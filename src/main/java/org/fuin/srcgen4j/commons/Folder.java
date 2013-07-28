@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -47,6 +48,10 @@ public class Folder extends AbstractElement {
 
 	@XmlAttribute
 	private Boolean clean;
+
+	@XmlTransient
+	private Project parent;
+	
 
 	/**
 	 * Default constructor.
@@ -221,11 +226,29 @@ public class Folder extends AbstractElement {
 	}
 
 	/**
+	 * Returns the parent for the folder.
+	 * 
+	 * @return Parent or <code>null</code>.
+	 */
+	public final Project getParent() {
+		return parent;
+	}
+
+	/**
+	 * Sets the parent for the folder.
+	 * 
+	 * @param parent Parent or <code>null</code>.
+	 */
+	public final void setParent(final Project parent) {
+		this.parent = parent;
+	}
+	
+	/**
 	 * Replaces all variables in all configuration objects.
 	 * 
 	 * @param vars Variables to use.
 	 */
-	public final void replaceVariables(final Map<String, String> vars) {
+	public final void init(final Map<String, String> vars) {
 		name = replaceVars(name, vars);
 		path = replaceVars(path, vars);
 	}	

@@ -51,6 +51,16 @@ public class Generator extends AbstractNamedTarget {
 	}
 
 	/**
+	 * Constructor with name.
+	 * 
+	 * @param name
+	 *            Name to set.
+	 */
+	public Generator(final String name) {
+		super(name, null, null);
+	}
+	
+	/**
 	 * Constructor with name, project and folder.
 	 * 
 	 * @param name
@@ -130,13 +140,13 @@ public class Generator extends AbstractNamedTarget {
 	 * 
 	 * @param vars Variables to use.
 	 */
-	public final void replaceVariables(final Map<String, String> vars) {
+	public final void init(final Map<String, String> vars) {
 		setName(replaceVars(getName(), vars));
 		setProject(replaceVars(getProject(), vars));
 		setFolder(replaceVars(getFolder(), vars));
 		if (artifacts != null) {
 			for (final Artifact artifact : artifacts) {
-				artifact.replaceVariables(vars);
+				artifact.init(vars);
 			}
 		}
 	}	

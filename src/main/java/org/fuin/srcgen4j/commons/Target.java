@@ -18,6 +18,7 @@
 package org.fuin.srcgen4j.commons;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -40,6 +41,10 @@ public class Target extends AbstractTarget {
 
 	@XmlTransient
 	private Artifact parent;
+
+	@XmlTransient
+	private Pattern regExpr;
+
 	
 	/**
 	 * Default constructor.
@@ -99,6 +104,36 @@ public class Target extends AbstractTarget {
 	public final void setParent(final Artifact parent) {
 		this.parent = parent;
 	}
+
+	/**
+	 * Returns the defined project from this object or any of it's parents.
+	 * 
+	 * @return Project or <code>null</code>.
+	 */
+	public final String getDefProject() {
+		if (getProject() == null) {
+			if (parent == null) {
+				return null;
+			}
+			return parent.getDefProject();
+		}
+		return getProject();
+	}
+	
+	/**
+	 * Returns the defined folder from this object or any of it's parents.
+	 * 
+	 * @return Folder or <code>null</code>.
+	 */
+	public final String getDefFolder() {
+		if (getFolder() == null) {
+			if (parent == null) {
+				return null;
+			}
+			return parent.getDefFolder();
+		}
+		return getFolder();
+	}
 	
 	/**
 	 * Called when the object is deserialized with JAXB. 
@@ -114,11 +149,26 @@ public class Target extends AbstractTarget {
 	 * Replaces all variables in all configuration objects.
 	 * 
 	 * @param vars Variables to use.
+	 * 
+	 * @return This instance.
 	 */
-	public final void replaceVariables(final Map<String, String> vars) {
+	public final Target init(final Map<String, String> vars) {
 		pattern = replaceVars(pattern, vars);
 		setProject(replaceVars(getProject(), vars));
 		setFolder(replaceVars(getFolder(), vars));
+		regExpr = Pattern.compile(pattern);
+		return this;
+	}
+
+	/**
+	 * Returns if the pattern matches the given path.
+	 * 
+	 * @param targetPath Path to test.
+	 * 
+	 * @return If the target matches TRUE, else FALSE.
+	 */
+	public final boolean matches(final String targetPath) {
+		return regExpr.matcher(targetPath).find();
 	}
 	
 }

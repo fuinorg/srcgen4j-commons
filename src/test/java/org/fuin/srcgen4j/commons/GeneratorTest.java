@@ -87,7 +87,7 @@ public class GeneratorTest extends AbstractTest {
 	}
 
 	@Test
-	public final void testReplaceVariables() {
+	public final void testInit() {
 		
 		// PREPARE
 		final Generator testee = new Generator("A${a}A", "${b}2B", "C3${c}");
@@ -102,7 +102,7 @@ public class GeneratorTest extends AbstractTest {
 		vars.put("z", "b");
 		
 		// TEST
-		testee.replaceVariables(vars);
+		testee.init(vars);
 		
 		// VERIFY
 		assertThat(testee.getName()).isEqualTo("A1A");

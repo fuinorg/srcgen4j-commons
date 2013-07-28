@@ -90,7 +90,7 @@ public class ArtifactTest extends AbstractTest {
 	}
 
 	@Test
-	public final void testReplaceVariables() {
+	public final void testInit() {
 		
 		// PREPARE
 		final Artifact testee = new Artifact("A ${x}", "${y}B", "a${z}c");
@@ -105,7 +105,7 @@ public class ArtifactTest extends AbstractTest {
 		vars.put("c", "z");
 		
 		// TEST
-		testee.replaceVariables(vars);
+		testee.init(vars);
 		
 		// VERIFY
 		assertThat(testee.getName()).isEqualTo("A NAME");

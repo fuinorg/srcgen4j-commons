@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<generator-config>
+	
+	<variables>
+		<variable name="root" value="/var/tmp" />
+	</variables>
+	
+	<projects>
+		<project name="prj1" path="${root}/myproject">
+			<folder name="folder1" path="src/main/java" />
+		</project>
+	</projects>
+	
+	<generators>
+		<generator name="gen1" project="prj2" folder="folder2">
+			<artifact name="arti1" project="prj1" folder="folder3">
+				<target pattern=".*/MyClass.java" project="prj1" folder="folder1" />				 
+			</artifact>
+		</generator>
+	</generators>
+	
+</generator-config>

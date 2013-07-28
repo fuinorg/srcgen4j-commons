@@ -17,29 +17,29 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import static org.fuin.units4j.AssertCoverage.assertEveryClassHasATest;
-
-import java.io.File;
-
-import org.fuin.units4j.AssertCoverage.ClassFilter;
-import org.junit.Test;
-
 /**
- * General tests for the project.
+ * A project with a given name was not found.
  */
-public class GeneralTest {
+public class ProjectNotFoundException extends Exception {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Verifies the test coverage of the project.
+	 * Constructor with names.
+	 * 
+	 * @param generatorName
+	 *            Name of the generator with the requested artifact.
+	 * @param artifactName
+	 *            Name of the artifact with the request target.
+	 * @param targetPattern
+	 *            Target pattern.
+	 * @param projectName
+	 *            Project name.
 	 */
-	@Test
-	public final void testEveryClassHasATest() {
-		assertEveryClassHasATest(new File("src/main/java"), new ClassFilter() {
-			@Override
-			public boolean isIncludeClass(final Class<?> clasz) {
-				return !clasz.getName().endsWith("Exception");
-			}
-		});
+	public ProjectNotFoundException(final String generatorName,
+			final String artifactName, final String targetPattern, final String projectName) {
+		super("The project name '" + projectName + "' is not known - Selection was: "
+				+ generatorName + " / " + artifactName + " / " + targetPattern);
 	}
-
+	
 }

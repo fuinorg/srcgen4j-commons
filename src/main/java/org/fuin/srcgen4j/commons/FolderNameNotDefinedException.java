@@ -17,29 +17,27 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import static org.fuin.units4j.AssertCoverage.assertEveryClassHasATest;
-
-import java.io.File;
-
-import org.fuin.units4j.AssertCoverage.ClassFilter;
-import org.junit.Test;
-
 /**
- * General tests for the project.
+ * For a given generator/artifact/target was no folder found in a generator configuration.
  */
-public class GeneralTest {
+public class FolderNameNotDefinedException extends Exception {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Verifies the test coverage of the project.
+	 * Constructor with names.
+	 * 
+	 * @param generatorName
+	 *            Name of the generator with the requested artifact.
+	 * @param artifactName
+	 *            Name of the artifact with the request target.
+	 * @param targetPattern
+	 *            Target pattern.
 	 */
-	@Test
-	public final void testEveryClassHasATest() {
-		assertEveryClassHasATest(new File("src/main/java"), new ClassFilter() {
-			@Override
-			public boolean isIncludeClass(final Class<?> clasz) {
-				return !clasz.getName().endsWith("Exception");
-			}
-		});
+	public FolderNameNotDefinedException(final String generatorName,
+			final String artifactName, final String targetPattern) {
+		super("No folder name is defined for: "
+				+ generatorName + " / " + artifactName + " / " + targetPattern);
 	}
 
 }

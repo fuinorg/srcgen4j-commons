@@ -17,29 +17,25 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import static org.fuin.units4j.AssertCoverage.assertEveryClassHasATest;
-
-import java.io.File;
-
-import org.fuin.units4j.AssertCoverage.ClassFilter;
-import org.junit.Test;
-
 /**
- * General tests for the project.
+ * An artifact with a given name was not found in a generator configuration.
  */
-public class GeneralTest {
+public class ArtifactNotFoundException extends Exception {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Verifies the test coverage of the project.
+	 * Constructor with names.
+	 * 
+	 * @param generatorName
+	 *            Name of the generator with the requested artifact.
+	 * @param artifactName
+	 *            Name of the generator that was not found.
 	 */
-	@Test
-	public final void testEveryClassHasATest() {
-		assertEveryClassHasATest(new File("src/main/java"), new ClassFilter() {
-			@Override
-			public boolean isIncludeClass(final Class<?> clasz) {
-				return !clasz.getName().endsWith("Exception");
-			}
-		});
+	public ArtifactNotFoundException(final String generatorName,
+			final String artifactName) {
+		super("The artifact '" + artifactName
+				+ "' is not configured for generator '" + generatorName + "'");
 	}
 
 }

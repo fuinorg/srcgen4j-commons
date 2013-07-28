@@ -89,7 +89,7 @@ public class FolderTest extends AbstractTest {
 	}
 
 	@Test
-	public final void testReplaceVariables() {
+	public final void testInit() {
 		
 		// PREPARE
 		final Folder testee = new Folder("A${x}", "${y}B");
@@ -99,7 +99,7 @@ public class FolderTest extends AbstractTest {
 		vars.put("y", "PATH");
 		
 		// TEST
-		testee.replaceVariables(vars);
+		testee.init(vars);
 		
 		// VERIFY
 		assertThat(testee.getName()).isEqualTo("ANAME");

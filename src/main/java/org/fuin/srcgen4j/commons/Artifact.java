@@ -107,6 +107,36 @@ public class Artifact extends AbstractNamedTarget {
 	}
 
 	/**
+	 * Returns the defined project from this object or any of it's parents.
+	 * 
+	 * @return Project or <code>null</code>.
+	 */
+	public final String getDefProject() {
+		if (getProject() == null) {
+			if (parent == null) {
+				return null;
+			}
+			return parent.getProject();
+		}
+		return getProject();
+	}
+	
+	/**
+	 * Returns the defined folder from this object or any of it's parents.
+	 * 
+	 * @return Folder or <code>null</code>.
+	 */
+	public final String getDefFolder() {
+		if (getFolder() == null) {
+			if (parent == null) {
+				return null;
+			}
+			return parent.getFolder();
+		}
+		return getFolder();
+	}
+	
+	/**
 	 * Returns the parent of the object.
 	 * 
 	 * @return Generator.
@@ -125,6 +155,25 @@ public class Artifact extends AbstractNamedTarget {
 	}
 	
 	/**
+	 * Returns the first target that matched the given path based on the defined patterns. 
+	 * 
+	 * @param targetPath Path to find.
+	 * 
+	 * @return Target or <code>null</code>.
+	 */
+	public final Target findTargetFor(final String targetPath) {
+		if (targets == null) {
+			return null;
+		}
+		for (final Target target : targets) {
+			if (target.matches(targetPath)) {
+				return target;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Called when the object is deserialized with JAXB. 
 	 * 
 	 * @param unmarshaller Unmarshaller.
@@ -139,15 +188,15 @@ public class Artifact extends AbstractNamedTarget {
 	 * 
 	 * @param vars Variables to use.
 	 */
-	public final void replaceVariables(final Map<String, String> vars) {
+	public final void init(final Map<String, String> vars) {
 		setName(replaceVars(getName(), vars));
 		setProject(replaceVars(getProject(), vars));
 		setFolder(replaceVars(getFolder(), vars));
 		if (targets != null) {
 			for (final Target target : targets) {
-				target.replaceVariables(vars);
+				target.init(vars);
 			}
 		}
 	}
-	
+
 }

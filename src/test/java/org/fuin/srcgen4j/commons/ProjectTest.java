@@ -87,7 +87,7 @@ public class ProjectTest extends AbstractTest {
 	}
 
 	@Test
-	public final void testReplaceVariables() {
+	public final void testInit() {
 		
 		// PREPARE
 		final Project testee = new Project("A${x}", "${y}B");
@@ -100,7 +100,7 @@ public class ProjectTest extends AbstractTest {
 		vars.put("b", "B");
 		
 		// TEST
-		testee.replaceVariables(vars);
+		testee.init(vars);
 		
 		// VERIFY
 		assertThat(testee.getName()).isEqualTo("ANAME");

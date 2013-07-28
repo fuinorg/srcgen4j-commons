@@ -75,6 +75,17 @@ public class Project extends AbstractElement {
 	}
 
 	/**
+	 * Constructor with name.
+	 * 
+	 * @param name
+	 *            Name to set.
+	 */
+	public Project(final String name) {
+		super();
+		this.name = name;
+	}
+
+	/**
 	 * Returns the name.
 	 * 
 	 * @return Current name.
@@ -235,12 +246,13 @@ public class Project extends AbstractElement {
 	 * 
 	 * @param vars Variables to use.
 	 */
-	public final void replaceVariables(final Map<String, String> vars) {
+	public final void init(final Map<String, String> vars) {
 		name = replaceVars(name, vars);
 		path = replaceVars(path, vars);
 		if (folders != null) {
 			for (final Folder folder : folders) {
-				folder.replaceVariables(vars);
+				folder.setParent(this);
+				folder.init(vars);
 			}
 		}
 	}

@@ -29,6 +29,13 @@ import org.junit.Test;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
+import com.openpojo.validation.rule.impl.GetterMustExistRule;
+import com.openpojo.validation.rule.impl.NoFieldShadowingRule;
+import com.openpojo.validation.rule.impl.NoPublicFieldsRule;
+import com.openpojo.validation.rule.impl.SetterMustExistRule;
+import com.openpojo.validation.test.impl.DefaultValuesNullTester;
+import com.openpojo.validation.test.impl.GetterTester;
+import com.openpojo.validation.test.impl.SetterTester;
 
 /**
  * Tests for {@link Target}.
@@ -40,8 +47,17 @@ public class TargetTest extends AbstractTest {
 	@Test
 	public final void testPojoStructureAndBehavior() {
 		
-		final PojoClass pc = PojoClassFactory.getPojoClass(Target.class);
-		final PojoValidator pv = createPojoValidator();
+		final PojoClass pc = PojoClassFactory.getPojoClass(Target.class);		
+
+		final PojoValidator pv = new PojoValidator();
+        
+		pv.addRule(new NoPublicFieldsRule());
+		pv.addRule(new NoFieldShadowingRule());
+
+		pv.addTester(new DefaultValuesNullTester());
+		pv.addTester(new SetterTester());
+		pv.addTester(new GetterTester());
+		
 		pv.runValidation(pc);
 		
 	}
@@ -79,7 +95,7 @@ public class TargetTest extends AbstractTest {
 	}
 
 	@Test
-	public final void testReplaceVariables() {
+	public final void testInit() {
 		
 		// PREPARE
 		final Target testee = new Target("${a}name", "t${b}rj", "xy${c}");
@@ -90,12 +106,25 @@ public class TargetTest extends AbstractTest {
 		vars.put("c", "z");
 		
 		// TEST
-		testee.replaceVariables(vars);
+		testee.init(vars);
 		
 		// VERIFY
 		assertThat(testee.getPattern()).isEqualTo("tname");
 		assertThat(testee.getProject()).isEqualTo("tprj");
 		assertThat(testee.getFolder()).isEqualTo("xyz");
+		
+	}
+
+	@Test
+	public final void testMatches() {
+		
+		// TEST & VERIFY
+		assertThat(new Target("MyName\\.java", "prj", "folder").init(null).matches("MyName.java")).isTrue();
+		assertThat(new Target(".*MyName\\.java", "prj", "folder").init(null).matches("MyName.java")).isTrue();
+		assertThat(new Target(".*MyName\\.java", "prj", "folder").init(null).matches("/MyName.java")).isTrue();
+		assertThat(new Target(".*a/b/c", "prj", "folder").init(null).matches("a/b/c/MyName.java")).isTrue();
+
+		assertThat(new Target("MyName\\.java", "prj", "folder").init(null).matches("Another.java")).isFalse();
 		
 	}
 	

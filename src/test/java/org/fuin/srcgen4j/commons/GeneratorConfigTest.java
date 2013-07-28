@@ -20,6 +20,7 @@ package org.fuin.srcgen4j.commons;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.MapAssert.entry;
 
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import java.util.Map;
 import javax.xml.bind.JAXBContext;
 
 import org.junit.Test;
+import static org.junit.Assert.fail;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -60,15 +62,16 @@ public class GeneratorConfigTest extends AbstractTest {
 		vars.add(new Variable("B", "b"));
 		vars.add(new Variable("x", "2"));
 		final GeneratorConfig testee = new GeneratorConfig();
-		testee.setVariables(vars);		
-		
+		testee.setVariables(vars);
+
 		// TEST
 		final Map<String, String> varMap = testee.getVarMap();
-		
+
 		// VERIFY
 		assertThat(varMap).isNotNull();
 		assertThat(varMap).hasSize(vars.size());
-		assertThat(varMap).includes(entry("a", "1"), entry("B", "b"), entry("x", "2"));
+		assertThat(varMap).includes(entry("a", "1"), entry("B", "b"),
+				entry("x", "2"));
 
 	}
 
@@ -133,11 +136,11 @@ public class GeneratorConfigTest extends AbstractTest {
 	}
 
 	@Test
-	public final void testReplaceVariables() {
-		
+	public final void tesInit() {
+
 		// PREPARE
 		final GeneratorConfig testee = new GeneratorConfig();
-		
+
 		final List<Variable> vars = new ArrayList<Variable>();
 		vars.add(new Variable("project.name", "1"));
 		vars.add(new Variable("project.path", "2"));
@@ -152,28 +155,32 @@ public class GeneratorConfigTest extends AbstractTest {
 		vars.add(new Variable("target.pattern", "11"));
 		vars.add(new Variable("target.project", "12"));
 		vars.add(new Variable("target.folder", "13"));
-		
+
 		final List<Project> projects = new ArrayList<Project>();
-		final Project project = new Project("${project.name}", "${project.path}");
+		final Project project = new Project("${project.name}",
+				"${project.path}");
 		projects.add(project);
 		project.addFolder(new Folder("${folder.name}", "${folder.path}"));
-		
+
 		final List<Generator> generators = new ArrayList<Generator>();
-		final Generator generator = new Generator("${generator.name}", "${generator.project}", "${generator.folder}");
+		final Generator generator = new Generator("${generator.name}",
+				"${generator.project}", "${generator.folder}");
 		generators.add(generator);
-		final Artifact artifact = new Artifact("${artifact.name}", "${artifact.project}", "${artifact.folder}");
+		final Artifact artifact = new Artifact("${artifact.name}",
+				"${artifact.project}", "${artifact.folder}");
 		generator.addArtifact(artifact);
-		artifact.addTarget(new Target("${target.pattern}", "${target.project}", "${target.folder}"));
+		artifact.addTarget(new Target("${target.pattern}", "${target.project}",
+				"${target.folder}"));
 
 		testee.setVariables(vars);
 		testee.setProjects(projects);
 		testee.setGenerators(generators);
-		
+
 		// TEST
-		testee.replaceVariables();
-		
+		testee.init();
+
 		// VERIFY
-		
+
 		final Project resultProject = testee.getProjects().get(0);
 		assertThat(resultProject.getName()).isEqualTo("1");
 		assertThat(resultProject.getPath()).isEqualTo("2");
@@ -193,9 +200,53 @@ public class GeneratorConfigTest extends AbstractTest {
 		assertThat(resultTarget.getPattern()).isEqualTo("11");
 		assertThat(resultTarget.getProject()).isEqualTo("12");
 		assertThat(resultTarget.getFolder()).isEqualTo("13");
+
+	}
+
+	@Test
+	public void testFindTargetPositive() throws Exception {
+
+		// PREPARE
+		final GeneratorConfig testee = load("findTarget.xml");
+		testee.init();
 		
+		// TEST
+		final Folder folder = testee.findTargetFolder("gen1", "arti1", "a/b/c/MyClass.java");
+
+		// VERIFY
+		assertThat(folder.getPath()).isEqualTo("src/main/java");
+		assertThat(folder.getParent().getPath()).isEqualTo("/var/tmp/myproject");
+
+	}
+
+	@Test
+	public void testFindTargetFolderNotFoundException() throws Exception {
+
+		// PREPARE
+		final GeneratorConfig testee = load("findTarget.xml");
+		testee.init();
 		
-	}	
+		// TEST
+		try {
+			testee.findTargetFolder("gen1", "arti1", "Unknown.java");
+			fail("The file should lead to arti1's folder 'folder3' that is not defined");
+		} catch (final FolderNotFoundException ex) {
+			// VERIFIED
+		}
+
+	}
+	
+	private GeneratorConfig load(final String resourceName) throws Exception {
+		final JAXBContext jaxbContext = JAXBContext
+				.newInstance(GeneratorConfig.class);
+		final Reader reader = new InputStreamReader(getClass().getClassLoader()
+				.getResourceAsStream(resourceName));
+		try {
+			return new JaxbHelper().create(reader, jaxbContext);
+		} finally {
+			reader.close();
+		}
+	}
 	
 	// CHECKSTYLE:ON
 

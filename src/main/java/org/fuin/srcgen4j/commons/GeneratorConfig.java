@@ -128,19 +128,102 @@ public class GeneratorConfig {
 	 * If you serialize the object after calling this method the current state
 	 * <b>without</b> previously defined variables will be saved.
 	 */
-	public final void replaceVariables() {
+	public final void init() {
 		if (variables != null) {
 			if (projects != null) {
 				for (final Project project : projects) {
-					project.replaceVariables(getVarMap());
+					project.init(getVarMap());
 				}
 			}
 			if (generators != null) {
 				for (final Generator generator : generators) {
-					generator.replaceVariables(getVarMap());
+					generator.init(getVarMap());
 				}
 			}
 		}
+	}
+
+	/**
+	 * Returns a target directory for a given combination of generator name,
+	 * artifact name and target sub path.
+	 * 
+	 * @param generatorName
+	 *            Name of the generator.
+	 * @param artifactName
+	 *            Name of the artifact.
+	 * @param targetPath
+	 *            Current path and file.
+	 * 
+	 * @return Target file based on the configuration.
+	 * 
+	 * @throws GeneratorNotFoundException
+	 *             The given generator name was not found in the configuration.
+	 * @throws ArtifactNotFoundException
+	 *             The given artifact was not found in the generator.
+	 * @throws ProjectNameNotDefinedException
+	 *             No project name is bound to the given combination.
+	 * @throws FolderNameNotDefinedException
+	 *             No folder name is bound to the given combination.
+	 * @throws ProjectNotFoundException
+	 *             The project name based on the selection is unknown.
+	 * @throws FolderNotFoundException
+	 *             The folder in the project based on the selection is unknown.
+	 */
+	public final Folder findTargetFolder(final String generatorName,
+			final String artifactName, final String targetPath)
+			throws ProjectNameNotDefinedException, ArtifactNotFoundException,
+			FolderNameNotDefinedException, GeneratorNotFoundException,
+			ProjectNotFoundException, FolderNotFoundException {
+
+		int idx = generators.indexOf(new Generator(generatorName));
+		if (idx < 0) {
+			throw new GeneratorNotFoundException(generatorName);
+		}
+		final Generator generator = generators.get(idx);
+
+		idx = generator.getArtifacts().indexOf(new Artifact(artifactName));
+		if (idx < 0) {
+			throw new ArtifactNotFoundException(generatorName, artifactName);
+		}
+		final Artifact artifact = generator.getArtifacts().get(idx);
+
+		final String projectName;
+		final String folderName;
+		final String targetPattern;
+		final Target target = artifact.findTargetFor(targetPath);
+		if (target == null) {
+			projectName = artifact.getDefProject();
+			folderName = artifact.getDefFolder();
+			targetPattern = null;
+		} else {
+			projectName = target.getDefProject();
+			folderName = target.getDefFolder();
+			targetPattern = target.getPattern();
+		}
+
+		if (projectName == null) {
+			throw new ProjectNameNotDefinedException(generatorName,
+					artifactName, targetPattern);
+		}
+		if (folderName == null) {
+			throw new FolderNameNotDefinedException(generatorName,
+					artifactName, targetPattern);
+		}
+
+		idx = projects.indexOf(new Project(projectName));
+		if (idx < 0) {
+			throw new ProjectNotFoundException(generatorName, artifactName,
+					targetPattern, projectName);
+		}
+		final Project project = projects.get(idx);
+
+		idx = project.getFolders().indexOf(new Folder(folderName));
+		if (idx < 0) {
+			throw new FolderNotFoundException(generatorName, artifactName,
+					targetPattern, projectName, folderName);
+		}
+		return project.getFolders().get(idx);
+
 	}
 
 }

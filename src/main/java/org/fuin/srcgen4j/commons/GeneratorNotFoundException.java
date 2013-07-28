@@ -17,29 +17,20 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import static org.fuin.units4j.AssertCoverage.assertEveryClassHasATest;
-
-import java.io.File;
-
-import org.fuin.units4j.AssertCoverage.ClassFilter;
-import org.junit.Test;
-
 /**
- * General tests for the project.
+ * A generator with a given name was not found in the configuration.
  */
-public class GeneralTest {
+public class GeneratorNotFoundException extends Exception {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Verifies the test coverage of the project.
+	 * Constructor with generator name.
+	 * 
+	 * @param generatorName Name of the generator that was not found.
 	 */
-	@Test
-	public final void testEveryClassHasATest() {
-		assertEveryClassHasATest(new File("src/main/java"), new ClassFilter() {
-			@Override
-			public boolean isIncludeClass(final Class<?> clasz) {
-				return !clasz.getName().endsWith("Exception");
-			}
-		});
+	public GeneratorNotFoundException(final String generatorName) {
+		super("The generator '" + generatorName + "' is not configured");
 	}
 
 }
