@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<generator-config>
+	
+	<variables>
+		<variable name="root" value="/var/tmp" />
+	</variables>
+	
+	<projects>
+		<project name="example" path="${root}/example">
+			<!-- Maven default folder --> 
+			<folder name="mainJava" path="src/main/java" create="false" override="false" clean="false" />
+			<folder name="mainRes" path="src/main/resources" create="false" override="false" clean="false" />
+			<folder name="genMainJava" path="src-gen/main/java" create="true" override="true" clean="true" />
+			<folder name="genMainRes" path="src-gen/main/resources" create="true" override="true" clean="true" />
+			<folder name="testJava" path="src/test/java" create="false" override="false" clean="false" />
+			<folder name="testRes" path="src/test/resources" create="false" override="false" clean="false" />
+			<folder name="genTestJava" path="src-gen/test/java" create="true" override="true" clean="true" />
+			<folder name="genTestRes" path="src-gen/test/resources" create="true" override="true" clean="true" />
+		</project>
+	</projects>
+	
+	<generators>
+		<generator name="gen1" project="example" folder="genMainJava">
+			<!-- Project and folder can be overridden in artifact -->
+			<artifact name="one" project="example" folder="genMainJava">
+				<!-- Example for changing the target folder or even the project based on a path/file regular expression --> 
+				<target pattern=".*//abc//def//ghi//.*//.java" project="example" folder="genMainJava" />				 
+			</artifact>
+			<artifact name="abstract" folder="genMainJava" />
+			<artifact name="manual" folder="mainJava" />
+		</generator>
+	</generators>
+	
+</generator-config>

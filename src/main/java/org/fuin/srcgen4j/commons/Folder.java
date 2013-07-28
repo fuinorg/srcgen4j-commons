@@ -54,6 +54,17 @@ public class Folder {
 	}
 
 	/**
+	 * Constructor with name.
+	 * 
+	 * @param name
+	 *            Name to set.
+	 */
+	public Folder(final String name) {
+		super();
+		this.name = name;
+	}
+	
+	/**
 	 * Constructor with name and path.
 	 * 
 	 * @param name

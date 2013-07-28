@@ -20,10 +20,12 @@ package org.fuin.srcgen4j.commons;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -37,6 +39,9 @@ public class Generator extends AbstractNamedTarget {
 	@XmlElement(name = "artifact")
 	private List<Artifact> artifacts;
 
+	@XmlTransient
+	private GeneratorConfig parent;
+	
 	/**
 	 * Default constructor.
 	 */
@@ -89,6 +94,34 @@ public class Generator extends AbstractNamedTarget {
 			artifacts = new ArrayList<Artifact>();
 		}
 		artifacts.add(artifact);
+	}
+	
+	/**
+	 * Returns the parent of the object.
+	 * 
+	 * @return GeneratorConfig.
+	 */
+	public final GeneratorConfig getParent() {
+		return parent;
+	}
+
+	/**
+	 * Sets the parent of the object.
+	 * 
+	 * @param parent GeneratorConfig.
+	 */
+	public final void setParent(final GeneratorConfig parent) {
+		this.parent = parent;
+	}
+	
+	/**
+	 * Called when the object is deserialized with JAXB. 
+	 * 
+	 * @param unmarshaller Unmarshaller.
+	 * @param parent Parent object.
+	 */
+	final void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
+		this.parent = (GeneratorConfig) parent;
 	}
 	
 }

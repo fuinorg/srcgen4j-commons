@@ -17,10 +17,12 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -34,6 +36,9 @@ public class Target extends AbstractTarget {
 	@XmlAttribute
 	private String pattern;
 
+	@XmlTransient
+	private Artifact parent;
+	
 	/**
 	 * Default constructor.
 	 */
@@ -75,4 +80,32 @@ public class Target extends AbstractTarget {
 		this.pattern = pattern;
 	}
 
+	/**
+	 * Returns the parent of the object.
+	 * 
+	 * @return Artifact.
+	 */
+	public final Artifact getParent() {
+		return parent;
+	}
+
+	/**
+	 * Sets the parent of the object.
+	 * 
+	 * @param parent Artifact.
+	 */
+	public final void setParent(final Artifact parent) {
+		this.parent = parent;
+	}
+	
+	/**
+	 * Called when the object is deserialized with JAXB. 
+	 * 
+	 * @param unmarshaller Unmarshaller.
+	 * @param parent Parent object.
+	 */
+	final void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
+		this.parent = (Artifact) parent;
+	}
+	
 }

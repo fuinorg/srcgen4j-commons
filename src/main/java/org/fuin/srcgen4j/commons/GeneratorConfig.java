@@ -19,6 +19,7 @@ package org.fuin.srcgen4j.commons;
 
 import java.util.List;
 
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -31,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "generator-config")
-@XmlType(propOrder = { "projects", "variables" })
+@XmlType(propOrder = { "generators", "projects", "variables" })
 public class GeneratorConfig {
 
 	@XmlElementWrapper(name = "variables")
@@ -42,6 +43,10 @@ public class GeneratorConfig {
 	@XmlElement(name = "project")
 	private List<Project> projects;
 
+	@XmlElementWrapper(name = "generators")
+	@XmlElement(name = "generator")
+	private List<Generator> generators;
+	
 	/**
 	 * Returns a list of variables.
 	 * 
@@ -80,4 +85,24 @@ public class GeneratorConfig {
 		this.projects = projects;
 	}
 
+	/**
+	 * Returns a list of generators.
+	 * 
+	 * @return Generators or NULL.
+	 */
+	public final List<Generator> getGenerators() {
+		return generators;
+	}
+
+	/**
+	 * Sets a list of generators.
+	 * 
+	 * @param generators
+	 *            Generators or NULL.
+	 */
+	public final void setGenerators(final List<Generator> generators) {
+		this.generators = generators;
+	}
+	
+	
 }

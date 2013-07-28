@@ -17,10 +17,12 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -37,6 +39,9 @@ public class Variable {
 	@XmlAttribute
 	private String value;
 
+	@XmlTransient
+	private GeneratorConfig parent;
+	
 	/**
 	 * Default constructor.
 	 */
@@ -96,6 +101,24 @@ public class Variable {
 		this.value = value;
 	}
 
+	/**
+	 * Returns the parent of the variable.
+	 * 
+	 * @return Generator configuration.
+	 */
+	public final GeneratorConfig getParent() {
+		return parent;
+	}
+
+	/**
+	 * Sets the parent of the variable.
+	 * 
+	 * @param parent Generator configuration.
+	 */
+	public final void setParent(final GeneratorConfig parent) {
+		this.parent = parent;
+	}
+
 	// CHECKSTYLE:OFF Generated code
 	@Override
 	public int hashCode() {
@@ -123,4 +146,14 @@ public class Variable {
 	}
 	// CHECKSTYLE:ON
 	
+	/**
+	 * Called when the object is deserialized with JAXB. 
+	 * 
+	 * @param unmarshaller Unmarshaller.
+	 * @param parent Parent object.
+	 */
+	final void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
+		this.parent = (GeneratorConfig) parent;
+	}
+
 }
