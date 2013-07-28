@@ -19,6 +19,9 @@ package org.fuin.srcgen4j.commons;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.bind.JAXBContext;
 
 import org.junit.Test;
@@ -83,6 +86,35 @@ public class GeneratorTest extends AbstractTest {
 
 	}
 
+	@Test
+	public final void testReplaceVariables() {
+		
+		// PREPARE
+		final Generator testee = new Generator("A${a}A", "${b}2B", "C3${c}");
+		testee.addArtifact(new Artifact("A ${x}", "${y}B", "a${z}c"));
+		
+		final Map<String, String> vars = new HashMap<String, String>();
+		vars.put("a", "1");
+		vars.put("b", "B");
+		vars.put("c", "C");
+		vars.put("x", "NAME");
+		vars.put("y", "PRJ");
+		vars.put("z", "b");
+		
+		// TEST
+		testee.replaceVariables(vars);
+		
+		// VERIFY
+		assertThat(testee.getName()).isEqualTo("A1A");
+		assertThat(testee.getProject()).isEqualTo("B2B");
+		assertThat(testee.getFolder()).isEqualTo("C3C");
+		final Artifact artifact = testee.getArtifacts().get(0);
+		assertThat(artifact.getName()).isEqualTo("A NAME");
+		assertThat(artifact.getProject()).isEqualTo("PRJB");
+		assertThat(artifact.getFolder()).isEqualTo("abc");
+		
+	}
+	
 	// CHECKSTYLE:ON
 	
 }

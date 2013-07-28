@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "folder", "project" })
-public abstract class AbstractTarget {
+public abstract class AbstractTarget extends AbstractElement {
 
 	@XmlAttribute
 	private String project;

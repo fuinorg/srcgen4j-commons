@@ -19,6 +19,7 @@ package org.fuin.srcgen4j.commons;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -123,5 +124,21 @@ public class Generator extends AbstractNamedTarget {
 	final void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
 		this.parent = (GeneratorConfig) parent;
 	}
+
+	/**
+	 * Replaces all variables in all configuration objects.
+	 * 
+	 * @param vars Variables to use.
+	 */
+	public final void replaceVariables(final Map<String, String> vars) {
+		setName(replaceVars(getName(), vars));
+		setProject(replaceVars(getProject(), vars));
+		setFolder(replaceVars(getFolder(), vars));
+		if (artifacts != null) {
+			for (final Artifact artifact : artifacts) {
+				artifact.replaceVariables(vars);
+			}
+		}
+	}	
 	
 }

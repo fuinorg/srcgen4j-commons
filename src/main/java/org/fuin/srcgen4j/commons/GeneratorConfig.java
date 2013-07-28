@@ -17,7 +17,9 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -27,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Configuration that maps generator output to projects. 
+ * Configuration that maps generator output to projects.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "generator-config")
@@ -45,7 +47,7 @@ public class GeneratorConfig {
 	@XmlElementWrapper(name = "generators")
 	@XmlElement(name = "generator")
 	private List<Generator> generators;
-	
+
 	/**
 	 * Returns a list of variables.
 	 * 
@@ -53,6 +55,22 @@ public class GeneratorConfig {
 	 */
 	public final List<Variable> getVariables() {
 		return variables;
+	}
+
+	/**
+	 * Returns a map of variables.
+	 * 
+	 * @return Map of variables or NULL.
+	 */
+	public final Map<String, String> getVarMap() {
+		if (variables == null) {
+			return null;
+		}
+		final Map<String, String> map = new HashMap<String, String>();
+		for (final Variable var : variables) {
+			map.put(var.getName(), var.getValue());
+		}
+		return map;
 	}
 
 	/**
@@ -102,6 +120,27 @@ public class GeneratorConfig {
 	public final void setGenerators(final List<Generator> generators) {
 		this.generators = generators;
 	}
-	
-	
+
+	/**
+	 * Replaces all variables in all configuration objects.<br>
+	 * <br>
+	 * <b>CAUTION:</b> Elements contained in this configuration will be changed.
+	 * If you serialize the object after calling this method the current state
+	 * <b>without</b> previously defined variables will be saved.
+	 */
+	public final void replaceVariables() {
+		if (variables != null) {
+			if (projects != null) {
+				for (final Project project : projects) {
+					project.replaceVariables(getVarMap());
+				}
+			}
+			if (generators != null) {
+				for (final Generator generator : generators) {
+					generator.replaceVariables(getVarMap());
+				}
+			}
+		}
+	}
+
 }

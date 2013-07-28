@@ -18,9 +18,13 @@
 package org.fuin.srcgen4j.commons;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.MapAssert.entry;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
@@ -37,9 +41,6 @@ public class GeneratorConfigTest extends AbstractTest {
 
 	// CHECKSTYLE:OFF
 
-	/**
-	 * Basic POJO test.
-	 */
 	@Test
 	public final void testPojoStructureAndBehavior() {
 
@@ -47,6 +48,27 @@ public class GeneratorConfigTest extends AbstractTest {
 				.getPojoClass(GeneratorConfig.class);
 		final PojoValidator pv = createPojoValidator();
 		pv.runValidation(pc);
+
+	}
+
+	@Test
+	public final void testGetVarMap() {
+
+		// PREPARE
+		final List<Variable> vars = new ArrayList<Variable>();
+		vars.add(new Variable("a", "1"));
+		vars.add(new Variable("B", "b"));
+		vars.add(new Variable("x", "2"));
+		final GeneratorConfig testee = new GeneratorConfig();
+		testee.setVariables(vars);		
+		
+		// TEST
+		final Map<String, String> varMap = testee.getVarMap();
+		
+		// VERIFY
+		assertThat(varMap).isNotNull();
+		assertThat(varMap).hasSize(vars.size());
+		assertThat(varMap).includes(entry("a", "1"), entry("B", "b"), entry("x", "2"));
 
 	}
 
@@ -79,14 +101,10 @@ public class GeneratorConfigTest extends AbstractTest {
 			assertThat(prj.getName()).isEqualTo("example");
 			assertThat(prj.getPath()).isEqualTo("${root}/example");
 			assertThat(prj.getFolders()).hasSize(8);
-			assertThat(prj.getFolders()).contains(
-					new Folder("mainJava"),
-					new Folder("mainRes"),
-					new Folder("genMainJava"),
-					new Folder("genMainRes"),
-					new Folder("testJava"),
-					new Folder("testRes"),
-					new Folder("genTestJava"),
+			assertThat(prj.getFolders()).contains(new Folder("mainJava"),
+					new Folder("mainRes"), new Folder("genMainJava"),
+					new Folder("genMainRes"), new Folder("testJava"),
+					new Folder("testRes"), new Folder("genTestJava"),
 					new Folder("genTestRes"));
 
 			assertThat(testee.getGenerators()).isNotNull();
@@ -96,25 +114,89 @@ public class GeneratorConfigTest extends AbstractTest {
 			assertThat(gen.getProject()).isEqualTo("example");
 			assertThat(gen.getFolder()).isEqualTo("genMainJava");
 			assertThat(gen.getArtifacts()).hasSize(3);
-			assertThat(gen.getArtifacts()).contains(
-					new Artifact("one"),
-					new Artifact("abstract"),
-					new Artifact("manual"));
+			assertThat(gen.getArtifacts()).contains(new Artifact("one"),
+					new Artifact("abstract"), new Artifact("manual"));
 			int idx = gen.getArtifacts().indexOf(new Artifact("one"));
 			assertThat(idx).isGreaterThan(-1);
 			final Artifact one = gen.getArtifacts().get(idx);
 			assertThat(one.getTargets()).isNotNull();
 			assertThat(one.getTargets()).hasSize(1);
 			final Target target = one.getTargets().get(0);
-			assertThat(target.getPattern()).isEqualTo(".*//abc//def//ghi//.*//.java");
+			assertThat(target.getPattern()).isEqualTo(
+					".*//abc//def//ghi//.*//.java");
 			assertThat(target.getProject()).isEqualTo("example");
 			assertThat(target.getFolder()).isEqualTo("genMainJava");
-			
+
 		} finally {
 			reader.close();
 		}
 	}
 
+	@Test
+	public final void testReplaceVariables() {
+		
+		// PREPARE
+		final GeneratorConfig testee = new GeneratorConfig();
+		
+		final List<Variable> vars = new ArrayList<Variable>();
+		vars.add(new Variable("project.name", "1"));
+		vars.add(new Variable("project.path", "2"));
+		vars.add(new Variable("generator.name", "3"));
+		vars.add(new Variable("generator.project", "4"));
+		vars.add(new Variable("generator.folder", "5"));
+		vars.add(new Variable("folder.name", "6"));
+		vars.add(new Variable("folder.path", "7"));
+		vars.add(new Variable("artifact.name", "8"));
+		vars.add(new Variable("artifact.project", "9"));
+		vars.add(new Variable("artifact.folder", "10"));
+		vars.add(new Variable("target.pattern", "11"));
+		vars.add(new Variable("target.project", "12"));
+		vars.add(new Variable("target.folder", "13"));
+		
+		final List<Project> projects = new ArrayList<Project>();
+		final Project project = new Project("${project.name}", "${project.path}");
+		projects.add(project);
+		project.addFolder(new Folder("${folder.name}", "${folder.path}"));
+		
+		final List<Generator> generators = new ArrayList<Generator>();
+		final Generator generator = new Generator("${generator.name}", "${generator.project}", "${generator.folder}");
+		generators.add(generator);
+		final Artifact artifact = new Artifact("${artifact.name}", "${artifact.project}", "${artifact.folder}");
+		generator.addArtifact(artifact);
+		artifact.addTarget(new Target("${target.pattern}", "${target.project}", "${target.folder}"));
+
+		testee.setVariables(vars);
+		testee.setProjects(projects);
+		testee.setGenerators(generators);
+		
+		// TEST
+		testee.replaceVariables();
+		
+		// VERIFY
+		
+		final Project resultProject = testee.getProjects().get(0);
+		assertThat(resultProject.getName()).isEqualTo("1");
+		assertThat(resultProject.getPath()).isEqualTo("2");
+		final Folder resultFolder = resultProject.getFolders().get(0);
+		assertThat(resultFolder.getName()).isEqualTo("6");
+		assertThat(resultFolder.getPath()).isEqualTo("7");
+
+		final Generator resultGenerator = testee.getGenerators().get(0);
+		assertThat(resultGenerator.getName()).isEqualTo("3");
+		assertThat(resultGenerator.getProject()).isEqualTo("4");
+		assertThat(resultGenerator.getFolder()).isEqualTo("5");
+		final Artifact resultArtifact = resultGenerator.getArtifacts().get(0);
+		assertThat(resultArtifact.getName()).isEqualTo("8");
+		assertThat(resultArtifact.getProject()).isEqualTo("9");
+		assertThat(resultArtifact.getFolder()).isEqualTo("10");
+		final Target resultTarget = resultArtifact.getTargets().get(0);
+		assertThat(resultTarget.getPattern()).isEqualTo("11");
+		assertThat(resultTarget.getProject()).isEqualTo("12");
+		assertThat(resultTarget.getFolder()).isEqualTo("13");
+		
+		
+	}	
+	
 	// CHECKSTYLE:ON
 
 }

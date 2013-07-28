@@ -19,6 +19,9 @@ package org.fuin.srcgen4j.commons;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.bind.JAXBContext;
 
 import org.junit.Test;
@@ -83,6 +86,31 @@ public class ProjectTest extends AbstractTest {
 
 	}
 
+	@Test
+	public final void testReplaceVariables() {
+		
+		// PREPARE
+		final Project testee = new Project("A${x}", "${y}B");
+		testee.addFolder(new Folder("${a}name", "folder${b}"));
+		
+		final Map<String, String> vars = new HashMap<String, String>();
+		vars.put("x", "NAME");
+		vars.put("y", "PATH");
+		vars.put("a", "A");
+		vars.put("b", "B");
+		
+		// TEST
+		testee.replaceVariables(vars);
+		
+		// VERIFY
+		assertThat(testee.getName()).isEqualTo("ANAME");
+		assertThat(testee.getPath()).isEqualTo("PATHB");
+		final Folder folder = testee.getFolders().get(0);
+		assertThat(folder.getName()).isEqualTo("Aname");
+		assertThat(folder.getPath()).isEqualTo("folderB");
+		
+	}
+	
 	// CHECKSTYLE:ON
 	
 }

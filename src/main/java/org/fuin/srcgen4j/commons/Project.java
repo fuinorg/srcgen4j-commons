@@ -19,6 +19,7 @@ package org.fuin.srcgen4j.commons;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -35,7 +36,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "project")
 @XmlType(propOrder = { "folders", "maven", "path", "name" })
-public class Project {
+public class Project extends AbstractElement {
 
 	@XmlAttribute
 	private String name;
@@ -227,6 +228,21 @@ public class Project {
 	 */
 	final void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
 		this.parent = (GeneratorConfig) parent;
+	}
+
+	/**
+	 * Replaces all variables in all configuration objects.
+	 * 
+	 * @param vars Variables to use.
+	 */
+	public final void replaceVariables(final Map<String, String> vars) {
+		name = replaceVars(name, vars);
+		path = replaceVars(path, vars);
+		if (folders != null) {
+			for (final Folder folder : folders) {
+				folder.replaceVariables(vars);
+			}
+		}
 	}
 	
 }

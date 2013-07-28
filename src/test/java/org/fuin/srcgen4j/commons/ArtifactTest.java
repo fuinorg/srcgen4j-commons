@@ -19,6 +19,9 @@ package org.fuin.srcgen4j.commons;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.bind.JAXBContext;
 
 import org.junit.Test;
@@ -86,6 +89,35 @@ public class ArtifactTest extends AbstractTest {
 
 	}
 
+	@Test
+	public final void testReplaceVariables() {
+		
+		// PREPARE
+		final Artifact testee = new Artifact("A ${x}", "${y}B", "a${z}c");
+		testee.addTarget(new Target("${a}name", "t${b}rj", "xy${c}"));
+		
+		final Map<String, String> vars = new HashMap<String, String>();
+		vars.put("x", "NAME");
+		vars.put("y", "PRJ");
+		vars.put("z", "b");
+		vars.put("a", "t");
+		vars.put("b", "p");
+		vars.put("c", "z");
+		
+		// TEST
+		testee.replaceVariables(vars);
+		
+		// VERIFY
+		assertThat(testee.getName()).isEqualTo("A NAME");
+		assertThat(testee.getProject()).isEqualTo("PRJB");
+		assertThat(testee.getFolder()).isEqualTo("abc");
+		final Target target = testee.getTargets().get(0);
+		assertThat(target.getPattern()).isEqualTo("tname");
+		assertThat(target.getProject()).isEqualTo("tprj");
+		assertThat(target.getFolder()).isEqualTo("xyz");
+		
+	}
+	
 	// CHECKSTYLE:ON
 	
 }

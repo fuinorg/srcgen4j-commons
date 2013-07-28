@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.util.Map;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -29,7 +31,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "folder")
 @XmlType(propOrder = { "clean", "override", "create", "path", "name" })
-public class Folder {
+public class Folder extends AbstractElement {
 
 	@XmlAttribute
 	private String name;
@@ -218,6 +220,16 @@ public class Folder {
 		this.override = override;
 	}
 
+	/**
+	 * Replaces all variables in all configuration objects.
+	 * 
+	 * @param vars Variables to use.
+	 */
+	public final void replaceVariables(final Map<String, String> vars) {
+		name = replaceVars(name, vars);
+		path = replaceVars(path, vars);
+	}	
+	
 	// CHECKSTYLE:OFF Generated code
 	@Override
 	public int hashCode() {
