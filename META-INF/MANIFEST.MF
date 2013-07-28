@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-Description: Source code generation for Java (Commons)
+Bundle-DocURL: http://www.fuin.org/
+Bundle-License: http://www.fsf.org/licensing/licenses/lgpl.html
+Bundle-ManifestVersion: 2
+Bundle-Name: SrcGen4j Commons
+Bundle-SymbolicName: org.fuin.srcgen4j.commons
+Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
+ ny)
+Bundle-Version: 0.3.0.SNAPSHOT
+Export-Package: org.fuin.srcgen4j.commons;uses:="javax.xml.bind,javax.xm
+ l.bind.annotation";version="0.3.0.SNAPSHOT"
+Import-Package: javax.xml.bind,javax.xml.bind.annotation

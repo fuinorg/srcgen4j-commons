@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.fuin</groupId>
+		<artifactId>pom-osgi</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>srcgen4j-commons</artifactId>
+	<packaging>jar</packaging>
+	<version>0.3.0-SNAPSHOT</version>
+	<name>SrcGen4j Commons</name>
+	<description>Source code generation for Java (Commons)</description>
+	<url>http://www.fuin.org/srcgen4j/commons/</url>
+
+	<scm>
+		<url>https://github.com/fuinorg/srcgen4j-commons/</url>
+		<connection>scm:git:git://github.com/fuinorg/srcgen4j-commons.git</connection>
+		<developerConnection>scm:git:git@github.com:fuinorg/srcgen4j-commons.git</developerConnection>
+	</scm>
+
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/fuinorg/srcgen4j-commons/issues</url>
+	</issueManagement>
+
+	<dependencies>
+
+		<!-- Compile -->
+
+		<!-- Test -->
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert</artifactId>
+			<version>1.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.fuin</groupId>
+			<artifactId>units4j</artifactId>
+			<version>0.4.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.openpojo</groupId>
+			<artifactId>openpojo</artifactId>
+			<version>0.4.5</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+</project>
