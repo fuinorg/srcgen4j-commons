@@ -144,6 +144,40 @@ public class GeneratorConfig {
 	}
 
 	/**
+	 * Returns a target directory for a given combination of generator name and
+	 * artifact name.
+	 * 
+	 * @param generatorName
+	 *            Name of the generator.
+	 * @param artifactName
+	 *            Name of the artifact.
+	 * 
+	 * @return Target file based on the configuration.
+	 * 
+	 * @throws GeneratorNotFoundException
+	 *             The given generator name was not found in the configuration.
+	 * @throws ArtifactNotFoundException
+	 *             The given artifact was not found in the generator.
+	 * @throws ProjectNameNotDefinedException
+	 *             No project name is bound to the given combination.
+	 * @throws FolderNameNotDefinedException
+	 *             No folder name is bound to the given combination.
+	 * @throws ProjectNotFoundException
+	 *             The project name based on the selection is unknown.
+	 * @throws FolderNotFoundException
+	 *             The folder in the project based on the selection is unknown.
+	 */
+	public final Folder findTargetFolder(final String generatorName,
+			final String artifactName) throws ProjectNameNotDefinedException,
+			ArtifactNotFoundException, FolderNameNotDefinedException,
+			GeneratorNotFoundException, ProjectNotFoundException,
+			FolderNotFoundException {
+
+		return findTargetFolder(generatorName, artifactName, null);
+
+	}
+
+	/**
 	 * Returns a target directory for a given combination of generator name,
 	 * artifact name and target sub path.
 	 * 

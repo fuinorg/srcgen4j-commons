@@ -117,6 +117,48 @@ public class ArtifactTest extends AbstractTest {
 		assertThat(target.getFolder()).isEqualTo("xyz");
 		
 	}
+
+	@Test
+	public void testFindTargetForNoTargetsDefined() {
+
+		// PREPARE
+		final Artifact testee = new Artifact("A", "B", "C");
+
+		// TEST & VERIFY
+		assertThat(testee.findTargetFor("whatever")).isNull();
+		
+	}
+
+	@Test
+	public void testFindTargetForArgumentNull() {
+
+		// PREPARE
+		final Artifact testee = new Artifact("A", "B", "C");
+
+		// TEST & VERIFY
+		assertThat(testee.findTargetFor(null)).isNull();
+		
+	}
+	
+	@Test
+	public void testFindTarget() {
+
+		// PREPARE
+		final Artifact testee = new Artifact("A", "B", "C");
+		final Target targetA = new Target("a", "b", "c").init(new HashMap<String, String>());
+		final Target targetB = new Target("d", "e", "f").init(new HashMap<String, String>());
+		final Target targetC = new Target("g", "h", "i").init(new HashMap<String, String>());
+		testee.addTarget(targetA);
+		testee.addTarget(targetB);
+		testee.addTarget(targetC);
+
+		// TEST & VERIFY
+		assertThat(testee.findTargetFor("a")).isSameAs(targetA);
+		assertThat(testee.findTargetFor("d")).isSameAs(targetB);
+		assertThat(testee.findTargetFor("g")).isSameAs(targetC);
+		
+	}
+	
 	
 	// CHECKSTYLE:ON
 	

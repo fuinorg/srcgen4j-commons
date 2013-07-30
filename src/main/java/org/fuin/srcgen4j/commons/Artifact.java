@@ -42,7 +42,7 @@ public class Artifact extends AbstractNamedTarget {
 
 	@XmlTransient
 	private Generator parent;
-	
+
 	/**
 	 * Default constructor.
 	 */
@@ -59,7 +59,7 @@ public class Artifact extends AbstractNamedTarget {
 	public Artifact(final String name) {
 		super(name, null, null);
 	}
-	
+
 	/**
 	 * Constructor with name, project and folder.
 	 * 
@@ -120,7 +120,7 @@ public class Artifact extends AbstractNamedTarget {
 		}
 		return getProject();
 	}
-	
+
 	/**
 	 * Returns the defined folder from this object or any of it's parents.
 	 * 
@@ -135,7 +135,7 @@ public class Artifact extends AbstractNamedTarget {
 		}
 		return getFolder();
 	}
-	
+
 	/**
 	 * Returns the parent of the object.
 	 * 
@@ -148,21 +148,27 @@ public class Artifact extends AbstractNamedTarget {
 	/**
 	 * Sets the parent of the object.
 	 * 
-	 * @param parent Generator.
+	 * @param parent
+	 *            Generator.
 	 */
 	public final void setParent(final Generator parent) {
 		this.parent = parent;
 	}
-	
+
 	/**
-	 * Returns the first target that matched the given path based on the defined patterns. 
+	 * Returns the first target that matched the given path based on the defined
+	 * patterns. Returns null if the argument is <code>null</code>.
 	 * 
-	 * @param targetPath Path to find.
+	 * @param targetPath
+	 *            Path to find or <code>null</code>.
 	 * 
 	 * @return Target or <code>null</code>.
 	 */
 	public final Target findTargetFor(final String targetPath) {
 		if (targets == null) {
+			return null;
+		}
+		if (targetPath == null) {
 			return null;
 		}
 		for (final Target target : targets) {
@@ -172,21 +178,25 @@ public class Artifact extends AbstractNamedTarget {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Called when the object is deserialized with JAXB. 
+	 * Called when the object is deserialized with JAXB.
 	 * 
-	 * @param unmarshaller Unmarshaller.
-	 * @param parent Parent object.
+	 * @param unmarshaller
+	 *            Unmarshaller.
+	 * @param parent
+	 *            Parent object.
 	 */
-	final void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
+	final void afterUnmarshal(final Unmarshaller unmarshaller,
+			final Object parent) {
 		this.parent = (Generator) parent;
 	}
 
 	/**
 	 * Replaces all variables in all configuration objects.
 	 * 
-	 * @param vars Variables to use.
+	 * @param vars
+	 *            Variables to use.
 	 */
 	public final void init(final Map<String, String> vars) {
 		setName(replaceVars(getName(), vars));

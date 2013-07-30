@@ -51,7 +51,6 @@ public class Folder extends AbstractElement {
 
 	@XmlTransient
 	private Project parent;
-	
 
 	/**
 	 * Default constructor.
@@ -70,7 +69,7 @@ public class Folder extends AbstractElement {
 		super();
 		this.name = name;
 	}
-	
+
 	/**
 	 * Constructor with name and path.
 	 * 
@@ -237,22 +236,36 @@ public class Folder extends AbstractElement {
 	/**
 	 * Sets the parent for the folder.
 	 * 
-	 * @param parent Parent or <code>null</code>.
+	 * @param parent
+	 *            Parent or <code>null</code>.
 	 */
 	public final void setParent(final Project parent) {
 		this.parent = parent;
 	}
-	
+
 	/**
 	 * Replaces all variables in all configuration objects.
 	 * 
-	 * @param vars Variables to use.
+	 * @param vars
+	 *            Variables to use.
 	 */
 	public final void init(final Map<String, String> vars) {
 		name = replaceVars(name, vars);
 		path = replaceVars(path, vars);
-	}	
-	
+	}
+
+	/**
+	 * Returns the full path from project and folder.
+	 * 
+	 * @return Path.
+	 */
+	public final String getDirectory() {
+		if (parent == null) {
+			return null;
+		}
+		return parent.getPath() + "/" + getPath();
+	}
+
 	// CHECKSTYLE:OFF Generated code
 	@Override
 	public int hashCode() {

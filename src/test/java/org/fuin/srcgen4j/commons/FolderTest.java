@@ -106,6 +106,21 @@ public class FolderTest extends AbstractTest {
 		assertThat(testee.getPath()).isEqualTo("PATHB");
 		
 	}
+
+	@Test
+	public final void testGetDirectory() {
+		
+		// PREPARE
+		final Project project = new Project("PRJ", "a/b");
+		final Folder testee = new Folder("FOL", "c/d");
+		testee.setParent(project);
+		
+		// TEST
+		final String dir = testee.getDirectory();
+		
+		// VERIFY
+		assertThat(dir).isEqualTo("a/b/c/d");
+	}
 	
 	// CHECKSTYLE:ON
 	
