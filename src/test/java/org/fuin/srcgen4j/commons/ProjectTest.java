@@ -36,21 +36,22 @@ import com.openpojo.validation.PojoValidator;
 public class ProjectTest extends AbstractTest {
 
 	// CHECKSTYLE:OFF
-	
+
 	@Test
 	public final void testPojoStructureAndBehavior() {
-		
+
 		final PojoClass pc = PojoClassFactory.getPojoClass(Project.class);
 		final PojoValidator pv = createPojoValidator();
 		pv.runValidation(pc);
-		
+
 	}
 
 	@Test
 	public final void testMarshal() throws Exception {
 
 		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Project.class, Folder.class);
+		final JAXBContext jaxbContext = JAXBContext.newInstance(Project.class,
+				Folder.class);
 		final Project testee = new Project("abc", "def");
 		testee.setMaven(true);
 		testee.addFolder(new Folder("NAME", "PATH"));
@@ -59,7 +60,10 @@ public class ProjectTest extends AbstractTest {
 		final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
 		// VERIFY
-		assertThat(result).isEqualTo(XML + "<project name=\"abc\" path=\"def\" maven=\"true\"><folder name=\"NAME\" path=\"PATH\"/></project>");
+		assertThat(result)
+				.isEqualTo(
+						XML
+								+ "<project name=\"abc\" path=\"def\" maven=\"true\"><folder name=\"NAME\" path=\"PATH\"/></project>");
 
 	}
 
@@ -67,12 +71,13 @@ public class ProjectTest extends AbstractTest {
 	public final void testUnmarshal() throws Exception {
 
 		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Project.class, Folder.class);
+		final JAXBContext jaxbContext = JAXBContext.newInstance(Project.class,
+				Folder.class);
 
 		// TEST
-		final Project testee = new JaxbHelper().create(
-				"<project name=\"abc\" path=\"def\" maven=\"true\"><folder name=\"NAME\" path=\"PATH\"/></project>",
-				jaxbContext);
+		final Project testee = new JaxbHelper()
+				.create("<project name=\"abc\" path=\"def\" maven=\"true\"><folder name=\"NAME\" path=\"PATH\"/></project>",
+						jaxbContext);
 
 		// VERIFY
 		assertThat(testee).isNotNull();
@@ -88,29 +93,69 @@ public class ProjectTest extends AbstractTest {
 
 	@Test
 	public final void testInit() {
-		
+
 		// PREPARE
 		final Project testee = new Project("A${x}", "${y}B");
 		testee.addFolder(new Folder("${a}name", "folder${b}"));
-		
+
 		final Map<String, String> vars = new HashMap<String, String>();
 		vars.put("x", "NAME");
 		vars.put("y", "PATH");
 		vars.put("a", "A");
 		vars.put("b", "B");
-		
+
 		// TEST
 		testee.init(vars);
-		
+
 		// VERIFY
 		assertThat(testee.getName()).isEqualTo("ANAME");
 		assertThat(testee.getPath()).isEqualTo("PATHB");
 		final Folder folder = testee.getFolders().get(0);
 		assertThat(folder.getName()).isEqualTo("Aname");
 		assertThat(folder.getPath()).isEqualTo("folderB");
+
+	}
+
+	@Test
+	public final void testInitMaven() {
+
+		// PREPARE
+		final Project testee = new Project("A", "B");
+
+		// TEST
+		testee.init(new HashMap<String, String>());
+
+		// VERIFY
+		assertThat(testee.getFolders()).contains(new Folder("mainJava"),
+				new Folder("mainRes"), new Folder("genMainJava"),
+				new Folder("genMainRes"), new Folder("testJava"),
+				new Folder("testRes"), new Folder("genTestJava"),
+				new Folder("genTestRes"));
+
+	}
+
+	@Test
+	public final void testInitMavenOverrideDefault() {
+
+		// PREPARE
+		final Project testee = new Project("A", "B");
+		final Folder folder = new Folder("mainJava", "different");
+		testee.addFolder(folder);
 		
+		// TEST
+		testee.init(new HashMap<String, String>());
+
+		// VERIFY
+		assertThat(testee.getFolders()).contains(folder,
+				new Folder("mainRes"), new Folder("genMainJava"),
+				new Folder("genMainRes"), new Folder("testJava"),
+				new Folder("testRes"), new Folder("genTestJava"),
+				new Folder("genTestRes"));
+		final int idx = testee.getFolders().indexOf(folder);
+		assertThat(testee.getFolders().get(idx)).isSameAs(folder);
+
 	}
 	
 	// CHECKSTYLE:ON
-	
+
 }

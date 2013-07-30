@@ -85,6 +85,33 @@ public class Folder extends AbstractElement {
 	}
 
 	/**
+	 * Constructor all data.
+	 * 
+	 * @param parent
+	 *            Parent folder.
+	 * @param name
+	 *            Name to set.
+	 * @param path
+	 *            path to set.
+	 * @param create
+	 *            Create directories (TRUE) or not (NULL or FALSE).
+	 * @param override
+	 *            Override files (TRUE) or not (NULL or FALSE).
+	 * @param clean
+	 *            Clean directory (TRUE) or not (NULL or FALSE).
+	 */
+	Folder(final Project parent, final String name, final String path,
+			final boolean create, final boolean override, final boolean clean) {
+		super();
+		this.parent = parent;
+		this.name = name;
+		this.path = path;
+		this.create = create;
+		this.override = override;
+		this.clean = clean;
+	}
+
+	/**
 	 * Returns the name.
 	 * 
 	 * @return Current name.

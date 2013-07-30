@@ -255,6 +255,26 @@ public class Project extends AbstractElement {
 				folder.init(vars);
 			}
 		}
+		if (isMaven()) {			
+			addIfNotExists(new Folder(this, "mainJava", "src/main/java", false, false, false));
+			addIfNotExists(new Folder(this, "mainRes", "src/main/resources", false, false, false));
+			addIfNotExists(new Folder(this, "genMainJava", "src-gen/main/java", true, true, true));
+			addIfNotExists(new Folder(this, "genMainRes", "src-gen/main/resources", true, true, true));
+			addIfNotExists(new Folder(this, "testJava", "src/test/java", false, false, false));
+			addIfNotExists(new Folder(this, "testRes", "src/test/resources", false, false, false));
+			addIfNotExists(new Folder(this, "genTestJava", "src-gen/test/java", true, true, true));
+			addIfNotExists(new Folder(this, "genTestRes", "src-gen/test/resources", true, true, true));
+		}
+	}
+
+	private void addIfNotExists(final Folder folder) {
+		if (folders == null) {
+			folders = new ArrayList<Folder>();
+		}
+		final int idx = folders.indexOf(folder);
+		if (idx < 0) {
+			folders.add(folder);
+		}		
 	}
 	
 }
