@@ -19,8 +19,8 @@ package org.fuin.srcgen4j.commons;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.MapAssert.entry;
+import static org.junit.Assert.fail;
 
-import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -30,7 +30,6 @@ import java.util.Map;
 import javax.xml.bind.JAXBContext;
 
 import org.junit.Test;
-import static org.junit.Assert.fail;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -111,8 +110,8 @@ public class GeneratorConfigTest extends AbstractTest {
 					new Folder("genTestRes"));
 
 			assertThat(testee.getGenerators()).isNotNull();
-			assertThat(testee.getGenerators()).hasSize(1);
-			final Generator gen = testee.getGenerators().get(0);
+			assertThat(testee.getGenerators().getList()).hasSize(1);
+			final Generator gen = testee.getGenerators().getList().get(0);
 			assertThat(gen.getName()).isEqualTo("gen1");
 			assertThat(gen.getProject()).isEqualTo("example");
 			assertThat(gen.getFolder()).isEqualTo("genMainJava");
@@ -136,7 +135,7 @@ public class GeneratorConfigTest extends AbstractTest {
 	}
 
 	@Test
-	public final void tesInit() {
+	public final void testInit() {
 
 		// PREPARE
 		final GeneratorConfig testee = new GeneratorConfig();
@@ -155,6 +154,8 @@ public class GeneratorConfigTest extends AbstractTest {
 		vars.add(new Variable("target.pattern", "11"));
 		vars.add(new Variable("target.project", "12"));
 		vars.add(new Variable("target.folder", "13"));
+		vars.add(new Variable("generators.project", "14"));
+		vars.add(new Variable("generators.folder", "15"));
 
 		final List<Project> projects = new ArrayList<Project>();
 		final Project project = new Project("${project.name}",
@@ -162,16 +163,19 @@ public class GeneratorConfigTest extends AbstractTest {
 		projects.add(project);
 		project.addFolder(new Folder("${folder.name}", "${folder.path}"));
 
-		final List<Generator> generators = new ArrayList<Generator>();
+		final List<Generator> genList = new ArrayList<Generator>();
 		final Generator generator = new Generator("${generator.name}",
 				"${generator.project}", "${generator.folder}");
-		generators.add(generator);
+		genList.add(generator);
 		final Artifact artifact = new Artifact("${artifact.name}",
 				"${artifact.project}", "${artifact.folder}");
 		generator.addArtifact(artifact);
 		artifact.addTarget(new Target("${target.pattern}", "${target.project}",
 				"${target.folder}"));
 
+		final Generators generators = new Generators("${generators.project}", "${generators.folder}");
+		generators.setList(genList);
+		
 		testee.setVariables(vars);
 		testee.setProjects(projects);
 		testee.setGenerators(generators);
@@ -188,7 +192,13 @@ public class GeneratorConfigTest extends AbstractTest {
 		assertThat(resultFolder.getName()).isEqualTo("6");
 		assertThat(resultFolder.getPath()).isEqualTo("7");
 
-		final Generator resultGenerator = testee.getGenerators().get(0);
+		assertThat(testee.getGenerators()).isNotNull();
+		assertThat(testee.getGenerators().getProject()).isEqualTo("14");
+		assertThat(testee.getGenerators().getFolder()).isEqualTo("15");
+		assertThat(testee.getGenerators().getList()).isNotNull();
+		assertThat(testee.getGenerators().getList()).hasSize(1);
+		
+		final Generator resultGenerator = testee.getGenerators().getList().get(0);
 		assertThat(resultGenerator.getName()).isEqualTo("3");
 		assertThat(resultGenerator.getProject()).isEqualTo("4");
 		assertThat(resultGenerator.getFolder()).isEqualTo("5");
@@ -200,6 +210,23 @@ public class GeneratorConfigTest extends AbstractTest {
 		assertThat(resultTarget.getPattern()).isEqualTo("11");
 		assertThat(resultTarget.getProject()).isEqualTo("12");
 		assertThat(resultTarget.getFolder()).isEqualTo("13");
+		
+
+		
+	}
+
+	@Test
+	public final void testInitNullContent() {
+
+		// PREPARE
+		final GeneratorConfig testee = new GeneratorConfig();
+
+		// TEST
+		testee.init();
+
+		// VERIFY
+		// Test makes sure the "init()" does not throw NullPointerException if
+		// nothing is set
 
 	}
 
@@ -209,13 +236,15 @@ public class GeneratorConfigTest extends AbstractTest {
 		// PREPARE
 		final GeneratorConfig testee = load("findTarget.xml");
 		testee.init();
-		
+
 		// TEST
-		final Folder folder = testee.findTargetFolder("gen1", "arti1", "a/b/c/MyClass.java");
+		final Folder folder = testee.findTargetFolder("gen1", "arti1",
+				"a/b/c/MyClass.java");
 
 		// VERIFY
 		assertThat(folder.getPath()).isEqualTo("src/main/java");
-		assertThat(folder.getParent().getPath()).isEqualTo("/var/tmp/myproject");
+		assertThat(folder.getParent().getPath())
+				.isEqualTo("/var/tmp/myproject");
 
 	}
 
@@ -225,7 +254,7 @@ public class GeneratorConfigTest extends AbstractTest {
 		// PREPARE
 		final GeneratorConfig testee = load("findTarget.xml");
 		testee.init();
-		
+
 		// TEST
 		try {
 			testee.findTargetFolder("gen1", "arti1", "Unknown.java");
@@ -235,6 +264,31 @@ public class GeneratorConfigTest extends AbstractTest {
 		}
 
 	}
+
+	@Test
+	public void testCreateMavenStyleSingleProject() {
+		
+		// PREPARE
+		final String projectName = "NAME";
+		
+		// TEST
+		GeneratorConfig config = GeneratorConfig.createMavenStyleSingleProject(projectName);
+		
+		// VERIFY
+		assertThat(config.getProjects()).hasSize(1);
+		final Project project = config.getProjects().get(0);
+		assertThat(project.getName()).isEqualTo(projectName);
+		assertThat(project.getPath()).isEqualTo(".");
+		assertThat(project.isMaven()).isTrue();
+		assertThat(project.getFolders()).hasSize(8);
+		assertThat(project.getFolders()).contains(new Folder("mainJava"),
+				new Folder("mainRes"), new Folder("genMainJava"),
+				new Folder("genMainRes"), new Folder("testJava"),
+				new Folder("testRes"), new Folder("genTestJava"),
+				new Folder("genTestRes"));
+		
+	}
+	
 	
 	private GeneratorConfig load(final String resourceName) throws Exception {
 		final JAXBContext jaxbContext = JAXBContext
@@ -247,7 +301,7 @@ public class GeneratorConfigTest extends AbstractTest {
 			reader.close();
 		}
 	}
-	
+
 	// CHECKSTYLE:ON
 
 }

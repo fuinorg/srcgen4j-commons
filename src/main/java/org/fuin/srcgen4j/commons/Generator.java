@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -41,7 +40,7 @@ public class Generator extends AbstractNamedTarget {
 	private List<Artifact> artifacts;
 
 	@XmlTransient
-	private GeneratorConfig parent;
+	private Generators parent;
 	
 	/**
 	 * Default constructor.
@@ -112,7 +111,7 @@ public class Generator extends AbstractNamedTarget {
 	 * 
 	 * @return GeneratorConfig.
 	 */
-	public final GeneratorConfig getParent() {
+	public final Generators getParent() {
 		return parent;
 	}
 
@@ -121,34 +120,61 @@ public class Generator extends AbstractNamedTarget {
 	 * 
 	 * @param parent GeneratorConfig.
 	 */
-	public final void setParent(final GeneratorConfig parent) {
+	public final void setParent(final Generators parent) {
 		this.parent = parent;
 	}
 	
 	/**
-	 * Called when the object is deserialized with JAXB. 
+	 * Returns the defined project from this object or any of it's parents.
 	 * 
-	 * @param unmarshaller Unmarshaller.
-	 * @param parent Parent object.
+	 * @return Project or <code>null</code>.
 	 */
-	final void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
-		this.parent = (GeneratorConfig) parent;
+	public final String getDefProject() {
+		if (getProject() == null) {
+			if (parent == null) {
+				return null;
+			}
+			return parent.getProject();
+		}
+		return getProject();
 	}
 
 	/**
-	 * Replaces all variables in all configuration objects.
+	 * Returns the defined folder from this object or any of it's parents.
 	 * 
-	 * @param vars Variables to use.
+	 * @return Folder or <code>null</code>.
 	 */
-	public final void init(final Map<String, String> vars) {
+	public final String getDefFolder() {
+		if (getFolder() == null) {
+			if (parent == null) {
+				return null;
+			}
+			return parent.getFolder();
+		}
+		return getFolder();
+	}
+	
+	/**
+	 * Initializes this object and it's childs.
+	 * 
+	 * @param parent
+	 *            Parent.
+	 * @param vars
+	 *            Variables to use.
+	 * 
+     * @return This instance.
+	 */
+	public final Generator init(final Generators parent, final Map<String, String> vars) {
+		this.parent = parent;
 		setName(replaceVars(getName(), vars));
 		setProject(replaceVars(getProject(), vars));
 		setFolder(replaceVars(getFolder(), vars));
 		if (artifacts != null) {
 			for (final Artifact artifact : artifacts) {
-				artifact.init(vars);
+				artifact.init(this, vars);
 			}
 		}
-	}	
-	
+		return this;
+	}
+
 }

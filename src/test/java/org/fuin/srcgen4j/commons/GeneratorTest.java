@@ -90,6 +90,7 @@ public class GeneratorTest extends AbstractTest {
 	public final void testInit() {
 		
 		// PREPARE
+		final Generators parent = new Generators();
 		final Generator testee = new Generator("A${a}A", "${b}2B", "C3${c}");
 		testee.addArtifact(new Artifact("A ${x}", "${y}B", "a${z}c"));
 		
@@ -102,9 +103,10 @@ public class GeneratorTest extends AbstractTest {
 		vars.put("z", "b");
 		
 		// TEST
-		testee.init(vars);
+		testee.init(parent, vars);
 		
 		// VERIFY
+		assertThat(testee.getParent()).isSameAs(parent);
 		assertThat(testee.getName()).isEqualTo("A1A");
 		assertThat(testee.getProject()).isEqualTo("B2B");
 		assertThat(testee.getFolder()).isEqualTo("C3C");
@@ -112,6 +114,43 @@ public class GeneratorTest extends AbstractTest {
 		assertThat(artifact.getName()).isEqualTo("A NAME");
 		assertThat(artifact.getProject()).isEqualTo("PRJB");
 		assertThat(artifact.getFolder()).isEqualTo("abc");
+		
+	}
+
+	@Test
+	public final void testGetDefProjectAndFolder() {
+
+		// PREPARE
+		final GeneratorConfig config = new GeneratorConfig();
+		final Generators generators = new Generators();
+		final Generator testee = new Generator();
+		
+		config.setGenerators(generators);
+		generators.addGenerator(testee);
+		
+		config.init();
+		
+		// TEST & VERIFY
+		
+		// No value set in hierarchy
+		assertThat(testee.getDefProject()).isNull();
+		assertThat(testee.getDefFolder()).isNull();
+
+		// Generator level
+		testee.setProject("C");
+		testee.setFolder("D");
+		assertThat(testee.getDefProject()).isEqualTo("C");
+		assertThat(testee.getDefFolder()).isEqualTo("D");
+		testee.setProject(null);
+		testee.setFolder(null);
+		
+		// Generators level
+		generators.setProject("E");
+		generators.setFolder("F");
+		assertThat(testee.getDefProject()).isEqualTo("E");
+		assertThat(testee.getDefFolder()).isEqualTo("F");
+		generators.setProject(null);
+		generators.setFolder(null);
 		
 	}
 	

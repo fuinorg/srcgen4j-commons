@@ -17,6 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +45,8 @@ public class GeneratorConfig {
 	@XmlElement(name = "project")
 	private List<Project> projects;
 
-	@XmlElementWrapper(name = "generators")
-	@XmlElement(name = "generator")
-	private List<Generator> generators;
+	@XmlElement(name = "generators")
+	private Generators generators;
 
 	/**
 	 * Returns a list of variables.
@@ -103,44 +103,49 @@ public class GeneratorConfig {
 	}
 
 	/**
-	 * Returns a list of generators.
+	 * Returns a set of generators.
 	 * 
 	 * @return Generators or NULL.
 	 */
-	public final List<Generator> getGenerators() {
+	public final Generators getGenerators() {
 		return generators;
 	}
 
 	/**
-	 * Sets a list of generators.
+	 * Sets a the of generators.
 	 * 
 	 * @param generators
 	 *            Generators or NULL.
 	 */
-	public final void setGenerators(final List<Generator> generators) {
+	public final void setGenerators(final Generators generators) {
 		this.generators = generators;
 	}
 
 	/**
-	 * Replaces all variables in all configuration objects.<br>
+	 * Initializes this object and it's childs.<br>
 	 * <br>
-	 * <b>CAUTION:</b> Elements contained in this configuration will be changed.
-	 * If you serialize the object after calling this method the current state
-	 * <b>without</b> previously defined variables will be saved.
+	 * <b>CAUTION:</b> Elements contained in this configuration may be changed.
+	 * If you serialize the object after calling this method the new state
+	 * will be saved.
+	 * 
+	 * @return This instance.
 	 */
-	public final void init() {
-		if (variables != null) {
-			if (projects != null) {
-				for (final Project project : projects) {
-					project.init(getVarMap());
-				}
-			}
-			if (generators != null) {
-				for (final Generator generator : generators) {
-					generator.init(getVarMap());
-				}
+	public final GeneratorConfig init() {
+		final Map<String, String> varMap;
+		if (variables == null) {
+			varMap = new HashMap<String, String>();
+		} else {
+			varMap = getVarMap();
+		}
+		if (projects != null) {
+			for (final Project project : projects) {
+				project.init(this, varMap);
 			}
 		}
+		if (generators != null) {
+			generators.init(this, varMap);
+		}
+		return this;
 	}
 
 	/**
@@ -209,13 +214,9 @@ public class GeneratorConfig {
 			FolderNameNotDefinedException, GeneratorNotFoundException,
 			ProjectNotFoundException, FolderNotFoundException {
 
-		int idx = generators.indexOf(new Generator(generatorName));
-		if (idx < 0) {
-			throw new GeneratorNotFoundException(generatorName);
-		}
-		final Generator generator = generators.get(idx);
+		final Generator generator = generators.findByName(generatorName);
 
-		idx = generator.getArtifacts().indexOf(new Artifact(artifactName));
+		int idx = generator.getArtifacts().indexOf(new Artifact(artifactName));
 		if (idx < 0) {
 			throw new ArtifactNotFoundException(generatorName, artifactName);
 		}
@@ -258,6 +259,27 @@ public class GeneratorConfig {
 		}
 		return project.getFolders().get(idx);
 
+	}
+
+	/**
+	 * Creates a new configuration with a single project and a Maven directory
+	 * structure.
+	 * 
+	 * @param projectName
+	 *            Name of the one and only project.
+	 * 
+	 * @return New initialized configuration instance.
+	 */
+	public static GeneratorConfig createMavenStyleSingleProject(
+			final String projectName) {
+		final GeneratorConfig config = new GeneratorConfig();
+		final List<Project> projects = new ArrayList<Project>();
+		final Project project = new Project(projectName, ".");
+		project.setMaven(true);
+		projects.add(project);
+		config.setProjects(projects);
+		config.init();
+		return config;
 	}
 
 }

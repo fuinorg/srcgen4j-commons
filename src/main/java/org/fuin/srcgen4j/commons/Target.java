@@ -20,7 +20,6 @@ package org.fuin.srcgen4j.commons;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -136,27 +135,25 @@ public class Target extends AbstractTarget {
 	}
 	
 	/**
-	 * Called when the object is deserialized with JAXB. 
+	 * Initializes this object and it's childs.
 	 * 
-	 * @param unmarshaller Unmarshaller.
-	 * @param parent Parent object.
+	 * @param parent
+	 *            Parent.
+	 * @param vars
+	 *            Variables to use.
+	 * 
+     * @return This instance.
 	 */
-	final void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
-		this.parent = (Artifact) parent;
-	}
-
-	/**
-	 * Replaces all variables in all configuration objects.
-	 * 
-	 * @param vars Variables to use.
-	 * 
-	 * @return This instance.
-	 */
-	public final Target init(final Map<String, String> vars) {
+	public final Target init(final Artifact parent, final Map<String, String> vars) {
+		this.parent = parent;
 		pattern = replaceVars(pattern, vars);
 		setProject(replaceVars(getProject(), vars));
 		setFolder(replaceVars(getFolder(), vars));
-		regExpr = Pattern.compile(pattern);
+		if (pattern == null) {
+			regExpr = null;
+		} else {
+			regExpr = Pattern.compile(pattern);
+		}
 		return this;
 	}
 
@@ -168,6 +165,9 @@ public class Target extends AbstractTarget {
 	 * @return If the target matches TRUE, else FALSE.
 	 */
 	public final boolean matches(final String targetPath) {
+		if (regExpr == null) {
+			return true;
+		}
 		return regExpr.matcher(targetPath).find();
 	}
 	

@@ -104,10 +104,13 @@ public class ArtifactTest extends AbstractTest {
 		vars.put("b", "p");
 		vars.put("c", "z");
 		
+		final Generator parent = new Generator();
+		
 		// TEST
-		testee.init(vars);
+		testee.init(parent, vars);
 		
 		// VERIFY
+		assertThat(testee.getParent()).isSameAs(parent);
 		assertThat(testee.getName()).isEqualTo("A NAME");
 		assertThat(testee.getProject()).isEqualTo("PRJB");
 		assertThat(testee.getFolder()).isEqualTo("abc");
@@ -144,14 +147,17 @@ public class ArtifactTest extends AbstractTest {
 	public void testFindTarget() {
 
 		// PREPARE
+		final Generator parent = new Generator();
 		final Artifact testee = new Artifact("A", "B", "C");
-		final Target targetA = new Target("a", "b", "c").init(new HashMap<String, String>());
-		final Target targetB = new Target("d", "e", "f").init(new HashMap<String, String>());
-		final Target targetC = new Target("g", "h", "i").init(new HashMap<String, String>());
+		final Target targetA = new Target("a", "b", "c");
+		final Target targetB = new Target("d", "e", "f");
+		final Target targetC = new Target("g", "h", "i");
 		testee.addTarget(targetA);
 		testee.addTarget(targetB);
 		testee.addTarget(targetC);
+		testee.init(parent, new HashMap<String, String>());
 
+		
 		// TEST & VERIFY
 		assertThat(testee.findTargetFor("a")).isSameAs(targetA);
 		assertThat(testee.findTargetFor("d")).isSameAs(targetB);
@@ -159,6 +165,53 @@ public class ArtifactTest extends AbstractTest {
 		
 	}
 	
+
+	@Test
+	public final void testGetDefProjectAndFolder() {
+
+		// PREPARE
+		final GeneratorConfig config = new GeneratorConfig();
+		final Generators generators = new Generators();
+		final Generator generator = new Generator();
+		final Artifact testee = new Artifact();
+		
+		config.setGenerators(generators);
+		generators.addGenerator(generator);
+		generator.addArtifact(testee);
+		
+		config.init();
+		
+		// TEST & VERIFY
+		
+		// No value set in hierarchy
+		assertThat(testee.getDefProject()).isNull();
+		assertThat(testee.getDefFolder()).isNull();
+
+		// Artifact level
+		testee.setProject("A");
+		testee.setFolder("B");
+		assertThat(testee.getDefProject()).isEqualTo("A");
+		assertThat(testee.getDefFolder()).isEqualTo("B");
+		testee.setProject(null);
+		testee.setFolder(null);
+		
+		// Generator level
+		generator.setProject("C");
+		generator.setFolder("D");
+		assertThat(testee.getDefProject()).isEqualTo("C");
+		assertThat(testee.getDefFolder()).isEqualTo("D");
+		generator.setProject(null);
+		generator.setFolder(null);
+		
+		// Generators level
+		generators.setProject("E");
+		generators.setFolder("F");
+		assertThat(testee.getDefProject()).isEqualTo("E");
+		assertThat(testee.getDefFolder()).isEqualTo("F");
+		generators.setProject(null);
+		generators.setFolder(null);
+		
+	}
 	
 	// CHECKSTYLE:ON
 	

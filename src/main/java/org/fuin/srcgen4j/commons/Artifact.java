@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -116,7 +115,7 @@ public class Artifact extends AbstractNamedTarget {
 			if (parent == null) {
 				return null;
 			}
-			return parent.getProject();
+			return parent.getDefProject();
 		}
 		return getProject();
 	}
@@ -131,7 +130,7 @@ public class Artifact extends AbstractNamedTarget {
 			if (parent == null) {
 				return null;
 			}
-			return parent.getFolder();
+			return parent.getDefFolder();
 		}
 		return getFolder();
 	}
@@ -180,33 +179,26 @@ public class Artifact extends AbstractNamedTarget {
 	}
 
 	/**
-	 * Called when the object is deserialized with JAXB.
+	 * Initializes this object and it's childs.
 	 * 
-	 * @param unmarshaller
-	 *            Unmarshaller.
 	 * @param parent
-	 *            Parent object.
-	 */
-	final void afterUnmarshal(final Unmarshaller unmarshaller,
-			final Object parent) {
-		this.parent = (Generator) parent;
-	}
-
-	/**
-	 * Replaces all variables in all configuration objects.
-	 * 
+	 *            Parent.
 	 * @param vars
 	 *            Variables to use.
+	 * 
+     * @return This instance.
 	 */
-	public final void init(final Map<String, String> vars) {
+	public final Artifact init(final Generator parent, final Map<String, String> vars) {
+		this.parent = parent;
 		setName(replaceVars(getName(), vars));
 		setProject(replaceVars(getProject(), vars));
 		setFolder(replaceVars(getFolder(), vars));
 		if (targets != null) {
 			for (final Target target : targets) {
-				target.init(vars);
+				target.init(this, vars);
 			}
 		}
+		return this;
 	}
 
 }

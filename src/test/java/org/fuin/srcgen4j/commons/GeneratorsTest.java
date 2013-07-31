@@ -31,38 +31,34 @@ import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
 
 /**
- * Tests for {@link Folder}.
+ * Tests for {@link Generators}.
  */
-public class FolderTest extends AbstractTest {
+public class GeneratorsTest extends AbstractTest {
 
 	// CHECKSTYLE:OFF
 	
 	@Test
 	public final void testPojoStructureAndBehavior() {
-
-		final PojoClass pc = PojoClassFactory.getPojoClass(Folder.class);
+		
+		final PojoClass pc = PojoClassFactory.getPojoClass(Generators.class);
 		final PojoValidator pv = createPojoValidator();
 		pv.runValidation(pc);
-
+		
 	}
 
 	@Test
 	public final void testMarshal() throws Exception {
 
 		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Folder.class);
-		final Folder testee = new Folder("abc", "def");
-		testee.setCreate(true);
-		testee.setClean(true);
-		testee.setOverride(true);
+		final JAXBContext jaxbContext = JAXBContext.newInstance(Generators.class);
+		final Generators testee = new Generators("abc", "def");
+		testee.addGenerator(new Generator("NAME", "PROJECT", "FOLDER"));
 
 		// TEST
 		final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
 		// VERIFY
-		assertThat(result).isEqualTo(
-				XML + "<folder name=\"abc\" path=\"def\" create=\"true\""
-						+ " override=\"true\" clean=\"true\"/>");
+		assertThat(result).isEqualTo(XML + "<generators project=\"abc\" folder=\"def\"><generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generators>");
 
 	}
 
@@ -70,21 +66,22 @@ public class FolderTest extends AbstractTest {
 	public final void testUnmarshal() throws Exception {
 
 		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Folder.class);
+		final JAXBContext jaxbContext = JAXBContext.newInstance(Generators.class);
 
 		// TEST
-		final Folder testee = new JaxbHelper().create(
-				"<folder name=\"abc\" path=\"def\" create=\"true\""
-						+ " override=\"true\" clean=\"true\"/>",
+		final Generators testee = new JaxbHelper().create(
+				"<generators project=\"abc\" folder=\"def\"><generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generators>",
 				jaxbContext);
 
 		// VERIFY
 		assertThat(testee).isNotNull();
-		assertThat(testee.getName()).isEqualTo("abc");
-		assertThat(testee.getPath()).isEqualTo("def");
-		assertThat(testee.isCreate()).isTrue();
-		assertThat(testee.isClean()).isTrue();
-		assertThat(testee.isOverride()).isTrue();
+		assertThat(testee.getProject()).isEqualTo("abc");
+		assertThat(testee.getFolder()).isEqualTo("def");
+		assertThat(testee.getList()).isNotNull();
+		assertThat(testee.getList()).hasSize(1);
+		assertThat(testee.getList().get(0).getName()).isEqualTo("NAME");
+		assertThat(testee.getList().get(0).getProject()).isEqualTo("PROJECT");
+		assertThat(testee.getList().get(0).getFolder()).isEqualTo("FOLDER");
 
 	}
 
@@ -92,38 +89,31 @@ public class FolderTest extends AbstractTest {
 	public final void testInit() {
 		
 		// PREPARE
-		final Project parent = new Project();
-		final Folder testee = new Folder("A${x}", "${y}B");
+		final GeneratorConfig parent = new GeneratorConfig();
+		final Generators testee = new Generators("A${a}A", "${b}2B");
+		testee.addGenerator(new Generator("A ${x}", "${y}B", "a${z}c"));
 		
 		final Map<String, String> vars = new HashMap<String, String>();
+		vars.put("a", "1");
+		vars.put("b", "B");
 		vars.put("x", "NAME");
-		vars.put("y", "PATH");
+		vars.put("y", "PRJ");
+		vars.put("z", "b");
 		
 		// TEST
 		testee.init(parent, vars);
 		
 		// VERIFY
 		assertThat(testee.getParent()).isSameAs(parent);
-		assertThat(testee.getName()).isEqualTo("ANAME");
-		assertThat(testee.getPath()).isEqualTo("PATHB");
+		assertThat(testee.getProject()).isEqualTo("A1A");
+		assertThat(testee.getFolder()).isEqualTo("B2B");
+		final Generator generator = testee.getList().get(0);
+		assertThat(generator.getName()).isEqualTo("A NAME");
+		assertThat(generator.getProject()).isEqualTo("PRJB");
+		assertThat(generator.getFolder()).isEqualTo("abc");
 		
 	}
 
-	@Test
-	public final void testGetDirectory() {
-		
-		// PREPARE
-		final Project project = new Project("PRJ", "a/b");
-		final Folder testee = new Folder("FOL", "c/d");
-		testee.setParent(project);
-		
-		// TEST
-		final String dir = testee.getDirectory();
-		
-		// VERIFY
-		assertThat(dir).isEqualTo("a/b/c/d");
-	}
-	
 	// CHECKSTYLE:ON
 	
 }

@@ -95,6 +95,7 @@ public class ProjectTest extends AbstractTest {
 	public final void testInit() {
 
 		// PREPARE
+		final GeneratorConfig parent = new GeneratorConfig();
 		final Project testee = new Project("A${x}", "${y}B");
 		testee.addFolder(new Folder("${a}name", "folder${b}"));
 
@@ -105,9 +106,10 @@ public class ProjectTest extends AbstractTest {
 		vars.put("b", "B");
 
 		// TEST
-		testee.init(vars);
+		testee.init(parent, vars);
 
 		// VERIFY
+		assertThat(testee.getParent()).isSameAs(parent);
 		assertThat(testee.getName()).isEqualTo("ANAME");
 		assertThat(testee.getPath()).isEqualTo("PATHB");
 		final Folder folder = testee.getFolders().get(0);
@@ -120,12 +122,14 @@ public class ProjectTest extends AbstractTest {
 	public final void testInitMaven() {
 
 		// PREPARE
+		final GeneratorConfig parent = new GeneratorConfig();
 		final Project testee = new Project("A", "B");
 
 		// TEST
-		testee.init(new HashMap<String, String>());
+		testee.init(parent, new HashMap<String, String>());
 
 		// VERIFY
+		assertThat(testee.getFolders()).hasSize(8);
 		assertThat(testee.getFolders()).contains(new Folder("mainJava"),
 				new Folder("mainRes"), new Folder("genMainJava"),
 				new Folder("genMainRes"), new Folder("testJava"),
@@ -138,12 +142,13 @@ public class ProjectTest extends AbstractTest {
 	public final void testInitMavenOverrideDefault() {
 
 		// PREPARE
+		final GeneratorConfig parent = new GeneratorConfig();
 		final Project testee = new Project("A", "B");
 		final Folder folder = new Folder("mainJava", "different");
 		testee.addFolder(folder);
 		
 		// TEST
-		testee.init(new HashMap<String, String>());
+		testee.init(parent, new HashMap<String, String>());
 
 		// VERIFY
 		assertThat(testee.getFolders()).contains(folder,

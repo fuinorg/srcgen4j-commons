@@ -271,14 +271,20 @@ public class Folder extends AbstractElement {
 	}
 
 	/**
-	 * Replaces all variables in all configuration objects.
+	 * Initializes this object and it's childs.
 	 * 
+	 * @param parent
+	 *            Parent.
 	 * @param vars
 	 *            Variables to use.
+	 * 
+     * @return This instance.
 	 */
-	public final void init(final Map<String, String> vars) {
+	public final Folder init(final Project parent, final Map<String, String> vars) {
+		this.parent = parent;
 		name = replaceVars(name, vars);
 		path = replaceVars(path, vars);
+		return this;
 	}
 
 	/**

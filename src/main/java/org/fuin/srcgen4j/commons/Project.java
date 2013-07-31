@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -232,27 +231,23 @@ public class Project extends AbstractElement {
 	}
 	
 	/**
-	 * Called when the object is deserialized with JAXB. 
+	 * Initializes this object and it's childs.
 	 * 
-	 * @param unmarshaller Unmarshaller.
-	 * @param parent Parent object.
-	 */
-	final void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
-		this.parent = (GeneratorConfig) parent;
-	}
-
-	/**
-	 * Replaces all variables in all configuration objects.
+	 * @param parent
+	 *            Parent.
+	 * @param vars
+	 *            Variables to use.
 	 * 
-	 * @param vars Variables to use.
+     * @return This instance.
 	 */
-	public final void init(final Map<String, String> vars) {
+	public final Project init(final GeneratorConfig parent, final Map<String, String> vars) {
+		this.parent = parent;
 		name = replaceVars(name, vars);
 		path = replaceVars(path, vars);
 		if (folders != null) {
 			for (final Folder folder : folders) {
 				folder.setParent(this);
-				folder.init(vars);
+				folder.init(this, vars);
 			}
 		}
 		if (isMaven()) {			
@@ -265,6 +260,7 @@ public class Project extends AbstractElement {
 			addIfNotExists(new Folder(this, "genTestJava", "src-gen/test/java", true, true, true));
 			addIfNotExists(new Folder(this, "genTestRes", "src-gen/test/resources", true, true, true));
 		}
+		return this;
 	}
 
 	private void addIfNotExists(final Folder folder) {
