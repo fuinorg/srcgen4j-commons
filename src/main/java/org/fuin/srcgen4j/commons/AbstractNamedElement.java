@@ -17,54 +17,42 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Represents a variable definition (name and value).
+ * Base class with a name that is used as unique identifier. Equals and hash
+ * code are also based on the name.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "variable")
-@XmlType(propOrder = { "value", "name" })
-public class Variable {
+@XmlType(propOrder = { "name" })
+public abstract class AbstractNamedElement extends AbstractElement {
 
     @XmlAttribute
     private String name;
 
-    @XmlAttribute
-    private String value;
-
-    @XmlTransient
-    private SrcGen4JConfig parent;
-
     /**
      * Default constructor.
      */
-    public Variable() {
+    public AbstractNamedElement() {
         super();
     }
 
     /**
-     * Constructor with name and value.
+     * Constructor with name, project and folder.
      * 
      * @param name
      *            Name to set.
-     * @param value
-     *            Value to set.
      */
-    public Variable(final String name, final String value) {
+    public AbstractNamedElement(final String name) {
         super();
         this.name = name;
-        this.value = value;
     }
 
     /**
-     * Returns the name of the variable.
+     * Returns the name.
      * 
      * @return Current name.
      */
@@ -73,51 +61,13 @@ public class Variable {
     }
 
     /**
-     * Sets the name of the variable.
+     * Sets the name.
      * 
      * @param name
      *            Name to set.
      */
     public final void setName(final String name) {
         this.name = name;
-    }
-
-    /**
-     * Returns the value of the variable.
-     * 
-     * @return Current value.
-     */
-    public final String getValue() {
-        return value;
-    }
-
-    /**
-     * Sets the value of the variable.
-     * 
-     * @param value
-     *            Value to set.
-     */
-    public final void setValue(final String value) {
-        this.value = value;
-    }
-
-    /**
-     * Returns the parent of the variable.
-     * 
-     * @return Generator configuration.
-     */
-    public final SrcGen4JConfig getParent() {
-        return parent;
-    }
-
-    /**
-     * Sets the parent of the variable.
-     * 
-     * @param parent
-     *            Generator configuration.
-     */
-    public final void setParent(final SrcGen4JConfig parent) {
-        this.parent = parent;
     }
 
     // CHECKSTYLE:OFF Generated code
@@ -130,14 +80,14 @@ public class Variable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Variable other = (Variable) obj;
+        AbstractNamedElement other = (AbstractNamedElement) obj;
         if (name == null) {
             if (other.name != null)
                 return false;
@@ -145,19 +95,6 @@ public class Variable {
             return false;
         return true;
     }
-
     // CHECKSTYLE:ON
-
-    /**
-     * Called when the object is deserialized with JAXB.
-     * 
-     * @param unmarshaller
-     *            Unmarshaller.
-     * @param parent
-     *            Parent object.
-     */
-    final void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
-        this.parent = (SrcGen4JConfig) parent;
-    }
 
 }

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+   targetNamespace="http://www.fuin.org/srcgen4j/commons">   
+  
+  <xs:element name="srcgen4j-config" type="sg4jc:srcgen4j-configType" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+  
+  <xs:complexType name="variableType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="value" use="required"/>
+        <xs:attribute type="xs:string" name="xpath" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="variablesType">
+    <xs:sequence>
+      <xs:element type="sg4jc:variableType" name="variable" minOccurs="1" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="binType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="dir" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="classpathType">
+    <xs:sequence>
+      <xs:element type="sg4jc:binType" name="bin" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="folderType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="path" use="required"/>
+        <xs:attribute type="xs:string" name="create" use="optional" default="false"/>
+        <xs:attribute type="xs:string" name="override" use="optional" default="false"/>
+        <xs:attribute type="xs:string" name="clean" use="optional" default="false"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="projectType">
+    <xs:sequence>
+      <xs:element type="sg4jc:folderType" name="folder" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="path" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="projectsType">
+    <xs:sequence>
+      <xs:element type="sg4jc:projectType" name="project" minOccurs="1" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="parserType">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded">
+   		<xs:annotation>
+      		<xs:documentation>Parser specific configuration</xs:documentation>
+      	</xs:annotation>      	
+      </xs:any>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="class" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="parsersType">
+    <xs:sequence>
+      <xs:element type="sg4jc:parserType" minOccurs="1" maxOccurs="unbounded" name="parser" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="targetType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="pattern" use="required"/>
+        <xs:attribute type="xs:string" name="project" use="optional"/>
+        <xs:attribute type="xs:string" name="folder" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="artifactType" mixed="true">
+    <xs:sequence>
+      <xs:element type="sg4jc:targetType" name="target" minOccurs="0" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="project" use="optional"/>
+    <xs:attribute type="xs:string" name="folder" use="optional"/>
+  </xs:complexType>
+  
+  <xs:complexType name="generatorType">
+    <xs:sequence>
+      <xs:element type="sg4jc:artifactType" name="artifact" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="class" use="required"/>
+    <xs:attribute type="xs:string" name="parser" use="required"/>
+    <xs:attribute type="xs:string" name="project" use="optional"/>
+    <xs:attribute type="xs:string" name="folder" use="optional"/>
+  </xs:complexType>
+  
+  <xs:complexType name="generatorsType">
+    <xs:sequence>
+      <xs:element type="sg4jc:generatorType" name="generator" minOccurs="1" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="srcgen4j-configType">
+    <xs:sequence>
+      <xs:element type="sg4jc:variablesType" name="variables" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+      <xs:element type="sg4jc:classpathType" name="classpath" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+      <xs:element type="sg4jc:projectsType" name="projects" minOccurs="1" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+      <xs:element type="sg4jc:parsersType" name="parsers"  minOccurs="1" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+      <xs:element type="sg4jc:generatorsType" name="generators"  minOccurs="1" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+</xs:schema>

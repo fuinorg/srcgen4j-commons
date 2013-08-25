@@ -15,30 +15,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
+@XmlSchema(namespace = "http://www.fuin.org/srcgen4j/commons", elementFormDefault = XmlNsForm.QUALIFIED)
 package org.fuin.srcgen4j.commons;
 
-/**
- * For a given generator/artifact/target was no project found in a generator
- * configuration.
- */
-public class ProjectNameNotDefinedException extends Exception {
+import javax.xml.bind.annotation.XmlNsForm;
+import javax.xml.bind.annotation.XmlSchema;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Constructor with names.
-     * 
-     * @param generatorName
-     *            Name of the generator with the requested artifact.
-     * @param artifactName
-     *            Name of the artifact with the request target.
-     * @param targetPattern
-     *            Target pattern.
-     */
-    public ProjectNameNotDefinedException(final String generatorName, final String artifactName,
-            final String targetPattern) {
-        super("No project name is defined for: " + generatorName + " / " + artifactName + " / "
-                + targetPattern);
-    }
-
-}

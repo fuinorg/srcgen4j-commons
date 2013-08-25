@@ -22,28 +22,27 @@ package org.fuin.srcgen4j.commons;
  */
 public class FolderNotFoundException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Constructor with names.
-	 * 
-	 * @param generatorName
-	 *            Name of the generator with the requested artifact.
-	 * @param artifactName
-	 *            Name of the artifact with the request target.
-	 * @param targetPath
-	 *            Target path.
-	 * @param projectName
-	 *            Project name.
-	 * @param folderName
-	 *            Folder name.
-	 */
-	public FolderNotFoundException(final String generatorName,
-			final String artifactName, final String targetPath,
-			final String projectName, final String folderName) {
-		super("The folder name '" + folderName + "' in project '"
-				+ projectName + "' is not known - Selection was: "
-				+ generatorName + " / " + artifactName + " / " + targetPath);
-	}
+    /**
+     * Constructor with names.
+     * 
+     * @param generatorName
+     *            Name of the generator with the requested artifact.
+     * @param artifactName
+     *            Name of the artifact with the request target.
+     * @param targetPath
+     *            Target path.
+     * @param projectName
+     *            Project name.
+     * @param folderName
+     *            Folder name.
+     */
+    public FolderNotFoundException(final String generatorName, final String artifactName,
+            final String targetPath, final String projectName, final String folderName) {
+        super("The folder name '" + folderName + "' in project '" + projectName
+                + "' is not known - Selection was: " + generatorName + " / " + artifactName + " / "
+                + targetPath);
+    }
 
 }

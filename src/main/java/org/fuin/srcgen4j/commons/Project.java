@@ -37,240 +37,244 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = { "folders", "maven", "path", "name" })
 public class Project extends AbstractElement {
 
-	@XmlAttribute
-	private String name;
+    @XmlAttribute
+    private String name;
 
-	@XmlAttribute
-	private String path;
+    @XmlAttribute
+    private String path;
 
-	@XmlAttribute
-	private Boolean maven;
+    @XmlAttribute
+    private Boolean maven;
 
-	@XmlElement(name = "folder")
-	private List<Folder> folders;
+    @XmlElement(name = "folder")
+    private List<Folder> folders;
 
-	@XmlTransient
-	private GeneratorConfig parent;
-	
-	/**
-	 * Default constructor.
-	 */
-	public Project() {
-		super();
-	}
+    @XmlTransient
+    private SrcGen4JConfig parent;
 
-	/**
-	 * Constructor with name and path.
-	 * 
-	 * @param name
-	 *            Name to set.
-	 * @param path
-	 *            path to set.
-	 */
-	public Project(final String name, final String path) {
-		super();
-		this.name = name;
-		this.path = path;
-	}
+    /**
+     * Default constructor.
+     */
+    public Project() {
+        super();
+    }
 
-	/**
-	 * Constructor with name.
-	 * 
-	 * @param name
-	 *            Name to set.
-	 */
-	public Project(final String name) {
-		super();
-		this.name = name;
-	}
+    /**
+     * Constructor with name and path.
+     * 
+     * @param name
+     *            Name to set.
+     * @param path
+     *            path to set.
+     */
+    public Project(final String name, final String path) {
+        super();
+        this.name = name;
+        this.path = path;
+    }
 
-	/**
-	 * Returns the name.
-	 * 
-	 * @return Current name.
-	 */
-	public final String getName() {
-		return name;
-	}
+    /**
+     * Constructor with name.
+     * 
+     * @param name
+     *            Name to set.
+     */
+    public Project(final String name) {
+        super();
+        this.name = name;
+    }
 
-	/**
-	 * Sets the name.
-	 * 
-	 * @param name
-	 *            Name to set.
-	 */
-	public final void setName(final String name) {
-		this.name = name;
-	}
+    /**
+     * Returns the name.
+     * 
+     * @return Current name.
+     */
+    public final String getName() {
+        return name;
+    }
 
-	/**
-	 * Returns the path.
-	 * 
-	 * @return Current path.
-	 */
-	public final String getPath() {
-		return path;
-	}
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     *            Name to set.
+     */
+    public final void setName(final String name) {
+        this.name = name;
+    }
 
-	/**
-	 * Sets the path.
-	 * 
-	 * @param path
-	 *            Path to set.
-	 */
-	public final void setPath(final String path) {
-		this.path = path;
-	}
+    /**
+     * Returns the path.
+     * 
+     * @return Current path.
+     */
+    public final String getPath() {
+        return path;
+    }
 
-	/**
-	 * Returns the information if Maven default path should be used.
-	 * 
-	 * @return Maven default path setup (TRUE) or not (FALSE).
-	 */
-	public final boolean isMaven() {
-		if (maven == null) {
-			return true;
-		}
-		return maven.booleanValue();
-	}
+    /**
+     * Sets the path.
+     * 
+     * @param path
+     *            Path to set.
+     */
+    public final void setPath(final String path) {
+        this.path = path;
+    }
 
-	/**
-	 * Returns the information if Maven default path should be used.
-	 * 
-	 * @return Maven default path setup (TRUE / NULL) or not (FALSE).
-	 */
-	public final Boolean getMaven() {
-		return maven;
-	}
+    /**
+     * Returns the information if Maven default path should be used.
+     * 
+     * @return Maven default path setup (TRUE) or not (FALSE).
+     */
+    public final boolean isMaven() {
+        if (maven == null) {
+            return true;
+        }
+        return maven.booleanValue();
+    }
 
-	/**
-	 * Returns the list of folders.
-	 * 
-	 * @return Folders or NULL.
-	 */
-	public final List<Folder> getFolders() {
-		return folders;
-	}
+    /**
+     * Returns the information if Maven default path should be used.
+     * 
+     * @return Maven default path setup (TRUE / NULL) or not (FALSE).
+     */
+    public final Boolean getMaven() {
+        return maven;
+    }
 
-	/**
-	 * Sets the list of folders.
-	 * 
-	 * @param folders
-	 *            Folders or NULL.
-	 */
-	public final void setFolders(final List<Folder> folders) {
-		this.folders = folders;
-	}
+    /**
+     * Returns the list of folders.
+     * 
+     * @return Folders or NULL.
+     */
+    public final List<Folder> getFolders() {
+        return folders;
+    }
 
-	/**
-	 * Sets the information if Maven default path should be used.
-	 * 
-	 * @param maven
-	 *            Maven default path setup (TRUE) or not (NULL or FALSE).
-	 */
-	public final void setMaven(final Boolean maven) {
-		this.maven = maven;
-	}
+    /**
+     * Sets the list of folders.
+     * 
+     * @param folders
+     *            Folders or NULL.
+     */
+    public final void setFolders(final List<Folder> folders) {
+        this.folders = folders;
+    }
 
-	/**
-	 * Adds a folder to the list. If the list does not exist it's created.
-	 * 
-	 * @param folder
-	 *            Folder to add - Cannot be NULL.
-	 */
-	public final void addFolder(final Folder folder) {
-		if (folders == null) {
-			folders = new ArrayList<Folder>();
-		}
-		folders.add(folder);
-	}
+    /**
+     * Sets the information if Maven default path should be used.
+     * 
+     * @param maven
+     *            Maven default path setup (TRUE) or not (NULL or FALSE).
+     */
+    public final void setMaven(final Boolean maven) {
+        this.maven = maven;
+    }
 
-	// CHECKSTYLE:OFF Generated code
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
+    /**
+     * Adds a folder to the list. If the list does not exist it's created.
+     * 
+     * @param folder
+     *            Folder to add - Cannot be NULL.
+     */
+    public final void addFolder(final Folder folder) {
+        if (folders == null) {
+            folders = new ArrayList<Folder>();
+        }
+        folders.add(folder);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Project other = (Project) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
-	// CHECKSTYLE:ON
+    // CHECKSTYLE:OFF Generated code
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
 
-	/**
-	 * Returns the parent of the object.
-	 * 
-	 * @return GeneratorConfig.
-	 */
-	public final GeneratorConfig getParent() {
-		return parent;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Project other = (Project) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        return true;
+    }
 
-	/**
-	 * Sets the parent of the object.
-	 * 
-	 * @param parent GeneratorConfig.
-	 */
-	public final void setParent(final GeneratorConfig parent) {
-		this.parent = parent;
-	}
-	
-	/**
-	 * Initializes this object and it's childs.
-	 * 
-	 * @param parent
-	 *            Parent.
-	 * @param vars
-	 *            Variables to use.
-	 * 
+    // CHECKSTYLE:ON
+
+    /**
+     * Returns the parent of the object.
+     * 
+     * @return GeneratorConfig.
+     */
+    public final SrcGen4JConfig getParent() {
+        return parent;
+    }
+
+    /**
+     * Sets the parent of the object.
+     * 
+     * @param parent
+     *            GeneratorConfig.
+     */
+    public final void setParent(final SrcGen4JConfig parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * Initializes this object and it's childs.
+     * 
+     * @param parent
+     *            Parent.
+     * @param vars
+     *            Variables to use.
+     * 
      * @return This instance.
-	 */
-	public final Project init(final GeneratorConfig parent, final Map<String, String> vars) {
-		this.parent = parent;
-		name = replaceVars(name, vars);
-		path = replaceVars(path, vars);
-		if (folders != null) {
-			for (final Folder folder : folders) {
-				folder.setParent(this);
-				folder.init(this, vars);
-			}
-		}
-		if (isMaven()) {			
-			addIfNotExists(new Folder(this, "mainJava", "src/main/java", false, false, false));
-			addIfNotExists(new Folder(this, "mainRes", "src/main/resources", false, false, false));
-			addIfNotExists(new Folder(this, "genMainJava", "src-gen/main/java", true, true, true));
-			addIfNotExists(new Folder(this, "genMainRes", "src-gen/main/resources", true, true, true));
-			addIfNotExists(new Folder(this, "testJava", "src/test/java", false, false, false));
-			addIfNotExists(new Folder(this, "testRes", "src/test/resources", false, false, false));
-			addIfNotExists(new Folder(this, "genTestJava", "src-gen/test/java", true, true, true));
-			addIfNotExists(new Folder(this, "genTestRes", "src-gen/test/resources", true, true, true));
-		}
-		return this;
-	}
+     */
+    public final Project init(final SrcGen4JConfig parent, final Map<String, String> vars) {
+        this.parent = parent;
+        name = replaceVars(name, vars);
+        path = replaceVars(path, vars);
+        if (folders != null) {
+            for (final Folder folder : folders) {
+                folder.setParent(this);
+                folder.init(this, vars);
+            }
+        }
+        if (isMaven()) {
+            addIfNotExists(new Folder(this, "mainJava", "src/main/java", false, false, false));
+            addIfNotExists(new Folder(this, "mainRes", "src/main/resources", false, false, false));
+            addIfNotExists(new Folder(this, "genMainJava", "src-gen/main/java", true, true, true));
+            addIfNotExists(new Folder(this, "genMainRes", "src-gen/main/resources", true, true,
+                    true));
+            addIfNotExists(new Folder(this, "testJava", "src/test/java", false, false, false));
+            addIfNotExists(new Folder(this, "testRes", "src/test/resources", false, false, false));
+            addIfNotExists(new Folder(this, "genTestJava", "src-gen/test/java", true, true, true));
+            addIfNotExists(new Folder(this, "genTestRes", "src-gen/test/resources", true, true,
+                    true));
+        }
+        return this;
+    }
 
-	private void addIfNotExists(final Folder folder) {
-		if (folders == null) {
-			folders = new ArrayList<Folder>();
-		}
-		final int idx = folders.indexOf(folder);
-		if (idx < 0) {
-			folders.add(folder);
-		}		
-	}
-	
+    private void addIfNotExists(final Folder folder) {
+        if (folders == null) {
+            folders = new ArrayList<Folder>();
+        }
+        final int idx = folders.indexOf(folder);
+        if (idx < 0) {
+            folders.add(folder);
+        }
+    }
+
 }

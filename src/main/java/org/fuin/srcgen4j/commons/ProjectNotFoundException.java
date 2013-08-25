@@ -22,24 +22,24 @@ package org.fuin.srcgen4j.commons;
  */
 public class ProjectNotFoundException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Constructor with names.
-	 * 
-	 * @param generatorName
-	 *            Name of the generator with the requested artifact.
-	 * @param artifactName
-	 *            Name of the artifact with the request target.
-	 * @param targetPattern
-	 *            Target pattern.
-	 * @param projectName
-	 *            Project name.
-	 */
-	public ProjectNotFoundException(final String generatorName,
-			final String artifactName, final String targetPattern, final String projectName) {
-		super("The project name '" + projectName + "' is not known - Selection was: "
-				+ generatorName + " / " + artifactName + " / " + targetPattern);
-	}
-	
+    /**
+     * Constructor with names.
+     * 
+     * @param generatorName
+     *            Name of the generator with the requested artifact.
+     * @param artifactName
+     *            Name of the artifact with the request target.
+     * @param targetPattern
+     *            Target pattern.
+     * @param projectName
+     *            Project name.
+     */
+    public ProjectNotFoundException(final String generatorName, final String artifactName,
+            final String targetPattern, final String projectName) {
+        super("The project name '" + projectName + "' is not known - Selection was: "
+                + generatorName + " / " + artifactName + " / " + targetPattern);
+    }
+
 }

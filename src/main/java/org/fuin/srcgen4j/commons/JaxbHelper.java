@@ -36,27 +36,27 @@ import javax.xml.bind.Unmarshaller;
  */
 public final class JaxbHelper {
 
-	private boolean formattedOutput = true;
+    private boolean formattedOutput = true;
 
-	/**
-	 * Default constructor.
-	 */
-	public JaxbHelper() {
-		super();
-	}
+    /**
+     * Default constructor.
+     */
+    public JaxbHelper() {
+        super();
+    }
 
-	/**
-	 * Constructor with format information.
-	 * 
-	 * @param formattedOutput
-	 *            If XML is formatted TRUE else FALSE.
-	 */
-	public JaxbHelper(final boolean formattedOutput) {
-		super();
-		this.formattedOutput = formattedOutput;
-	}
-	
-   /** Checks if the given file contains a start tag within the first 1024 bytes. 
+    /**
+     * Constructor with format information.
+     * 
+     * @param formattedOutput
+     *            If XML is formatted TRUE else FALSE.
+     */
+    public JaxbHelper(final boolean formattedOutput) {
+        super();
+        this.formattedOutput = formattedOutput;
+    }
+
+/** Checks if the given file contains a start tag within the first 1024 bytes. 
     *
     * @param file
     *            File to check.
@@ -65,213 +65,207 @@ public final class JaxbHelper {
     * 
     * @return If the file contains the start tag TRUE else FALSE.
     */
-	public boolean containsStartTag(final File file, final String tagName) {
-		final String xml = readFirstPartOfFile(file);
-		return xml.indexOf("<" + tagName) > -1;
-	}
+    public boolean containsStartTag(final File file, final String tagName) {
+        final String xml = readFirstPartOfFile(file);
+        return xml.indexOf("<" + tagName) > -1;
+    }
 
-	private String readFirstPartOfFile(final File file) {
-		try {
-			final Reader reader = new FileReader(file);
-			try {
+    private String readFirstPartOfFile(final File file) {
+        try {
+            final Reader reader = new FileReader(file);
+            try {
 
-				final char[] buf = new char[1024];
-				reader.read(buf);
-				return String.copyValueOf(buf);
-			} finally {
-				reader.close();
-			}
-		} catch (final IOException ex) {
-			throw new RuntimeException("Could not read first part of file: "
-					+ file, ex);
-		}
-	}
+                final char[] buf = new char[1024];
+                reader.read(buf);
+                return String.copyValueOf(buf);
+            } finally {
+                reader.close();
+            }
+        } catch (final IOException ex) {
+            throw new RuntimeException("Could not read first part of file: " + file, ex);
+        }
+    }
 
-	/**
-	 * Creates an instance by reading the XML from a reader.
-	 * 
-	 * @param reader
-	 *            Reader to use.
-	 * @param jaxbContext
-	 *            Context to use.
-	 * 
-	 * @return New instance.
-	 * 
-	 * @throws UnmarshalObjectException
-	 *             Error deserializing the object.
-	 * 
-	 * @param <TYPE>
-	 *            Type of the created object.
-	 */
-	@SuppressWarnings("unchecked")
-	public <TYPE> TYPE create(final Reader reader, final JAXBContext jaxbContext)
-			throws UnmarshalObjectException {
-		try {
-			final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-			final TYPE obj = (TYPE) unmarshaller.unmarshal(reader);
-			return obj;
-		} catch (final JAXBException ex) {
-			throw new UnmarshalObjectException(
-					"Unable to parse XML from reader", ex);
-		}
-	}
+    /**
+     * Creates an instance by reading the XML from a reader.
+     * 
+     * @param reader
+     *            Reader to use.
+     * @param jaxbContext
+     *            Context to use.
+     * 
+     * @return New instance.
+     * 
+     * @throws UnmarshalObjectException
+     *             Error deserializing the object.
+     * 
+     * @param <TYPE>
+     *            Type of the created object.
+     */
+    @SuppressWarnings("unchecked")
+    public <TYPE> TYPE create(final Reader reader, final JAXBContext jaxbContext)
+            throws UnmarshalObjectException {
+        try {
+            final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            final TYPE obj = (TYPE) unmarshaller.unmarshal(reader);
+            return obj;
+        } catch (final JAXBException ex) {
+            throw new UnmarshalObjectException("Unable to parse XML from reader", ex);
+        }
+    }
 
-	/**
-	 * Creates an instance by reading the XML from a file.
-	 * 
-	 * @param file
-	 *            File to read.
-	 * @param jaxbContext
-	 *            Context to use.
-	 * 
-	 * @return New instance.
-	 * 
-	 * @throws UnmarshalObjectException
-	 *             Error deserializing the object.
-	 * 
-	 * @param <TYPE>
-	 *            Type of the created object.
-	 */
-	@SuppressWarnings("unchecked")
-	public <TYPE> TYPE create(final File file, final JAXBContext jaxbContext)
-			throws UnmarshalObjectException {
-		try {
-			final FileReader fr = new FileReader(file);
-			try {
-				return (TYPE) create(fr, jaxbContext);
-			} finally {
-				fr.close();
-			}
-		} catch (final IOException ex) {
-			throw new UnmarshalObjectException(
-					"Unable to parse XML from file: " + file, ex);
-		}
-	}
+    /**
+     * Creates an instance by reading the XML from a file.
+     * 
+     * @param file
+     *            File to read.
+     * @param jaxbContext
+     *            Context to use.
+     * 
+     * @return New instance.
+     * 
+     * @throws UnmarshalObjectException
+     *             Error deserializing the object.
+     * 
+     * @param <TYPE>
+     *            Type of the created object.
+     */
+    @SuppressWarnings("unchecked")
+    public <TYPE> TYPE create(final File file, final JAXBContext jaxbContext)
+            throws UnmarshalObjectException {
+        try {
+            final FileReader fr = new FileReader(file);
+            try {
+                return (TYPE) create(fr, jaxbContext);
+            } finally {
+                fr.close();
+            }
+        } catch (final IOException ex) {
+            throw new UnmarshalObjectException("Unable to parse XML from file: " + file, ex);
+        }
+    }
 
-	/**
-	 * Creates an instance by from a given XML.
-	 * 
-	 * @param xml
-	 *            XML to parse.
-	 * @param jaxbContext
-	 *            Context to use.
-	 * 
-	 * @return New instance.
-	 * 
-	 * @throws UnmarshalObjectException
-	 *             Error deserializing the object.
-	 * 
-	 * @param <TYPE>
-	 *            Type of the created object.
-	 */
-	@SuppressWarnings("unchecked")
-	public <TYPE> TYPE create(final String xml, final JAXBContext jaxbContext)
-			throws UnmarshalObjectException {
+    /**
+     * Creates an instance by from a given XML.
+     * 
+     * @param xml
+     *            XML to parse.
+     * @param jaxbContext
+     *            Context to use.
+     * 
+     * @return New instance.
+     * 
+     * @throws UnmarshalObjectException
+     *             Error deserializing the object.
+     * 
+     * @param <TYPE>
+     *            Type of the created object.
+     */
+    @SuppressWarnings("unchecked")
+    public <TYPE> TYPE create(final String xml, final JAXBContext jaxbContext)
+            throws UnmarshalObjectException {
 
-		return (TYPE) create(new StringReader(xml), jaxbContext);
+        return (TYPE) create(new StringReader(xml), jaxbContext);
 
-	}
+    }
 
-	/**
-	 * Marshals the object as XML to a file.
-	 * 
-	 * @param obj
-	 *            Object to marshal.
-	 * @param file
-	 *            File to write the instance to.
-	 * @param jaxbContext
-	 *            Context to use.
-	 * 
-	 * @throws MarshalObjectException
-	 *             Error writing the object.
-	 * 
-	 * @param <TYPE>
-	 *            Type of the object.
-	 */
-	public <TYPE> void write(final TYPE obj, final File file,
-			final JAXBContext jaxbContext) throws MarshalObjectException {
-		try {
-			final FileWriter fw = new FileWriter(file);
-			try {
-				write(obj, fw, jaxbContext);
-			} finally {
-				fw.close();
-			}
-		} catch (final IOException ex) {
-			throw new MarshalObjectException("Unable to write XML to file: "
-					+ file, ex);
-		}
-	}
+    /**
+     * Marshals the object as XML to a file.
+     * 
+     * @param obj
+     *            Object to marshal.
+     * @param file
+     *            File to write the instance to.
+     * @param jaxbContext
+     *            Context to use.
+     * 
+     * @throws MarshalObjectException
+     *             Error writing the object.
+     * 
+     * @param <TYPE>
+     *            Type of the object.
+     */
+    public <TYPE> void write(final TYPE obj, final File file, final JAXBContext jaxbContext)
+            throws MarshalObjectException {
+        try {
+            final FileWriter fw = new FileWriter(file);
+            try {
+                write(obj, fw, jaxbContext);
+            } finally {
+                fw.close();
+            }
+        } catch (final IOException ex) {
+            throw new MarshalObjectException("Unable to write XML to file: " + file, ex);
+        }
+    }
 
-	/**
-	 * Marshals the object as XML to a string.
-	 * 
-	 * @param obj
-	 *            Object to marshal.
-	 * @param jaxbContext
-	 *            Context to use.
-	 * 
-	 * @return XML String.
-	 * 
-	 * @throws MarshalObjectException
-	 *             Error writing the object.
-	 * 
-	 * @param <TYPE>
-	 *            Type of the object.
-	 */
-	public <TYPE> String write(final TYPE obj, final JAXBContext jaxbContext)
-			throws MarshalObjectException {
-		final StringWriter writer = new StringWriter();
-		write(obj, writer, jaxbContext);
-		return writer.toString();
-	}
+    /**
+     * Marshals the object as XML to a string.
+     * 
+     * @param obj
+     *            Object to marshal.
+     * @param jaxbContext
+     *            Context to use.
+     * 
+     * @return XML String.
+     * 
+     * @throws MarshalObjectException
+     *             Error writing the object.
+     * 
+     * @param <TYPE>
+     *            Type of the object.
+     */
+    public <TYPE> String write(final TYPE obj, final JAXBContext jaxbContext)
+            throws MarshalObjectException {
+        final StringWriter writer = new StringWriter();
+        write(obj, writer, jaxbContext);
+        return writer.toString();
+    }
 
-	/**
-	 * Marshals the object as XML to a writer.
-	 * 
-	 * @param obj
-	 *            Object to marshal.
-	 * @param writer
-	 *            Writer to write the object to.
-	 * @param jaxbContext
-	 *            Context to use.
-	 * 
-	 * @throws MarshalObjectException
-	 *             Error writing the object.
-	 * 
-	 * @param <TYPE>
-	 *            Type of the object.
-	 */
-	public <TYPE> void write(final TYPE obj, final Writer writer,
-			final JAXBContext jaxbContext) throws MarshalObjectException {
-		try {
-			final Marshaller marshaller = jaxbContext.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-					formattedOutput);
-			marshaller.marshal(obj, writer);
-		} catch (final JAXBException ex) {
-			throw new MarshalObjectException("Unable to write XML to writer",
-					ex);
-		}
-	}
+    /**
+     * Marshals the object as XML to a writer.
+     * 
+     * @param obj
+     *            Object to marshal.
+     * @param writer
+     *            Writer to write the object to.
+     * @param jaxbContext
+     *            Context to use.
+     * 
+     * @throws MarshalObjectException
+     *             Error writing the object.
+     * 
+     * @param <TYPE>
+     *            Type of the object.
+     */
+    public <TYPE> void write(final TYPE obj, final Writer writer, final JAXBContext jaxbContext)
+            throws MarshalObjectException {
+        try {
+            final Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, formattedOutput);
+            marshaller.marshal(obj, writer);
+        } catch (final JAXBException ex) {
+            throw new MarshalObjectException("Unable to write XML to writer", ex);
+        }
+    }
 
-	/**
-	 * Returns the information if XML should be formatted.
-	 * 
-	 * @return If XML is formatted TRUE else FALSE.
-	 */
-	public final boolean isFormattedOutput() {
-		return formattedOutput;
-	}
+    /**
+     * Returns the information if XML should be formatted.
+     * 
+     * @return If XML is formatted TRUE else FALSE.
+     */
+    public final boolean isFormattedOutput() {
+        return formattedOutput;
+    }
 
-	/**
-	 * Sets the information if XML should be formatted.
-	 * 
-	 * @param formattedOutput
-	 *            If XML is formatted TRUE else FALSE.
-	 */
-	public final void setFormattedOutput(final boolean formattedOutput) {
-		this.formattedOutput = formattedOutput;
-	}
+    /**
+     * Sets the information if XML should be formatted.
+     * 
+     * @param formattedOutput
+     *            If XML is formatted TRUE else FALSE.
+     */
+    public final void setFormattedOutput(final boolean formattedOutput) {
+        this.formattedOutput = formattedOutput;
+    }
 
 }

@@ -28,147 +28,149 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Maps a single generated artifact based on a regular expression to a project/folder. 
+ * Maps a single generated artifact based on a regular expression to a
+ * project/folder.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "target")
 @XmlType(propOrder = { "pattern" })
 public class Target extends AbstractTarget {
 
-	@XmlAttribute
-	private String pattern;
+    @XmlAttribute
+    private String pattern;
 
-	@XmlTransient
-	private Artifact parent;
+    @XmlTransient
+    private Artifact parent;
 
-	@XmlTransient
-	private Pattern regExpr;
+    @XmlTransient
+    private Pattern regExpr;
 
-	
-	/**
-	 * Default constructor.
-	 */
-	public Target() {
-		super();
-	}
+    /**
+     * Default constructor.
+     */
+    public Target() {
+        super();
+    }
 
-	/**
-	 * Constructor with pattern, project and folder.
-	 * 
-	 * @param pattern
-	 *            Pattern to set.
-	 * @param project
-	 *            Project to set.
-	 * @param folder
-	 *            Folder to set.
-	 */
-	public Target(final String pattern, final String project, final String folder) {
-		super(project, folder);
-		this.pattern = pattern;
-	}
+    /**
+     * Constructor with pattern, project and folder.
+     * 
+     * @param pattern
+     *            Pattern to set.
+     * @param project
+     *            Project to set.
+     * @param folder
+     *            Folder to set.
+     */
+    public Target(final String pattern, final String project, final String folder) {
+        super(project, folder);
+        this.pattern = pattern;
+    }
 
-	/**
-	 * Returns the pattern.
-	 * 
-	 * @return Current pattern.
-	 */
-	public final String getPattern() {
-		return pattern;
-	}
+    /**
+     * Returns the pattern.
+     * 
+     * @return Current pattern.
+     */
+    public final String getPattern() {
+        return pattern;
+    }
 
-	/**
-	 * Sets the pattern.
-	 * 
-	 * @param pattern
-	 *            Pattern to set.
-	 */
-	public final void setPattern(final String pattern) {
-		this.pattern = pattern;
-	}
+    /**
+     * Sets the pattern.
+     * 
+     * @param pattern
+     *            Pattern to set.
+     */
+    public final void setPattern(final String pattern) {
+        this.pattern = pattern;
+    }
 
-	/**
-	 * Returns the parent of the object.
-	 * 
-	 * @return Artifact.
-	 */
-	public final Artifact getParent() {
-		return parent;
-	}
+    /**
+     * Returns the parent of the object.
+     * 
+     * @return Artifact.
+     */
+    public final Artifact getParent() {
+        return parent;
+    }
 
-	/**
-	 * Sets the parent of the object.
-	 * 
-	 * @param parent Artifact.
-	 */
-	public final void setParent(final Artifact parent) {
-		this.parent = parent;
-	}
+    /**
+     * Sets the parent of the object.
+     * 
+     * @param parent
+     *            Artifact.
+     */
+    public final void setParent(final Artifact parent) {
+        this.parent = parent;
+    }
 
-	/**
-	 * Returns the defined project from this object or any of it's parents.
-	 * 
-	 * @return Project or <code>null</code>.
-	 */
-	public final String getDefProject() {
-		if (getProject() == null) {
-			if (parent == null) {
-				return null;
-			}
-			return parent.getDefProject();
-		}
-		return getProject();
-	}
-	
-	/**
-	 * Returns the defined folder from this object or any of it's parents.
-	 * 
-	 * @return Folder or <code>null</code>.
-	 */
-	public final String getDefFolder() {
-		if (getFolder() == null) {
-			if (parent == null) {
-				return null;
-			}
-			return parent.getDefFolder();
-		}
-		return getFolder();
-	}
-	
-	/**
-	 * Initializes this object and it's childs.
-	 * 
-	 * @param parent
-	 *            Parent.
-	 * @param vars
-	 *            Variables to use.
-	 * 
+    /**
+     * Returns the defined project from this object or any of it's parents.
+     * 
+     * @return Project or <code>null</code>.
+     */
+    public final String getDefProject() {
+        if (getProject() == null) {
+            if (parent == null) {
+                return null;
+            }
+            return parent.getDefProject();
+        }
+        return getProject();
+    }
+
+    /**
+     * Returns the defined folder from this object or any of it's parents.
+     * 
+     * @return Folder or <code>null</code>.
+     */
+    public final String getDefFolder() {
+        if (getFolder() == null) {
+            if (parent == null) {
+                return null;
+            }
+            return parent.getDefFolder();
+        }
+        return getFolder();
+    }
+
+    /**
+     * Initializes this object and it's childs.
+     * 
+     * @param parent
+     *            Parent.
+     * @param vars
+     *            Variables to use.
+     * 
      * @return This instance.
-	 */
-	public final Target init(final Artifact parent, final Map<String, String> vars) {
-		this.parent = parent;
-		pattern = replaceVars(pattern, vars);
-		setProject(replaceVars(getProject(), vars));
-		setFolder(replaceVars(getFolder(), vars));
-		if (pattern == null) {
-			regExpr = null;
-		} else {
-			regExpr = Pattern.compile(pattern);
-		}
-		return this;
-	}
+     */
+    public final Target init(final Artifact parent, final Map<String, String> vars) {
+        this.parent = parent;
+        pattern = replaceVars(pattern, vars);
+        setProject(replaceVars(getProject(), vars));
+        setFolder(replaceVars(getFolder(), vars));
+        if (pattern == null) {
+            regExpr = null;
+        } else {
+            regExpr = Pattern.compile(pattern);
+        }
+        return this;
+    }
 
-	/**
-	 * Returns if the pattern matches the given path.
-	 * 
-	 * @param targetPath Path to test.
-	 * 
-	 * @return If the target matches TRUE, else FALSE.
-	 */
-	public final boolean matches(final String targetPath) {
-		if (regExpr == null) {
-			return true;
-		}
-		return regExpr.matcher(targetPath).find();
-	}
-	
+    /**
+     * Returns if the pattern matches the given path.
+     * 
+     * @param targetPath
+     *            Path to test.
+     * 
+     * @return If the target matches TRUE, else FALSE.
+     */
+    public final boolean matches(final String targetPath) {
+        if (regExpr == null) {
+            return true;
+        }
+        return regExpr.matcher(targetPath).find();
+    }
+
 }

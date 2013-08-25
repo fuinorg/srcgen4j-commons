@@ -34,296 +34,296 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = { "clean", "override", "create", "path", "name" })
 public class Folder extends AbstractElement {
 
-	@XmlAttribute
-	private String name;
+    @XmlAttribute
+    private String name;
 
-	@XmlAttribute
-	private String path;
+    @XmlAttribute
+    private String path;
 
-	@XmlAttribute
-	private Boolean create;
+    @XmlAttribute
+    private Boolean create;
 
-	@XmlAttribute
-	private Boolean override;
+    @XmlAttribute
+    private Boolean override;
 
-	@XmlAttribute
-	private Boolean clean;
+    @XmlAttribute
+    private Boolean clean;
 
-	@XmlTransient
-	private Project parent;
+    @XmlTransient
+    private Project parent;
 
-	/**
-	 * Default constructor.
-	 */
-	public Folder() {
-		super();
-	}
+    /**
+     * Default constructor.
+     */
+    public Folder() {
+        super();
+    }
 
-	/**
-	 * Constructor with name.
-	 * 
-	 * @param name
-	 *            Name to set.
-	 */
-	public Folder(final String name) {
-		super();
-		this.name = name;
-	}
+    /**
+     * Constructor with name.
+     * 
+     * @param name
+     *            Name to set.
+     */
+    public Folder(final String name) {
+        super();
+        this.name = name;
+    }
 
-	/**
-	 * Constructor with name and path.
-	 * 
-	 * @param name
-	 *            Name to set.
-	 * @param path
-	 *            path to set.
-	 */
-	public Folder(final String name, final String path) {
-		super();
-		this.name = name;
-		this.path = path;
-	}
+    /**
+     * Constructor with name and path.
+     * 
+     * @param name
+     *            Name to set.
+     * @param path
+     *            path to set.
+     */
+    public Folder(final String name, final String path) {
+        super();
+        this.name = name;
+        this.path = path;
+    }
 
-	/**
-	 * Constructor all data.
-	 * 
-	 * @param parent
-	 *            Parent folder.
-	 * @param name
-	 *            Name to set.
-	 * @param path
-	 *            path to set.
-	 * @param create
-	 *            Create directories (TRUE) or not (NULL or FALSE).
-	 * @param override
-	 *            Override files (TRUE) or not (NULL or FALSE).
-	 * @param clean
-	 *            Clean directory (TRUE) or not (NULL or FALSE).
-	 */
-	Folder(final Project parent, final String name, final String path,
-			final boolean create, final boolean override, final boolean clean) {
-		super();
-		this.parent = parent;
-		this.name = name;
-		this.path = path;
-		this.create = create;
-		this.override = override;
-		this.clean = clean;
-	}
+    /**
+     * Constructor all data.
+     * 
+     * @param parent
+     *            Parent folder.
+     * @param name
+     *            Name to set.
+     * @param path
+     *            path to set.
+     * @param create
+     *            Create directories (TRUE) or not (NULL or FALSE).
+     * @param override
+     *            Override files (TRUE) or not (NULL or FALSE).
+     * @param clean
+     *            Clean directory (TRUE) or not (NULL or FALSE).
+     */
+    Folder(final Project parent, final String name, final String path, final boolean create,
+            final boolean override, final boolean clean) {
+        super();
+        this.parent = parent;
+        this.name = name;
+        this.path = path;
+        this.create = create;
+        this.override = override;
+        this.clean = clean;
+    }
 
-	/**
-	 * Returns the name.
-	 * 
-	 * @return Current name.
-	 */
-	public final String getName() {
-		return name;
-	}
+    /**
+     * Returns the name.
+     * 
+     * @return Current name.
+     */
+    public final String getName() {
+        return name;
+    }
 
-	/**
-	 * Sets the name.
-	 * 
-	 * @param name
-	 *            Name to set.
-	 */
-	public final void setName(final String name) {
-		this.name = name;
-	}
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     *            Name to set.
+     */
+    public final void setName(final String name) {
+        this.name = name;
+    }
 
-	/**
-	 * Returns the path.
-	 * 
-	 * @return Current path.
-	 */
-	public final String getPath() {
-		return path;
-	}
+    /**
+     * Returns the path.
+     * 
+     * @return Current path.
+     */
+    public final String getPath() {
+        return path;
+    }
 
-	/**
-	 * Sets the path.
-	 * 
-	 * @param path
-	 *            Path to set.
-	 */
-	public final void setPath(final String path) {
-		this.path = path;
-	}
+    /**
+     * Sets the path.
+     * 
+     * @param path
+     *            Path to set.
+     */
+    public final void setPath(final String path) {
+        this.path = path;
+    }
 
-	/**
-	 * Returns the information if the directories should be created if they
-	 * don't exist.
-	 * 
-	 * @return Create directories (TRUE) or not (FALSE).
-	 */
-	public final boolean isCreate() {
-		if (create == null) {
-			return false;
-		}
-		return create.booleanValue();
-	}
+    /**
+     * Returns the information if the directories should be created if they
+     * don't exist.
+     * 
+     * @return Create directories (TRUE) or not (FALSE).
+     */
+    public final boolean isCreate() {
+        if (create == null) {
+            return false;
+        }
+        return create.booleanValue();
+    }
 
-	/**
-	 * Returns the information if the directories should be created if they
-	 * don't exist.
-	 * 
-	 * @return Create directories (TRUE) or not (NULL or FALSE).
-	 */
-	public final Boolean getCreate() {
-		return create;
-	}
+    /**
+     * Returns the information if the directories should be created if they
+     * don't exist.
+     * 
+     * @return Create directories (TRUE) or not (NULL or FALSE).
+     */
+    public final Boolean getCreate() {
+        return create;
+    }
 
-	/**
-	 * Sets the information if the directories should be created if they don't
-	 * exist.
-	 * 
-	 * @param create
-	 *            Create directories (TRUE) or not (NULL or FALSE).
-	 */
-	public final void setCreate(final Boolean create) {
-		this.create = create;
-	}
+    /**
+     * Sets the information if the directories should be created if they don't
+     * exist.
+     * 
+     * @param create
+     *            Create directories (TRUE) or not (NULL or FALSE).
+     */
+    public final void setCreate(final Boolean create) {
+        this.create = create;
+    }
 
-	/**
-	 * Returns the information if the directory should be cleaned (delete all
-	 * files in it).
-	 * 
-	 * @return Clean directory (TRUE) or not (FALSE).
-	 */
-	public final boolean isClean() {
-		if (clean == null) {
-			return false;
-		}
-		return clean.booleanValue();
-	}
+    /**
+     * Returns the information if the directory should be cleaned (delete all
+     * files in it).
+     * 
+     * @return Clean directory (TRUE) or not (FALSE).
+     */
+    public final boolean isClean() {
+        if (clean == null) {
+            return false;
+        }
+        return clean.booleanValue();
+    }
 
-	/**
-	 * Returns the information if the directory should be cleaned (delete all
-	 * files in it).
-	 * 
-	 * @return Clean directory (TRUE) or not (NULL or FALSE).
-	 */
-	public final Boolean getClean() {
-		return clean;
-	}
+    /**
+     * Returns the information if the directory should be cleaned (delete all
+     * files in it).
+     * 
+     * @return Clean directory (TRUE) or not (NULL or FALSE).
+     */
+    public final Boolean getClean() {
+        return clean;
+    }
 
-	/**
-	 * Sets the information if the directory should be cleaned (delete all files
-	 * in it).
-	 * 
-	 * @param clean
-	 *            Clean directory (TRUE) or not (NULL or FALSE).
-	 */
-	public final void setClean(final Boolean clean) {
-		this.clean = clean;
-	}
+    /**
+     * Sets the information if the directory should be cleaned (delete all files
+     * in it).
+     * 
+     * @param clean
+     *            Clean directory (TRUE) or not (NULL or FALSE).
+     */
+    public final void setClean(final Boolean clean) {
+        this.clean = clean;
+    }
 
-	/**
-	 * Returns the information if existing files in the directory should be
-	 * overridden.
-	 * 
-	 * @return Override files (TRUE) or not (FALSE).
-	 */
-	public final boolean isOverride() {
-		if (override == null) {
-			return false;
-		}
-		return override.booleanValue();
-	}
+    /**
+     * Returns the information if existing files in the directory should be
+     * overridden.
+     * 
+     * @return Override files (TRUE) or not (FALSE).
+     */
+    public final boolean isOverride() {
+        if (override == null) {
+            return false;
+        }
+        return override.booleanValue();
+    }
 
-	/**
-	 * Returns the information if existing files in the directory should be
-	 * overridden.
-	 * 
-	 * @return Override files (TRUE) or not (NULL or FALSE).
-	 */
-	public final Boolean getOverride() {
-		return override;
-	}
+    /**
+     * Returns the information if existing files in the directory should be
+     * overridden.
+     * 
+     * @return Override files (TRUE) or not (NULL or FALSE).
+     */
+    public final Boolean getOverride() {
+        return override;
+    }
 
-	/**
-	 * Sets the information if existing files in the directory should be
-	 * overridden.
-	 * 
-	 * @param override
-	 *            Override files (TRUE) or not (NULL or FALSE).
-	 */
-	public final void setOverride(final Boolean override) {
-		this.override = override;
-	}
+    /**
+     * Sets the information if existing files in the directory should be
+     * overridden.
+     * 
+     * @param override
+     *            Override files (TRUE) or not (NULL or FALSE).
+     */
+    public final void setOverride(final Boolean override) {
+        this.override = override;
+    }
 
-	/**
-	 * Returns the parent for the folder.
-	 * 
-	 * @return Parent or <code>null</code>.
-	 */
-	public final Project getParent() {
-		return parent;
-	}
+    /**
+     * Returns the parent for the folder.
+     * 
+     * @return Parent or <code>null</code>.
+     */
+    public final Project getParent() {
+        return parent;
+    }
 
-	/**
-	 * Sets the parent for the folder.
-	 * 
-	 * @param parent
-	 *            Parent or <code>null</code>.
-	 */
-	public final void setParent(final Project parent) {
-		this.parent = parent;
-	}
+    /**
+     * Sets the parent for the folder.
+     * 
+     * @param parent
+     *            Parent or <code>null</code>.
+     */
+    public final void setParent(final Project parent) {
+        this.parent = parent;
+    }
 
-	/**
-	 * Initializes this object and it's childs.
-	 * 
-	 * @param parent
-	 *            Parent.
-	 * @param vars
-	 *            Variables to use.
-	 * 
+    /**
+     * Initializes this object and it's childs.
+     * 
+     * @param parent
+     *            Parent.
+     * @param vars
+     *            Variables to use.
+     * 
      * @return This instance.
-	 */
-	public final Folder init(final Project parent, final Map<String, String> vars) {
-		this.parent = parent;
-		name = replaceVars(name, vars);
-		path = replaceVars(path, vars);
-		return this;
-	}
+     */
+    public final Folder init(final Project parent, final Map<String, String> vars) {
+        this.parent = parent;
+        name = replaceVars(name, vars);
+        path = replaceVars(path, vars);
+        return this;
+    }
 
-	/**
-	 * Returns the full path from project and folder.
-	 * 
-	 * @return Path.
-	 */
-	public final String getDirectory() {
-		if (parent == null) {
-			return null;
-		}
-		return parent.getPath() + "/" + getPath();
-	}
+    /**
+     * Returns the full path from project and folder.
+     * 
+     * @return Path.
+     */
+    public final String getDirectory() {
+        if (parent == null) {
+            return null;
+        }
+        return parent.getPath() + "/" + getPath();
+    }
 
-	// CHECKSTYLE:OFF Generated code
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
+    // CHECKSTYLE:OFF Generated code
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Folder other = (Folder) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
-	// CHECKSTYLE:ON
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Folder other = (Folder) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        return true;
+    }
+    // CHECKSTYLE:ON
 
 }

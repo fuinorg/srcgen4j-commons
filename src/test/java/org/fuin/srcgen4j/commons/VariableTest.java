@@ -32,51 +32,53 @@ import com.openpojo.validation.PojoValidator;
  */
 public class VariableTest extends AbstractTest {
 
-	// CHECKSTYLE:OFF
-	
-	@Test
-	public final void testPojoStructureAndBehavior() {
-		
-		final PojoClass pc = PojoClassFactory.getPojoClass(Variable.class);
-		final PojoValidator pv = createPojoValidator();
-		pv.runValidation(pc);
-		
-	}
-	
-	@Test
-	public final void testMarshal() throws Exception {
+    // CHECKSTYLE:OFF
 
-		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Variable.class, Folder.class);
-		final Variable testee = new Variable("abc", "def");
+    @Test
+    public final void testPojoStructureAndBehavior() {
 
-		// TEST
-		final String result = new JaxbHelper(false).write(testee, jaxbContext);
+        final PojoClass pc = PojoClassFactory.getPojoClass(Variable.class);
+        final PojoValidator pv = createPojoValidator();
+        pv.runValidation(pc);
 
-		// VERIFY
-		assertThat(result).isEqualTo(XML + "<variable name=\"abc\" value=\"def\"/>");
+    }
 
-	}
+    @Test
+    public final void testMarshal() throws Exception {
 
-	@Test
-	public final void testUnmarshal() throws Exception {
+        // PREPARE
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Variable.class, Folder.class);
+        final Variable testee = new Variable("abc", "def");
 
-		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Variable.class, Folder.class);
+        // TEST
+        final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
-		// TEST
-		final Variable testee = new JaxbHelper().create(
-				"<variable name=\"abc\" value=\"def\"/>",
-				jaxbContext);
+        // VERIFY
+        assertThat(result)
+                .isEqualTo(
+                        XML
+                                + "<variable name=\"abc\" value=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
 
-		// VERIFY
-		assertThat(testee).isNotNull();
-		assertThat(testee.getName()).isEqualTo("abc");
-		assertThat(testee.getValue()).isEqualTo("def");
+    }
 
-	}
+    @Test
+    public final void testUnmarshal() throws Exception {
 
-	// CHECKSTYLE:ON
-	
+        // PREPARE
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Variable.class, Folder.class);
+
+        // TEST
+        final Variable testee = new JaxbHelper()
+                .create("<variable name=\"abc\" value=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
+                        jaxbContext);
+
+        // VERIFY
+        assertThat(testee).isNotNull();
+        assertThat(testee.getName()).isEqualTo("abc");
+        assertThat(testee.getValue()).isEqualTo("def");
+
+    }
+
+    // CHECKSTYLE:ON
 
 }

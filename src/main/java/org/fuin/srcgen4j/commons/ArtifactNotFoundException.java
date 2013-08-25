@@ -22,20 +22,19 @@ package org.fuin.srcgen4j.commons;
  */
 public class ArtifactNotFoundException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Constructor with names.
-	 * 
-	 * @param generatorName
-	 *            Name of the generator with the requested artifact.
-	 * @param artifactName
-	 *            Name of the generator that was not found.
-	 */
-	public ArtifactNotFoundException(final String generatorName,
-			final String artifactName) {
-		super("The artifact '" + artifactName
-				+ "' is not configured for generator '" + generatorName + "'");
-	}
+    /**
+     * Constructor with names.
+     * 
+     * @param generatorName
+     *            Name of the generator with the requested artifact.
+     * @param artifactName
+     *            Name of the generator that was not found.
+     */
+    public ArtifactNotFoundException(final String generatorName, final String artifactName) {
+        super("The artifact '" + artifactName + "' is not configured for generator '"
+                + generatorName + "'");
+    }
 
 }

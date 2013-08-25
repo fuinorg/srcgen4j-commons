@@ -40,145 +40,149 @@ import com.openpojo.validation.PojoValidator;
  */
 public class JaxbHelperTest extends AbstractTest {
 
-	// CHECKSTYLE:OFF Tests
+    // CHECKSTYLE:OFF Tests
 
-	private JaxbHelper testee;
+    private JaxbHelper testee;
 
-	@Before
-	public void setup() {
-		testee = new JaxbHelper();
-	}
+    @Before
+    public void setup() {
+        testee = new JaxbHelper();
+    }
 
-	@After
-	public void teardown() {
-		testee = null;
-	}
+    @After
+    public void teardown() {
+        testee = null;
+    }
 
-	@Test
-	public void testContainsStartTag() {
+    @Test
+    public void testContainsStartTag() {
 
-		// PREPARE
-		final File file = new File("./src/test/resources/containsStartTag.xml");
+        // PREPARE
+        final File file = new File("./src/test/resources/containsStartTag.xml");
 
-		// TEST & VERIFY
-		assertThat(testee.containsStartTag(file, "test-tag")).isTrue();
-		assertThat(testee.containsStartTag(file, "abc-xyz")).isFalse();
+        // TEST & VERIFY
+        assertThat(testee.containsStartTag(file, "test-tag")).isTrue();
+        assertThat(testee.containsStartTag(file, "abc-xyz")).isFalse();
 
-	}
+    }
 
-	@Test
-	public void testCreateReaderJAXBContext() throws Exception {
+    @Test
+    public void testCreateReaderJAXBContext() throws Exception {
 
-		// PREPARE
-		final Reader reader = new StringReader("<dummy name=\"Joe\" />");
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
+        // PREPARE
+        final Reader reader = new StringReader(
+                "<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
 
-		// TEST
-		final Dummy dummy = testee.create(reader, jaxbContext);
+        // TEST
+        final Dummy dummy = testee.create(reader, jaxbContext);
 
-		// VERIFY
-		assertThat(dummy).isNotNull();
-		assertThat(dummy.getName()).isEqualTo("Joe");
+        // VERIFY
+        assertThat(dummy).isNotNull();
+        assertThat(dummy.getName()).isEqualTo("Joe");
 
-	}
+    }
 
-	@Test
-	public void testCreateFileJAXBContext() throws Exception {
+    @Test
+    public void testCreateFileJAXBContext() throws Exception {
 
-		// PREPARE
-		final File file = new File("./src/test/resources/dummy.xml");
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
+        // PREPARE
+        final File file = new File("./src/test/resources/dummy.xml");
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
 
-		// TEST
-		final Dummy dummy = testee.create(file, jaxbContext);
+        // TEST
+        final Dummy dummy = testee.create(file, jaxbContext);
 
-		// VERIFY
-		assertThat(dummy).isNotNull();
-		assertThat(dummy.getName()).isEqualTo("Joe");
+        // VERIFY
+        assertThat(dummy).isNotNull();
+        assertThat(dummy.getName()).isEqualTo("Joe");
 
-	}
+    }
 
-	@Test
-	public void testCreateStringJAXBContext() throws Exception {
+    @Test
+    public void testCreateStringJAXBContext() throws Exception {
 
-		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
+        // PREPARE
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
 
-		// TEST
-		final Dummy dummy = testee
-				.create("<dummy name=\"Joe\" />", jaxbContext);
+        // TEST
+        final Dummy dummy = testee
+                .create("<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
+                        jaxbContext);
 
-		// VERIFY
-		assertThat(dummy).isNotNull();
-		assertThat(dummy.getName()).isEqualTo("Joe");
+        // VERIFY
+        assertThat(dummy).isNotNull();
+        assertThat(dummy.getName()).isEqualTo("Joe");
 
-	}
+    }
 
-	@Test
-	public void testWriteTYPEFileJAXBContext() throws Exception {
+    @Test
+    public void testWriteTYPEFileJAXBContext() throws Exception {
 
-		// PREPARE
-		final File expected = new File("./src/test/resources/dummy.xml");
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
-		final File file = File.createTempFile("test", "xml");
-		file.deleteOnExit();
-		final Dummy dummy = new Dummy();
-		dummy.setName("Joe");
-		testee.setFormattedOutput(false);
+        // PREPARE
+        final File expected = new File("./src/test/resources/dummy.xml");
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
+        final File file = File.createTempFile("test", "xml");
+        file.deleteOnExit();
+        final Dummy dummy = new Dummy();
+        dummy.setName("Joe");
+        testee.setFormattedOutput(false);
 
-		// TEST
-		testee.write(dummy, file, jaxbContext);
+        // TEST
+        testee.write(dummy, file, jaxbContext);
 
-		// VERIFY
-		assertThat(file).exists();
-		assertThat(file).hasSameContentAs(expected);
+        // VERIFY
+        assertThat(file).exists();
+        assertThat(file).hasSameContentAs(expected);
 
-	}
+    }
 
-	@Test
-	public void testWriteTYPEJAXBContext() throws Exception {
+    @Test
+    public void testWriteTYPEJAXBContext() throws Exception {
 
-		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
-		final Dummy dummy = new Dummy();
-		dummy.setName("Joe");
-		testee.setFormattedOutput(false);
+        // PREPARE
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
+        final Dummy dummy = new Dummy();
+        dummy.setName("Joe");
+        testee.setFormattedOutput(false);
 
-		// TEST
-		final String result = testee.write(dummy, jaxbContext);
+        // TEST
+        final String result = testee.write(dummy, jaxbContext);
 
-		// VERIFY
-		assertThat(result).isEqualTo(XML + "<dummy name=\"Joe\"/>");
+        // VERIFY
+        assertThat(result).isEqualTo(
+                XML + "<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
 
-	}
+    }
 
-	@Test
-	public void testWriteTYPEWriterJAXBContext() throws Exception {
+    @Test
+    public void testWriteTYPEWriterJAXBContext() throws Exception {
 
-		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
-		final Writer writer = new StringWriter();
-		final Dummy dummy = new Dummy();
-		dummy.setName("Joe");
-		testee.setFormattedOutput(false);
+        // PREPARE
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
+        final Writer writer = new StringWriter();
+        final Dummy dummy = new Dummy();
+        dummy.setName("Joe");
+        testee.setFormattedOutput(false);
 
-		// TEST
-		testee.write(dummy, writer, jaxbContext);
+        // TEST
+        testee.write(dummy, writer, jaxbContext);
 
-		// VERIFY
-		assertThat(writer.toString()).isEqualTo(XML + "<dummy name=\"Joe\"/>");
+        // VERIFY
+        assertThat(writer.toString()).isEqualTo(
+                XML + "<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
 
-	}
+    }
 
-	@Test
-	public void testPOJO() {
+    @Test
+    public void testPOJO() {
 
-		final PojoClass pc = PojoClassFactory.getPojoClass(JaxbHelper.class);
-		final PojoValidator pv = createPojoValidator();
-		pv.runValidation(pc);
+        final PojoClass pc = PojoClassFactory.getPojoClass(JaxbHelper.class);
+        final PojoValidator pv = createPojoValidator();
+        pv.runValidation(pc);
 
-	}
+    }
 
-	// CHECKSTYLE:ON
+    // CHECKSTYLE:ON
 
 }

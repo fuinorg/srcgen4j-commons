@@ -22,28 +22,28 @@ package org.fuin.srcgen4j.commons;
  */
 public final class UnmarshalObjectException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Constructor with message and cause.
-	 * 
-	 * @param message
-	 *            Message.
-	 * @param cause
-	 *            Cause.
-	 */
-	public UnmarshalObjectException(final String message, final Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * Constructor with message and cause.
+     * 
+     * @param message
+     *            Message.
+     * @param cause
+     *            Cause.
+     */
+    public UnmarshalObjectException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 
-	/**
-	 * Constructor with cause.
-	 * 
-	 * @param cause
-	 *            Cause.
-	 */
-	public UnmarshalObjectException(final Throwable cause) {
-		super(cause);
-	}
+    /**
+     * Constructor with cause.
+     * 
+     * @param cause
+     *            Cause.
+     */
+    public UnmarshalObjectException(final Throwable cause) {
+        super(cause);
+    }
 
 }

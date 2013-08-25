@@ -31,28 +31,28 @@ import com.openpojo.validation.test.impl.SetterTester;
  */
 public abstract class AbstractTest {
 
-	/** XML Prefix. */
-	protected static final String XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
-	
-	/**
-	 * Creates a configured POJO validator.
-	 * 
-	 * @return New instance.
-	 */
-	protected final PojoValidator createPojoValidator() {
-		
-		final PojoValidator pv = new PojoValidator();
-		        
-		pv.addRule(new NoPublicFieldsRule());
-		pv.addRule(new NoFieldShadowingRule());
-		pv.addRule(new GetterMustExistRule());
-		pv.addRule(new SetterMustExistRule());
+    /** XML Prefix. */
+    protected static final String XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
 
-		pv.addTester(new DefaultValuesNullTester());
-		pv.addTester(new SetterTester());
-		pv.addTester(new GetterTester());
-		
+    /**
+     * Creates a configured POJO validator.
+     * 
+     * @return New instance.
+     */
+    protected final PojoValidator createPojoValidator() {
+
+        final PojoValidator pv = new PojoValidator();
+
+        pv.addRule(new NoPublicFieldsRule());
+        pv.addRule(new NoFieldShadowingRule());
+        pv.addRule(new GetterMustExistRule());
+        pv.addRule(new SetterMustExistRule());
+
+        pv.addTester(new DefaultValuesNullTester());
+        pv.addTester(new SetterTester());
+        pv.addTester(new GetterTester());
+
         return pv;
-	}
-	
+    }
+
 }

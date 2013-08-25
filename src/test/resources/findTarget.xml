@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<generator-config>
+<srcgen4j-config xmlns="http://www.fuin.org/srcgen4j/commons">
 	
 	<variables>
 		<variable name="root" value="/var/tmp" />
@@ -11,12 +11,16 @@
 		</project>
 	</projects>
 	
+	<parsers>
+		<parser name="parser1" class="a.b.c.MyParser" />
+	</parsers>
+	
 	<generators>
-		<generator name="gen1" project="prj2" folder="folder2">
+		<generator name="gen1" parser="parser1" class="a.b.c.MyGenerator" project="prj2" folder="folder2">
 			<artifact name="arti1" project="prj1" folder="folder3">
 				<target pattern=".*/MyClass.java" project="prj1" folder="folder1" />				 
 			</artifact>
 		</generator>
 	</generators>
 	
-</generator-config>
+</srcgen4j-config>

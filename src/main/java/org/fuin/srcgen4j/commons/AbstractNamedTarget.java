@@ -30,75 +30,75 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = { "name" })
 public abstract class AbstractNamedTarget extends AbstractTarget {
 
-	@XmlAttribute
-	private String name;
+    @XmlAttribute
+    private String name;
 
-	/**
-	 * Default constructor.
-	 */
-	public AbstractNamedTarget() {
-		super();
-	}
+    /**
+     * Default constructor.
+     */
+    public AbstractNamedTarget() {
+        super();
+    }
 
-	/**
-	 * Constructor with name, project and folder.
-	 * 
-	 * @param name
-	 *            Name to set.
-	 * @param project
-	 *            Project to set.
-	 * @param folder
-	 *            Folder to set.
-	 */
-	public AbstractNamedTarget(final String name, final String project, final String folder) {
-		super(project, folder);
-		this.name = name;
-	}
+    /**
+     * Constructor with name, project and folder.
+     * 
+     * @param name
+     *            Name to set.
+     * @param project
+     *            Project to set.
+     * @param folder
+     *            Folder to set.
+     */
+    public AbstractNamedTarget(final String name, final String project, final String folder) {
+        super(project, folder);
+        this.name = name;
+    }
 
-	/**
-	 * Returns the name.
-	 * 
-	 * @return Current name.
-	 */
-	public final String getName() {
-		return name;
-	}
+    /**
+     * Returns the name.
+     * 
+     * @return Current name.
+     */
+    public final String getName() {
+        return name;
+    }
 
-	/**
-	 * Sets the name.
-	 * 
-	 * @param name
-	 *            Name to set.
-	 */
-	public final void setName(final String name) {
-		this.name = name;
-	}
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     *            Name to set.
+     */
+    public final void setName(final String name) {
+        this.name = name;
+    }
 
-	// CHECKSTYLE:OFF Generated code
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
+    // CHECKSTYLE:OFF Generated code
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AbstractNamedTarget other = (AbstractNamedTarget) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
-	// CHECKSTYLE:ON
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        AbstractNamedTarget other = (AbstractNamedTarget) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        return true;
+    }
+    // CHECKSTYLE:ON
 
 }

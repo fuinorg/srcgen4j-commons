@@ -17,28 +17,45 @@
  */
 package org.fuin.srcgen4j.commons;
 
-/**
- * For a given generator/artifact/target was no project found in a generator
- * configuration.
- */
-public class ProjectNameNotDefinedException extends Exception {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
-    private static final long serialVersionUID = 1L;
+/**
+ * Specific parser configuration example.
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "input", namespace = "http://www.fuin.org/srcgen4j/commons/test")
+public class TestInput {
+
+    @XmlAttribute
+    private String path;
 
     /**
-     * Constructor with names.
-     * 
-     * @param generatorName
-     *            Name of the generator with the requested artifact.
-     * @param artifactName
-     *            Name of the artifact with the request target.
-     * @param targetPattern
-     *            Target pattern.
+     * Default constructor.
      */
-    public ProjectNameNotDefinedException(final String generatorName, final String artifactName,
-            final String targetPattern) {
-        super("No project name is defined for: " + generatorName + " / " + artifactName + " / "
-                + targetPattern);
+    public TestInput() {
+        super();
+    }
+
+    /**
+     * Returns the path.
+     * 
+     * @return Path information.
+     */
+    public final String getPath() {
+        return path;
+    }
+
+    /**
+     * Sets the path to a new value.
+     * 
+     * @param path
+     *            Path information to set.
+     */
+    public final void setPath(final String path) {
+        this.path = path;
     }
 
 }

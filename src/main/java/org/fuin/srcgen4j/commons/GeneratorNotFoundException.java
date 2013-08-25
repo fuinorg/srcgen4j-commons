@@ -22,15 +22,16 @@ package org.fuin.srcgen4j.commons;
  */
 public class GeneratorNotFoundException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Constructor with generator name.
-	 * 
-	 * @param generatorName Name of the generator that was not found.
-	 */
-	public GeneratorNotFoundException(final String generatorName) {
-		super("The generator '" + generatorName + "' is not configured");
-	}
+    /**
+     * Constructor with generator name.
+     * 
+     * @param generatorName
+     *            Name of the generator that was not found.
+     */
+    public GeneratorNotFoundException(final String generatorName) {
+        super("The generator '" + generatorName + "' is not configured");
+    }
 
 }

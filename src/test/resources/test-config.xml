@@ -1,9 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<generator-config>
+<?xml version="1.0" encoding="UTF-8"?>
+<srcgen4j-config
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns="http://www.fuin.org/srcgen4j/commons"
+   xmlns:test="http://www.fuin.org/srcgen4j/commons/test">
 	
 	<variables>
 		<variable name="root" value="/var/tmp" />
+		<!-- 
+		  The following line creates X variables based on the number of nodes selected by the XPATH expression. 
+		  All attributes in the selected node can be used as a variable prefixed with 'xpath:'. 
+		-->
+		<variable name="project_${xpath:name}_path" value="${xpath:path}" xpath="//project" />
 	</variables>
+	
+	<classpath>
+		<bin dir="${project_example_path}/target/classes" />
+	</classpath>
 	
 	<projects>
 		<project name="example" path="${root}/example">
@@ -19,8 +31,14 @@
 		</project>
 	</projects>
 	
+	<parsers>
+		<parser name="parser1" class="org.fuin.srcgen4j.commons.TestParser">
+			<test:input path="${root}/xtext-ddd/TestModel/src/main/domain" />
+		</parser>
+	</parsers>
+	
 	<generators>
-		<generator name="gen1" project="example" folder="genMainJava">
+		<generator name="gen1" class="org.fuin.srcgen4j.commons.TestGenerator" parser="parser1" project="example" folder="genMainJava">
 			<!-- Project and folder can be overridden in artifact -->
 			<artifact name="one" project="example" folder="genMainJava">
 				<!-- Example for changing the target folder or even the project based on a path/file regular expression --> 
@@ -31,4 +49,4 @@
 		</generator>
 	</generators>
 	
-</generator-config>
+</srcgen4j-config>

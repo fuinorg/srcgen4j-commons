@@ -29,69 +29,69 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = { "folder", "project" })
 public abstract class AbstractTarget extends AbstractElement {
 
-	@XmlAttribute
-	private String project;
+    @XmlAttribute
+    private String project;
 
-	@XmlAttribute
-	private String folder;
+    @XmlAttribute
+    private String folder;
 
-	/**
-	 * Default constructor.
-	 */
-	public AbstractTarget() {
-		super();
-	}
+    /**
+     * Default constructor.
+     */
+    public AbstractTarget() {
+        super();
+    }
 
-	/**
-	 * Constructor with project and folder.
-	 * 
-	 * @param project
-	 *            Project to set.
-	 * @param folder
-	 *            Folder to set.
-	 */
-	public AbstractTarget(final String project, final String folder) {
-		super();
-		this.project = project;
-		this.folder = folder;
-	}
+    /**
+     * Constructor with project and folder.
+     * 
+     * @param project
+     *            Project to set.
+     * @param folder
+     *            Folder to set.
+     */
+    public AbstractTarget(final String project, final String folder) {
+        super();
+        this.project = project;
+        this.folder = folder;
+    }
 
-	/**
-	 * Returns the project.
-	 * 
-	 * @return Current project.
-	 */
-	public final String getProject() {
-		return project;
-	}
+    /**
+     * Returns the project.
+     * 
+     * @return Current project.
+     */
+    public final String getProject() {
+        return project;
+    }
 
-	/**
-	 * Sets the project.
-	 * 
-	 * @param project
-	 *            Project to set.
-	 */
-	public final void setProject(final String project) {
-		this.project = project;
-	}
+    /**
+     * Sets the project.
+     * 
+     * @param project
+     *            Project to set.
+     */
+    public final void setProject(final String project) {
+        this.project = project;
+    }
 
-	/**
-	 * Returns the folder.
-	 * 
-	 * @return Current folder.
-	 */
-	public final String getFolder() {
-		return folder;
-	}
+    /**
+     * Returns the folder.
+     * 
+     * @return Current folder.
+     */
+    public final String getFolder() {
+        return folder;
+    }
 
-	/**
-	 * Sets the folder.
-	 * 
-	 * @param folder
-	 *            Folder to set.
-	 */
-	public final void setFolder(final String folder) {
-		this.folder = folder;
-	}
+    /**
+     * Sets the folder.
+     * 
+     * @param folder
+     *            Folder to set.
+     */
+    public final void setFolder(final String folder) {
+        this.folder = folder;
+    }
 
 }

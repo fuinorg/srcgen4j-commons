@@ -35,85 +35,90 @@ import com.openpojo.validation.PojoValidator;
  */
 public class GeneratorsTest extends AbstractTest {
 
-	// CHECKSTYLE:OFF
-	
-	@Test
-	public final void testPojoStructureAndBehavior() {
-		
-		final PojoClass pc = PojoClassFactory.getPojoClass(Generators.class);
-		final PojoValidator pv = createPojoValidator();
-		pv.runValidation(pc);
-		
-	}
+    // CHECKSTYLE:OFF
 
-	@Test
-	public final void testMarshal() throws Exception {
+    @Test
+    public final void testPojoStructureAndBehavior() {
 
-		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Generators.class);
-		final Generators testee = new Generators("abc", "def");
-		testee.addGenerator(new Generator("NAME", "PROJECT", "FOLDER"));
+        final PojoClass pc = PojoClassFactory.getPojoClass(Generators.class);
+        final PojoValidator pv = createPojoValidator();
+        pv.runValidation(pc);
 
-		// TEST
-		final String result = new JaxbHelper(false).write(testee, jaxbContext);
+    }
 
-		// VERIFY
-		assertThat(result).isEqualTo(XML + "<generators project=\"abc\" folder=\"def\"><generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generators>");
+    @Test
+    public final void testMarshal() throws Exception {
 
-	}
+        // PREPARE
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Generators.class);
+        final Generators testee = new Generators("abc", "def");
+        testee.addGenerator(new Generator("NAME", "PROJECT", "FOLDER"));
 
-	@Test
-	public final void testUnmarshal() throws Exception {
+        // TEST
+        final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
-		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Generators.class);
+        // VERIFY
+        assertThat(result)
+                .isEqualTo(
+                        XML
+                                + "<generators project=\"abc\" "
+                                + "folder=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+                                + "<generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generators>");
 
-		// TEST
-		final Generators testee = new JaxbHelper().create(
-				"<generators project=\"abc\" folder=\"def\"><generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generators>",
-				jaxbContext);
+    }
 
-		// VERIFY
-		assertThat(testee).isNotNull();
-		assertThat(testee.getProject()).isEqualTo("abc");
-		assertThat(testee.getFolder()).isEqualTo("def");
-		assertThat(testee.getList()).isNotNull();
-		assertThat(testee.getList()).hasSize(1);
-		assertThat(testee.getList().get(0).getName()).isEqualTo("NAME");
-		assertThat(testee.getList().get(0).getProject()).isEqualTo("PROJECT");
-		assertThat(testee.getList().get(0).getFolder()).isEqualTo("FOLDER");
+    @Test
+    public final void testUnmarshal() throws Exception {
 
-	}
+        // PREPARE
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Generators.class);
 
-	@Test
-	public final void testInit() {
-		
-		// PREPARE
-		final GeneratorConfig parent = new GeneratorConfig();
-		final Generators testee = new Generators("A${a}A", "${b}2B");
-		testee.addGenerator(new Generator("A ${x}", "${y}B", "a${z}c"));
-		
-		final Map<String, String> vars = new HashMap<String, String>();
-		vars.put("a", "1");
-		vars.put("b", "B");
-		vars.put("x", "NAME");
-		vars.put("y", "PRJ");
-		vars.put("z", "b");
-		
-		// TEST
-		testee.init(parent, vars);
-		
-		// VERIFY
-		assertThat(testee.getParent()).isSameAs(parent);
-		assertThat(testee.getProject()).isEqualTo("A1A");
-		assertThat(testee.getFolder()).isEqualTo("B2B");
-		final Generator generator = testee.getList().get(0);
-		assertThat(generator.getName()).isEqualTo("A NAME");
-		assertThat(generator.getProject()).isEqualTo("PRJB");
-		assertThat(generator.getFolder()).isEqualTo("abc");
-		
-	}
+        // TEST
+        final Generators testee = new JaxbHelper()
+                .create("<generators project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"><generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generators>",
+                        jaxbContext);
 
-	// CHECKSTYLE:ON
-	
+        // VERIFY
+        assertThat(testee).isNotNull();
+        assertThat(testee.getProject()).isEqualTo("abc");
+        assertThat(testee.getFolder()).isEqualTo("def");
+        assertThat(testee.getList()).isNotNull();
+        assertThat(testee.getList()).hasSize(1);
+        assertThat(testee.getList().get(0).getName()).isEqualTo("NAME");
+        assertThat(testee.getList().get(0).getProject()).isEqualTo("PROJECT");
+        assertThat(testee.getList().get(0).getFolder()).isEqualTo("FOLDER");
+
+    }
+
+    @Test
+    public final void testInit() {
+
+        // PREPARE
+        final SrcGen4JConfig parent = new SrcGen4JConfig();
+        final Generators testee = new Generators("A${a}A", "${b}2B");
+        testee.addGenerator(new Generator("A ${x}", "${y}B", "a${z}c"));
+
+        final Map<String, String> vars = new HashMap<String, String>();
+        vars.put("a", "1");
+        vars.put("b", "B");
+        vars.put("x", "NAME");
+        vars.put("y", "PRJ");
+        vars.put("z", "b");
+
+        // TEST
+        testee.init(parent, vars);
+
+        // VERIFY
+        assertThat(testee.getParent()).isSameAs(parent);
+        assertThat(testee.getProject()).isEqualTo("A1A");
+        assertThat(testee.getFolder()).isEqualTo("B2B");
+        final Generator generator = testee.getList().get(0);
+        assertThat(generator.getName()).isEqualTo("A NAME");
+        assertThat(generator.getProject()).isEqualTo("PRJB");
+        assertThat(generator.getFolder()).isEqualTo("abc");
+
+    }
+
+    // CHECKSTYLE:ON
+
 }

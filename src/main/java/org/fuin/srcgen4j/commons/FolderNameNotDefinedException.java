@@ -18,26 +18,27 @@
 package org.fuin.srcgen4j.commons;
 
 /**
- * For a given generator/artifact/target was no folder found in a generator configuration.
+ * For a given generator/artifact/target was no folder found in a generator
+ * configuration.
  */
 public class FolderNameNotDefinedException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Constructor with names.
-	 * 
-	 * @param generatorName
-	 *            Name of the generator with the requested artifact.
-	 * @param artifactName
-	 *            Name of the artifact with the request target.
-	 * @param targetPattern
-	 *            Target pattern.
-	 */
-	public FolderNameNotDefinedException(final String generatorName,
-			final String artifactName, final String targetPattern) {
-		super("No folder name is defined for: "
-				+ generatorName + " / " + artifactName + " / " + targetPattern);
-	}
+    /**
+     * Constructor with names.
+     * 
+     * @param generatorName
+     *            Name of the generator with the requested artifact.
+     * @param artifactName
+     *            Name of the artifact with the request target.
+     * @param targetPattern
+     *            Target pattern.
+     */
+    public FolderNameNotDefinedException(final String generatorName, final String artifactName,
+            final String targetPattern) {
+        super("No folder name is defined for: " + generatorName + " / " + artifactName + " / "
+                + targetPattern);
+    }
 
 }
