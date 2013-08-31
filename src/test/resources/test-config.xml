@@ -6,15 +6,11 @@
 	
 	<variables>
 		<variable name="root" value="/var/tmp" />
-		<!-- 
-		  The following line creates X variables based on the number of nodes selected by the XPATH expression. 
-		  All attributes in the selected node can be used as a variable prefixed with 'xpath:'. 
-		-->
-		<variable name="project_${xpath:name}_path" value="${xpath:path}" xpath="//project" />
+		<variable name="project_example_path" value="${root}/example" />
 	</variables>
 	
 	<classpath>
-		<bin dir="${project_example_path}/target/classes" />
+		<bin path="${project_example_path}/target/classes" />
 	</classpath>
 	
 	<projects>

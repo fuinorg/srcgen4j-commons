@@ -34,12 +34,15 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "srcgen4j-config")
-@XmlType(propOrder = { "generators", "parsers", "projects", "variables" })
+@XmlType(propOrder = { "generators", "parsers", "projects", "classpath", "variables" })
 public class SrcGen4JConfig {
 
     @XmlElementWrapper(name = "variables")
     @XmlElement(name = "variable")
     private List<Variable> variables;
+
+    @XmlElement(name = "classpath")
+    private Classpath classpath;
 
     @XmlElementWrapper(name = "projects")
     @XmlElement(name = "project")
@@ -80,6 +83,25 @@ public class SrcGen4JConfig {
      */
     public final void setVariables(final List<Variable> variables) {
         this.variables = variables;
+    }
+
+    /**
+     * Returns the class path.
+     * 
+     * @return Class path.
+     */
+    public final Classpath getClasspath() {
+        return classpath;
+    }
+
+    /**
+     * Sets the class path to a new value.
+     * 
+     * @param classpath
+     *            Value to set or NULL.
+     */
+    public final void setClasspath(final Classpath classpath) {
+        this.classpath = classpath;
     }
 
     /**

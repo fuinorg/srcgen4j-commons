@@ -123,8 +123,13 @@ public class SrcGen4JConfigTest extends AbstractTest {
             assertThat(var0.getName()).isEqualTo("root");
             assertThat(var0.getValue()).isEqualTo("/var/tmp");
             final Variable var1 = testee.getVariables().get(1);
-            assertThat(var1.getName()).isEqualTo("project_${xpath:name}_path");
-            assertThat(var1.getValue()).isEqualTo("${xpath:path}");
+            assertThat(var1.getName()).isEqualTo("project_example_path");
+            assertThat(var1.getValue()).isEqualTo("${root}/example");
+
+            assertThat(testee.getClasspath()).isNotNull();
+            assertThat(testee.getClasspath().getBinList()).hasSize(1);
+            final BinClasspathEntry entry = testee.getClasspath().getBinList().get(0);
+            assertThat(entry.getPath()).isEqualTo("${project_example_path}/target/classes");
 
             assertThat(testee.getProjects()).isNotNull();
             assertThat(testee.getProjects()).hasSize(1);
