@@ -143,6 +143,20 @@ public class SrcGen4JConfig {
     }
 
     /**
+     * Adds a parser to the configuration. If the list of parsers does not exist
+     * it will be created.
+     * 
+     * @param parser
+     *            Parser to add - Never NULL.
+     */
+    public final void addParser(final ParserConfig parser) {
+        if (parsers == null) {
+            parsers = new ArrayList<ParserConfig>();
+        }
+        parsers.add(parser);
+    }
+
+    /**
      * Returns a set of generators.
      * 
      * @return Generators or NULL.
@@ -308,6 +322,25 @@ public class SrcGen4JConfig {
         }
         return project.getFolders().get(idx);
 
+    }
+
+    /**
+     * Find all generators that are connected to a given parser.
+     * 
+     * @param parserName
+     *            Name of the parser to return the generators for.
+     * 
+     * @return List of generators.
+     */
+    public final List<GeneratorConfig> findGeneratorsForParser(final String parserName) {
+        final List<GeneratorConfig> list = new ArrayList<GeneratorConfig>();
+        final List<GeneratorConfig> gcList = generators.getList();
+        for (final GeneratorConfig gc : gcList) {
+            if (gc.getParser().equals(parserName)) {
+                list.add(gc);
+            }
+        }
+        return list;
     }
 
     /**

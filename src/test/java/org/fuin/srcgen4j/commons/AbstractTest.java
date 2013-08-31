@@ -21,7 +21,6 @@ import com.openpojo.validation.PojoValidator;
 import com.openpojo.validation.rule.impl.GetterMustExistRule;
 import com.openpojo.validation.rule.impl.NoFieldShadowingRule;
 import com.openpojo.validation.rule.impl.NoPublicFieldsRule;
-import com.openpojo.validation.rule.impl.SetterMustExistRule;
 import com.openpojo.validation.test.impl.DefaultValuesNullTester;
 import com.openpojo.validation.test.impl.GetterTester;
 import com.openpojo.validation.test.impl.SetterTester;
@@ -46,7 +45,6 @@ public abstract class AbstractTest {
         pv.addRule(new NoPublicFieldsRule());
         pv.addRule(new NoFieldShadowingRule());
         pv.addRule(new GetterMustExistRule());
-        pv.addRule(new SetterMustExistRule());
 
         pv.addTester(new DefaultValuesNullTester());
         pv.addTester(new SetterTester());

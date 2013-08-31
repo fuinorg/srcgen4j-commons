@@ -28,6 +28,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.fuin.utils4j.Utils4J;
+
 /**
  * Represents a code generator.
  */
@@ -47,6 +49,8 @@ public class GeneratorConfig extends AbstractNamedTarget implements
     private List<Artifact> artifacts;
 
     private transient Generators parent;
+
+    private transient Generator<Object> generator;
 
     /**
      * Default constructor.
@@ -211,6 +215,26 @@ public class GeneratorConfig extends AbstractNamedTarget implements
             }
         }
         return this;
+    }
+
+    /**
+     * Returns an existing generator instance or creates a new one if it's the
+     * first call to this method.
+     * 
+     * @return Generator of type {@link #className}.
+     */
+    @SuppressWarnings("unchecked")
+    public final Generator<Object> getGenerator() {
+        if (generator != null) {
+            return generator;
+        }
+        final Object obj = Utils4J.createInstance(className);
+        if (!(obj instanceof Generator<?>)) {
+            throw new IllegalStateException("Expected class to be of type '"
+                    + Generator.class.getName() + "', but was: " + className);
+        }
+        generator = (Generator<Object>) obj;
+        return generator;
     }
 
 }

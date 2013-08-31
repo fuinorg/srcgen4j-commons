@@ -26,6 +26,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.fuin.utils4j.Utils4J;
+
 /**
  * Represents a model parser.
  */
@@ -42,6 +44,8 @@ public class ParserConfig extends AbstractNamedElement implements
     private Object config;
 
     private transient SrcGen4JConfig parent;
+
+    private transient Parser<Object> parser;
 
     /**
      * Default constructor.
@@ -141,6 +145,26 @@ public class ParserConfig extends AbstractNamedElement implements
             ie.init(this, vars);
         }
         return this;
+    }
+
+    /**
+     * Returns an existing parser instance or creates a new one if it's the
+     * first call to this method.
+     * 
+     * @return Parser of type {@link #className}.
+     */
+    @SuppressWarnings("unchecked")
+    public final Parser<Object> getParser() {
+        if (parser != null) {
+            return parser;
+        }
+        final Object obj = Utils4J.createInstance(className);
+        if (!(obj instanceof Parser<?>)) {
+            throw new IllegalStateException("Expected class to be of type '"
+                    + Parser.class.getName() + "', but was: " + className);
+        }
+        parser = (Parser<Object>) obj;
+        return parser;
     }
 
 }

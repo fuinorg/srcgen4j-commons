@@ -34,12 +34,6 @@ import org.junit.Test;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
-import com.openpojo.validation.rule.impl.GetterMustExistRule;
-import com.openpojo.validation.rule.impl.NoFieldShadowingRule;
-import com.openpojo.validation.rule.impl.NoPublicFieldsRule;
-import com.openpojo.validation.test.impl.DefaultValuesNullTester;
-import com.openpojo.validation.test.impl.GetterTester;
-import com.openpojo.validation.test.impl.SetterTester;
 
 /**
  * Tests for {@link SrcGen4JConfig}.
@@ -52,14 +46,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
     public final void testPojoStructureAndBehavior() {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(SrcGen4JConfig.class);
-
-        final PojoValidator pv = new PojoValidator();
-        pv.addRule(new NoPublicFieldsRule());
-        pv.addRule(new NoFieldShadowingRule());
-        pv.addRule(new GetterMustExistRule());
-        pv.addTester(new DefaultValuesNullTester());
-        pv.addTester(new SetterTester());
-        pv.addTester(new GetterTester());
+        final PojoValidator pv = createPojoValidator();
 
         pv.runValidation(pc);
 

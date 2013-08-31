@@ -34,6 +34,7 @@ import org.junit.Test;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
+import com.openpojo.validation.rule.impl.SetterMustExistRule;
 
 /**
  * Tests for {@link JaxbHelper}.
@@ -175,10 +176,11 @@ public class JaxbHelperTest extends AbstractTest {
     }
 
     @Test
-    public void testPOJO() {
+    public void testStructureAndBehaviour() {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(JaxbHelper.class);
         final PojoValidator pv = createPojoValidator();
+        pv.addRule(new SetterMustExistRule());
         pv.runValidation(pc);
 
     }
