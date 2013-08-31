@@ -26,7 +26,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -47,7 +46,6 @@ public class GeneratorConfig extends AbstractNamedTarget implements
     @XmlElement(name = "artifact")
     private List<Artifact> artifacts;
 
-    @XmlTransient
     private transient Generators parent;
 
     /**

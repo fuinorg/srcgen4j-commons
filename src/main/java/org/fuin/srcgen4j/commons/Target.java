@@ -24,7 +24,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -39,10 +38,8 @@ public class Target extends AbstractTarget implements InitializableElement<Targe
     @XmlAttribute
     private String pattern;
 
-    @XmlTransient
     private transient Artifact parent;
 
-    @XmlTransient
     private transient Pattern regExpr;
 
     /**
