@@ -140,11 +140,10 @@ public class SrcGen4JConfig {
     }
 
     private void initVarMap() {
-        varMap = new HashMap<String, String>();
-        if (variables != null) {
-            for (final Variable var : variables) {
-                varMap.put(var.getName(), var.getValue());
-            }
+        if (variables == null) {
+            varMap = new HashMap<String, String>();
+        } else {
+            varMap = new VariableResolver(variables).getResolved();
         }
     }
 
