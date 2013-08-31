@@ -104,10 +104,7 @@
       <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
   </module>
-  <module name="FileTabCharacter">
-    <property name="severity" value="ignore"/>
-    <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-  </module>
+  <module name="FileTabCharacter"/>
   <module name="Header">
     <property name="headerFile" value="${checkstyle.header.file}"/>
   </module>
