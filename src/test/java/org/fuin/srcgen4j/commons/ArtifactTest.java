@@ -110,7 +110,7 @@ public class ArtifactTest extends AbstractTest {
         vars.put("b", "p");
         vars.put("c", "z");
 
-        final Generator parent = new Generator();
+        final GeneratorConfig parent = new GeneratorConfig();
 
         // TEST
         testee.init(parent, vars);
@@ -153,7 +153,7 @@ public class ArtifactTest extends AbstractTest {
     public void testFindTarget() {
 
         // PREPARE
-        final Generator parent = new Generator();
+        final GeneratorConfig parent = new GeneratorConfig();
         final Artifact testee = new Artifact("A", "B", "C");
         final Target targetA = new Target("a", "b", "c");
         final Target targetB = new Target("d", "e", "f");
@@ -176,7 +176,7 @@ public class ArtifactTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig config = new SrcGen4JConfig();
         final Generators generators = new Generators();
-        final Generator generator = new Generator();
+        final GeneratorConfig generator = new GeneratorConfig();
         final Artifact testee = new Artifact();
 
         config.setGenerators(generators);

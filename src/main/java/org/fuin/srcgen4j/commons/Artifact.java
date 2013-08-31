@@ -34,13 +34,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "artifact")
 @XmlType(propOrder = { "targets" })
-public class Artifact extends AbstractNamedTarget {
+public class Artifact extends AbstractNamedTarget implements
+        InitializableElement<Artifact, GeneratorConfig> {
 
     @XmlElement(name = "target")
     private List<Target> targets;
 
     @XmlTransient
-    private Generator parent;
+    private transient GeneratorConfig parent;
 
     /**
      * Default constructor.
@@ -140,7 +141,7 @@ public class Artifact extends AbstractNamedTarget {
      * 
      * @return Generator.
      */
-    public final Generator getParent() {
+    public final GeneratorConfig getParent() {
         return parent;
     }
 
@@ -150,7 +151,7 @@ public class Artifact extends AbstractNamedTarget {
      * @param parent
      *            Generator.
      */
-    public final void setParent(final Generator parent) {
+    public final void setParent(final GeneratorConfig parent) {
         this.parent = parent;
     }
 
@@ -178,17 +179,8 @@ public class Artifact extends AbstractNamedTarget {
         return null;
     }
 
-    /**
-     * Initializes this object and it's childs.
-     * 
-     * @param parent
-     *            Parent.
-     * @param vars
-     *            Variables to use.
-     * 
-     * @return This instance.
-     */
-    public final Artifact init(final Generator parent, final Map<String, String> vars) {
+    @Override
+    public final Artifact init(final GeneratorConfig parent, final Map<String, String> vars) {
         this.parent = parent;
         setName(replaceVars(getName(), vars));
         setProject(replaceVars(getProject(), vars));

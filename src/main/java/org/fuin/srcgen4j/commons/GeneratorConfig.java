@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "generator")
 @XmlType(propOrder = { "artifacts", "parser", "className" })
-public class Generator extends AbstractNamedTarget {
+public class GeneratorConfig extends AbstractNamedTarget implements
+        InitializableElement<GeneratorConfig, Generators> {
 
     @XmlAttribute(name = "class")
     private String className;
@@ -47,12 +48,12 @@ public class Generator extends AbstractNamedTarget {
     private List<Artifact> artifacts;
 
     @XmlTransient
-    private Generators parent;
+    private transient Generators parent;
 
     /**
      * Default constructor.
      */
-    public Generator() {
+    public GeneratorConfig() {
         super();
     }
 
@@ -62,7 +63,7 @@ public class Generator extends AbstractNamedTarget {
      * @param name
      *            Name to set.
      */
-    public Generator(final String name) {
+    public GeneratorConfig(final String name) {
         super(name, null, null);
     }
 
@@ -76,7 +77,7 @@ public class Generator extends AbstractNamedTarget {
      * @param folder
      *            Folder to set.
      */
-    public Generator(final String name, final String project, final String folder) {
+    public GeneratorConfig(final String name, final String project, final String folder) {
         super(name, project, folder);
     }
 
@@ -200,17 +201,8 @@ public class Generator extends AbstractNamedTarget {
         return getFolder();
     }
 
-    /**
-     * Initializes this object and it's childs.
-     * 
-     * @param parent
-     *            Parent.
-     * @param vars
-     *            Variables to use.
-     * 
-     * @return This instance.
-     */
-    public final Generator init(final Generators parent, final Map<String, String> vars) {
+    @Override
+    public final GeneratorConfig init(final Generators parent, final Map<String, String> vars) {
         this.parent = parent;
         setName(replaceVars(getName(), vars));
         setProject(replaceVars(getProject(), vars));

@@ -31,16 +31,16 @@ import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
 
 /**
- * Tests for {@link Generator}.
+ * Tests for {@link GeneratorConfig}.
  */
-public class GeneratorTest extends AbstractTest {
+public class GeneratorConfigTest extends AbstractTest {
 
     // CHECKSTYLE:OFF
 
     @Test
     public final void testPojoStructureAndBehavior() {
 
-        final PojoClass pc = PojoClassFactory.getPojoClass(Generator.class);
+        final PojoClass pc = PojoClassFactory.getPojoClass(GeneratorConfig.class);
         final PojoValidator pv = createPojoValidator();
         pv.runValidation(pc);
 
@@ -50,8 +50,8 @@ public class GeneratorTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Generator.class, Artifact.class);
-        final Generator testee = new Generator("abc", "def", "ghi");
+        final JAXBContext jaxbContext = JAXBContext.newInstance(GeneratorConfig.class, Artifact.class);
+        final GeneratorConfig testee = new GeneratorConfig("abc", "def", "ghi");
         testee.addArtifact(new Artifact("NAME", "PROJECT", "FOLDER"));
 
         // TEST
@@ -71,10 +71,10 @@ public class GeneratorTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Generator.class, Folder.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(GeneratorConfig.class, Folder.class);
 
         // TEST
-        final Generator testee = new JaxbHelper().create("<generator name=\"abc\" "
+        final GeneratorConfig testee = new JaxbHelper().create("<generator name=\"abc\" "
                 + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
                 + "<artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generator>",
                 jaxbContext);
@@ -97,7 +97,7 @@ public class GeneratorTest extends AbstractTest {
 
         // PREPARE
         final Generators parent = new Generators();
-        final Generator testee = new Generator("A${a}A", "${b}2B", "C3${c}");
+        final GeneratorConfig testee = new GeneratorConfig("A${a}A", "${b}2B", "C3${c}");
         testee.addArtifact(new Artifact("A ${x}", "${y}B", "a${z}c"));
 
         final Map<String, String> vars = new HashMap<String, String>();
@@ -129,7 +129,7 @@ public class GeneratorTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig config = new SrcGen4JConfig();
         final Generators generators = new Generators();
-        final Generator testee = new Generator();
+        final GeneratorConfig testee = new GeneratorConfig();
 
         config.setGenerators(generators);
         generators.addGenerator(testee);

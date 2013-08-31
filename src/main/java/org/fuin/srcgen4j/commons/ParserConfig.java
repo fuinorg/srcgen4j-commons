@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.util.Map;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -30,7 +32,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "parser")
 @XmlType(propOrder = { "config", "className" })
-public class Parser extends AbstractNamedElement {
+public class ParserConfig extends AbstractNamedElement implements
+        InitializableElement<ParserConfig, SrcGen4JConfig> {
 
     @XmlAttribute(name = "class")
     private String className;
@@ -38,10 +41,12 @@ public class Parser extends AbstractNamedElement {
     @XmlAnyElement(lax = true)
     private Object config;
 
+    private transient SrcGen4JConfig parent;
+
     /**
      * Default constructor.
      */
-    public Parser() {
+    public ParserConfig() {
         super();
     }
 
@@ -51,7 +56,7 @@ public class Parser extends AbstractNamedElement {
      * @param name
      *            Name to set.
      */
-    public Parser(final String name) {
+    public ParserConfig(final String name) {
         super(name);
     }
 
@@ -63,7 +68,7 @@ public class Parser extends AbstractNamedElement {
      * @param className
      *            Full qualified name of the class to set.
      */
-    public Parser(final String name, final String className) {
+    public ParserConfig(final String name, final String className) {
         super(name);
         this.className = className;
     }
@@ -104,6 +109,38 @@ public class Parser extends AbstractNamedElement {
      */
     public final void setConfig(final Object config) {
         this.config = config;
+    }
+
+    /**
+     * Returns the parent of the object.
+     * 
+     * @return GeneratorConfig.
+     */
+    public final SrcGen4JConfig getParent() {
+        return parent;
+    }
+
+    /**
+     * Sets the parent of the object.
+     * 
+     * @param parent
+     *            GeneratorConfig.
+     */
+    public final void setParent(final SrcGen4JConfig parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public final ParserConfig init(final SrcGen4JConfig parent, final Map<String, String> vars) {
+        this.parent = parent;
+        setName(replaceVars(getName(), vars));
+        setClassName(replaceVars(getClassName(), vars));
+        if (config instanceof InitializableElement) {
+            final InitializableElement<?, ParserConfig> ie = (InitializableElement<?, ParserConfig>) config;
+            ie.init(this, vars);
+        }
+        return this;
     }
 
 }

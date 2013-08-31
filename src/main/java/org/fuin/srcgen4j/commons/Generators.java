@@ -34,13 +34,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "generators")
 @XmlType(propOrder = { "list" })
-public class Generators extends AbstractTarget {
+public class Generators extends AbstractTarget implements
+        InitializableElement<Generators, SrcGen4JConfig> {
 
     @XmlElement(name = "generator")
-    private List<Generator> list;
+    private List<GeneratorConfig> list;
 
     @XmlTransient
-    private SrcGen4JConfig parent;
+    private transient SrcGen4JConfig parent;
 
     /**
      * Default constructor.
@@ -66,7 +67,7 @@ public class Generators extends AbstractTarget {
      * 
      * @return Generators or NULL.
      */
-    public final List<Generator> getList() {
+    public final List<GeneratorConfig> getList() {
         return list;
     }
 
@@ -76,7 +77,7 @@ public class Generators extends AbstractTarget {
      * @param list
      *            Generators or NULL.
      */
-    public final void setList(final List<Generator> list) {
+    public final void setList(final List<GeneratorConfig> list) {
         this.list = list;
     }
 
@@ -86,9 +87,9 @@ public class Generators extends AbstractTarget {
      * @param generator
      *            Generator to add - Cannot be NULL.
      */
-    public final void addGenerator(final Generator generator) {
+    public final void addGenerator(final GeneratorConfig generator) {
         if (list == null) {
-            list = new ArrayList<Generator>();
+            list = new ArrayList<GeneratorConfig>();
         }
         list.add(generator);
     }
@@ -112,22 +113,13 @@ public class Generators extends AbstractTarget {
         this.parent = parent;
     }
 
-    /**
-     * Initializes this object and it's childs.
-     * 
-     * @param parent
-     *            Parent.
-     * @param vars
-     *            Variables to use.
-     * 
-     * @return This instance.
-     */
+    @Override
     public final Generators init(final SrcGen4JConfig parent, final Map<String, String> vars) {
         this.parent = parent;
         setProject(replaceVars(getProject(), vars));
         setFolder(replaceVars(getFolder(), vars));
         if (list != null) {
-            for (final Generator generator : list) {
+            for (final GeneratorConfig generator : list) {
                 generator.init(this, vars);
             }
         }
@@ -145,8 +137,9 @@ public class Generators extends AbstractTarget {
      * @throws GeneratorNotFoundException
      *             No generator with the given name was found.
      */
-    public final Generator findByName(final String generatorName) throws GeneratorNotFoundException {
-        final int idx = list.indexOf(new Generator(generatorName));
+    public final GeneratorConfig findByName(final String generatorName)
+            throws GeneratorNotFoundException {
+        final int idx = list.indexOf(new GeneratorConfig(generatorName));
         if (idx < 0) {
             throw new GeneratorNotFoundException(generatorName);
         }

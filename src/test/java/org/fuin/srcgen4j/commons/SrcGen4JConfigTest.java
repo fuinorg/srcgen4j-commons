@@ -123,7 +123,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
             assertThat(testee.getGenerators()).isNotNull();
             assertThat(testee.getGenerators().getList()).hasSize(1);
-            final Generator gen = testee.getGenerators().getList().get(0);
+            final GeneratorConfig gen = testee.getGenerators().getList().get(0);
             assertThat(gen.getName()).isEqualTo("gen1");
             assertThat(gen.getProject()).isEqualTo("example");
             assertThat(gen.getFolder()).isEqualTo("genMainJava");
@@ -173,8 +173,8 @@ public class SrcGen4JConfigTest extends AbstractTest {
         projects.add(project);
         project.addFolder(new Folder("${folder.name}", "${folder.path}"));
 
-        final List<Generator> genList = new ArrayList<Generator>();
-        final Generator generator = new Generator("${generator.name}", "${generator.project}",
+        final List<GeneratorConfig> genList = new ArrayList<GeneratorConfig>();
+        final GeneratorConfig generator = new GeneratorConfig("${generator.name}", "${generator.project}",
                 "${generator.folder}");
         genList.add(generator);
         final Artifact artifact = new Artifact("${artifact.name}", "${artifact.project}",
@@ -208,7 +208,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
         assertThat(testee.getGenerators().getList()).isNotNull();
         assertThat(testee.getGenerators().getList()).hasSize(1);
 
-        final Generator resultGenerator = testee.getGenerators().getList().get(0);
+        final GeneratorConfig resultGenerator = testee.getGenerators().getList().get(0);
         assertThat(resultGenerator.getName()).isEqualTo("3");
         assertThat(resultGenerator.getProject()).isEqualTo("4");
         assertThat(resultGenerator.getFolder()).isEqualTo("5");

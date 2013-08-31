@@ -47,7 +47,7 @@ public class SrcGen4JConfig {
 
     @XmlElementWrapper(name = "parsers")
     @XmlElement(name = "parser")
-    private List<Parser> parsers;
+    private List<ParserConfig> parsers;
 
     @XmlElement(name = "generators")
     private Generators generators;
@@ -111,7 +111,7 @@ public class SrcGen4JConfig {
      * 
      * @return Parsers or NULL.
      */
-    public final List<Parser> getParsers() {
+    public final List<ParserConfig> getParsers() {
         return parsers;
     }
 
@@ -121,7 +121,7 @@ public class SrcGen4JConfig {
      * @param parsers
      *            Parsers or NULL.
      */
-    public final void setParsers(final List<Parser> parsers) {
+    public final void setParsers(final List<ParserConfig> parsers) {
         this.parsers = parsers;
     }
 
@@ -167,6 +167,11 @@ public class SrcGen4JConfig {
         }
         if (generators != null) {
             generators.init(this, varMap);
+        }
+        if (parsers != null) {
+            for (final ParserConfig parser : parsers) {
+                parser.init(this, varMap);
+            }
         }
         return this;
     }
@@ -235,7 +240,7 @@ public class SrcGen4JConfig {
             ArtifactNotFoundException, FolderNameNotDefinedException, GeneratorNotFoundException,
             ProjectNotFoundException, FolderNotFoundException {
 
-        final Generator generator = generators.findByName(generatorName);
+        final GeneratorConfig generator = generators.findByName(generatorName);
 
         int idx = generator.getArtifacts().indexOf(new Artifact(artifactName));
         if (idx < 0) {

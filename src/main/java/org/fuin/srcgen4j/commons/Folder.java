@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "folder")
 @XmlType(propOrder = { "clean", "override", "create", "path", "name" })
-public class Folder extends AbstractElement {
+public class Folder extends AbstractElement implements InitializableElement<Folder, Project> {
 
     @XmlAttribute
     private String name;
@@ -50,7 +50,7 @@ public class Folder extends AbstractElement {
     private Boolean clean;
 
     @XmlTransient
-    private Project parent;
+    private transient Project parent;
 
     /**
      * Default constructor.
@@ -270,16 +270,7 @@ public class Folder extends AbstractElement {
         this.parent = parent;
     }
 
-    /**
-     * Initializes this object and it's childs.
-     * 
-     * @param parent
-     *            Parent.
-     * @param vars
-     *            Variables to use.
-     * 
-     * @return This instance.
-     */
+    @Override
     public final Folder init(final Project parent, final Map<String, String> vars) {
         this.parent = parent;
         name = replaceVars(name, vars);

@@ -40,7 +40,7 @@ public class Variable {
     private String value;
 
     @XmlTransient
-    private SrcGen4JConfig parent;
+    private transient SrcGen4JConfig parent;
 
     /**
      * Default constructor.

@@ -52,7 +52,7 @@ public class GeneratorsTest extends AbstractTest {
         // PREPARE
         final JAXBContext jaxbContext = JAXBContext.newInstance(Generators.class);
         final Generators testee = new Generators("abc", "def");
-        testee.addGenerator(new Generator("NAME", "PROJECT", "FOLDER"));
+        testee.addGenerator(new GeneratorConfig("NAME", "PROJECT", "FOLDER"));
 
         // TEST
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
@@ -96,7 +96,7 @@ public class GeneratorsTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig parent = new SrcGen4JConfig();
         final Generators testee = new Generators("A${a}A", "${b}2B");
-        testee.addGenerator(new Generator("A ${x}", "${y}B", "a${z}c"));
+        testee.addGenerator(new GeneratorConfig("A ${x}", "${y}B", "a${z}c"));
 
         final Map<String, String> vars = new HashMap<String, String>();
         vars.put("a", "1");
@@ -112,7 +112,7 @@ public class GeneratorsTest extends AbstractTest {
         assertThat(testee.getParent()).isSameAs(parent);
         assertThat(testee.getProject()).isEqualTo("A1A");
         assertThat(testee.getFolder()).isEqualTo("B2B");
-        final Generator generator = testee.getList().get(0);
+        final GeneratorConfig generator = testee.getList().get(0);
         assertThat(generator.getName()).isEqualTo("A NAME");
         assertThat(generator.getProject()).isEqualTo("PRJB");
         assertThat(generator.getFolder()).isEqualTo("abc");

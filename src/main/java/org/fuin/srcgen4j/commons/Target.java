@@ -34,16 +34,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "target")
 @XmlType(propOrder = { "pattern" })
-public class Target extends AbstractTarget {
+public class Target extends AbstractTarget implements InitializableElement<Target, Artifact> {
 
     @XmlAttribute
     private String pattern;
 
     @XmlTransient
-    private Artifact parent;
+    private transient Artifact parent;
 
     @XmlTransient
-    private Pattern regExpr;
+    private transient Pattern regExpr;
 
     /**
      * Default constructor.
@@ -135,16 +135,7 @@ public class Target extends AbstractTarget {
         return getFolder();
     }
 
-    /**
-     * Initializes this object and it's childs.
-     * 
-     * @param parent
-     *            Parent.
-     * @param vars
-     *            Variables to use.
-     * 
-     * @return This instance.
-     */
+    @Override
     public final Target init(final Artifact parent, final Map<String, String> vars) {
         this.parent = parent;
         pattern = replaceVars(pattern, vars);

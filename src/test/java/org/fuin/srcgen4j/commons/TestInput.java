@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.util.Map;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -27,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "input", namespace = "http://www.fuin.org/srcgen4j/commons/test")
-public class TestInput {
+public class TestInput extends AbstractElement implements
+        InitializableElement<TestInput, ParserConfig> {
 
     @XmlAttribute
     private String path;
@@ -37,6 +40,17 @@ public class TestInput {
      */
     public TestInput() {
         super();
+    }
+
+    /**
+     * Constructor with path.
+     * 
+     * @param path
+     *            Path.
+     */
+    public TestInput(final String path) {
+        super();
+        this.path = path;
     }
 
     /**
@@ -56,6 +70,12 @@ public class TestInput {
      */
     public final void setPath(final String path) {
         this.path = path;
+    }
+
+    @Override
+    public final TestInput init(final ParserConfig parent, final Map<String, String> vars) {
+        setPath(replaceVars(getPath(), vars));
+        return this;
     }
 
 }

@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "project")
 @XmlType(propOrder = { "folders", "maven", "path", "name" })
-public class Project extends AbstractElement {
+public class Project extends AbstractElement implements
+        InitializableElement<Project, SrcGen4JConfig> {
 
     @XmlAttribute
     private String name;
@@ -50,7 +51,7 @@ public class Project extends AbstractElement {
     private List<Folder> folders;
 
     @XmlTransient
-    private SrcGen4JConfig parent;
+    private transient SrcGen4JConfig parent;
 
     /**
      * Default constructor.
@@ -232,16 +233,7 @@ public class Project extends AbstractElement {
         this.parent = parent;
     }
 
-    /**
-     * Initializes this object and it's childs.
-     * 
-     * @param parent
-     *            Parent.
-     * @param vars
-     *            Variables to use.
-     * 
-     * @return This instance.
-     */
+    @Override
     public final Project init(final SrcGen4JConfig parent, final Map<String, String> vars) {
         this.parent = parent;
         name = replaceVars(name, vars);
