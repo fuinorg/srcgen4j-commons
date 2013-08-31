@@ -52,6 +52,8 @@ public class SrcGen4JConfig {
     @XmlElement(name = "generators")
     private Generators generators;
 
+    private transient Map<String, String> varMap;
+
     /**
      * Returns a list of variables.
      * 
@@ -67,14 +69,7 @@ public class SrcGen4JConfig {
      * @return Map of variables or NULL.
      */
     public final Map<String, String> getVarMap() {
-        if (variables == null) {
-            return null;
-        }
-        final Map<String, String> map = new HashMap<String, String>();
-        for (final Variable var : variables) {
-            map.put(var.getName(), var.getValue());
-        }
-        return map;
+        return varMap;
     }
 
     /**
@@ -144,6 +139,15 @@ public class SrcGen4JConfig {
         this.generators = generators;
     }
 
+    private void initVarMap() {
+        varMap = new HashMap<String, String>();
+        if (variables != null) {
+            for (final Variable var : variables) {
+                varMap.put(var.getName(), var.getValue());
+            }
+        }
+    }
+
     /**
      * Initializes this object and it's childs.<br>
      * <br>
@@ -154,11 +158,11 @@ public class SrcGen4JConfig {
      * @return This instance.
      */
     public final SrcGen4JConfig init() {
-        final Map<String, String> varMap;
-        if (variables == null) {
-            varMap = new HashMap<String, String>();
-        } else {
-            varMap = getVarMap();
+        initVarMap();
+        if (variables != null) {
+            for (final Variable variable : variables) {
+                variable.init(this, varMap);
+            }
         }
         if (projects != null) {
             for (final Project project : projects) {

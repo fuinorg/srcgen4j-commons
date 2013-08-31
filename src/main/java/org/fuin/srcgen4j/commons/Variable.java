@@ -17,7 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import javax.xml.bind.Unmarshaller;
+import java.util.Map;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -29,14 +30,18 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "variable")
-@XmlType(propOrder = { "value", "name" })
-public class Variable {
+@XmlType(propOrder = { "xpath", "value", "name" })
+public class Variable extends AbstractElement implements
+        InitializableElement<Variable, SrcGen4JConfig> {
 
     @XmlAttribute
     private String name;
 
     @XmlAttribute
     private String value;
+
+    @XmlAttribute
+    private String xpath;
 
     private transient SrcGen4JConfig parent;
 
@@ -59,6 +64,23 @@ public class Variable {
         super();
         this.name = name;
         this.value = value;
+    }
+
+    /**
+     * Constructor with name, value and xpath.
+     * 
+     * @param name
+     *            Name to set.
+     * @param value
+     *            Value to set.
+     * @param xpath
+     *            Value to set.
+     */
+    public Variable(final String name, final String value, final String xpath) {
+        super();
+        this.name = name;
+        this.value = value;
+        this.xpath = xpath;
     }
 
     /**
@@ -97,6 +119,25 @@ public class Variable {
      */
     public final void setValue(final String value) {
         this.value = value;
+    }
+
+    /**
+     * Returns the xpath of the variable.
+     * 
+     * @return Current xpath.
+     */
+    public final String getXpath() {
+        return xpath;
+    }
+
+    /**
+     * Sets the xpath of the variable.
+     * 
+     * @param xpath
+     *            Xpath to set.
+     */
+    public final void setXpath(final String xpath) {
+        this.xpath = xpath;
     }
 
     /**
@@ -144,18 +185,12 @@ public class Variable {
         return true;
     }
 
-    // CHECKSTYLE:ON
-
-    /**
-     * Called when the object is deserialized with JAXB.
-     * 
-     * @param unmarshaller
-     *            Unmarshaller.
-     * @param parent
-     *            Parent object.
-     */
-    final void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
-        this.parent = (SrcGen4JConfig) parent;
+    @Override
+    public final Variable init(final SrcGen4JConfig parent, final Map<String, String> vars) {
+        setValue(replaceVars(getValue(), vars));
+        return this;
     }
+
+    // CHECKSTYLE:ON
 
 }

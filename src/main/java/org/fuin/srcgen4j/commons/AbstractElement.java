@@ -38,41 +38,7 @@ public abstract class AbstractElement {
      *         unchanged.
      */
     public final String replaceVars(final String str, final Map<String, String> vars) {
-
-        if ((str == null) || (str.length() == 0) || (vars == null) || (vars.size() == 0)) {
-            return str;
-        }
-
-        final StringBuffer sb = new StringBuffer();
-
-        int end = -1;
-        int from = 0;
-        int start = -1;
-        while ((start = str.indexOf("${", from)) > -1) {
-            sb.append(str.substring(end + 1, start));
-            end = str.indexOf('}', start + 1);
-            if (end == -1) {
-                // No closing bracket found...
-                sb.append(str.substring(start));
-                from = str.length();
-            } else {
-                final String key = str.substring(start + 2, end);
-                final String value = (String) vars.get(key);
-                if (value == null) {
-                    sb.append("${");
-                    sb.append(key);
-                    sb.append("}");
-                } else {
-                    sb.append(value);
-                }
-                from = end + 1;
-            }
-        }
-
-        sb.append(str.substring(from));
-
-        return sb.toString();
-
+        return VariableResolver.replaceVars(str, vars);
     }
 
 }

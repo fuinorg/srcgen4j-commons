@@ -61,6 +61,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
         vars.add(new Variable("x", "2"));
         final SrcGen4JConfig testee = new SrcGen4JConfig();
         testee.setVariables(vars);
+        testee.init();
 
         // TEST
         final Map<String, String> varMap = testee.getVarMap();
@@ -174,8 +175,8 @@ public class SrcGen4JConfigTest extends AbstractTest {
         project.addFolder(new Folder("${folder.name}", "${folder.path}"));
 
         final List<GeneratorConfig> genList = new ArrayList<GeneratorConfig>();
-        final GeneratorConfig generator = new GeneratorConfig("${generator.name}", "${generator.project}",
-                "${generator.folder}");
+        final GeneratorConfig generator = new GeneratorConfig("${generator.name}",
+                "${generator.project}", "${generator.folder}");
         genList.add(generator);
         final Artifact artifact = new Artifact("${artifact.name}", "${artifact.project}",
                 "${artifact.folder}");

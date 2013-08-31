@@ -19,6 +19,9 @@ package org.fuin.srcgen4j.commons;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.bind.JAXBContext;
 
 import org.junit.Test;
@@ -76,6 +79,23 @@ public class VariableTest extends AbstractTest {
         assertThat(testee).isNotNull();
         assertThat(testee.getName()).isEqualTo("abc");
         assertThat(testee.getValue()).isEqualTo("def");
+
+    }
+
+    @Test
+    public final void testInit() {
+
+        // PREPARE
+        final Map<String, String> vars = new HashMap<String, String>();
+        vars.put("a", "1");
+
+        final Variable testee = new Variable("x", "${a}");
+
+        // TEST
+        testee.init(new SrcGen4JConfig(), vars);
+
+        // VERIFY
+        assertThat(testee.getValue()).isEqualTo("1");
 
     }
 
