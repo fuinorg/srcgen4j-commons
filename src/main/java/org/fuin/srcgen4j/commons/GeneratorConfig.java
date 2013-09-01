@@ -23,6 +23,7 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,7 +36,7 @@ import org.fuin.utils4j.Utils4J;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "generator")
-@XmlType(propOrder = { "artifacts", "parser", "className" })
+@XmlType(propOrder = { "config", "artifacts", "parser", "className" })
 public class GeneratorConfig extends AbstractNamedTarget implements
         InitializableElement<GeneratorConfig, Generators> {
 
@@ -47,6 +48,9 @@ public class GeneratorConfig extends AbstractNamedTarget implements
 
     @XmlElement(name = "artifact")
     private List<Artifact> artifacts;
+
+    @XmlAnyElement(lax = true)
+    private Object config;
 
     private transient Generators parent;
 
@@ -155,6 +159,25 @@ public class GeneratorConfig extends AbstractNamedTarget implements
     }
 
     /**
+     * Returns the parser specific configuration.
+     * 
+     * @return Configuration for the parser.
+     */
+    public final Object getConfig() {
+        return config;
+    }
+
+    /**
+     * Sets the parser specific configuration.
+     * 
+     * @param config
+     *            Configuration for the parser.
+     */
+    public final void setConfig(final Object config) {
+        this.config = config;
+    }
+
+    /**
      * Returns the parent of the object.
      * 
      * @return Generators.
@@ -204,6 +227,7 @@ public class GeneratorConfig extends AbstractNamedTarget implements
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public final GeneratorConfig init(final Generators parent, final Map<String, String> vars) {
         this.parent = parent;
         setName(replaceVars(getName(), vars));
@@ -213,6 +237,11 @@ public class GeneratorConfig extends AbstractNamedTarget implements
             for (final Artifact artifact : artifacts) {
                 artifact.init(this, vars);
             }
+        }
+        if (config instanceof InitializableElement) {
+            final InitializableElement<?, GeneratorConfig> ie;
+            ie = (InitializableElement<?, GeneratorConfig>) config;
+            ie.init(this, vars);
         }
         return this;
     }
@@ -235,6 +264,21 @@ public class GeneratorConfig extends AbstractNamedTarget implements
         }
         generator = (Generator<Object>) obj;
         return generator;
+    }
+
+    /**
+     * Returns the appropriate folder for a given artifact.
+     * 
+     * @param artifactName
+     *            Unique name of the artifact to return a target folder for.
+     * 
+     * @return Target folder.
+     */
+    public final Folder findTargetFolder(final String artifactName) {
+        if (parent == null) {
+            throw new IllegalStateException("Parent for generator config is not set: " + getName());
+        }
+        return parent.findTargetFolder(getName(), artifactName);
     }
 
 }

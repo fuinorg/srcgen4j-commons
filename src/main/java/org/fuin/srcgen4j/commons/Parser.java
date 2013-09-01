@@ -32,7 +32,10 @@ public interface Parser<MODEL> {
      *            Configuration to use.
      * 
      * @return Model.
+     * 
+     * @throws ParseException
+     *             Error during parse process.
      */
-    public MODEL parse(ParserConfig config);
+    public MODEL parse(ParserConfig config) throws ParseException;
 
 }

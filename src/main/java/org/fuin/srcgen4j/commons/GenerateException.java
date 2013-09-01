@@ -18,26 +18,32 @@
 package org.fuin.srcgen4j.commons;
 
 /**
- * Generates something using a given model.
- * 
- * @param <MODEL>
- *            Type of the model.
+ * The generation failed.
  */
-public interface Generator<MODEL> {
+public final class GenerateException extends Exception {
+
+    private static final long serialVersionUID = 1L;
 
     /**
-     * Generates something using the given configuration and model. The type of
-     * the generator implementation is the same as defined in
-     * {@link GeneratorConfig#getClassName()}.
+     * Constructor only with message.
      * 
-     * @param config
-     *            Configuration to use.
-     * @param model
-     *            Model to use.
-     * 
-     * @throws GenerateException
-     *             Error when generating.
+     * @param message
+     *            Message.
      */
-    public void generate(GeneratorConfig config, MODEL model) throws GenerateException;
+    public GenerateException(final String message) {
+        super(message);
+    }
+
+    /**
+     * Constructor with message and cause.
+     * 
+     * @param message
+     *            Message.
+     * @param cause
+     *            Cause.
+     */
+    public GenerateException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 
 }

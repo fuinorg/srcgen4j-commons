@@ -35,7 +35,7 @@ public class SrcGen4JTest {
 
     @Test
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public final void testExecute() {
+    public final void testExecute() throws ParseException, GenerateException {
 
         // PREPARE
         final SrcGen4JConfig config = new SrcGen4JConfig();

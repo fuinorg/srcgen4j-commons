@@ -41,8 +41,13 @@ public final class SrcGen4J {
 
     /**
      * Parse and generate.
+     * 
+     * @throws ParseException
+     *             Error during parse process.
+     * @throws GenerateException
+     *             Error during generation process.
      */
-    public final void execute() {
+    public final void execute() throws ParseException, GenerateException {
 
         // Add classes directories or JARs to class path
         final Classpath cp = config.getClasspath();

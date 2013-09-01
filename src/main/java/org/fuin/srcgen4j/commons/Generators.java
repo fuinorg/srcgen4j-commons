@@ -144,4 +144,41 @@ public class Generators extends AbstractTarget implements
         return list.get(idx);
     }
 
+    /**
+     * Returns the appropriate folder for a given artifact.
+     * 
+     * @param generatorName
+     *            Unique name of the generator to return a target folder for.
+     * @param artifactName
+     *            Unique name of the artifact to return a target folder for.
+     * 
+     * @return Target folder.
+     */
+    public final Folder findTargetFolder(final String generatorName, final String artifactName) {
+        if (parent == null) {
+            throw new IllegalStateException("Parent for generators is not set");
+        }
+        try {
+            return parent.findTargetFolder(generatorName, artifactName);
+        } catch (final ProjectNameNotDefinedException ex) {
+            throw new RuntimeException("Couldn't determine target folder for generator '"
+                    + generatorName + "' and artifact '" + artifactName + "'", ex);
+        } catch (final ArtifactNotFoundException ex) {
+            throw new RuntimeException("Couldn't determine target folder for generator '"
+                    + generatorName + "' and artifact '" + artifactName + "'", ex);
+        } catch (final FolderNameNotDefinedException ex) {
+            throw new RuntimeException("Couldn't determine target folder for generator '"
+                    + generatorName + "' and artifact '" + artifactName + "'", ex);
+        } catch (final GeneratorNotFoundException ex) {
+            throw new RuntimeException("Couldn't determine target folder for generator '"
+                    + generatorName + "' and artifact '" + artifactName + "'", ex);
+        } catch (final ProjectNotFoundException ex) {
+            throw new RuntimeException("Couldn't determine target folder for generator '"
+                    + generatorName + "' and artifact '" + artifactName + "'", ex);
+        } catch (final FolderNotFoundException ex) {
+            throw new RuntimeException("Couldn't determine target folder for generator '"
+                    + generatorName + "' and artifact '" + artifactName + "'", ex);
+        }
+    }
+
 }
