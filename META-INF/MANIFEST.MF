@@ -10,4 +10,7 @@ Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
 Bundle-Version: 0.3.0.SNAPSHOT
 Export-Package: org.fuin.srcgen4j.commons;uses:="javax.xml.bind,javax.xm
  l.bind.annotation";version="0.3.0.SNAPSHOT"
-Import-Package: javax.xml.bind,javax.xml.bind.annotation
+Import-Package: javax.xml.bind,javax.xml.bind.annotation,org.fuin.utils4
+ j;version="[0.8,1)"
+Include-Resource: srcgen4j-commons.xsd=src/main/resources/srcgen4j-commo
+ ns.xsd
