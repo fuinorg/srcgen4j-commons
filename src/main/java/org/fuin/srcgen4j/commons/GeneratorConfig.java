@@ -159,7 +159,7 @@ public class GeneratorConfig extends AbstractNamedTarget implements
     }
 
     /**
-     * Returns the parser specific configuration.
+     * Returns the generator specific configuration.
      * 
      * @return Configuration for the parser.
      */
@@ -168,7 +168,7 @@ public class GeneratorConfig extends AbstractNamedTarget implements
     }
 
     /**
-     * Sets the parser specific configuration.
+     * Sets the generator specific configuration.
      * 
      * @param config
      *            Configuration for the parser.
