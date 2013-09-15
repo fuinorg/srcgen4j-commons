@@ -62,6 +62,8 @@ public class SrcGen4JTest {
         genCfg3.setParser("parser2"); // Also connected to parser2
         generators.addGenerator(genCfg3);
 
+        config.init();
+
         final SrcGen4J testee = new SrcGen4J(config);
 
         // TEST
