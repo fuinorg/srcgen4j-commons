@@ -48,7 +48,7 @@ public class GeneratorConfig extends AbstractNamedTarget implements
     @XmlElement(name = "artifact")
     private List<Artifact> artifacts;
 
-    @XmlElement(name = "generator-config")
+    @XmlElement(name = "config")
     private Config<GeneratorConfig> config;
 
     private transient Generators parent;

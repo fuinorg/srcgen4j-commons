@@ -65,8 +65,7 @@ public class ParserConfigTest extends AbstractTest {
                 XML + "<parser class=\"a.b.c.TestParser\" name=\"parser1\" "
                         + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons/test\" "
                         + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<parser-config><ns2:input path=\"a/b/c\"/></parser-config>"
-                        + "</parser>");
+                        + "<config><ns2:input path=\"a/b/c\"/></config>" + "</parser>");
 
     }
 
@@ -78,12 +77,11 @@ public class ParserConfigTest extends AbstractTest {
                 .newInstance(ParserConfig.class, TestInput.class);
 
         // TEST
-        final ParserConfig testee = new JaxbHelper().create(
-                "<parser class=\"a.b.c.TestParser\" name=\"parser1\" "
+        final ParserConfig testee = new JaxbHelper()
+                .create("<parser class=\"a.b.c.TestParser\" name=\"parser1\" "
                         + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons/test\" "
                         + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<parser-config><ns2:input path=\"a/b/c\"/></parser-config>"
-                        + "</parser>", jaxbContext);
+                        + "<config><ns2:input path=\"a/b/c\"/></config>" + "</parser>", jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();

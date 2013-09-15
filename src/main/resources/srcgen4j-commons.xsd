@@ -73,7 +73,7 @@
   
   <xs:complexType name="parserType">
     <xs:sequence>
-      <xs:element type="sg4jc:anyConfigType" name="parser-config" minOccurs="0" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
+      <xs:element type="sg4jc:anyConfigType" name="config" minOccurs="0" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
     </xs:sequence>
     <xs:attribute type="xs:string" name="name" use="required"/>
     <xs:attribute type="xs:string" name="class" use="required"/>
@@ -106,7 +106,7 @@
   
   <xs:complexType name="generatorType">
     <xs:sequence>
-      <xs:element type="sg4jc:anyConfigType" name="generator-config" minOccurs="0" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
+      <xs:element type="sg4jc:anyConfigType" name="config" minOccurs="0" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
       <xs:element type="sg4jc:artifactType" name="artifact" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
     </xs:sequence>
     <xs:attribute type="xs:string" name="name" use="required"/>

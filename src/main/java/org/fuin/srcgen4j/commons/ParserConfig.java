@@ -40,7 +40,7 @@ public class ParserConfig extends AbstractNamedElement implements
     @XmlAttribute(name = "class")
     private String className;
 
-    @XmlElement(name = "parser-config")
+    @XmlElement(name = "config")
     private Config<ParserConfig> config;
 
     private transient SrcGen4JConfig parent;
