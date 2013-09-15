@@ -39,9 +39,9 @@
       <xs:extension base="xs:string">
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="path" use="required"/>
-        <xs:attribute type="xs:string" name="create" use="optional" default="false"/>
-        <xs:attribute type="xs:string" name="override" use="optional" default="false"/>
-        <xs:attribute type="xs:string" name="clean" use="optional" default="false"/>
+        <xs:attribute type="xs:boolean" name="create" use="optional" default="false"/>
+        <xs:attribute type="xs:boolean" name="override" use="optional" default="false"/>
+        <xs:attribute type="xs:boolean" name="clean" use="optional" default="false"/>
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
@@ -52,6 +52,7 @@
     </xs:sequence>
     <xs:attribute type="xs:string" name="name" use="required"/>
     <xs:attribute type="xs:string" name="path" use="required"/>
+    <xs:attribute type="xs:boolean" name="maven" use="optional" default="true"/>
   </xs:complexType>
   
   <xs:complexType name="projectsType">
@@ -60,13 +61,19 @@
     </xs:sequence>
   </xs:complexType>
   
-  <xs:complexType name="parserType">
+  <xs:complexType name="anyConfigType">
     <xs:sequence>
       <xs:any minOccurs="0" maxOccurs="unbounded">
    		<xs:annotation>
-      		<xs:documentation>Parser specific configuration</xs:documentation>
+      		<xs:documentation>Specific configuration of unknown type</xs:documentation>
       	</xs:annotation>      	
       </xs:any>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="parserType">
+    <xs:sequence>
+      <xs:element type="sg4jc:anyConfigType" name="parser-config" minOccurs="0" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
     </xs:sequence>
     <xs:attribute type="xs:string" name="name" use="required"/>
     <xs:attribute type="xs:string" name="class" use="required"/>
@@ -99,6 +106,7 @@
   
   <xs:complexType name="generatorType">
     <xs:sequence>
+      <xs:element type="sg4jc:anyConfigType" name="generator-config" minOccurs="0" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
       <xs:element type="sg4jc:artifactType" name="artifact" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
     </xs:sequence>
     <xs:attribute type="xs:string" name="name" use="required"/>

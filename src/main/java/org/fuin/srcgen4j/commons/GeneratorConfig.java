@@ -23,7 +23,6 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -49,8 +48,8 @@ public class GeneratorConfig extends AbstractNamedTarget implements
     @XmlElement(name = "artifact")
     private List<Artifact> artifacts;
 
-    @XmlAnyElement(lax = true)
-    private Object config;
+    @XmlElement(name = "generator-config")
+    private Config<GeneratorConfig> config;
 
     private transient Generators parent;
 
@@ -163,7 +162,7 @@ public class GeneratorConfig extends AbstractNamedTarget implements
      * 
      * @return Configuration for the parser.
      */
-    public final Object getConfig() {
+    public final Config<GeneratorConfig> getConfig() {
         return config;
     }
 
@@ -173,7 +172,7 @@ public class GeneratorConfig extends AbstractNamedTarget implements
      * @param config
      *            Configuration for the parser.
      */
-    public final void setConfig(final Object config) {
+    public final void setConfig(final Config<GeneratorConfig> config) {
         this.config = config;
     }
 
@@ -227,7 +226,6 @@ public class GeneratorConfig extends AbstractNamedTarget implements
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public final GeneratorConfig init(final Generators parent, final Map<String, String> vars) {
         this.parent = parent;
         setName(replaceVars(getName(), vars));
@@ -238,10 +236,8 @@ public class GeneratorConfig extends AbstractNamedTarget implements
                 artifact.init(this, vars);
             }
         }
-        if (config instanceof InitializableElement) {
-            final InitializableElement<?, GeneratorConfig> ie;
-            ie = (InitializableElement<?, GeneratorConfig>) config;
-            ie.init(this, vars);
+        if (config != null) {
+            config.init(this, vars);
         }
         return this;
     }

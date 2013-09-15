@@ -54,7 +54,8 @@ public class ParserConfigTest extends AbstractTest {
                 .newInstance(ParserConfig.class, TestInput.class);
         final ParserConfig testee = new ParserConfig("parser1", "a.b.c.TestParser");
         final TestInput testInput = new TestInput("a/b/c");
-        testee.setConfig(testInput);
+        final Config<ParserConfig> config = new Config<ParserConfig>(testInput);
+        testee.setConfig(config);
 
         // TEST
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
@@ -64,7 +65,8 @@ public class ParserConfigTest extends AbstractTest {
                 XML + "<parser class=\"a.b.c.TestParser\" name=\"parser1\" "
                         + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons/test\" "
                         + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<ns2:input path=\"a/b/c\"/>" + "</parser>");
+                        + "<parser-config><ns2:input path=\"a/b/c\"/></parser-config>"
+                        + "</parser>");
 
     }
 
@@ -80,15 +82,16 @@ public class ParserConfigTest extends AbstractTest {
                 "<parser class=\"a.b.c.TestParser\" name=\"parser1\" "
                         + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons/test\" "
                         + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<ns2:input path=\"a/b/c\"/>" + "</parser>", jaxbContext);
+                        + "<parser-config><ns2:input path=\"a/b/c\"/></parser-config>"
+                        + "</parser>", jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();
         assertThat(testee.getName()).isEqualTo("parser1");
         assertThat(testee.getClassName()).isEqualTo("a.b.c.TestParser");
         assertThat(testee.getConfig()).isNotNull();
-        assertThat(testee.getConfig()).isInstanceOf(TestInput.class);
-        final TestInput testInput = (TestInput) testee.getConfig();
+        assertThat(testee.getConfig().getConfig()).isInstanceOf(TestInput.class);
+        final TestInput testInput = (TestInput) testee.getConfig().getConfig();
         assertThat(testInput.getPath()).isEqualTo("a/b/c");
 
     }
@@ -100,7 +103,8 @@ public class ParserConfigTest extends AbstractTest {
         final SrcGen4JConfig parent = new SrcGen4JConfig();
         final ParserConfig testee = new ParserConfig("parser${a}", "a.${x}.c.TestParser");
         final TestInput testInput = new TestInput("a/b/${y}");
-        testee.setConfig(testInput);
+        final Config<ParserConfig> config = new Config<ParserConfig>(testInput);
+        testee.setConfig(config);
 
         final Map<String, String> vars = new HashMap<String, String>();
         vars.put("a", "1");

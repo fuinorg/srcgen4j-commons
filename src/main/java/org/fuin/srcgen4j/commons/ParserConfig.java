@@ -21,8 +21,8 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -40,8 +40,8 @@ public class ParserConfig extends AbstractNamedElement implements
     @XmlAttribute(name = "class")
     private String className;
 
-    @XmlAnyElement(lax = true)
-    private Object config;
+    @XmlElement(name = "parser-config")
+    private Config<ParserConfig> config;
 
     private transient SrcGen4JConfig parent;
 
@@ -101,7 +101,7 @@ public class ParserConfig extends AbstractNamedElement implements
      * 
      * @return Configuration for the parser.
      */
-    public final Object getConfig() {
+    public final Config<ParserConfig> getConfig() {
         return config;
     }
 
@@ -111,7 +111,7 @@ public class ParserConfig extends AbstractNamedElement implements
      * @param config
      *            Configuration for the parser.
      */
-    public final void setConfig(final Object config) {
+    public final void setConfig(final Config<ParserConfig> config) {
         this.config = config;
     }
 
@@ -135,14 +135,12 @@ public class ParserConfig extends AbstractNamedElement implements
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public final ParserConfig init(final SrcGen4JConfig parent, final Map<String, String> vars) {
         this.parent = parent;
         setName(replaceVars(getName(), vars));
         setClassName(replaceVars(getClassName(), vars));
-        if (config instanceof InitializableElement) {
-            final InitializableElement<?, ParserConfig> ie = (InitializableElement<?, ParserConfig>) config;
-            ie.init(this, vars);
+        if (config != null) {
+            config.init(this, vars);
         }
         return this;
     }

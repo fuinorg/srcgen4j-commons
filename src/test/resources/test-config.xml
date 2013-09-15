@@ -29,7 +29,9 @@
 	
 	<parsers>
 		<parser name="parser1" class="org.fuin.srcgen4j.commons.TestParser">
-			<test:input path="${root}/xtext-ddd/TestModel/src/main/domain" />
+			<parser-config>
+				<test:input path="${root}/xtext-ddd/TestModel/src/main/domain" />
+			</parser-config>
 		</parser>
 	</parsers>
 	

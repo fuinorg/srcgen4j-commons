@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "input", namespace = "http://www.fuin.org/srcgen4j/commons/test")
 public class TestInput extends AbstractElement implements
-        InitializableElement<TestInput, ParserConfig> {
+        InitializableElement<TestInput, Config<ParserConfig>> {
 
     @XmlAttribute
     private String path;
@@ -73,7 +73,7 @@ public class TestInput extends AbstractElement implements
     }
 
     @Override
-    public final TestInput init(final ParserConfig parent, final Map<String, String> vars) {
+    public final TestInput init(final Config<ParserConfig> parent, final Map<String, String> vars) {
         setPath(replaceVars(getPath(), vars));
         return this;
     }
