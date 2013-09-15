@@ -57,6 +57,8 @@ public class SrcGen4JConfig {
 
     private transient Map<String, String> varMap;
 
+    private transient boolean initialized = false;
+
     /**
      * Returns a list of variables.
      * 
@@ -175,6 +177,15 @@ public class SrcGen4JConfig {
         this.generators = generators;
     }
 
+    /**
+     * Returns the information if the object has been initialized.
+     * 
+     * @return If the method {@link #init()} was called TRUE, else FALSE.
+     */
+    public final boolean isInitialized() {
+        return initialized;
+    }
+
     private void initVarMap() {
         if (variables == null) {
             varMap = new HashMap<String, String>();
@@ -212,6 +223,7 @@ public class SrcGen4JConfig {
                 parser.init(this, varMap);
             }
         }
+        initialized = true;
         return this;
     }
 

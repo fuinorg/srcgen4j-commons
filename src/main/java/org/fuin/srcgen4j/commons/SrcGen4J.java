@@ -36,6 +36,12 @@ public final class SrcGen4J {
      */
     public SrcGen4J(final SrcGen4JConfig config) {
         super();
+        if (config == null) {
+            throw new IllegalArgumentException("Argument 'config' cannot be NULL");
+        }
+        if (!config.isInitialized()) {
+            throw new IllegalArgumentException("The configuration is not initialized");
+        }
         this.config = config;
     }
 
