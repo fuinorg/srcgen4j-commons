@@ -17,8 +17,11 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.fuin.utils4j.Utils4J;
 
 /**
@@ -45,17 +48,7 @@ public final class SrcGen4J {
         this.config = config;
     }
 
-    /**
-     * Parse and generate.
-     * 
-     * @throws ParseException
-     *             Error during parse process.
-     * @throws GenerateException
-     *             Error during generation process.
-     */
-    public final void execute() throws ParseException, GenerateException {
-
-        // Add classes directories or JARs to class path
+    private void enhanceClasspath() {
         final Classpath cp = config.getClasspath();
         if (cp != null) {
             final List<BinClasspathEntry> binList = cp.getBinList();
@@ -71,6 +64,38 @@ public final class SrcGen4J {
                 }
             }
         }
+    }
+
+    private void cleanFolders() {
+        final List<Project> projects = config.getProjects();
+        for (final Project project : projects) {
+            final List<Folder> folders = project.getFolders();
+            for (final Folder folder : folders) {
+                final File dir = new File(folder.getDirectory());
+                if (folder.isClean() && dir.exists()) {
+                    try {
+                        FileUtils.cleanDirectory(dir);
+                    } catch (final IOException ex) {
+                        throw new RuntimeException("Error cleaning: " + dir, ex);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Parse and generate.
+     * 
+     * @throws ParseException
+     *             Error during parse process.
+     * @throws GenerateException
+     *             Error during generation process.
+     */
+    public final void execute() throws ParseException, GenerateException {
+
+        enhanceClasspath();
+
+        cleanFolders();
 
         // Parse models & generate
         final List<ParserConfig> parserConfigs = config.getParsers();
