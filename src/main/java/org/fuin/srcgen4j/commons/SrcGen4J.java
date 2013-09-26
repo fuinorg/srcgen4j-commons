@@ -68,15 +68,17 @@ public final class SrcGen4J {
 
     private void cleanFolders() {
         final List<Project> projects = config.getProjects();
-        for (final Project project : projects) {
-            final List<Folder> folders = project.getFolders();
-            for (final Folder folder : folders) {
-                final File dir = new File(folder.getDirectory());
-                if (folder.isClean() && dir.exists()) {
-                    try {
-                        FileUtils.cleanDirectory(dir);
-                    } catch (final IOException ex) {
-                        throw new RuntimeException("Error cleaning: " + dir, ex);
+        if (projects != null) {
+            for (final Project project : projects) {
+                final List<Folder> folders = project.getFolders();
+                for (final Folder folder : folders) {
+                    final File dir = new File(folder.getDirectory());
+                    if (folder.isClean() && dir.exists()) {
+                        try {
+                            FileUtils.cleanDirectory(dir);
+                        } catch (final IOException ex) {
+                            throw new RuntimeException("Error cleaning: " + dir, ex);
+                        }
                     }
                 }
             }
