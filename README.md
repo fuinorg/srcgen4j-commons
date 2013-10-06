@@ -3,6 +3,8 @@ srcgen4j-commons
 
 Source code generation for Java (Commons)
 
+__CAUTION: *Project is in early stage (Work in progress)*__
+
 [![Build Status](https://fuin-org.ci.cloudbees.com/job/srcgen4j-commons/badge/icon)](https://fuin-org.ci.cloudbees.com/job/srcgen4j-commons/)
 
 <a href="https://fuin-org.ci.cloudbees.com/job/srcgen4j-commons"><img src="http://www.fuin.org/images/Button-Built-on-CB-1.png" width="213" height="72" border="0" alt="Built on CloudBees"/></a>
