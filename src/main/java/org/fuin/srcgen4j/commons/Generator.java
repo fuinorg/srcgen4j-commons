@@ -26,18 +26,24 @@ package org.fuin.srcgen4j.commons;
 public interface Generator<MODEL> {
 
     /**
-     * Generates something using the given configuration and model. The type of
-     * the generator implementation is the same as defined in
-     * {@link GeneratorConfig#getClassName()}.
+     * Initializes the generator with agiven configuration. This is only called
+     * once per instance. The type of the generator implementation is the same
+     * as defined in {@link GeneratorConfig#getClassName()}.
      * 
      * @param config
-     *            Configuration to use.
+     *            Configuration to use - Cannot be NULL.
+     */
+    public void initialize(GeneratorConfig config);
+
+    /**
+     * Generates something using the initially given configuration and model.
+     * 
      * @param model
-     *            Model to use.
+     *            Model to use - Cannot be NULL.
      * 
      * @throws GenerateException
      *             Error when generating.
      */
-    public void generate(GeneratorConfig config, MODEL model) throws GenerateException;
+    public void generate(MODEL model) throws GenerateException;
 
 }

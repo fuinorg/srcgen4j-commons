@@ -11,8 +11,12 @@ public class Parser2 implements Parser<String> {
     private String model = "PARSER_2_MODEL";
 
     @Override
-    public String parse(final ParserConfig config) {
+    public void initialize(ParserConfig config) {
         this.config = config;
+    }
+
+    @Override
+    public String parse() {
         return model;
     }
 

@@ -259,6 +259,7 @@ public class GeneratorConfig extends AbstractNamedTarget implements
                     + Generator.class.getName() + "', but was: " + className);
         }
         generator = (Generator<Object>) obj;
+        generator.initialize(this);
         return generator;
     }
 

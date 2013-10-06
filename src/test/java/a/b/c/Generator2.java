@@ -11,8 +11,12 @@ public class Generator2 implements Generator<String> {
     private String model;
 
     @Override
-    public void generate(GeneratorConfig config, String model) {
+    public void initialize(GeneratorConfig config) {
         this.config = config;
+    }
+
+    @Override
+    public void generate(String model) {
         this.model = model;
     }
 

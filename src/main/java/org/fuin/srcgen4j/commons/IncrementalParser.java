@@ -17,31 +17,28 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.io.File;
+import java.util.Set;
+
 /**
- * Parses some kind of model.
+ * Parses some kind of model in a full or an incremental mode.
  * 
  * @param <MODEL>
  *            Type of the model.
  */
-public interface Parser<MODEL> {
+public interface IncrementalParser<MODEL> extends Parser<MODEL> {
 
     /**
-     * Initializes the parser using the given configuration. Only called once
-     * for every parser instance.
+     * Parses a model using the initially given configuration and a file list.
      * 
-     * @param config
-     *            Configuration to use - Cannot be NULL.
-     */
-    public void initialize(ParserConfig config);
-
-    /**
-     * Parses a model using the initially given configuration.
+     * @param files
+     *            Set of files to parse - Cannot be NULL.
      * 
      * @return Model.
      * 
      * @throws ParseException
      *             Error during parse process.
      */
-    public MODEL parse() throws ParseException;
+    public MODEL parse(Set<File> files) throws ParseException;
 
 }

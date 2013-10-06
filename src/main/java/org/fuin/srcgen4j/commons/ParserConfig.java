@@ -162,6 +162,7 @@ public class ParserConfig extends AbstractNamedElement implements
                     + Parser.class.getName() + "', but was: " + className);
         }
         parser = (Parser<Object>) obj;
+        parser.initialize(this);
         return parser;
     }
 

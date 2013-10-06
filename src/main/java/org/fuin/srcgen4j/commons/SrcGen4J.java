@@ -20,6 +20,7 @@ package org.fuin.srcgen4j.commons;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.fuin.utils4j.Utils4J;
@@ -104,12 +105,45 @@ public final class SrcGen4J {
         if (parserConfigs != null) {
             for (final ParserConfig pc : parserConfigs) {
                 final Parser<Object> parser = pc.getParser();
-                final Object model = parser.parse(pc);
+                final Object model = parser.parse();
                 final List<GeneratorConfig> generatorConfigs = config.findGeneratorsForParser(pc
                         .getName());
                 for (final GeneratorConfig gc : generatorConfigs) {
                     final Generator<Object> generator = gc.getGenerator();
-                    generator.generate(gc, model);
+                    generator.generate(model);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Incremental parse and generate.
+     * 
+     * @param files
+     *            Set of files to parse for the model - Cannot be NULL.
+     * 
+     * @throws ParseException
+     *             Error during parse process.
+     * @throws GenerateException
+     *             Error during generation process.
+     */
+    public final void execute(final Set<File> files) throws ParseException, GenerateException {
+
+        // Parse models & generate
+        final List<ParserConfig> parserConfigs = config.getParsers();
+        if (parserConfigs != null) {
+            for (final ParserConfig pc : parserConfigs) {
+                final Parser<Object> pars = pc.getParser();
+                if (pars instanceof IncrementalParser) {
+                    final IncrementalParser<?> parser = (IncrementalParser<?>) pars;
+                    final Object model = parser.parse(files);
+                    final List<GeneratorConfig> generatorConfigs = config
+                            .findGeneratorsForParser(pc.getName());
+                    for (final GeneratorConfig gc : generatorConfigs) {
+                        final Generator<Object> generator = gc.getGenerator();
+                        generator.generate(model);
+                    }
                 }
             }
         }
