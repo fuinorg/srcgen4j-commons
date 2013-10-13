@@ -29,6 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.fuin.utils4j.Utils4J;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents a code generator.
@@ -38,6 +40,8 @@ import org.fuin.utils4j.Utils4J;
 @XmlType(propOrder = { "config", "artifacts", "parser", "className" })
 public class GeneratorConfig extends AbstractNamedTarget implements
         InitializableElement<GeneratorConfig, Generators> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(GeneratorConfig.class);
 
     @XmlAttribute(name = "class")
     private String className;
@@ -244,16 +248,30 @@ public class GeneratorConfig extends AbstractNamedTarget implements
 
     /**
      * Returns an existing generator instance or creates a new one if it's the
+     * first call to this method. The class loader of this class is used.
+     * 
+     * @return Generator of type {@link #className}.
+     */
+    public final Generator<Object> getGenerator() {
+        return getGenerator(getClass().getClassLoader());
+    }
+
+    /**
+     * Returns an existing generator instance or creates a new one if it's the
      * first call to this method.
+     * 
+     * @param classLoader
+     *            Dedicated class loader to use - Cannot be NULL.
      * 
      * @return Generator of type {@link #className}.
      */
     @SuppressWarnings("unchecked")
-    public final Generator<Object> getGenerator() {
+    public final Generator<Object> getGenerator(final ClassLoader classLoader) {
         if (generator != null) {
             return generator;
         }
-        final Object obj = Utils4J.createInstance(className);
+        LOG.info("Creating generator: " + className);
+        final Object obj = Utils4J.createInstance(className, classLoader);
         if (!(obj instanceof Generator<?>)) {
             throw new IllegalStateException("Expected class to be of type '"
                     + Generator.class.getName() + "', but was: " + className);

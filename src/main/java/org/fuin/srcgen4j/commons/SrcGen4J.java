@@ -24,11 +24,15 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.fuin.utils4j.Utils4J;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Parses models based on a configuration and generates something with it.
  */
 public final class SrcGen4J {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SrcGen4J.class);
 
     private final SrcGen4JConfig config;
 
@@ -51,9 +55,13 @@ public final class SrcGen4J {
 
     private void enhanceClasspath() {
         final Classpath cp = config.getClasspath();
-        if (cp != null) {
+        if (cp == null) {
+            LOG.debug("No additional classpath found");
+        } else {
             final List<BinClasspathEntry> binList = cp.getBinList();
-            if (binList != null) {
+            if (binList == null) {
+                LOG.debug("No binary list found");
+            } else {
                 for (final BinClasspathEntry entry : binList) {
                     final String url;
                     if (entry.getPath().startsWith("file:")) {
@@ -61,6 +69,7 @@ public final class SrcGen4J {
                     } else {
                         url = "file:///" + entry.getPath();
                     }
+                    LOG.info("Adding to classpath: " + url);
                     Utils4J.addToClasspath(url);
                 }
             }
@@ -69,16 +78,26 @@ public final class SrcGen4J {
 
     private void cleanFolders() {
         final List<Project> projects = config.getProjects();
-        if (projects != null) {
+        if (projects == null) {
+            LOG.warn("No projects configured!");
+        } else {
             for (final Project project : projects) {
                 final List<Folder> folders = project.getFolders();
-                for (final Folder folder : folders) {
-                    final File dir = new File(folder.getDirectory());
-                    if (folder.isClean() && dir.exists()) {
-                        try {
-                            FileUtils.cleanDirectory(dir);
-                        } catch (final IOException ex) {
-                            throw new RuntimeException("Error cleaning: " + dir, ex);
+                if (folders == null) {
+                    LOG.warn("No project folders configured for: " + project.getName());
+                } else {
+                    for (final Folder folder : folders) {
+                        final File dir = new File(folder.getDirectory());
+                        if (folder.isClean() && dir.exists()) {
+                            try {
+                                LOG.info("Cleaning: " + dir);
+                                FileUtils.cleanDirectory(dir);
+                            } catch (final IOException ex) {
+                                throw new RuntimeException("Error cleaning: " + dir, ex);
+                            }
+                        } else {
+                            LOG.debug("Nothing to to [clean=" + folder.isClean() + ", exists="
+                                    + dir.exists() + "]: " + dir);
                         }
                     }
                 }
@@ -87,7 +106,7 @@ public final class SrcGen4J {
     }
 
     /**
-     * Parse and generate.
+     * Parse and generate with class loader from this class.
      * 
      * @throws ParseException
      *             Error during parse process.
@@ -95,6 +114,24 @@ public final class SrcGen4J {
      *             Error during generation process.
      */
     public final void execute() throws ParseException, GenerateException {
+        execute(getClass().getClassLoader());
+    }
+
+    /**
+     * Parse and generate.
+     * 
+     * @param classLoader
+     *            Dedicated class loader to use.
+     * 
+     * @throws ParseException
+     *             Error during parse process.
+     * @throws GenerateException
+     *             Error during generation process.
+     */
+    public final void execute(final ClassLoader classLoader) throws ParseException,
+            GenerateException {
+
+        LOG.info("Executing full build");
 
         enhanceClasspath();
 
@@ -102,14 +139,16 @@ public final class SrcGen4J {
 
         // Parse models & generate
         final List<ParserConfig> parserConfigs = config.getParsers();
-        if (parserConfigs != null) {
+        if (parserConfigs == null) {
+            LOG.warn("No parsers configured");
+        } else {
             for (final ParserConfig pc : parserConfigs) {
-                final Parser<Object> parser = pc.getParser();
+                final Parser<Object> parser = pc.getParser(classLoader);
                 final Object model = parser.parse();
                 final List<GeneratorConfig> generatorConfigs = config.findGeneratorsForParser(pc
                         .getName());
                 for (final GeneratorConfig gc : generatorConfigs) {
-                    final Generator<Object> generator = gc.getGenerator();
+                    final Generator<Object> generator = gc.getGenerator(classLoader);
                     generator.generate(model);
                 }
             }
@@ -118,7 +157,8 @@ public final class SrcGen4J {
     }
 
     /**
-     * Incremental parse and generate.
+     * Incremental parse and generate. The class loader of this class will be
+     * used.
      * 
      * @param files
      *            Set of files to parse for the model - Cannot be NULL.
@@ -129,21 +169,50 @@ public final class SrcGen4J {
      *             Error during generation process.
      */
     public final void execute(final Set<File> files) throws ParseException, GenerateException {
+        execute(files, getClass().getClassLoader());
+    }
+
+    /**
+     * Incremental parse and generate.
+     * 
+     * @param files
+     *            Set of files to parse for the model - Cannot be NULL.
+     * @param classLoader
+     *            Dedicated class loader to use - Cannot be NULL.
+     * 
+     * @throws ParseException
+     *             Error during parse process.
+     * @throws GenerateException
+     *             Error during generation process.
+     */
+    public final void execute(final Set<File> files, final ClassLoader classLoader)
+            throws ParseException, GenerateException {
+
+        LOG.info("Executing incremental build (" + files.size() + " files)");
+        if (LOG.isDebugEnabled()) {
+            for (final File file : files) {
+                LOG.debug(file.toString());
+            }
+        }
 
         // Parse models & generate
         final List<ParserConfig> parserConfigs = config.getParsers();
-        if (parserConfigs != null) {
+        if (parserConfigs == null) {
+            LOG.warn("No parsers configured");
+        } else {
             for (final ParserConfig pc : parserConfigs) {
-                final Parser<Object> pars = pc.getParser();
+                final Parser<Object> pars = pc.getParser(classLoader);
                 if (pars instanceof IncrementalParser) {
                     final IncrementalParser<?> parser = (IncrementalParser<?>) pars;
                     final Object model = parser.parse(files);
                     final List<GeneratorConfig> generatorConfigs = config
                             .findGeneratorsForParser(pc.getName());
                     for (final GeneratorConfig gc : generatorConfigs) {
-                        final Generator<Object> generator = gc.getGenerator();
+                        final Generator<Object> generator = gc.getGenerator(classLoader);
                         generator.generate(model);
                     }
+                } else {
+                    LOG.debug("No incremental parser: " + pars.getClass().getName());
                 }
             }
         }

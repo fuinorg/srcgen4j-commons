@@ -27,6 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.fuin.utils4j.Utils4J;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents a model parser.
@@ -36,6 +38,8 @@ import org.fuin.utils4j.Utils4J;
 @XmlType(propOrder = { "config", "className" })
 public class ParserConfig extends AbstractNamedElement implements
         InitializableElement<ParserConfig, SrcGen4JConfig> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ParserConfig.class);
 
     @XmlAttribute(name = "class")
     private String className;
@@ -147,16 +151,30 @@ public class ParserConfig extends AbstractNamedElement implements
 
     /**
      * Returns an existing parser instance or creates a new one if it's the
+     * first call to this method. The class loader of this class is used.
+     * 
+     * @return Parser of type {@link #className}.
+     */
+    public final Parser<Object> getParser() {
+        return getParser(getClass().getClassLoader());
+    }
+
+    /**
+     * Returns an existing parser instance or creates a new one if it's the
      * first call to this method.
+     * 
+     * @param classLoader
+     *            Dedicated class loader to use - Cannot be NULL.
      * 
      * @return Parser of type {@link #className}.
      */
     @SuppressWarnings("unchecked")
-    public final Parser<Object> getParser() {
+    public final Parser<Object> getParser(final ClassLoader classLoader) {
         if (parser != null) {
             return parser;
         }
-        final Object obj = Utils4J.createInstance(className);
+        LOG.info("Creating parser: " + className);
+        final Object obj = Utils4J.createInstance(className, classLoader);
         if (!(obj instanceof Parser<?>)) {
             throw new IllegalStateException("Expected class to be of type '"
                     + Parser.class.getName() + "', but was: " + className);
