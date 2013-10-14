@@ -19,6 +19,7 @@ package org.fuin.srcgen4j.commons;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +51,8 @@ public class GeneratorConfigTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(GeneratorConfig.class, Artifact.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(GeneratorConfig.class,
+                Artifact.class);
         final GeneratorConfig testee = new GeneratorConfig("abc", "def", "ghi");
         testee.addArtifact(new Artifact("NAME", "PROJECT", "FOLDER"));
 
@@ -71,7 +73,8 @@ public class GeneratorConfigTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(GeneratorConfig.class, Folder.class);
+        final JAXBContext jaxbContext = JAXBContext
+                .newInstance(GeneratorConfig.class, Folder.class);
 
         // TEST
         final GeneratorConfig testee = new JaxbHelper().create("<generator name=\"abc\" "
@@ -134,7 +137,7 @@ public class GeneratorConfigTest extends AbstractTest {
         config.setGenerators(generators);
         generators.addGenerator(testee);
 
-        config.init();
+        config.init(new File("."));
 
         // TEST & VERIFY
 

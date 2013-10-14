@@ -19,6 +19,8 @@ package org.fuin.srcgen4j.commons;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import a.b.b.Generator1;
@@ -62,7 +64,7 @@ public class SrcGen4JTest {
         genCfg3.setParser("parser2"); // Also connected to parser2
         generators.addGenerator(genCfg3);
 
-        config.init();
+        config.init(new File("."));
 
         final SrcGen4J testee = new SrcGen4J(config);
 

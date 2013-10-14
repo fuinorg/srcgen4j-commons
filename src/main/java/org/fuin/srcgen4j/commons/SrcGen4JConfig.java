@@ -17,6 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -201,15 +202,20 @@ public class SrcGen4JConfig {
      * If you serialize the object after calling this method the new state will
      * be saved.
      * 
+     * @param rootDir
+     *            Root directory that is available as variable 'rootDir' -
+     *            Cannot be NULL.
+     * 
      * @return This instance.
      */
-    public final SrcGen4JConfig init() {
+    public final SrcGen4JConfig init(final File rootDir) {
         initVarMap();
         if (variables != null) {
             for (final Variable variable : variables) {
                 variable.init(this, varMap);
             }
         }
+        varMap.put("rootDir", rootDir.toString());
         if (projects != null) {
             for (final Project project : projects) {
                 project.init(this, varMap);
@@ -361,17 +367,21 @@ public class SrcGen4JConfig {
      * 
      * @param projectName
      *            Name of the one and only project.
+     * @param rootDir
+     *            Root directory that is available as variable 'srcgen4jRootDir'
+     *            - Cannot be NULL.
      * 
      * @return New initialized configuration instance.
      */
-    public static SrcGen4JConfig createMavenStyleSingleProject(final String projectName) {
+    public static SrcGen4JConfig createMavenStyleSingleProject(final String projectName,
+            final File rootDir) {
         final SrcGen4JConfig config = new SrcGen4JConfig();
         final List<Project> projects = new ArrayList<Project>();
         final Project project = new Project(projectName, ".");
         project.setMaven(true);
         projects.add(project);
         config.setProjects(projects);
-        config.init();
+        config.init(rootDir);
         return config;
     }
 

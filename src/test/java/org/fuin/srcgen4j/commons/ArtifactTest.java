@@ -19,6 +19,7 @@ package org.fuin.srcgen4j.commons;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -185,7 +186,7 @@ public class ArtifactTest extends AbstractTest {
         generators.addGenerator(generator);
         generator.addArtifact(testee);
 
-        config.init();
+        config.init(new File("."));
 
         // TEST & VERIFY
 

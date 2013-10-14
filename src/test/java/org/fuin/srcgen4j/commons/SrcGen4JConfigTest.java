@@ -21,6 +21,7 @@ import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.MapAssert.entry;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -62,15 +63,16 @@ public class SrcGen4JConfigTest extends AbstractTest {
         vars.add(new Variable("x", "2"));
         final SrcGen4JConfig testee = new SrcGen4JConfig();
         testee.setVariables(vars);
-        testee.init();
+        testee.init(new File("."));
 
         // TEST
         final Map<String, String> varMap = testee.getVarMap();
 
         // VERIFY
         assertThat(varMap).isNotNull();
-        assertThat(varMap).hasSize(vars.size());
-        assertThat(varMap).includes(entry("a", "1"), entry("B", "b"), entry("x", "2"));
+        assertThat(varMap).includes(entry("rootDir", "."), entry("a", "1"), entry("B", "b"),
+                entry("x", "2"));
+        assertThat(varMap).hasSize(vars.size() + 1);
 
     }
 
@@ -198,7 +200,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
         testee.setGenerators(generators);
 
         // TEST
-        testee.init();
+        testee.init(new File("."));
 
         // VERIFY
 
@@ -237,11 +239,11 @@ public class SrcGen4JConfigTest extends AbstractTest {
         final SrcGen4JConfig testee = new SrcGen4JConfig();
 
         // TEST
-        testee.init();
+        testee.init(new File("."));
 
         // VERIFY
-        // Test makes sure the "init()" does not throw NullPointerException if
-        // nothing is set
+        // Test makes sure the "init(File)" does not throw NullPointerException
+        // if nothing is set
 
     }
 
@@ -250,7 +252,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
         // PREPARE
         final SrcGen4JConfig testee = load("findTarget.xml");
-        testee.init();
+        testee.init(new File("."));
 
         // TEST
         final Folder folder = testee.findTargetFolder("gen1", "arti1", "a/b/c/MyClass.java");
@@ -266,7 +268,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
         // PREPARE
         final SrcGen4JConfig testee = load("findTarget.xml");
-        testee.init();
+        testee.init(new File("."));
 
         // TEST
         try {
@@ -285,7 +287,8 @@ public class SrcGen4JConfigTest extends AbstractTest {
         final String projectName = "NAME";
 
         // TEST
-        SrcGen4JConfig config = SrcGen4JConfig.createMavenStyleSingleProject(projectName);
+        SrcGen4JConfig config = SrcGen4JConfig.createMavenStyleSingleProject(projectName, new File(
+                "."));
 
         // VERIFY
         assertThat(config.getProjects()).hasSize(1);
