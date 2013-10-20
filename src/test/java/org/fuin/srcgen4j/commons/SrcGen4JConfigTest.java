@@ -72,7 +72,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
         assertThat(varMap).isNotNull();
         assertThat(varMap).includes(entry("rootDir", "."), entry("a", "1"), entry("B", "b"),
                 entry("x", "2"));
-        assertThat(varMap).hasSize(vars.size() + 1);
+        assertThat(varMap).hasSize(vars.size());
 
     }
 

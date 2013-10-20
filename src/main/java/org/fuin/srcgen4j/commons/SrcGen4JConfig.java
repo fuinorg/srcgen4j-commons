@@ -206,7 +206,6 @@ public class SrcGen4JConfig {
             } else {
                 variables.add(rootDirVar);
             }
-            variables.add(rootDirVar);
             varMap = new VariableResolver(variables).getResolved();
         }
     }
