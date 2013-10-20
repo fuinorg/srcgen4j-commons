@@ -66,7 +66,7 @@ public class SrcGen4JTest {
 
         config.init(new File("."));
 
-        final SrcGen4J testee = new SrcGen4J(config);
+        final SrcGen4J testee = new SrcGen4J(config, this.getClass().getClassLoader());
 
         // TEST
         testee.execute();

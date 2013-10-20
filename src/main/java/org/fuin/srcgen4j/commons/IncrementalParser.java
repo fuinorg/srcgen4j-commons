@@ -20,6 +20,8 @@ package org.fuin.srcgen4j.commons;
 import java.io.File;
 import java.util.Set;
 
+import org.apache.commons.io.filefilter.IOFileFilter;
+
 /**
  * Parses some kind of model in a full or an incremental mode.
  * 
@@ -27,6 +29,13 @@ import java.util.Set;
  *            Type of the model.
  */
 public interface IncrementalParser<MODEL> extends Parser<MODEL> {
+
+    /**
+     * Returns a file filter to use for selecting the appropriate files.
+     * 
+     * @return File filter - Never NULL.
+     */
+    public IOFileFilter getFileFilter();
 
     /**
      * Parses a model using the initially given configuration and a file list.

@@ -94,7 +94,7 @@ public class VariableTest extends AbstractTest {
         final Variable testee = new Variable("x", "${a}");
 
         // TEST
-        testee.init(new SrcGen4JConfig(), vars);
+        testee.init(vars);
 
         // VERIFY
         assertThat(testee.getValue()).isEqualTo("1");

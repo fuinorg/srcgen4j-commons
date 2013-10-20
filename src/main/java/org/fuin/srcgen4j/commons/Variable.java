@@ -31,8 +31,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "variable")
 @XmlType(propOrder = { "xpath", "value", "name" })
-public class Variable extends AbstractElement implements
-        InitializableElement<Variable, SrcGen4JConfig> {
+public class Variable extends AbstractElement {
 
     @XmlAttribute
     private String name;
@@ -42,8 +41,6 @@ public class Variable extends AbstractElement implements
 
     @XmlAttribute
     private String xpath;
-
-    private transient SrcGen4JConfig parent;
 
     /**
      * Default constructor.
@@ -140,25 +137,6 @@ public class Variable extends AbstractElement implements
         this.xpath = xpath;
     }
 
-    /**
-     * Returns the parent of the variable.
-     * 
-     * @return Generator configuration.
-     */
-    public final SrcGen4JConfig getParent() {
-        return parent;
-    }
-
-    /**
-     * Sets the parent of the variable.
-     * 
-     * @param parent
-     *            Generator configuration.
-     */
-    public final void setParent(final SrcGen4JConfig parent) {
-        this.parent = parent;
-    }
-
     // CHECKSTYLE:OFF Generated code
     @Override
     public int hashCode() {
@@ -185,10 +163,14 @@ public class Variable extends AbstractElement implements
         return true;
     }
 
-    @Override
-    public final Variable init(final SrcGen4JConfig parent, final Map<String, String> vars) {
+    /**
+     * Replaces variables (if defined) in the value.
+     * 
+     * @param vars
+     *            Variables to use.
+     */
+    public final void init(final Map<String, String> vars) {
         setValue(replaceVars(getValue(), vars));
-        return this;
     }
 
     // CHECKSTYLE:ON

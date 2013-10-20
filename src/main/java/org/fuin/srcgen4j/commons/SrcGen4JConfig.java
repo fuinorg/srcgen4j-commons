@@ -30,6 +30,9 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Configuration that maps generator output to projects.
  */
@@ -37,6 +40,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "srcgen4j-config")
 @XmlType(propOrder = { "generators", "parsers", "projects", "classpath", "variables" })
 public class SrcGen4JConfig {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SrcGen4JConfig.class);
 
     @XmlElementWrapper(name = "variables")
     @XmlElement(name = "variable")
@@ -187,10 +192,21 @@ public class SrcGen4JConfig {
         return initialized;
     }
 
-    private void initVarMap() {
+    private void initVarMap(final File rootDir) {
         if (variables == null) {
             varMap = new HashMap<String, String>();
+            varMap.put("rootDir", rootDir.toString());
         } else {
+            final Variable rootDirVar = new Variable("rootDir", rootDir.toString());
+            final int idx = variables.indexOf(rootDirVar);
+            if (idx > -1) {
+                final Variable old = variables.set(idx, rootDirVar);
+                LOG.warn("Replaced existing root directory variable '" + old.getValue()
+                        + "' with: " + rootDir);
+            } else {
+                variables.add(rootDirVar);
+            }
+            variables.add(rootDirVar);
             varMap = new VariableResolver(variables).getResolved();
         }
     }
@@ -209,13 +225,12 @@ public class SrcGen4JConfig {
      * @return This instance.
      */
     public final SrcGen4JConfig init(final File rootDir) {
-        initVarMap();
+        initVarMap(rootDir);
         if (variables != null) {
             for (final Variable variable : variables) {
-                variable.init(this, varMap);
+                variable.init(varMap);
             }
         }
-        varMap.put("rootDir", rootDir.toString());
         if (projects != null) {
             for (final Project project : projects) {
                 project.init(this, varMap);
