@@ -112,7 +112,7 @@ public class GeneratorConfigTest extends AbstractTest {
         vars.put("z", "b");
 
         // TEST
-        testee.init(parent, vars);
+        testee.init(new DefaultContext(), parent, vars);
 
         // VERIFY
         assertThat(testee.getParent()).isSameAs(parent);
@@ -137,7 +137,7 @@ public class GeneratorConfigTest extends AbstractTest {
         config.setGenerators(generators);
         generators.addGenerator(testee);
 
-        config.init(new File("."));
+        config.init(new DefaultContext(), new File("."));
 
         // TEST & VERIFY
 

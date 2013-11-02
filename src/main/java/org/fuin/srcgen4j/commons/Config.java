@@ -56,11 +56,12 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
 
     @SuppressWarnings("unchecked")
     @Override
-    public final Config<PARENT> init(final PARENT parent, final Map<String, String> vars) {
+    public final Config<PARENT> init(final SrcGen4JContext context, final PARENT parent,
+            final Map<String, String> vars) {
         if (config instanceof InitializableElement) {
             final InitializableElement<?, Config<PARENT>> ie;
             ie = (InitializableElement<?, Config<PARENT>>) config;
-            ie.init(this, vars);
+            ie.init(context, this, vars);
         }
         return this;
     }

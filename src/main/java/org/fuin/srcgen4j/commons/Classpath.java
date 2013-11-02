@@ -101,11 +101,12 @@ public class Classpath extends AbstractElement implements
     }
 
     @Override
-    public final Classpath init(final SrcGen4JConfig parent, final Map<String, String> vars) {
+    public final Classpath init(final SrcGen4JContext context, final SrcGen4JConfig parent,
+            final Map<String, String> vars) {
         this.parent = parent;
         if (binList != null) {
             for (final BinClasspathEntry bin : binList) {
-                bin.init(this, vars);
+                bin.init(context, this, vars);
             }
         }
         return this;

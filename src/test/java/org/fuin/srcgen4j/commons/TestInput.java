@@ -73,7 +73,8 @@ public class TestInput extends AbstractElement implements
     }
 
     @Override
-    public final TestInput init(final Config<ParserConfig> parent, final Map<String, String> vars) {
+    public final TestInput init(final SrcGen4JContext context, final Config<ParserConfig> parent,
+            final Map<String, String> vars) {
         setPath(replaceVars(getPath(), vars));
         return this;
     }

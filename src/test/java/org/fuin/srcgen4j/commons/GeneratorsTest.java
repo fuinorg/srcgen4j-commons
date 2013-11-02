@@ -108,7 +108,7 @@ public class GeneratorsTest extends AbstractTest {
         vars.put("z", "b");
 
         // TEST
-        testee.init(parent, vars);
+        testee.init(new DefaultContext(), parent, vars);
 
         // VERIFY
         assertThat(testee.getParent()).isSameAs(parent);

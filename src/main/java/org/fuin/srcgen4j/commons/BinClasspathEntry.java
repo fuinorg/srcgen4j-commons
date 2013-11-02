@@ -96,7 +96,8 @@ public class BinClasspathEntry extends AbstractElement implements
     }
 
     @Override
-    public final BinClasspathEntry init(final Classpath parent, final Map<String, String> vars) {
+    public final BinClasspathEntry init(final SrcGen4JContext context, final Classpath parent,
+            final Map<String, String> vars) {
         this.parent = parent;
         path = replaceVars(path, vars);
         return this;

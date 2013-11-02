@@ -178,14 +178,15 @@ public class Artifact extends AbstractNamedTarget implements
     }
 
     @Override
-    public final Artifact init(final GeneratorConfig parent, final Map<String, String> vars) {
+    public final Artifact init(final SrcGen4JContext context, final GeneratorConfig parent,
+            final Map<String, String> vars) {
         this.parent = parent;
         setName(replaceVars(getName(), vars));
         setProject(replaceVars(getProject(), vars));
         setFolder(replaceVars(getFolder(), vars));
         if (targets != null) {
             for (final Target target : targets) {
-                target.init(this, vars);
+                target.init(context, this, vars);
             }
         }
         return this;

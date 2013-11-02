@@ -97,7 +97,7 @@ public class ClasspathTest extends AbstractTest {
         vars.put("b", "b");
 
         // TEST
-        testee.init(parent, vars);
+        testee.init(new DefaultContext(), parent, vars);
 
         // VERIFY
         assertThat(testee.getParent()).isSameAs(parent);

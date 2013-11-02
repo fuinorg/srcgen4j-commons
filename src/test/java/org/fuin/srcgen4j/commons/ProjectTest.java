@@ -106,7 +106,7 @@ public class ProjectTest extends AbstractTest {
         vars.put("b", "B");
 
         // TEST
-        testee.init(parent, vars);
+        testee.init(new DefaultContext(), parent, vars);
 
         // VERIFY
         assertThat(testee.getParent()).isSameAs(parent);
@@ -126,7 +126,7 @@ public class ProjectTest extends AbstractTest {
         final Project testee = new Project("A", "B");
 
         // TEST
-        testee.init(parent, new HashMap<String, String>());
+        testee.init(new DefaultContext(), parent, new HashMap<String, String>());
 
         // VERIFY
         assertThat(testee.getFolders()).hasSize(8);
@@ -146,7 +146,7 @@ public class ProjectTest extends AbstractTest {
         testee.addFolder(folder);
 
         // TEST
-        testee.init(parent, new HashMap<String, String>());
+        testee.init(new DefaultContext(), parent, new HashMap<String, String>());
 
         // VERIFY
         assertThat(testee.getFolders()).contains(folder, new Folder("mainRes"),

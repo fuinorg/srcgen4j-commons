@@ -116,7 +116,7 @@ public class ArtifactTest extends AbstractTest {
         final GeneratorConfig parent = new GeneratorConfig();
 
         // TEST
-        testee.init(parent, vars);
+        testee.init(new DefaultContext(), parent, vars);
 
         // VERIFY
         assertThat(testee.getParent()).isSameAs(parent);
@@ -164,7 +164,7 @@ public class ArtifactTest extends AbstractTest {
         testee.addTarget(targetA);
         testee.addTarget(targetB);
         testee.addTarget(targetC);
-        testee.init(parent, new HashMap<String, String>());
+        testee.init(new DefaultContext(), parent, new HashMap<String, String>());
 
         // TEST & VERIFY
         assertThat(testee.findTargetFor("a")).isSameAs(targetA);
@@ -186,7 +186,7 @@ public class ArtifactTest extends AbstractTest {
         generators.addGenerator(generator);
         generator.addArtifact(testee);
 
-        config.init(new File("."));
+        config.init(new DefaultContext(), new File("."));
 
         // TEST & VERIFY
 

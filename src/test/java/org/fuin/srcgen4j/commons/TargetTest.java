@@ -113,7 +113,7 @@ public class TargetTest extends AbstractTest {
         vars.put("c", "z");
 
         // TEST
-        testee.init(parent, vars);
+        testee.init(new DefaultContext(), parent, vars);
 
         // VERIFY
         assertThat(testee.getParent()).isSameAs(parent);
@@ -131,21 +131,21 @@ public class TargetTest extends AbstractTest {
 
         // TEST & VERIFY
         assertThat(
-                new Target("MyName\\.java", "prj", "folder").init(parent, null).matches(
-                        "MyName.java")).isTrue();
+                new Target("MyName\\.java", "prj", "folder").init(new DefaultContext(), parent,
+                        null).matches("MyName.java")).isTrue();
         assertThat(
-                new Target(".*MyName\\.java", "prj", "folder").init(parent, null).matches(
-                        "MyName.java")).isTrue();
+                new Target(".*MyName\\.java", "prj", "folder").init(new DefaultContext(), parent,
+                        null).matches("MyName.java")).isTrue();
         assertThat(
-                new Target(".*MyName\\.java", "prj", "folder").init(parent, null).matches(
-                        "/MyName.java")).isTrue();
+                new Target(".*MyName\\.java", "prj", "folder").init(new DefaultContext(), parent,
+                        null).matches("/MyName.java")).isTrue();
         assertThat(
-                new Target(".*a/b/c", "prj", "folder").init(parent, null).matches(
-                        "a/b/c/MyName.java")).isTrue();
+                new Target(".*a/b/c", "prj", "folder").init(new DefaultContext(), parent, null)
+                        .matches("a/b/c/MyName.java")).isTrue();
 
         assertThat(
-                new Target("MyName\\.java", "prj", "folder").init(parent, null).matches(
-                        "Another.java")).isFalse();
+                new Target("MyName\\.java", "prj", "folder").init(new DefaultContext(), parent,
+                        null).matches("Another.java")).isFalse();
 
     }
 
@@ -164,7 +164,7 @@ public class TargetTest extends AbstractTest {
         generator.addArtifact(artifact);
         artifact.addTarget(testee);
 
-        config.init(new File("."));
+        config.init(new DefaultContext(), new File("."));
 
         // TEST & VERIFY
 

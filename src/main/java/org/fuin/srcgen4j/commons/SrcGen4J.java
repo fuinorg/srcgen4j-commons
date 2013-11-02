@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.OrFileFilter;
@@ -40,7 +42,7 @@ public final class SrcGen4J {
 
     private final SrcGen4JConfig config;
 
-    private ClassLoader classLoader;
+    private final SrcGen4JContext context;
 
     private FileFilter fileFilter;
 
@@ -48,11 +50,11 @@ public final class SrcGen4J {
      * Constructor with configuration.
      * 
      * @param config
-     *            Configuration - Cannot be NULL.
-     * @param classLoader
-     *            Dedicated class loader to use - Cannot be NULL.
+     *            Configuration.
+     * @param context
+     *            Build context.
      */
-    public SrcGen4J(final SrcGen4JConfig config, final ClassLoader classLoader) {
+    public SrcGen4J(@NotNull final SrcGen4JConfig config, @NotNull final SrcGen4JContext context) {
         super();
         if (config == null) {
             throw new IllegalArgumentException("Argument 'config' cannot be NULL");
@@ -60,11 +62,11 @@ public final class SrcGen4J {
         if (!config.isInitialized()) {
             throw new IllegalArgumentException("The configuration is not initialized");
         }
-        if (classLoader == null) {
-            throw new IllegalArgumentException("Argument 'classLoader' cannot be NULL");
+        if (context == null) {
+            throw new IllegalArgumentException("Argument 'context' cannot be NULL");
         }
         this.config = config;
-        this.classLoader = classLoader;
+        this.context = context;
     }
 
     private void enhanceClasspath() {
@@ -84,7 +86,7 @@ public final class SrcGen4J {
                         url = "file:///" + entry.getPath();
                     }
                     LOG.info("Adding to classpath: " + url);
-                    Utils4J.addToClasspath(url, classLoader);
+                    Utils4J.addToClasspath(url, context.getClassLoader());
                 }
             }
         }
@@ -141,12 +143,12 @@ public final class SrcGen4J {
             LOG.warn("No parsers configured");
         } else {
             for (final ParserConfig pc : parserConfigs) {
-                final Parser<Object> parser = pc.getParser(classLoader);
+                final Parser<Object> parser = pc.getParser();
                 final Object model = parser.parse();
                 final List<GeneratorConfig> generatorConfigs = config.findGeneratorsForParser(pc
                         .getName());
                 for (final GeneratorConfig gc : generatorConfigs) {
-                    final Generator<Object> generator = gc.getGenerator(classLoader);
+                    final Generator<Object> generator = gc.getGenerator();
                     generator.generate(model);
                 }
             }
@@ -166,7 +168,7 @@ public final class SrcGen4J {
             final List<ParserConfig> parserConfigs = config.getParsers();
             if (parserConfigs != null) {
                 for (final ParserConfig pc : parserConfigs) {
-                    final Parser<Object> pars = pc.getParser(classLoader);
+                    final Parser<Object> pars = pc.getParser();
                     if (pars instanceof IncrementalParser) {
                         final IncrementalParser<?> parser = (IncrementalParser<?>) pars;
                         filters.add(parser.getFileFilter());
@@ -210,14 +212,14 @@ public final class SrcGen4J {
             LOG.warn("No parsers configured");
         } else {
             for (final ParserConfig pc : parserConfigs) {
-                final Parser<Object> pars = pc.getParser(classLoader);
+                final Parser<Object> pars = pc.getParser();
                 if (pars instanceof IncrementalParser) {
                     final IncrementalParser<?> parser = (IncrementalParser<?>) pars;
                     final Object model = parser.parse(files);
                     final List<GeneratorConfig> generatorConfigs = config
                             .findGeneratorsForParser(pc.getName());
                     for (final GeneratorConfig gc : generatorConfigs) {
-                        final Generator<Object> generator = gc.getGenerator(classLoader);
+                        final Generator<Object> generator = gc.getGenerator();
                         generator.generate(model);
                     }
                 } else {

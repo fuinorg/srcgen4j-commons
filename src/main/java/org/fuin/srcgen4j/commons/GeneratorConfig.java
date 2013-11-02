@@ -55,6 +55,8 @@ public class GeneratorConfig extends AbstractNamedTarget implements
     @XmlElement(name = "config")
     private Config<GeneratorConfig> config;
 
+    private transient SrcGen4JContext context;
+
     private transient Generators parent;
 
     private transient Generator<Object> generator;
@@ -230,48 +232,37 @@ public class GeneratorConfig extends AbstractNamedTarget implements
     }
 
     @Override
-    public final GeneratorConfig init(final Generators parent, final Map<String, String> vars) {
+    public final GeneratorConfig init(final SrcGen4JContext context, final Generators parent,
+            final Map<String, String> vars) {
+        this.context = context;
         this.parent = parent;
         setName(replaceVars(getName(), vars));
         setProject(replaceVars(getProject(), vars));
         setFolder(replaceVars(getFolder(), vars));
         if (artifacts != null) {
             for (final Artifact artifact : artifacts) {
-                artifact.init(this, vars);
+                artifact.init(context, this, vars);
             }
         }
         if (config != null) {
-            config.init(this, vars);
+            config.init(context, this, vars);
         }
         return this;
     }
 
     /**
      * Returns an existing generator instance or creates a new one if it's the
-     * first call to this method. The class loader of this class is used.
-     * 
-     * @return Generator of type {@link #className}.
-     */
-    public final Generator<Object> getGenerator() {
-        return getGenerator(getClass().getClassLoader());
-    }
-
-    /**
-     * Returns an existing generator instance or creates a new one if it's the
      * first call to this method.
-     * 
-     * @param classLoader
-     *            Dedicated class loader to use - Cannot be NULL.
      * 
      * @return Generator of type {@link #className}.
      */
     @SuppressWarnings("unchecked")
-    public final Generator<Object> getGenerator(final ClassLoader classLoader) {
+    public final Generator<Object> getGenerator() {
         if (generator != null) {
             return generator;
         }
         LOG.info("Creating generator: " + className);
-        final Object obj = Utils4J.createInstance(className, classLoader);
+        final Object obj = Utils4J.createInstance(className, context.getClassLoader());
         if (!(obj instanceof Generator<?>)) {
             throw new IllegalStateException("Expected class to be of type '"
                     + Generator.class.getName() + "', but was: " + className);
@@ -294,6 +285,15 @@ public class GeneratorConfig extends AbstractNamedTarget implements
             throw new IllegalStateException("Parent for generator config is not set: " + getName());
         }
         return parent.findTargetFolder(getName(), artifactName);
+    }
+
+    /**
+     * Returns the context the configuration belongs to.
+     * 
+     * @return Current context.
+     */
+    public final SrcGen4JContext getContext() {
+        return context;
     }
 
 }

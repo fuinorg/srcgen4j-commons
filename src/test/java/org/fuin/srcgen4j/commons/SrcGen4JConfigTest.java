@@ -63,7 +63,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
         vars.add(new Variable("x", "2"));
         final SrcGen4JConfig testee = new SrcGen4JConfig();
         testee.setVariables(vars);
-        testee.init(new File("."));
+        testee.init(new DefaultContext(), new File("."));
 
         // TEST
         final Map<String, String> varMap = testee.getVarMap();
@@ -200,7 +200,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
         testee.setGenerators(generators);
 
         // TEST
-        testee.init(new File("."));
+        testee.init(new DefaultContext(), new File("."));
 
         // VERIFY
 
@@ -239,7 +239,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
         final SrcGen4JConfig testee = new SrcGen4JConfig();
 
         // TEST
-        testee.init(new File("."));
+        testee.init(new DefaultContext(), new File("."));
 
         // VERIFY
         // Test makes sure the "init(File)" does not throw NullPointerException
@@ -252,7 +252,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
         // PREPARE
         final SrcGen4JConfig testee = load("findTarget.xml");
-        testee.init(new File("."));
+        testee.init(new DefaultContext(), new File("."));
 
         // TEST
         final Folder folder = testee.findTargetFolder("gen1", "arti1", "a/b/c/MyClass.java");
@@ -268,7 +268,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
         // PREPARE
         final SrcGen4JConfig testee = load("findTarget.xml");
-        testee.init(new File("."));
+        testee.init(new DefaultContext(), new File("."));
 
         // TEST
         try {
@@ -287,8 +287,8 @@ public class SrcGen4JConfigTest extends AbstractTest {
         final String projectName = "NAME";
 
         // TEST
-        SrcGen4JConfig config = SrcGen4JConfig.createMavenStyleSingleProject(projectName, new File(
-                "."));
+        SrcGen4JConfig config = SrcGen4JConfig.createMavenStyleSingleProject(new DefaultContext(),
+                projectName, new File("."));
 
         // VERIFY
         assertThat(config.getProjects()).hasSize(1);

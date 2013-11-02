@@ -133,7 +133,8 @@ public class Target extends AbstractTarget implements InitializableElement<Targe
     }
 
     @Override
-    public final Target init(final Artifact parent, final Map<String, String> vars) {
+    public final Target init(final SrcGen4JContext context, final Artifact parent,
+            final Map<String, String> vars) {
         this.parent = parent;
         pattern = replaceVars(pattern, vars);
         setProject(replaceVars(getProject(), vars));

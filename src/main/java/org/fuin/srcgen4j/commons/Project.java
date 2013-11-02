@@ -232,14 +232,15 @@ public class Project extends AbstractElement implements
     }
 
     @Override
-    public final Project init(final SrcGen4JConfig parent, final Map<String, String> vars) {
+    public final Project init(final SrcGen4JContext context, final SrcGen4JConfig parent,
+            final Map<String, String> vars) {
         this.parent = parent;
         name = replaceVars(name, vars);
         path = replaceVars(path, vars);
         if (folders != null) {
             for (final Folder folder : folders) {
                 folder.setParent(this);
-                folder.init(this, vars);
+                folder.init(context, this, vars);
             }
         }
         if (isMaven()) {

@@ -269,7 +269,8 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
     }
 
     @Override
-    public final Folder init(final Project parent, final Map<String, String> vars) {
+    public final Folder init(final SrcGen4JContext context, final Project parent,
+            final Map<String, String> vars) {
         this.parent = parent;
         name = replaceVars(name, vars);
         path = replaceVars(path, vars);

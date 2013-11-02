@@ -217,13 +217,15 @@ public class SrcGen4JConfig {
      * If you serialize the object after calling this method the new state will
      * be saved.
      * 
+     * @param context
+     *            Current context - Cannot be NULL.
      * @param rootDir
      *            Root directory that is available as variable 'rootDir' -
      *            Cannot be NULL.
      * 
      * @return This instance.
      */
-    public final SrcGen4JConfig init(final File rootDir) {
+    public final SrcGen4JConfig init(final SrcGen4JContext context, final File rootDir) {
         initVarMap(rootDir);
         if (variables != null) {
             for (final Variable variable : variables) {
@@ -232,15 +234,15 @@ public class SrcGen4JConfig {
         }
         if (projects != null) {
             for (final Project project : projects) {
-                project.init(this, varMap);
+                project.init(context, this, varMap);
             }
         }
         if (generators != null) {
-            generators.init(this, varMap);
+            generators.init(context, this, varMap);
         }
         if (parsers != null) {
             for (final ParserConfig parser : parsers) {
-                parser.init(this, varMap);
+                parser.init(context, this, varMap);
             }
         }
         initialized = true;
@@ -379,23 +381,25 @@ public class SrcGen4JConfig {
      * Creates a new configuration with a single project and a Maven directory
      * structure.
      * 
+     * @param context
+     *            Current context - Cannot be NULL.
      * @param projectName
-     *            Name of the one and only project.
+     *            Name of the one and only project - Cannot be NULL.
      * @param rootDir
      *            Root directory that is available as variable 'srcgen4jRootDir'
      *            - Cannot be NULL.
      * 
      * @return New initialized configuration instance.
      */
-    public static SrcGen4JConfig createMavenStyleSingleProject(final String projectName,
-            final File rootDir) {
+    public static SrcGen4JConfig createMavenStyleSingleProject(final SrcGen4JContext context,
+            final String projectName, final File rootDir) {
         final SrcGen4JConfig config = new SrcGen4JConfig();
         final List<Project> projects = new ArrayList<Project>();
         final Project project = new Project(projectName, ".");
         project.setMaven(true);
         projects.add(project);
         config.setProjects(projects);
-        config.init(rootDir);
+        config.init(context, rootDir);
         return config;
     }
 

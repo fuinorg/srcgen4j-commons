@@ -17,30 +17,9 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import java.util.Map;
-
 /**
- * Used by elements that require initialization with parent and variables.
- * 
- * @param <ELEMENT>
- *            Type of the instance that implements this interface.
- * @param <PARENT>
- *            Type of the element's parent.
+ * Represents a file marker.
  */
-public interface InitializableElement<ELEMENT, PARENT> {
-
-    /**
-     * Initializes this object and it's childs.
-     * 
-     * @param context
-     *            Current context.
-     * @param parent
-     *            Parent.
-     * @param vars
-     *            Variables to use.
-     * 
-     * @return This instance.
-     */
-    public ELEMENT init(SrcGen4JContext context, PARENT parent, Map<String, String> vars);
+public interface FileMarker {
 
 }

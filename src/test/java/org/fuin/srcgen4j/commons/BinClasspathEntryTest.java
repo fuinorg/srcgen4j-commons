@@ -92,7 +92,7 @@ public class BinClasspathEntryTest extends AbstractTest {
         vars.put("x", "PATH");
 
         // TEST
-        testee.init(parent, vars);
+        testee.init(new DefaultContext(), parent, vars);
 
         // VERIFY
         assertThat(testee.getParent()).isSameAs(parent);

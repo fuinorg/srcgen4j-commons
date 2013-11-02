@@ -17,30 +17,20 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import java.util.Map;
+import javax.validation.constraints.NotNull;
 
 /**
- * Used by elements that require initialization with parent and variables.
- * 
- * @param <ELEMENT>
- *            Type of the instance that implements this interface.
- * @param <PARENT>
- *            Type of the element's parent.
+ * Provides a context for the build process.
  */
-public interface InitializableElement<ELEMENT, PARENT> {
+public interface SrcGen4JContext {
 
     /**
-     * Initializes this object and it's childs.
+     * Returns the class loader to use for loading parsers, generators and other
+     * stuff.
      * 
-     * @param context
-     *            Current context.
-     * @param parent
-     *            Parent.
-     * @param vars
-     *            Variables to use.
-     * 
-     * @return This instance.
+     * @return Class loader.
      */
-    public ELEMENT init(SrcGen4JContext context, PARENT parent, Map<String, String> vars);
+    @NotNull
+    public ClassLoader getClassLoader();
 
 }

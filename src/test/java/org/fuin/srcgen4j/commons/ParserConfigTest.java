@@ -110,7 +110,7 @@ public class ParserConfigTest extends AbstractTest {
         vars.put("y", "c");
 
         // TEST
-        testee.init(parent, vars);
+        testee.init(new DefaultContext(), parent, vars);
 
         // VERIFY
         assertThat(testee.getParent()).isSameAs(parent);

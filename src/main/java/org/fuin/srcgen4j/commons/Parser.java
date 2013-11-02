@@ -29,10 +29,12 @@ public interface Parser<MODEL> {
      * Initializes the parser using the given configuration. Only called once
      * for every parser instance.
      * 
+     * @param context
+     *            Current context - Cannot be NULL.
      * @param config
      *            Configuration to use - Cannot be NULL.
      */
-    public void initialize(ParserConfig config);
+    public void initialize(SrcGen4JContext context, ParserConfig config);
 
     /**
      * Parses a model using the initially given configuration.

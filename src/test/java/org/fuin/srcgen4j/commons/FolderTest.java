@@ -104,7 +104,7 @@ public class FolderTest extends AbstractTest {
         vars.put("y", "PATH");
 
         // TEST
-        testee.init(parent, vars);
+        testee.init(new DefaultContext(), parent, vars);
 
         // VERIFY
         assertThat(testee.getParent()).isSameAs(parent);

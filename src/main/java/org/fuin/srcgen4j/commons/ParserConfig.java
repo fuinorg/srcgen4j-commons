@@ -47,6 +47,8 @@ public class ParserConfig extends AbstractNamedElement implements
     @XmlElement(name = "config")
     private Config<ParserConfig> config;
 
+    private transient SrcGen4JContext context;
+
     private transient SrcGen4JConfig parent;
 
     private transient Parser<Object> parser;
@@ -139,49 +141,47 @@ public class ParserConfig extends AbstractNamedElement implements
     }
 
     @Override
-    public final ParserConfig init(final SrcGen4JConfig parent, final Map<String, String> vars) {
+    public final ParserConfig init(final SrcGen4JContext context, final SrcGen4JConfig parent,
+            final Map<String, String> vars) {
+        this.context = context;
         this.parent = parent;
         setName(replaceVars(getName(), vars));
         setClassName(replaceVars(getClassName(), vars));
         if (config != null) {
-            config.init(this, vars);
+            config.init(context, this, vars);
         }
         return this;
     }
 
     /**
      * Returns an existing parser instance or creates a new one if it's the
-     * first call to this method. The class loader of this class is used.
-     * 
-     * @return Parser of type {@link #className}.
-     */
-    public final Parser<Object> getParser() {
-        return getParser(getClass().getClassLoader());
-    }
-
-    /**
-     * Returns an existing parser instance or creates a new one if it's the
      * first call to this method.
-     * 
-     * @param classLoader
-     *            Dedicated class loader to use - Cannot be NULL.
      * 
      * @return Parser of type {@link #className}.
      */
     @SuppressWarnings("unchecked")
-    public final Parser<Object> getParser(final ClassLoader classLoader) {
+    public final Parser<Object> getParser() {
         if (parser != null) {
             return parser;
         }
         LOG.info("Creating parser: " + className);
-        final Object obj = Utils4J.createInstance(className, classLoader);
+        final Object obj = Utils4J.createInstance(className, context.getClassLoader());
         if (!(obj instanceof Parser<?>)) {
             throw new IllegalStateException("Expected class to be of type '"
                     + Parser.class.getName() + "', but was: " + className);
         }
         parser = (Parser<Object>) obj;
-        parser.initialize(this);
+        parser.initialize(context, this);
         return parser;
+    }
+
+    /**
+     * Returns the context the configuration belongs to.
+     * 
+     * @return Current context.
+     */
+    public final SrcGen4JContext getContext() {
+        return context;
     }
 
 }
