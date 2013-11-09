@@ -17,7 +17,6 @@
  */
 package org.fuin.srcgen4j.commons;
 
-
 /**
  * Creates an artifact for a given model.
  * 
@@ -32,6 +31,14 @@ public interface ArtifactFactory<TYPE> {
      * @return Model class.
      */
     public Class<? extends TYPE> getModelType();
+
+    /**
+     * Initializes the factory with the artifact name.
+     * 
+     * @param artifact
+     *            Externally configured artifact name.
+     */
+    public void init(String artifact);
 
     /**
      * Generates an artifact based on a given model object.

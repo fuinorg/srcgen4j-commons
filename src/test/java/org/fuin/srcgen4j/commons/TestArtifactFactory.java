@@ -22,14 +22,21 @@ package org.fuin.srcgen4j.commons;
  */
 public final class TestArtifactFactory implements ArtifactFactory<Object> {
 
+    private String artifact;
+
     @Override
     public final Class<? extends Object> getModelType() {
         return Object.class;
     }
 
     @Override
+    public final void init(final String artifact) {
+        this.artifact = artifact;
+    }
+
+    @Override
     public final GeneratedArtifact create(final Object modelObject) throws GenerateException {
-        return new GeneratedArtifact("a", "b/c/d.txt", "abcd");
+        return new GeneratedArtifact(artifact, "b/c/d.txt", "abcd");
     }
 
 }

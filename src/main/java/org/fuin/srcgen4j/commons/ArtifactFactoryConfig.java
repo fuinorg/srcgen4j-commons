@@ -118,6 +118,7 @@ public class ArtifactFactoryConfig extends AbstractElement {
                         + ArtifactFactory.class.getName() + "', but was: " + obj.getClass());
             }
             factory = (ArtifactFactory<?>) obj;
+            factory.init(artifact);
         }
         return factory;
     }
