@@ -16,7 +16,7 @@ public class Generator1 implements Generator<String> {
     }
 
     @Override
-    public void generate(String model) {
+    public void generate(String model, boolean incremental) {
         this.model = model;
     }
 

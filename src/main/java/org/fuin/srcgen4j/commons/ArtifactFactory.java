@@ -35,10 +35,18 @@ public interface ArtifactFactory<TYPE> {
     /**
      * Initializes the factory with the artifact name.
      * 
-     * @param artifact
-     *            Externally configured artifact name.
+     * @param config
+     *            Configuration to use.
      */
-    public void init(String artifact);
+    public void init(ArtifactFactoryConfig config);
+
+    /**
+     * Determines if the factory supports an incremental build.
+     * 
+     * @return If the factory supports an incremental build TRUE (default), else
+     *         FALSE (only full build).
+     */
+    public boolean isIncremental();
 
     /**
      * Generates an artifact based on a given model object.

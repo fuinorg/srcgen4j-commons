@@ -149,7 +149,7 @@ public final class SrcGen4J {
                         .getName());
                 for (final GeneratorConfig gc : generatorConfigs) {
                     final Generator<Object> generator = gc.getGenerator();
-                    generator.generate(model);
+                    generator.generate(model, false);
                 }
             }
         }
@@ -220,7 +220,7 @@ public final class SrcGen4J {
                             .findGeneratorsForParser(pc.getName());
                     for (final GeneratorConfig gc : generatorConfigs) {
                         final Generator<Object> generator = gc.getGenerator();
-                        generator.generate(model);
+                        generator.generate(model, true);
                     }
                 } else {
                     LOG.debug("No incremental parser: " + pars.getClass().getName());

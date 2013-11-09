@@ -39,6 +39,9 @@ public class ArtifactFactoryConfig extends AbstractElement {
     @XmlAttribute(name = "class")
     private String factoryClassName;
 
+    @XmlAttribute(name = "incremental")
+    private Boolean incremental;
+
     private transient SrcGen4JContext context;
 
     private transient ArtifactFactory<?> factory;
@@ -103,6 +106,43 @@ public class ArtifactFactoryConfig extends AbstractElement {
     }
 
     /**
+     * Returns the information if the factory should be called during an
+     * incremental build.
+     * 
+     * @return If the factory executes on an incremental build TRUE, else FALSE.
+     */
+    public final Boolean getIncremental() {
+        return incremental;
+    }
+
+    /**
+     * Sets the information if the factory should be called during an
+     * incremental build.
+     * 
+     * @param incremental
+     *            If the factory executes on an incremental build TRUE, else
+     *            FALSE.
+     */
+    public final void setIncremental(final Boolean incremental) {
+        this.incremental = incremental;
+    }
+
+    /**
+     * Returns the information if the factory should be called during an
+     * incremental build. If the information is not set (NULL) the value
+     * defaults to TRUE.
+     * 
+     * @return If the factory executes on an incremental build TRUE (default),
+     *         else FALSE.
+     */
+    public final boolean isIncremental() {
+        if (incremental == null) {
+            return true;
+        }
+        return incremental;
+    }
+
+    /**
      * Returns the factory instance. If it does not exist, it will be created.
      * 
      * @return Factory.
@@ -118,7 +158,7 @@ public class ArtifactFactoryConfig extends AbstractElement {
                         + ArtifactFactory.class.getName() + "', but was: " + obj.getClass());
             }
             factory = (ArtifactFactory<?>) obj;
-            factory.init(artifact);
+            factory.init(this);
         }
         return factory;
     }

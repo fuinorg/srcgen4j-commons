@@ -26,7 +26,7 @@ package org.fuin.srcgen4j.commons;
 public interface Generator<MODEL> {
 
     /**
-     * Initializes the generator with agiven configuration. This is only called
+     * Initializes the generator with a given configuration. This is only called
      * once per instance. The type of the generator implementation is the same
      * as defined in {@link GeneratorConfig#getClassName()}.
      * 
@@ -40,10 +40,12 @@ public interface Generator<MODEL> {
      * 
      * @param model
      *            Model to use - Cannot be NULL.
+     * @param incremental
+     *            If this is an incremental build TRUE, else FALSE (full build).
      * 
      * @throws GenerateException
      *             Error when generating.
      */
-    public void generate(MODEL model) throws GenerateException;
+    public void generate(MODEL model, boolean incremental) throws GenerateException;
 
 }

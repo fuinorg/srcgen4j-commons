@@ -30,8 +30,13 @@ public final class TestArtifactFactory implements ArtifactFactory<Object> {
     }
 
     @Override
-    public final void init(final String artifact) {
-        this.artifact = artifact;
+    public final boolean isIncremental() {
+        return true;
+    }
+
+    @Override
+    public final void init(final ArtifactFactoryConfig config) {
+        this.artifact = config.getArtifact();
     }
 
     @Override
