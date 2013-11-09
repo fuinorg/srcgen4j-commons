@@ -131,5 +131,10 @@
       <xs:element type="sg4jc:generatorsType" name="generators"  minOccurs="1" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
     </xs:sequence>
   </xs:complexType>
-  
+
+  	<xs:complexType name="artifactFactoryConfigType">
+		<xs:attribute type="xs:string" name="artifact" use="required" />
+		<xs:attribute type="xs:string" name="class" use="required" />
+	</xs:complexType>
+
 </xs:schema>
