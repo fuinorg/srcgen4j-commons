@@ -74,9 +74,17 @@ public final class SrcGen4J {
         if (cp == null) {
             LOG.debug("No additional classpath found");
         } else {
+
+            // Add context class path
+            if (cp.isAddContextCP()) {
+                addToClasspath(context.getJarFiles(), "Context jar files");
+                addToClasspath(context.getBinDirs(), "Context bin directories");
+            }
+
+            // Add class paths from configuration
             final List<BinClasspathEntry> binList = cp.getBinList();
             if (binList == null) {
-                LOG.debug("No binary list found");
+                LOG.debug("No binary classpath list found");
             } else {
                 for (final BinClasspathEntry entry : binList) {
                     final String url;
@@ -88,6 +96,17 @@ public final class SrcGen4J {
                     LOG.info("Adding to classpath: " + url);
                     Utils4J.addToClasspath(url, context.getClassLoader());
                 }
+            }
+        }
+    }
+
+    private void addToClasspath(final List<File> files, final String message) {
+        if (files.size() == 0) {
+            LOG.debug("No files found (" + message + ")");
+        } else {
+            for (final File file : files) {
+                LOG.info("Adding to classpath (" + message + "): " + file);
+                Utils4J.addToClasspath(file, context.getClassLoader());
             }
         }
     }

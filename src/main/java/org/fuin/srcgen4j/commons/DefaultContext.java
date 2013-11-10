@@ -18,9 +18,12 @@
 package org.fuin.srcgen4j.commons;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,12 +40,56 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
 
     private final Map<File, Set<DefaultFileMarker>> markers;
 
+    private final ClassLoader classLoader;
+
+    private final List<File> jarFiles;
+
+    private final List<File> binDirs;
+
     /**
      * Default constructor.
      */
     public DefaultContext() {
+        this(DefaultContext.class.getClassLoader());
+    }
+
+    /**
+     * Constructor without class path information.
+     * 
+     * @param classLoader
+     *            Class loader to use in this context.
+     */
+    public DefaultContext(final ClassLoader classLoader) {
+        super();
+        this.markers = new HashMap<File, Set<DefaultFileMarker>>();
+        this.classLoader = classLoader;
+        this.jarFiles = Collections.unmodifiableList(new ArrayList<File>());
+        this.binDirs = Collections.unmodifiableList(new ArrayList<File>());
+    }
+
+    /**
+     * Constructor with class path information.
+     * 
+     * @param classLoader
+     *            Class loader to use in this context.
+     * @param cp
+     *            Class path with JAR files and binary directories.
+     */
+    public DefaultContext(final ClassLoader classLoader, final List<File> cp) {
         super();
         markers = new HashMap<File, Set<DefaultFileMarker>>();
+        this.classLoader = classLoader;
+        final List<File> files = new ArrayList<File>();
+        final List<File> dirs = new ArrayList<File>();
+        for (final File file : cp) {
+            if (file.isDirectory()) {
+                dirs.add(file);
+            } else {
+                files.add(file);
+            }
+        }
+        jarFiles = Collections.unmodifiableList(files);
+        binDirs = Collections.unmodifiableList(dirs);
     }
 
     private DefaultFileMarker add(final File file, final DefaultFileMarker marker) {
@@ -124,7 +171,17 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
 
     @Override
     public final ClassLoader getClassLoader() {
-        return DefaultContext.class.getClassLoader();
+        return classLoader;
+    }
+
+    @Override
+    public final List<File> getJarFiles() {
+        return jarFiles;
+    }
+
+    @Override
+    public final List<File> getBinDirs() {
+        return binDirs;
     }
 
 }

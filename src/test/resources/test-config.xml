@@ -9,7 +9,7 @@
 		<variable name="project_example_path" value="${root}/example" />
 	</variables>
 	
-	<classpath>
+	<classpath context="true">
 		<bin path="${project_example_path}/target/classes" />
 	</classpath>
 	

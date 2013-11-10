@@ -23,6 +23,7 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -36,6 +37,9 @@ import javax.xml.bind.annotation.XmlType;
 public class Classpath extends AbstractElement implements
         InitializableElement<Classpath, SrcGen4JConfig> {
 
+    @XmlAttribute(name = "context")
+    private Boolean addContextCP;
+
     @XmlElement(name = "bin")
     private List<BinClasspathEntry> binList;
 
@@ -46,6 +50,40 @@ public class Classpath extends AbstractElement implements
      */
     public Classpath() {
         super();
+    }
+
+    /**
+     * Returns the information if the class path from the context should be
+     * added.
+     * 
+     * @return f the context's class path should be added TRUE, else FALSE.
+     */
+    public final Boolean getAddContextCP() {
+        return addContextCP;
+    }
+
+    /**
+     * Sets the information if the class path from the context should be added.
+     * 
+     * @param addContextCP
+     *            If the context's class path should be added TRUE, else FALSE.
+     */
+    public final void setAddContextCP(final Boolean addContextCP) {
+        this.addContextCP = addContextCP;
+    }
+
+    /**
+     * Returns the information the information if the class path from the
+     * context should be added. If the information is not set (NULL) the value
+     * defaults to TRUE.
+     * 
+     * @return If the context's class path should be added TRUE, else FALSE.
+     */
+    public final boolean isAddContextCP() {
+        if (addContextCP == null) {
+            return true;
+        }
+        return addContextCP;
     }
 
     /**

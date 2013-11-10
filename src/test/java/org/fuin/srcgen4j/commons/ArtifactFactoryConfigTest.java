@@ -19,6 +19,10 @@ package org.fuin.srcgen4j.commons;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.JAXBContext;
 
 import org.junit.Test;
@@ -75,6 +79,16 @@ public class ArtifactFactoryConfigTest extends AbstractTest {
             @Override
             public ClassLoader getClassLoader() {
                 return ArtifactFactoryConfigTest.class.getClassLoader();
+            }
+
+            @Override
+            public List<File> getJarFiles() {
+                return new ArrayList<File>();
+            }
+
+            @Override
+            public List<File> getBinDirs() {
+                return new ArrayList<File>();
             }
         });
 

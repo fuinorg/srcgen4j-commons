@@ -29,6 +29,7 @@
   </xs:complexType>
   
   <xs:complexType name="classpathType">
+    <xs:attribute type="xs:boolean" name="context" use="optional" default="true" />
     <xs:sequence>
       <xs:element type="sg4jc:binType" name="bin" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
     </xs:sequence>
