@@ -122,7 +122,7 @@ public final class SrcGen4J {
                     LOG.warn("No project folders configured for: " + project.getName());
                 } else {
                     for (final Folder folder : folders) {
-                        final File dir = new File(folder.getDirectory());
+                        final File dir = folder.getCanonicalDir();
                         if (folder.isClean() && dir.exists()) {
                             try {
                                 LOG.info("Cleaning: " + dir);
