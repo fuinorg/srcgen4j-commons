@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -280,13 +282,30 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
     /**
      * Returns the full path from project and folder.
      * 
-     * @return Path.
+     * @return Path or NULL.
      */
     public final String getDirectory() {
         if (parent == null) {
             return null;
         }
         return parent.getPath() + "/" + getPath();
+    }
+
+    /**
+     * Returns the full path from project and folder.
+     * 
+     * @return Directory or NULL.
+     */
+    public final File getCanonicalDir() {
+        final String dir = getDirectory();
+        if (dir == null) {
+            return null;
+        }
+        try {
+            return new File(dir).getCanonicalFile();
+        } catch (final IOException ex) {
+            throw new RuntimeException("Couldn't determine canonical file: " + dir, ex);
+        }
     }
 
     // CHECKSTYLE:OFF Generated code
