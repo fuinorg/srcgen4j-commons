@@ -29,7 +29,6 @@ import org.junit.Test;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
-import com.openpojo.validation.rule.impl.SetterMustExistRule;
 
 /**
  * Tests for {@link Generators}.
@@ -43,7 +42,6 @@ public class GeneratorsTest extends AbstractTest {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(Generators.class);
         final PojoValidator pv = createPojoValidator();
-        pv.addRule(new SetterMustExistRule());
         pv.runValidation(pc);
 
     }
@@ -54,18 +52,17 @@ public class GeneratorsTest extends AbstractTest {
         // PREPARE
         final JAXBContext jaxbContext = JAXBContext.newInstance(Generators.class);
         final Generators testee = new Generators("abc", "def");
-        testee.addGenerator(new GeneratorConfig("NAME", "PROJECT", "FOLDER"));
+        testee.addGenerator(new GeneratorConfig("NAME", "a.b.c.D", "PARSER", "PROJECT", "FOLDER"));
 
         // TEST
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        assertThat(result)
-                .isEqualTo(
-                        XML
-                                + "<generators project=\"abc\" "
-                                + "folder=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                                + "<generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generators>");
+        assertThat(result).isEqualTo(
+                XML + "<generators project=\"abc\" folder=\"def\" "
+                        + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<generator class=\"a.b.c.D\" parser=\"PARSER\" name=\"NAME\""
+                        + " project=\"PROJECT\" folder=\"FOLDER\"/></generators>");
 
     }
 
@@ -98,7 +95,7 @@ public class GeneratorsTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig parent = new SrcGen4JConfig();
         final Generators testee = new Generators("A${a}A", "${b}2B");
-        testee.addGenerator(new GeneratorConfig("A ${x}", "${y}B", "a${z}c"));
+        testee.addGenerator(new GeneratorConfig("A ${x}", "CLASS", "PARSER", "${y}B", "a${z}c"));
 
         final Map<String, String> vars = new HashMap<String, String>();
         vars.put("a", "1");

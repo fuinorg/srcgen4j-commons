@@ -29,7 +29,6 @@ import org.junit.Test;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
-import com.openpojo.validation.rule.impl.SetterMustExistRule;
 
 /**
  * Tests for {@link Project}.
@@ -43,7 +42,6 @@ public class ProjectTest extends AbstractTest {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(Project.class);
         final PojoValidator pv = createPojoValidator();
-        pv.addRule(new SetterMustExistRule());
         pv.runValidation(pc);
 
     }
@@ -62,9 +60,9 @@ public class ProjectTest extends AbstractTest {
 
         // VERIFY
         assertThat(result).isEqualTo(
-                XML + "<project name=\"abc\" path=\"def\""
-                        + " maven=\"true\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<folder name=\"NAME\" path=\"PATH\"/></project>");
+                XML + "<project path=\"def\" maven=\"true\" name=\"abc\" "
+                        + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<folder path=\"PATH\" name=\"NAME\"/></project>");
 
     }
 
@@ -130,9 +128,11 @@ public class ProjectTest extends AbstractTest {
 
         // VERIFY
         assertThat(testee.getFolders()).hasSize(8);
-        assertThat(testee.getFolders()).contains(new Folder("mainJava"), new Folder("mainRes"),
-                new Folder("genMainJava"), new Folder("genMainRes"), new Folder("testJava"),
-                new Folder("testRes"), new Folder("genTestJava"), new Folder("genTestRes"));
+        assertThat(testee.getFolders()).contains(new Folder("mainJava", ""),
+                new Folder("mainRes", ""), new Folder("genMainJava", ""),
+                new Folder("genMainRes", ""), new Folder("testJava", ""),
+                new Folder("testRes", ""), new Folder("genTestJava", ""),
+                new Folder("genTestRes", ""));
 
     }
 
@@ -149,9 +149,10 @@ public class ProjectTest extends AbstractTest {
         testee.init(new DefaultContext(), parent, new HashMap<String, String>());
 
         // VERIFY
-        assertThat(testee.getFolders()).contains(folder, new Folder("mainRes"),
-                new Folder("genMainJava"), new Folder("genMainRes"), new Folder("testJava"),
-                new Folder("testRes"), new Folder("genTestJava"), new Folder("genTestRes"));
+        assertThat(testee.getFolders()).contains(folder, new Folder("mainRes", ""),
+                new Folder("genMainJava", ""), new Folder("genMainRes", ""),
+                new Folder("testJava", ""), new Folder("testRes", ""),
+                new Folder("genTestJava", ""), new Folder("genTestRes", ""));
         final int idx = testee.getFolders().indexOf(folder);
         assertThat(testee.getFolders().get(idx)).isSameAs(folder);
 

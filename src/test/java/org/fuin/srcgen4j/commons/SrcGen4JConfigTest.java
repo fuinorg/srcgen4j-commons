@@ -126,9 +126,11 @@ public class SrcGen4JConfigTest extends AbstractTest {
             assertThat(prj.getName()).isEqualTo("example");
             assertThat(prj.getPath()).isEqualTo("${root}/example");
             assertThat(prj.getFolders()).hasSize(8);
-            assertThat(prj.getFolders()).contains(new Folder("mainJava"), new Folder("mainRes"),
-                    new Folder("genMainJava"), new Folder("genMainRes"), new Folder("testJava"),
-                    new Folder("testRes"), new Folder("genTestJava"), new Folder("genTestRes"));
+            assertThat(prj.getFolders()).contains(new Folder("mainJava", ""),
+                    new Folder("mainRes", ""), new Folder("genMainJava", ""),
+                    new Folder("genMainRes", ""), new Folder("testJava", ""),
+                    new Folder("testRes", ""), new Folder("genTestJava", ""),
+                    new Folder("genTestRes", ""));
 
             assertThat(testee.getGenerators()).isNotNull();
             assertThat(testee.getGenerators().getList()).hasSize(1);
@@ -183,8 +185,8 @@ public class SrcGen4JConfigTest extends AbstractTest {
         project.addFolder(new Folder("${folder.name}", "${folder.path}"));
 
         final List<GeneratorConfig> genList = new ArrayList<GeneratorConfig>();
-        final GeneratorConfig generator = new GeneratorConfig("${generator.name}",
-                "${generator.project}", "${generator.folder}");
+        final GeneratorConfig generator = new GeneratorConfig("${generator.name}", "CLASS",
+                "PARSER", "${generator.project}", "${generator.folder}");
         genList.add(generator);
         final Artifact artifact = new Artifact("${artifact.name}", "${artifact.project}",
                 "${artifact.folder}");
@@ -297,9 +299,11 @@ public class SrcGen4JConfigTest extends AbstractTest {
         assertThat(project.getPath()).isEqualTo(".");
         assertThat(project.isMaven()).isTrue();
         assertThat(project.getFolders()).hasSize(8);
-        assertThat(project.getFolders()).contains(new Folder("mainJava"), new Folder("mainRes"),
-                new Folder("genMainJava"), new Folder("genMainRes"), new Folder("testJava"),
-                new Folder("testRes"), new Folder("genTestJava"), new Folder("genTestRes"));
+        assertThat(project.getFolders()).contains(new Folder("mainJava", ""),
+                new Folder("mainRes", ""), new Folder("genMainJava", ""),
+                new Folder("genMainRes", ""), new Folder("testJava", ""),
+                new Folder("testRes", ""), new Folder("genTestJava", ""),
+                new Folder("genTestRes", ""));
 
     }
 

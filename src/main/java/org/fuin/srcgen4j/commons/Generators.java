@@ -21,11 +21,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NotEmpty;
+import org.fuin.objects4j.common.Nullable;
 
 /**
  * Represents a set of code generators.
@@ -36,15 +42,18 @@ import javax.xml.bind.annotation.XmlType;
 public class Generators extends AbstractTarget implements
         InitializableElement<Generators, SrcGen4JConfig> {
 
+    @Nullable
+    @Valid
     @XmlElement(name = "generator")
     private List<GeneratorConfig> list;
 
+    @Nullable
     private transient SrcGen4JConfig parent;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public Generators() {
+    Generators() {
         super();
     }
 
@@ -56,15 +65,16 @@ public class Generators extends AbstractTarget implements
      * @param folder
      *            Folder to set.
      */
-    public Generators(final String project, final String folder) {
+    public Generators(@Nullable final String project, @Nullable final String folder) {
         super(project, folder);
     }
 
     /**
      * Returns the list of generators.
      * 
-     * @return Generators or NULL.
+     * @return Generators.
      */
+    @Nullable
     public final List<GeneratorConfig> getList() {
         return list;
     }
@@ -73,9 +83,9 @@ public class Generators extends AbstractTarget implements
      * Sets the list of generators.
      * 
      * @param list
-     *            Generators or NULL.
+     *            Generators.
      */
-    public final void setList(final List<GeneratorConfig> list) {
+    public final void setList(@Nullable final List<GeneratorConfig> list) {
         this.list = list;
     }
 
@@ -83,9 +93,10 @@ public class Generators extends AbstractTarget implements
      * Adds a generator to the list. If the list does not exist it's created.
      * 
      * @param generator
-     *            Generator to add - Cannot be NULL.
+     *            Generator to add.
      */
-    public final void addGenerator(final GeneratorConfig generator) {
+    public final void addGenerator(@NotNull final GeneratorConfig generator) {
+        Contract.requireArgNotNull("generator", generator);
         if (list == null) {
             list = new ArrayList<GeneratorConfig>();
         }
@@ -97,18 +108,9 @@ public class Generators extends AbstractTarget implements
      * 
      * @return GeneratorConfig.
      */
+    @Nullable
     public final SrcGen4JConfig getParent() {
         return parent;
-    }
-
-    /**
-     * Sets the parent of the object.
-     * 
-     * @param parent
-     *            GeneratorConfig.
-     */
-    public final void setParent(final SrcGen4JConfig parent) {
-        this.parent = parent;
     }
 
     @Override
@@ -136,9 +138,11 @@ public class Generators extends AbstractTarget implements
      * @throws GeneratorNotFoundException
      *             No generator with the given name was found.
      */
-    public final GeneratorConfig findByName(final String generatorName)
+    @Nullable
+    public final GeneratorConfig findByName(@NotEmpty final String generatorName)
             throws GeneratorNotFoundException {
-        final int idx = list.indexOf(new GeneratorConfig(generatorName));
+        Contract.requireArgNotEmpty("generatorName", generatorName);
+        final int idx = list.indexOf(new GeneratorConfig(generatorName, "dummy", "dummy"));
         if (idx < 0) {
             throw new GeneratorNotFoundException(generatorName);
         }
@@ -155,7 +159,11 @@ public class Generators extends AbstractTarget implements
      * 
      * @return Target folder.
      */
-    public final Folder findTargetFolder(final String generatorName, final String artifactName) {
+    @Nullable
+    public final Folder findTargetFolder(@NotEmpty final String generatorName,
+            @NotEmpty final String artifactName) {
+        Contract.requireArgNotEmpty("generatorName", generatorName);
+        Contract.requireArgNotEmpty("artifactName", artifactName);
         if (parent == null) {
             throw new IllegalStateException("Parent for generators is not set");
         }

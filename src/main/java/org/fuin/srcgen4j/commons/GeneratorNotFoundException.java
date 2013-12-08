@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * A generator with a given name was not found in the configuration.
  */
@@ -28,9 +30,10 @@ public class GeneratorNotFoundException extends Exception {
      * Constructor with generator name.
      * 
      * @param generatorName
-     *            Name of the generator that was not found.
+     *            Name of the generator that was not found - Should not be
+     *            <code>null</code>.
      */
-    public GeneratorNotFoundException(final String generatorName) {
+    public GeneratorNotFoundException(@Nullable final String generatorName) {
         super("The generator '" + generatorName + "' is not configured");
     }
 

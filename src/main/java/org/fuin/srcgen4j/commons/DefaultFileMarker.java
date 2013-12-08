@@ -20,15 +20,21 @@ package org.fuin.srcgen4j.commons;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverNull;
+
 /**
  * Represents a file marker.
  */
 public final class DefaultFileMarker implements FileMarker {
 
+    @NotNull
     private final DefaultFileMarkerType type;
 
+    @NotNull
     private final FileMarkerSeverity severity;
 
+    @NotNull
     private final String message;
 
     private final int line;
@@ -48,6 +54,9 @@ public final class DefaultFileMarker implements FileMarker {
     public DefaultFileMarker(@NotNull final FileMarkerSeverity severity,
             @NotNull final String message) {
         super();
+        Contract.requireArgNotNull("severity", severity);
+        Contract.requireArgNotNull("message", message);
+
         this.type = DefaultFileMarkerType.FILE;
         this.severity = severity;
         this.message = message;
@@ -69,6 +78,9 @@ public final class DefaultFileMarker implements FileMarker {
     public DefaultFileMarker(@NotNull final FileMarkerSeverity severity,
             @NotNull final String message, @Min(0) final int line) {
         super();
+        Contract.requireArgNotNull("severity", severity);
+        Contract.requireArgNotNull("message", message);
+
         this.type = DefaultFileMarkerType.LINE;
         this.severity = severity;
         this.message = message;
@@ -92,6 +104,9 @@ public final class DefaultFileMarker implements FileMarker {
     public DefaultFileMarker(@NotNull final FileMarkerSeverity severity,
             @NotNull final String message, @Min(0) final int start, @Min(1) final int length) {
         super();
+        Contract.requireArgNotNull("severity", severity);
+        Contract.requireArgNotNull("message", message);
+
         this.type = DefaultFileMarkerType.POS_LENGTH;
         this.severity = severity;
         this.message = message;
@@ -105,7 +120,7 @@ public final class DefaultFileMarker implements FileMarker {
      * 
      * @return Type.
      */
-    @NotNull
+    @NeverNull
     public final DefaultFileMarkerType getType() {
         return type;
     }
@@ -115,7 +130,7 @@ public final class DefaultFileMarker implements FileMarker {
      * 
      * @return Severity indicator.
      */
-    @NotNull
+    @NeverNull
     public final FileMarkerSeverity getSeverity() {
         return severity;
     }
@@ -125,7 +140,7 @@ public final class DefaultFileMarker implements FileMarker {
      * 
      * @return Message.
      */
-    @NotNull
+    @NeverNull
     public final String getMessage() {
         return message;
     }

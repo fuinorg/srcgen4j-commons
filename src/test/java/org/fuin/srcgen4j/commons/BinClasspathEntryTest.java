@@ -29,7 +29,6 @@ import org.junit.Test;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
-import com.openpojo.validation.rule.impl.SetterMustExistRule;
 
 /**
  * Tests for {@link BinClasspathEntry}.
@@ -43,7 +42,6 @@ public class BinClasspathEntryTest extends AbstractTest {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(BinClasspathEntry.class);
         final PojoValidator pv = createPojoValidator();
-        pv.addRule(new SetterMustExistRule());
         pv.runValidation(pc);
 
     }

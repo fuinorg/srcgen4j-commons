@@ -49,19 +49,17 @@ public class SrcGen4JTest {
         final Generators generators = new Generators();
         config.setGenerators(generators);
 
-        final GeneratorConfig genCfg1 = new GeneratorConfig("generator1");
-        genCfg1.setClassName("a.b.b.Generator1");
-        genCfg1.setParser("parser1");
+        final GeneratorConfig genCfg1 = new GeneratorConfig("generator1", "a.b.b.Generator1",
+                "parser1");
         generators.addGenerator(genCfg1);
 
-        final GeneratorConfig genCfg2 = new GeneratorConfig("generator2");
-        genCfg2.setClassName("a.b.c.Generator2");
-        genCfg2.setParser("parser2");
+        final GeneratorConfig genCfg2 = new GeneratorConfig("generator2", "a.b.c.Generator2",
+                "parser2");
         generators.addGenerator(genCfg2);
 
-        final GeneratorConfig genCfg3 = new GeneratorConfig("generator3");
-        genCfg3.setClassName("a.b.c.Generator2"); // Re-use generator class
-        genCfg3.setParser("parser2"); // Also connected to parser2
+        // Re-use generator class + Also connected to parser2
+        final GeneratorConfig genCfg3 = new GeneratorConfig("generator3", "a.b.c.Generator2",
+                "parser2");
         generators.addGenerator(genCfg3);
 
         config.init(new DefaultContext(), new File("."));

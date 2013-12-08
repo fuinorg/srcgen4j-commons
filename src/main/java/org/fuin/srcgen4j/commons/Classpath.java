@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -28,27 +30,34 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * Represents a class path.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "classpath")
 @XmlType(propOrder = { "binList" })
-public class Classpath extends AbstractElement implements
+public final class Classpath extends AbstractElement implements
         InitializableElement<Classpath, SrcGen4JConfig> {
 
+    @Nullable
     @XmlAttribute(name = "context")
     private Boolean addContextCP;
 
+    @Nullable
+    @Valid
     @XmlElement(name = "bin")
     private List<BinClasspathEntry> binList;
 
+    @Nullable
     private transient SrcGen4JConfig parent;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public Classpath() {
+    Classpath() {
         super();
     }
 
@@ -56,8 +65,9 @@ public class Classpath extends AbstractElement implements
      * Returns the information if the class path from the context should be
      * added.
      * 
-     * @return f the context's class path should be added TRUE, else FALSE.
+     * @return If the context's class path should be added TRUE, else FALSE.
      */
+    @Nullable
     public final Boolean getAddContextCP() {
         return addContextCP;
     }
@@ -68,7 +78,7 @@ public class Classpath extends AbstractElement implements
      * @param addContextCP
      *            If the context's class path should be added TRUE, else FALSE.
      */
-    public final void setAddContextCP(final Boolean addContextCP) {
+    public final void setAddContextCP(@Nullable final Boolean addContextCP) {
         this.addContextCP = addContextCP;
     }
 
@@ -89,8 +99,9 @@ public class Classpath extends AbstractElement implements
     /**
      * Returns the list of binary directories.
      * 
-     * @return List or NULL.
+     * @return List.
      */
+    @Nullable
     public final List<BinClasspathEntry> getBinList() {
         return binList;
     }
@@ -99,9 +110,9 @@ public class Classpath extends AbstractElement implements
      * Sets the list of binary directories.
      * 
      * @param list
-     *            List or NULL.
+     *            List.
      */
-    public final void setBinList(final List<BinClasspathEntry> list) {
+    public final void setBinList(@Nullable final List<BinClasspathEntry> list) {
         this.binList = list;
     }
 
@@ -110,9 +121,10 @@ public class Classpath extends AbstractElement implements
      * created.
      * 
      * @param entry
-     *            Binaries directory to add - Cannot be NULL.
+     *            Binaries directory to add.
      */
-    public final void addBin(final BinClasspathEntry entry) {
+    public final void addBin(@NotNull final BinClasspathEntry entry) {
+        Contract.requireArgNotNull("entry", entry);
         if (binList == null) {
             binList = new ArrayList<BinClasspathEntry>();
         }
@@ -124,18 +136,9 @@ public class Classpath extends AbstractElement implements
      * 
      * @return BinClasspathEntry.
      */
+    @Nullable
     public final SrcGen4JConfig getParent() {
         return parent;
-    }
-
-    /**
-     * Sets the parent of the object.
-     * 
-     * @param parent
-     *            BinClasspathEntry.
-     */
-    public final void setParent(final SrcGen4JConfig parent) {
-        this.parent = parent;
     }
 
     @Override

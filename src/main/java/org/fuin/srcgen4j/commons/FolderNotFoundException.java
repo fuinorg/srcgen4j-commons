@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * A folder with a given name was not found.
  */
@@ -28,18 +30,21 @@ public class FolderNotFoundException extends Exception {
      * Constructor with names.
      * 
      * @param generatorName
-     *            Name of the generator with the requested artifact.
+     *            Name of the generator with the requested artifact - Should not
+     *            be <code>null</code>.
      * @param artifactName
-     *            Name of the artifact with the request target.
+     *            Name of the artifact with the request target - Should not be
+     *            <code>null</code>.
      * @param targetPath
-     *            Target path.
+     *            Target path - Should not be <code>null</code>.
      * @param projectName
-     *            Project name.
+     *            Project name - Should not be <code>null</code>.
      * @param folderName
-     *            Folder name.
+     *            Folder name - Should not be <code>null</code>.
      */
-    public FolderNotFoundException(final String generatorName, final String artifactName,
-            final String targetPath, final String projectName, final String folderName) {
+    public FolderNotFoundException(@Nullable final String generatorName,
+            @Nullable final String artifactName, @Nullable final String targetPath,
+            @Nullable final String projectName, @Nullable final String folderName) {
         super("The folder name '" + folderName + "' in project '" + projectName
                 + "' is not known - Selection was: " + generatorName + " / " + artifactName + " / "
                 + targetPath);

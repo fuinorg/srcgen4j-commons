@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * A project with a given name was not found.
  */
@@ -28,16 +30,19 @@ public class ProjectNotFoundException extends Exception {
      * Constructor with names.
      * 
      * @param generatorName
-     *            Name of the generator with the requested artifact.
+     *            Name of the generator with the requested artifact - Should not
+     *            be <code>null</code>.
      * @param artifactName
-     *            Name of the artifact with the request target.
+     *            Name of the artifact with the request target - Should not be
+     *            <code>null</code>.
      * @param targetPattern
-     *            Target pattern.
+     *            Target pattern - Should not be <code>null</code>.
      * @param projectName
-     *            Project name.
+     *            Project name - Should not be <code>null</code>.
      */
-    public ProjectNotFoundException(final String generatorName, final String artifactName,
-            final String targetPattern, final String projectName) {
+    public ProjectNotFoundException(@Nullable final String generatorName,
+            @Nullable final String artifactName, @Nullable final String targetPattern,
+            @Nullable final String projectName) {
         super("The project name '" + projectName + "' is not known - Selection was: "
                 + generatorName + " / " + artifactName + " / " + targetPattern);
     }

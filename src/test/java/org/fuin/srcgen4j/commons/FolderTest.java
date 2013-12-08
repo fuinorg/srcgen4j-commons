@@ -29,7 +29,6 @@ import org.junit.Test;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
-import com.openpojo.validation.rule.impl.SetterMustExistRule;
 
 /**
  * Tests for {@link Folder}.
@@ -43,7 +42,6 @@ public class FolderTest extends AbstractTest {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(Folder.class);
         final PojoValidator pv = createPojoValidator();
-        pv.addRule(new SetterMustExistRule());
         pv.runValidation(pc);
 
     }
@@ -65,8 +63,8 @@ public class FolderTest extends AbstractTest {
         assertThat(result)
                 .isEqualTo(
                         XML
-                                + "<folder name=\"abc\" path=\"def\" create=\"true\""
-                                + " override=\"true\" clean=\"true\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+                                + "<folder path=\"def\" create=\"true\""
+                                + " override=\"true\" clean=\"true\" name=\"abc\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
 
     }
 

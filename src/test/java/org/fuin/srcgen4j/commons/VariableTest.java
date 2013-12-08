@@ -29,7 +29,6 @@ import org.junit.Test;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
-import com.openpojo.validation.rule.impl.SetterMustExistRule;
 
 /**
  * Tests for {@link Variable}.
@@ -43,7 +42,6 @@ public class VariableTest extends AbstractTest {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(Variable.class);
         final PojoValidator pv = createPojoValidator();
-        pv.addRule(new SetterMustExistRule());
         pv.runValidation(pc);
 
     }
@@ -59,10 +57,9 @@ public class VariableTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        assertThat(result)
-                .isEqualTo(
-                        XML
-                                + "<variable name=\"abc\" value=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+        assertThat(result).isEqualTo(
+                XML + "<variable value=\"def\" name=\"abc\" "
+                        + "xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
 
     }
 

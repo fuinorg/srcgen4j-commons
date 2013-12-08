@@ -17,6 +17,10 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import javax.validation.constraints.NotNull;
+
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * Creates an artifact for a given model.
  * 
@@ -30,15 +34,16 @@ public interface ArtifactFactory<TYPE> {
      * 
      * @return Model class.
      */
+    @NotNull
     public Class<? extends TYPE> getModelType();
 
     /**
-     * Initializes the factory with the artifact name.
+     * Initializes the factory with the configuration.
      * 
      * @param config
      *            Configuration to use.
      */
-    public void init(ArtifactFactoryConfig config);
+    public void init(@NotNull ArtifactFactoryConfig config);
 
     /**
      * Determines if the factory supports an incremental build.
@@ -54,11 +59,13 @@ public interface ArtifactFactory<TYPE> {
      * @param modelObject
      *            Model object to create the artifact for.
      * 
-     * @return The generated artifact.
+     * @return The generated artifact. A <code>null</code> value signals that
+     *         nothing was generated.
      * 
      * @throws GenerateException
      *             Error when generating.
      */
-    public GeneratedArtifact create(TYPE modelObject) throws GenerateException;
+    @Nullable
+    public GeneratedArtifact create(@NotNull TYPE modelObject) throws GenerateException;
 
 }

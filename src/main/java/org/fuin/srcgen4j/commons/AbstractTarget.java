@@ -22,6 +22,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * Base class for assigning generated artifacts to a project folder.
  */
@@ -29,16 +31,18 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = { "folder", "project" })
 public abstract class AbstractTarget extends AbstractElement {
 
+    @Nullable
     @XmlAttribute
     private String project;
 
+    @Nullable
     @XmlAttribute
     private String folder;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public AbstractTarget() {
+    AbstractTarget() {
         super();
     }
 
@@ -50,7 +54,7 @@ public abstract class AbstractTarget extends AbstractElement {
      * @param folder
      *            Folder to set.
      */
-    public AbstractTarget(final String project, final String folder) {
+    public AbstractTarget(@Nullable final String project, @Nullable final String folder) {
         super();
         this.project = project;
         this.folder = folder;
@@ -61,6 +65,7 @@ public abstract class AbstractTarget extends AbstractElement {
      * 
      * @return Current project.
      */
+    @Nullable
     public final String getProject() {
         return project;
     }
@@ -71,7 +76,7 @@ public abstract class AbstractTarget extends AbstractElement {
      * @param project
      *            Project to set.
      */
-    public final void setProject(final String project) {
+    protected final void setProject(@Nullable final String project) {
         this.project = project;
     }
 
@@ -80,6 +85,7 @@ public abstract class AbstractTarget extends AbstractElement {
      * 
      * @return Current folder.
      */
+    @Nullable
     public final String getFolder() {
         return folder;
     }
@@ -90,7 +96,7 @@ public abstract class AbstractTarget extends AbstractElement {
      * @param folder
      *            Folder to set.
      */
-    public final void setFolder(final String folder) {
+    protected final void setFolder(@Nullable final String folder) {
         this.folder = folder;
     }
 

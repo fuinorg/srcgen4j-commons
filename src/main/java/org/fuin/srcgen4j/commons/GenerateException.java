@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * The generation failed.
  */
@@ -30,7 +32,7 @@ public final class GenerateException extends Exception {
      * @param message
      *            Message.
      */
-    public GenerateException(final String message) {
+    public GenerateException(@NotNull final String message) {
         super(message);
     }
 
@@ -42,7 +44,7 @@ public final class GenerateException extends Exception {
      * @param cause
      *            Cause.
      */
-    public GenerateException(final String message, final Throwable cause) {
+    public GenerateException(@NotNull final String message, @NotNull final Throwable cause) {
         super(message, cause);
     }
 

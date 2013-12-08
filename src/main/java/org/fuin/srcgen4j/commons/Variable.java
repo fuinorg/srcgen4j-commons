@@ -25,27 +25,31 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverEmpty;
+import org.fuin.objects4j.common.NotEmpty;
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * Represents a variable definition (name and value).
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "variable")
-@XmlType(propOrder = { "xpath", "value", "name" })
-public class Variable extends AbstractElement {
+@XmlType(propOrder = { "xpath", "value" })
+public class Variable extends AbstractNamedElement {
 
-    @XmlAttribute
-    private String name;
-
+    @NotEmpty
     @XmlAttribute
     private String value;
 
+    @Nullable
     @XmlAttribute
     private String xpath;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public Variable() {
+    Variable() {
         super();
     }
 
@@ -57,9 +61,9 @@ public class Variable extends AbstractElement {
      * @param value
      *            Value to set.
      */
-    public Variable(final String name, final String value) {
-        super();
-        this.name = name;
+    public Variable(@NotEmpty final String name, @NotEmpty final String value) {
+        super(name);
+        Contract.requireArgNotEmpty("value", value);
         this.value = value;
     }
 
@@ -73,30 +77,13 @@ public class Variable extends AbstractElement {
      * @param xpath
      *            Value to set.
      */
-    public Variable(final String name, final String value, final String xpath) {
-        super();
-        this.name = name;
+    public Variable(@NotEmpty final String name, @NotEmpty final String value,
+            @NotEmpty final String xpath) {
+        super(name);
+        Contract.requireArgNotEmpty("value", value);
+        Contract.requireArgNotEmpty("xpath", xpath);
         this.value = value;
         this.xpath = xpath;
-    }
-
-    /**
-     * Returns the name of the variable.
-     * 
-     * @return Current name.
-     */
-    public final String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the name of the variable.
-     * 
-     * @param name
-     *            Name to set.
-     */
-    public final void setName(final String name) {
-        this.name = name;
     }
 
     /**
@@ -104,18 +91,9 @@ public class Variable extends AbstractElement {
      * 
      * @return Current value.
      */
+    @NeverEmpty
     public final String getValue() {
         return value;
-    }
-
-    /**
-     * Sets the value of the variable.
-     * 
-     * @param value
-     *            Value to set.
-     */
-    public final void setValue(final String value) {
-        this.value = value;
     }
 
     /**
@@ -123,44 +101,9 @@ public class Variable extends AbstractElement {
      * 
      * @return Current xpath.
      */
+    @Nullable
     public final String getXpath() {
         return xpath;
-    }
-
-    /**
-     * Sets the xpath of the variable.
-     * 
-     * @param xpath
-     *            Xpath to set.
-     */
-    public final void setXpath(final String xpath) {
-        this.xpath = xpath;
-    }
-
-    // CHECKSTYLE:OFF Generated code
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Variable other = (Variable) obj;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        return true;
     }
 
     /**
@@ -169,8 +112,8 @@ public class Variable extends AbstractElement {
      * @param vars
      *            Variables to use.
      */
-    public final void init(final Map<String, String> vars) {
-        setValue(replaceVars(getValue(), vars));
+    public final void init(@Nullable final Map<String, String> vars) {
+        value = replaceVars(value, vars);
     }
 
     // CHECKSTYLE:ON

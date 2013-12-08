@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Error writing an object to XML.
  */
@@ -32,18 +34,8 @@ public final class MarshalObjectException extends Exception {
      * @param cause
      *            Cause.
      */
-    public MarshalObjectException(final String message, final Throwable cause) {
+    public MarshalObjectException(@NotNull final String message, @NotNull final Throwable cause) {
         super(message, cause);
-    }
-
-    /**
-     * Constructor with cause.
-     * 
-     * @param cause
-     *            Cause.
-     */
-    public MarshalObjectException(final Throwable cause) {
-        super(cause);
     }
 
 }

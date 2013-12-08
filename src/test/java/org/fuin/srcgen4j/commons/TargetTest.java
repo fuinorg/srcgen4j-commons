@@ -155,8 +155,8 @@ public class TargetTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig config = new SrcGen4JConfig();
         final Generators generators = new Generators();
-        final GeneratorConfig generator = new GeneratorConfig();
-        final Artifact artifact = new Artifact();
+        final GeneratorConfig generator = new GeneratorConfig("NAME1", "a.b.c.D", "PARSER1");
+        final Artifact artifact = new Artifact("ARTIFACT");
         final Target testee = new Target();
 
         config.setGenerators(generators);

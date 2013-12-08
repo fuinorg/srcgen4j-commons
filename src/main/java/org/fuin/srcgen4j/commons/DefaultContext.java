@@ -27,6 +27,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+
+import org.fuin.objects4j.common.Contract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,12 +41,16 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultContext.class);
 
+    @NotNull
     private final Map<File, Set<DefaultFileMarker>> markers;
 
+    @NotNull
     private final ClassLoader classLoader;
 
+    @NotNull
     private final List<File> jarFiles;
 
+    @NotNull
     private final List<File> binDirs;
 
     /**
@@ -59,8 +66,9 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
      * @param classLoader
      *            Class loader to use in this context.
      */
-    public DefaultContext(final ClassLoader classLoader) {
+    public DefaultContext(@NotNull final ClassLoader classLoader) {
         super();
+        Contract.requireArgNotNull("classLoader", classLoader);
         this.markers = new HashMap<File, Set<DefaultFileMarker>>();
         this.classLoader = classLoader;
         this.jarFiles = Collections.unmodifiableList(new ArrayList<File>());
@@ -75,8 +83,11 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
      * @param cp
      *            Class path with JAR files and binary directories.
      */
-    public DefaultContext(final ClassLoader classLoader, final List<File> cp) {
+    public DefaultContext(@NotNull final ClassLoader classLoader, @NotNull final List<File> cp) {
         super();
+        Contract.requireArgNotNull("classLoader", classLoader);
+        Contract.requireArgNotNull("cp", cp);
+
         markers = new HashMap<File, Set<DefaultFileMarker>>();
         this.classLoader = classLoader;
         final List<File> files = new ArrayList<File>();

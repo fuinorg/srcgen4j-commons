@@ -22,6 +22,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverEmpty;
+import org.fuin.objects4j.common.NotEmpty;
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * Base class for assigning generated artifacts to a project folder and a name
  * as unique identifier.
@@ -30,13 +35,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = { "name" })
 public abstract class AbstractNamedTarget extends AbstractTarget {
 
+    @NotEmpty
     @XmlAttribute
     private String name;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public AbstractNamedTarget() {
+    AbstractNamedTarget() {
         super();
     }
 
@@ -50,8 +56,10 @@ public abstract class AbstractNamedTarget extends AbstractTarget {
      * @param folder
      *            Folder to set.
      */
-    public AbstractNamedTarget(final String name, final String project, final String folder) {
+    public AbstractNamedTarget(@NotEmpty final String name, @Nullable final String project,
+            @Nullable final String folder) {
         super(project, folder);
+        Contract.requireArgNotEmpty("name", name);
         this.name = name;
     }
 
@@ -60,6 +68,7 @@ public abstract class AbstractNamedTarget extends AbstractTarget {
      * 
      * @return Current name.
      */
+    @NeverEmpty
     public final String getName() {
         return name;
     }
@@ -70,7 +79,8 @@ public abstract class AbstractNamedTarget extends AbstractTarget {
      * @param name
      *            Name to set.
      */
-    public final void setName(final String name) {
+    protected final void setName(@NotEmpty final String name) {
+        Contract.requireArgNotEmpty("name", name);
         this.name = name;
     }
 

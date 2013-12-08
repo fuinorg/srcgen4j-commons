@@ -53,7 +53,7 @@ public class GeneratorConfigTest extends AbstractTest {
         // PREPARE
         final JAXBContext jaxbContext = JAXBContext.newInstance(GeneratorConfig.class,
                 Artifact.class);
-        final GeneratorConfig testee = new GeneratorConfig("abc", "def", "ghi");
+        final GeneratorConfig testee = new GeneratorConfig("NAME", "CLASS", "PARSER", "PRJ", "FLD");
         testee.addArtifact(new Artifact("NAME", "PROJECT", "FOLDER"));
 
         // TEST
@@ -63,8 +63,8 @@ public class GeneratorConfigTest extends AbstractTest {
         assertThat(result)
                 .isEqualTo(
                         XML
-                                + "<generator name=\"abc\" "
-                                + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+                                + "<generator class=\"CLASS\" parser=\"PARSER\" name=\"NAME\" project=\"PRJ\" folder=\"FLD\""
+                                + " xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
                                 + "<artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generator>");
 
     }
@@ -100,7 +100,8 @@ public class GeneratorConfigTest extends AbstractTest {
 
         // PREPARE
         final Generators parent = new Generators();
-        final GeneratorConfig testee = new GeneratorConfig("A${a}A", "${b}2B", "C3${c}");
+        final GeneratorConfig testee = new GeneratorConfig("A${a}A", "CLASS", "PARSER", "${b}2B",
+                "C3${c}");
         testee.addArtifact(new Artifact("A ${x}", "${y}B", "a${z}c"));
 
         final Map<String, String> vars = new HashMap<String, String>();
@@ -132,7 +133,7 @@ public class GeneratorConfigTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig config = new SrcGen4JConfig();
         final Generators generators = new Generators();
-        final GeneratorConfig testee = new GeneratorConfig();
+        final GeneratorConfig testee = new GeneratorConfig("NAME1", "a.b.c.D", "PARSER1");
 
         config.setGenerators(generators);
         generators.addGenerator(testee);

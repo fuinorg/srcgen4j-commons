@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * An artifact with a given name was not found in a generator configuration.
  */
@@ -28,11 +30,14 @@ public class ArtifactNotFoundException extends Exception {
      * Constructor with names.
      * 
      * @param generatorName
-     *            Name of the generator with the requested artifact.
+     *            Name of the generator with the requested artifact - Should not
+     *            be <code>null</code>.
      * @param artifactName
-     *            Name of the generator that was not found.
+     *            Name of the generator that was not found - Should not be
+     *            <code>null</code>.
      */
-    public ArtifactNotFoundException(final String generatorName, final String artifactName) {
+    public ArtifactNotFoundException(@Nullable final String generatorName,
+            @Nullable final String artifactName) {
         super("The artifact '" + artifactName + "' is not configured for generator '"
                 + generatorName + "'");
     }

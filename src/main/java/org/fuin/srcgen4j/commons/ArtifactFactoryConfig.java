@@ -17,12 +17,16 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverNull;
+import org.fuin.objects4j.common.Nullable;
 import org.fuin.utils4j.Utils4J;
 
 /**
@@ -31,26 +35,44 @@ import org.fuin.utils4j.Utils4J;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "artifact-factory")
 @XmlType(propOrder = { "factoryClassName", "artifact" })
-public class ArtifactFactoryConfig extends AbstractElement {
+public final class ArtifactFactoryConfig extends AbstractElement {
 
+    @NotNull
     @XmlAttribute(name = "artifact")
     private String artifact;
 
+    @NotNull
     @XmlAttribute(name = "class")
     private String factoryClassName;
 
+    @Nullable
     @XmlAttribute(name = "incremental")
     private Boolean incremental;
 
+    @Nullable
     private transient SrcGen4JContext context;
 
+    @Nullable
     private transient ArtifactFactory<?> factory;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public ArtifactFactoryConfig() {
+    ArtifactFactoryConfig() {
         super();
+    }
+
+    /**
+     * Constructor without incremental value.
+     * 
+     * @param artifact
+     *            Artifact.
+     * @param factoryClassName
+     *            Full qualified factory class name.
+     */
+    public ArtifactFactoryConfig(@NotNull final String artifact,
+            @NotNull final String factoryClassName) {
+        this(artifact, factoryClassName, null);
     }
 
     /**
@@ -60,8 +82,12 @@ public class ArtifactFactoryConfig extends AbstractElement {
      *            Artifact.
      * @param factoryClassName
      *            Full qualified factory class name.
+     * @param incremental
+     *            If the factory executes on an incremental build TRUE
+     *            (default), else FALSE.
      */
-    public ArtifactFactoryConfig(final String artifact, final String factoryClassName) {
+    public ArtifactFactoryConfig(@NotNull final String artifact,
+            @NotNull final String factoryClassName, @Nullable final Boolean incremental) {
         super();
         this.artifact = artifact;
         this.factoryClassName = factoryClassName;
@@ -72,18 +98,9 @@ public class ArtifactFactoryConfig extends AbstractElement {
      * 
      * @return Unique artifact name.
      */
+    @NeverNull
     public final String getArtifact() {
         return artifact;
-    }
-
-    /**
-     * Sets the name of the generated artifact.
-     * 
-     * @param artifact
-     *            Unique artifact name.
-     */
-    public final void setArtifact(final String artifact) {
-        this.artifact = artifact;
     }
 
     /**
@@ -91,18 +108,9 @@ public class ArtifactFactoryConfig extends AbstractElement {
      * 
      * @return Full qualified class name.
      */
+    @NeverNull
     public final String getFactoryClassName() {
         return factoryClassName;
-    }
-
-    /**
-     * Sets the name of the factory class.
-     * 
-     * @param factoryClassName
-     *            Full qualified class name.
-     */
-    public final void setFactoryClassName(final String factoryClassName) {
-        this.factoryClassName = factoryClassName;
     }
 
     /**
@@ -111,6 +119,7 @@ public class ArtifactFactoryConfig extends AbstractElement {
      * 
      * @return If the factory executes on an incremental build TRUE, else FALSE.
      */
+    @Nullable
     public final Boolean getIncremental() {
         return incremental;
     }
@@ -123,7 +132,7 @@ public class ArtifactFactoryConfig extends AbstractElement {
      *            If the factory executes on an incremental build TRUE, else
      *            FALSE.
      */
-    public final void setIncremental(final Boolean incremental) {
+    public final void setIncremental(@Nullable final Boolean incremental) {
         this.incremental = incremental;
     }
 
@@ -144,13 +153,18 @@ public class ArtifactFactoryConfig extends AbstractElement {
 
     /**
      * Returns the factory instance. If it does not exist, it will be created.
+     * Requires that {@link #init(SrcGen4JContext)} was called once before.
      * 
      * @return Factory.
      */
+    @NeverNull
     public final ArtifactFactory<?> getFactory() {
         if (factory == null) {
             if (factoryClassName == null) {
-                return null;
+                throw new IllegalStateException("Factory class name was not set: " + artifact);
+            }
+            if (context == null) {
+                throw new IllegalStateException("Context class loader was not set: " + artifact);
             }
             final Object obj = Utils4J.createInstance(factoryClassName, context.getClassLoader());
             if (!ArtifactFactory.class.isAssignableFrom(obj.getClass())) {
@@ -171,7 +185,9 @@ public class ArtifactFactoryConfig extends AbstractElement {
      * 
      * @return This instance.
      */
-    public final ArtifactFactoryConfig init(final SrcGen4JContext context) {
+    @NeverNull
+    public final ArtifactFactoryConfig init(@NotNull final SrcGen4JContext context) {
+        Contract.requireArgNotNull("context", context);
         this.context = context;
         return this;
     }

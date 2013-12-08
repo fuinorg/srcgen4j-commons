@@ -17,6 +17,11 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import javax.validation.constraints.NotNull;
+
+import org.fuin.objects4j.common.NeverNull;
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * Parses some kind of model.
  * 
@@ -30,11 +35,11 @@ public interface Parser<MODEL> {
      * for every parser instance.
      * 
      * @param context
-     *            Current context - Cannot be NULL.
+     *            Current context.
      * @param config
-     *            Configuration to use - Cannot be NULL.
+     *            Configuration to use.
      */
-    public void initialize(SrcGen4JContext context, ParserConfig config);
+    public void initialize(@NotNull SrcGen4JContext context, @Nullable ParserConfig config);
 
     /**
      * Parses a model using the initially given configuration.
@@ -44,6 +49,7 @@ public interface Parser<MODEL> {
      * @throws ParseException
      *             Error during parse process.
      */
+    @NeverNull
     public MODEL parse() throws ParseException;
 
 }

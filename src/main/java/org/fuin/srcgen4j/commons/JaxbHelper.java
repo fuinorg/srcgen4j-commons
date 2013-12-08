@@ -26,10 +26,18 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.FileExists;
+import org.fuin.objects4j.common.FileExistsValidator;
+import org.fuin.objects4j.common.IsFile;
+import org.fuin.objects4j.common.IsFileValidator;
+import org.fuin.objects4j.common.NeverNull;
 
 /**
  * Helper to serialize and deserialize objects using JAXB.
@@ -56,8 +64,9 @@ public final class JaxbHelper {
         this.formattedOutput = formattedOutput;
     }
 
-/** Checks if the given file contains a start tag within the first 1024 bytes. 
-    *
+/** 
+    * Checks if the given file contains a start tag within the first 1024 bytes.
+    * 
     * @param file
     *            File to check.
     * @param tagName
@@ -65,7 +74,13 @@ public final class JaxbHelper {
     * 
     * @return If the file contains the start tag TRUE else FALSE.
     */
-    public boolean containsStartTag(final File file, final String tagName) {
+    public boolean containsStartTag(@NotNull @FileExists @IsFile final File file,
+            @NotNull final String tagName) {
+        Contract.requireArgNotNull("file", file);
+        FileExistsValidator.requireArgValid("file", file);
+        IsFileValidator.requireArgValid("file", file);
+        Contract.requireArgNotNull("tagName", tagName);
+
         final String xml = readFirstPartOfFile(file);
         return xml.indexOf("<" + tagName) > -1;
     }
@@ -103,8 +118,11 @@ public final class JaxbHelper {
      *            Type of the created object.
      */
     @SuppressWarnings("unchecked")
-    public <TYPE> TYPE create(final Reader reader, final JAXBContext jaxbContext)
+    @NeverNull
+    public <TYPE> TYPE create(@NotNull final Reader reader, @NotNull final JAXBContext jaxbContext)
             throws UnmarshalObjectException {
+        Contract.requireArgNotNull("reader", reader);
+        Contract.requireArgNotNull("jaxbContext", jaxbContext);
         try {
             final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             final TYPE obj = (TYPE) unmarshaller.unmarshal(reader);
@@ -131,8 +149,13 @@ public final class JaxbHelper {
      *            Type of the created object.
      */
     @SuppressWarnings("unchecked")
-    public <TYPE> TYPE create(final File file, final JAXBContext jaxbContext)
-            throws UnmarshalObjectException {
+    @NeverNull
+    public <TYPE> TYPE create(@NotNull @FileExists @IsFile final File file,
+            @NotNull final JAXBContext jaxbContext) throws UnmarshalObjectException {
+        Contract.requireArgNotNull("file", file);
+        FileExistsValidator.requireArgValid("file", file);
+        IsFileValidator.requireArgValid("file", file);
+        Contract.requireArgNotNull("jaxbContext", jaxbContext);
         try {
             final FileReader fr = new FileReader(file);
             try {
@@ -162,8 +185,12 @@ public final class JaxbHelper {
      *            Type of the created object.
      */
     @SuppressWarnings("unchecked")
-    public <TYPE> TYPE create(final String xml, final JAXBContext jaxbContext)
+    @NeverNull
+    public <TYPE> TYPE create(@NotNull final String xml, @NotNull final JAXBContext jaxbContext)
             throws UnmarshalObjectException {
+
+        Contract.requireArgNotNull("xml", xml);
+        Contract.requireArgNotNull("jaxbContext", jaxbContext);
 
         return (TYPE) create(new StringReader(xml), jaxbContext);
 
@@ -185,8 +212,13 @@ public final class JaxbHelper {
      * @param <TYPE>
      *            Type of the object.
      */
-    public <TYPE> void write(final TYPE obj, final File file, final JAXBContext jaxbContext)
-            throws MarshalObjectException {
+    public <TYPE> void write(@NotNull final TYPE obj, @NotNull final File file,
+            @NotNull final JAXBContext jaxbContext) throws MarshalObjectException {
+
+        Contract.requireArgNotNull("obj", obj);
+        Contract.requireArgNotNull("file", file);
+        Contract.requireArgNotNull("jaxbContext", jaxbContext);
+
         try {
             final FileWriter fw = new FileWriter(file);
             try {
@@ -215,8 +247,12 @@ public final class JaxbHelper {
      * @param <TYPE>
      *            Type of the object.
      */
-    public <TYPE> String write(final TYPE obj, final JAXBContext jaxbContext)
+    public <TYPE> String write(@NotNull final TYPE obj, @NotNull final JAXBContext jaxbContext)
             throws MarshalObjectException {
+
+        Contract.requireArgNotNull("obj", obj);
+        Contract.requireArgNotNull("jaxbContext", jaxbContext);
+
         final StringWriter writer = new StringWriter();
         write(obj, writer, jaxbContext);
         return writer.toString();
@@ -238,8 +274,13 @@ public final class JaxbHelper {
      * @param <TYPE>
      *            Type of the object.
      */
-    public <TYPE> void write(final TYPE obj, final Writer writer, final JAXBContext jaxbContext)
-            throws MarshalObjectException {
+    public <TYPE> void write(@NotNull final TYPE obj, @NotNull final Writer writer,
+            @NotNull final JAXBContext jaxbContext) throws MarshalObjectException {
+
+        Contract.requireArgNotNull("obj", obj);
+        Contract.requireArgNotNull("writer", writer);
+        Contract.requireArgNotNull("jaxbContext", jaxbContext);
+
         try {
             final Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, formattedOutput);

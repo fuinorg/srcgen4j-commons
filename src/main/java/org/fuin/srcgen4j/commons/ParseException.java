@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * The parsing process failed.
  */
@@ -30,7 +32,7 @@ public final class ParseException extends Exception {
      * @param message
      *            Message.
      */
-    public ParseException(final String message) {
+    public ParseException(@NotNull final String message) {
         super(message);
     }
 
@@ -42,7 +44,7 @@ public final class ParseException extends Exception {
      * @param cause
      *            Cause.
      */
-    public ParseException(final String message, final Throwable cause) {
+    public ParseException(@NotNull final String message, @NotNull final Throwable cause) {
         super(message, cause);
     }
 

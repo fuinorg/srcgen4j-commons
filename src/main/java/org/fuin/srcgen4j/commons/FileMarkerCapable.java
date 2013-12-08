@@ -22,6 +22,8 @@ import java.util.Iterator;
 
 import javax.validation.constraints.NotNull;
 
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * A context that supports marking files.
  */
@@ -40,6 +42,7 @@ public interface FileMarkerCapable {
      * @return New marker instance or NULL if the file was not found in the
      *         context.
      */
+    @Nullable
     public FileMarker addMarker(@NotNull File file, @NotNull FileMarkerSeverity severity,
             @NotNull String message);
 
@@ -58,6 +61,7 @@ public interface FileMarkerCapable {
      * @return New marker instance or NULL if the file was not found in the
      *         context.
      */
+    @Nullable
     public FileMarker addMarker(@NotNull File file, @NotNull FileMarkerSeverity severity,
             @NotNull String message, int line);
 
@@ -78,6 +82,7 @@ public interface FileMarkerCapable {
      * @return New marker instance or NULL if the file was not found in the
      *         context.
      */
+    @Nullable
     public FileMarker addMarker(@NotNull File file, @NotNull FileMarkerSeverity severity,
             @NotNull String message, int start, int length);
 
@@ -110,6 +115,7 @@ public interface FileMarkerCapable {
      * @return Iterator or NULL if the file was not found in the context or has
      *         no markers.
      */
+    @Nullable
     public Iterator<? extends FileMarker> getMarkerIterator(@NotNull File file);
 
     /**
@@ -122,7 +128,7 @@ public interface FileMarkerCapable {
      * 
      * @return Iterator or NULL if there are no files with markers.
      */
-    @NotNull
+    @Nullable
     public Iterator<? extends FileMarker> getMarkerIterator();
 
 }

@@ -25,17 +25,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+
+import org.fuin.objects4j.common.NeverNull;
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * Resolves the references from variable values to other variable names.
  */
 public final class VariableResolver {
 
+    @NotNull
     private List<Variable> vars;
 
+    @NotNull
     private Map<String, String> unresolved;
 
+    @NotNull
     private Map<String, Integer> depth;
 
+    @NotNull
     private Map<String, String> resolved;
 
     /**
@@ -44,7 +53,7 @@ public final class VariableResolver {
      * @param vars
      *            List to use.
      */
-    public VariableResolver(final List<Variable> vars) {
+    public VariableResolver(@Nullable final List<Variable> vars) {
         if (vars == null) {
             this.vars = new ArrayList<Variable>();
         } else {
@@ -122,6 +131,7 @@ public final class VariableResolver {
      * 
      * @return Names and state of all known variables.
      */
+    @NeverNull
     public final Map<String, Integer> getDepth() {
         return depth;
     }
@@ -131,6 +141,7 @@ public final class VariableResolver {
      * 
      * @return Variable map - Never NULL, but may be empty.
      */
+    @NeverNull
     public final Map<String, String> getResolved() {
         return resolved;
     }
@@ -140,6 +151,7 @@ public final class VariableResolver {
      * 
      * @return Variable map - Never NULL, but may be empty.
      */
+    @NeverNull
     public final Map<String, String> getUnresolved() {
         return unresolved;
     }
@@ -152,7 +164,8 @@ public final class VariableResolver {
      * 
      * @return Referenced variable names - Never NULL, but may be empty.
      */
-    public static Set<String> references(final String value) {
+    @NeverNull
+    public static Set<String> references(@Nullable final String value) {
 
         final HashSet<String> names = new HashSet<String>();
         if ((value == null) || (value.length() == 0)) {
@@ -184,13 +197,14 @@ public final class VariableResolver {
      *            Text with variables (Format: ${key} ) - May be
      *            <code>null</code> or empty.
      * @param vars
-     *            Map with key/values (both of type <code>String</code> - May be
-     *            <code>null</code>.
+     *            Map with key/values (both of type <code>String</code>.
      * 
      * @return String with replaced variables. Unknown variables will remain
      *         unchanged.
      */
-    public static String replaceVars(final String str, final Map<String, String> vars) {
+    @Nullable
+    public static String replaceVars(@Nullable final String str,
+            @Nullable final Map<String, String> vars) {
 
         if ((str == null) || (str.length() == 0) || (vars == null) || (vars.size() == 0)) {
             return str;

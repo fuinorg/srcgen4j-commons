@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -28,33 +30,39 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverEmpty;
+import org.fuin.objects4j.common.NotEmpty;
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * Represents a target project.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "project")
-@XmlType(propOrder = { "folders", "maven", "path", "name" })
-public class Project extends AbstractElement implements
+@XmlType(propOrder = { "folders", "maven", "path" })
+public class Project extends AbstractNamedElement implements
         InitializableElement<Project, SrcGen4JConfig> {
 
-    @XmlAttribute
-    private String name;
-
+    @NotEmpty
     @XmlAttribute
     private String path;
 
+    @Nullable
     @XmlAttribute
     private Boolean maven;
 
+    @Nullable
+    @Valid
     @XmlElement(name = "folder")
     private List<Folder> folders;
 
     private transient SrcGen4JConfig parent;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public Project() {
+    Project() {
         super();
     }
 
@@ -66,40 +74,10 @@ public class Project extends AbstractElement implements
      * @param path
      *            path to set.
      */
-    public Project(final String name, final String path) {
-        super();
-        this.name = name;
+    public Project(@NotEmpty final String name, @NotEmpty final String path) {
+        super(name);
+        Contract.requireArgNotNull("path", path);
         this.path = path;
-    }
-
-    /**
-     * Constructor with name.
-     * 
-     * @param name
-     *            Name to set.
-     */
-    public Project(final String name) {
-        super();
-        this.name = name;
-    }
-
-    /**
-     * Returns the name.
-     * 
-     * @return Current name.
-     */
-    public final String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the name.
-     * 
-     * @param name
-     *            Name to set.
-     */
-    public final void setName(final String name) {
-        this.name = name;
     }
 
     /**
@@ -107,18 +85,9 @@ public class Project extends AbstractElement implements
      * 
      * @return Current path.
      */
+    @NeverEmpty
     public final String getPath() {
         return path;
-    }
-
-    /**
-     * Sets the path.
-     * 
-     * @param path
-     *            Path to set.
-     */
-    public final void setPath(final String path) {
-        this.path = path;
     }
 
     /**
@@ -138,6 +107,7 @@ public class Project extends AbstractElement implements
      * 
      * @return Maven default path setup (TRUE / NULL) or not (FALSE).
      */
+    @Nullable
     public final Boolean getMaven() {
         return maven;
     }
@@ -147,6 +117,7 @@ public class Project extends AbstractElement implements
      * 
      * @return Folders or NULL.
      */
+    @Nullable
     public final List<Folder> getFolders() {
         return folders;
     }
@@ -157,7 +128,7 @@ public class Project extends AbstractElement implements
      * @param folders
      *            Folders or NULL.
      */
-    public final void setFolders(final List<Folder> folders) {
+    public final void setFolders(@Nullable final List<Folder> folders) {
         this.folders = folders;
     }
 
@@ -167,7 +138,7 @@ public class Project extends AbstractElement implements
      * @param maven
      *            Maven default path setup (TRUE) or not (NULL or FALSE).
      */
-    public final void setMaven(final Boolean maven) {
+    public final void setMaven(@Nullable final Boolean maven) {
         this.maven = maven;
     }
 
@@ -175,67 +146,31 @@ public class Project extends AbstractElement implements
      * Adds a folder to the list. If the list does not exist it's created.
      * 
      * @param folder
-     *            Folder to add - Cannot be NULL.
+     *            Folder to add.
      */
-    public final void addFolder(final Folder folder) {
+    public final void addFolder(@NotNull final Folder folder) {
+        Contract.requireArgNotNull("folder", folder);
         if (folders == null) {
             folders = new ArrayList<Folder>();
         }
         folders.add(folder);
     }
 
-    // CHECKSTYLE:OFF Generated code
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Project other = (Project) obj;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        return true;
-    }
-
-    // CHECKSTYLE:ON
-
     /**
      * Returns the parent of the object.
      * 
      * @return GeneratorConfig.
      */
+    @Nullable
     public final SrcGen4JConfig getParent() {
         return parent;
-    }
-
-    /**
-     * Sets the parent of the object.
-     * 
-     * @param parent
-     *            GeneratorConfig.
-     */
-    public final void setParent(final SrcGen4JConfig parent) {
-        this.parent = parent;
     }
 
     @Override
     public final Project init(final SrcGen4JContext context, final SrcGen4JConfig parent,
             final Map<String, String> vars) {
         this.parent = parent;
-        name = replaceVars(name, vars);
+        setName(replaceVars(getName(), vars));
         path = replaceVars(path, vars);
         if (folders != null) {
             for (final Folder folder : folders) {

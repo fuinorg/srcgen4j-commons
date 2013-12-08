@@ -19,11 +19,15 @@ package org.fuin.srcgen4j.commons;
 
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import org.fuin.objects4j.common.NeverNull;
+import org.fuin.objects4j.common.Nullable;
 
 /**
  * Represents a folder in a target folder.
@@ -31,18 +35,20 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "bin")
 @XmlType(propOrder = "path")
-public class BinClasspathEntry extends AbstractElement implements
+public final class BinClasspathEntry extends AbstractElement implements
         InitializableElement<BinClasspathEntry, Classpath> {
 
+    @NotNull
     @XmlAttribute
     private String path;
 
+    @Nullable
     private transient Classpath parent;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public BinClasspathEntry() {
+    BinClasspathEntry() {
         super();
     }
 
@@ -52,7 +58,7 @@ public class BinClasspathEntry extends AbstractElement implements
      * @param path
      *            Path to set.
      */
-    public BinClasspathEntry(final String path) {
+    public BinClasspathEntry(@NotNull final String path) {
         super();
         this.path = path;
     }
@@ -62,25 +68,17 @@ public class BinClasspathEntry extends AbstractElement implements
      * 
      * @return Current path.
      */
+    @NeverNull
     public final String getPath() {
         return path;
     }
 
     /**
-     * Sets the path.
-     * 
-     * @param path
-     *            Path to set.
-     */
-    public final void setPath(final String path) {
-        this.path = path;
-    }
-
-    /**
      * Returns the parent for the folder.
      * 
-     * @return Parent or <code>null</code>.
+     * @return Parent.
      */
+    @Nullable
     public final Classpath getParent() {
         return parent;
     }
@@ -89,9 +87,9 @@ public class BinClasspathEntry extends AbstractElement implements
      * Sets the parent for the folder.
      * 
      * @param parent
-     *            Parent or <code>null</code>.
+     *            Parent.
      */
-    public final void setParent(final Classpath parent) {
+    public final void setParent(@Nullable final Classpath parent) {
         this.parent = parent;
     }
 

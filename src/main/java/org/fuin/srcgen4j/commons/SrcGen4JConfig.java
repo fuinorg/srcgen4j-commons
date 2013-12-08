@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -30,6 +32,13 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.FileExists;
+import org.fuin.objects4j.common.FileExistsValidator;
+import org.fuin.objects4j.common.IsDirectory;
+import org.fuin.objects4j.common.IsDirectoryValidator;
+import org.fuin.objects4j.common.NeverNull;
+import org.fuin.objects4j.common.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,33 +52,52 @@ public class SrcGen4JConfig {
 
     private static final Logger LOG = LoggerFactory.getLogger(SrcGen4JConfig.class);
 
+    @Nullable
+    @Valid
     @XmlElementWrapper(name = "variables")
     @XmlElement(name = "variable")
     private List<Variable> variables;
 
+    @Nullable
+    @Valid
     @XmlElement(name = "classpath")
     private Classpath classpath;
 
+    @Nullable
+    @Valid
     @XmlElementWrapper(name = "projects")
     @XmlElement(name = "project")
     private List<Project> projects;
 
+    @Nullable
+    @Valid
     @XmlElementWrapper(name = "parsers")
     @XmlElement(name = "parser")
     private List<ParserConfig> parsers;
 
+    @Nullable
+    @Valid
     @XmlElement(name = "generators")
     private Generators generators;
 
+    @Nullable
     private transient Map<String, String> varMap;
 
     private transient boolean initialized = false;
 
     /**
+     * Default constructor.
+     */
+    public SrcGen4JConfig() {
+        super();
+    }
+
+    /**
      * Returns a list of variables.
      * 
-     * @return Variables or NULL.
+     * @return Variables.
      */
+    @Nullable
     public final List<Variable> getVariables() {
         return variables;
     }
@@ -77,8 +105,9 @@ public class SrcGen4JConfig {
     /**
      * Returns a map of variables.
      * 
-     * @return Map of variables or NULL.
+     * @return Map of variables.
      */
+    @Nullable
     public final Map<String, String> getVarMap() {
         return varMap;
     }
@@ -87,9 +116,9 @@ public class SrcGen4JConfig {
      * Sets a list of variables.
      * 
      * @param variables
-     *            Variables or NULL.
+     *            Variables.
      */
-    public final void setVariables(final List<Variable> variables) {
+    public final void setVariables(@Nullable final List<Variable> variables) {
         this.variables = variables;
     }
 
@@ -98,6 +127,7 @@ public class SrcGen4JConfig {
      * 
      * @return Class path.
      */
+    @Nullable
     public final Classpath getClasspath() {
         return classpath;
     }
@@ -106,17 +136,18 @@ public class SrcGen4JConfig {
      * Sets the class path to a new value.
      * 
      * @param classpath
-     *            Value to set or NULL.
+     *            Value to set.
      */
-    public final void setClasspath(final Classpath classpath) {
+    public final void setClasspath(@Nullable final Classpath classpath) {
         this.classpath = classpath;
     }
 
     /**
      * Returns a list of projects.
      * 
-     * @return Projects or NULL.
+     * @return Projects.
      */
+    @Nullable
     public final List<Project> getProjects() {
         return projects;
     }
@@ -125,17 +156,18 @@ public class SrcGen4JConfig {
      * Sets a list of projects.
      * 
      * @param projects
-     *            Projects or NULL.
+     *            Projects.
      */
-    public final void setProjects(final List<Project> projects) {
+    public final void setProjects(@Nullable final List<Project> projects) {
         this.projects = projects;
     }
 
     /**
      * Returns the list of parsers.
      * 
-     * @return Parsers or NULL.
+     * @return Parsers.
      */
+    @Nullable
     public final List<ParserConfig> getParsers() {
         return parsers;
     }
@@ -144,9 +176,9 @@ public class SrcGen4JConfig {
      * Sets the list of parsers.
      * 
      * @param parsers
-     *            Parsers or NULL.
+     *            Parsers.
      */
-    public final void setParsers(final List<ParserConfig> parsers) {
+    public final void setParsers(@Nullable final List<ParserConfig> parsers) {
         this.parsers = parsers;
     }
 
@@ -155,9 +187,10 @@ public class SrcGen4JConfig {
      * it will be created.
      * 
      * @param parser
-     *            Parser to add - Never NULL.
+     *            Parser to add.
      */
-    public final void addParser(final ParserConfig parser) {
+    public final void addParser(@NotNull final ParserConfig parser) {
+        Contract.requireArgNotNull("parser", parser);
         if (parsers == null) {
             parsers = new ArrayList<ParserConfig>();
         }
@@ -167,8 +200,9 @@ public class SrcGen4JConfig {
     /**
      * Returns a set of generators.
      * 
-     * @return Generators or NULL.
+     * @return Generators.
      */
+    @Nullable
     public final Generators getGenerators() {
         return generators;
     }
@@ -177,16 +211,17 @@ public class SrcGen4JConfig {
      * Sets a the of generators.
      * 
      * @param generators
-     *            Generators or NULL.
+     *            Generators.
      */
-    public final void setGenerators(final Generators generators) {
+    public final void setGenerators(@Nullable final Generators generators) {
         this.generators = generators;
     }
 
     /**
      * Returns the information if the object has been initialized.
      * 
-     * @return If the method {@link #init()} was called TRUE, else FALSE.
+     * @return If the method {@link #init(SrcGen4JContext, File)} was called
+     *         TRUE, else FALSE.
      */
     public final boolean isInitialized() {
         return initialized;
@@ -218,14 +253,20 @@ public class SrcGen4JConfig {
      * be saved.
      * 
      * @param context
-     *            Current context - Cannot be NULL.
+     *            Current context.
      * @param rootDir
-     *            Root directory that is available as variable 'rootDir' -
-     *            Cannot be NULL.
+     *            Root directory that is available as variable 'rootDir'.
      * 
      * @return This instance.
      */
-    public final SrcGen4JConfig init(final SrcGen4JContext context, final File rootDir) {
+    public final SrcGen4JConfig init(@NotNull final SrcGen4JContext context,
+            @NotNull @FileExists @IsDirectory final File rootDir) {
+
+        Contract.requireArgNotNull("context", context);
+        Contract.requireArgNotNull("rootDir", rootDir);
+        FileExistsValidator.requireArgValid("rootDir", rootDir);
+        IsDirectoryValidator.requireArgValid("rootDir", rootDir);
+
         initVarMap(rootDir);
         if (variables != null) {
             for (final Variable variable : variables) {
@@ -273,10 +314,13 @@ public class SrcGen4JConfig {
      * @throws FolderNotFoundException
      *             The folder in the project based on the selection is unknown.
      */
-    public final Folder findTargetFolder(final String generatorName, final String artifactName)
-            throws ProjectNameNotDefinedException, ArtifactNotFoundException,
-            FolderNameNotDefinedException, GeneratorNotFoundException, ProjectNotFoundException,
-            FolderNotFoundException {
+    public final Folder findTargetFolder(@NotNull final String generatorName,
+            @NotNull final String artifactName) throws ProjectNameNotDefinedException,
+            ArtifactNotFoundException, FolderNameNotDefinedException, GeneratorNotFoundException,
+            ProjectNotFoundException, FolderNotFoundException {
+
+        Contract.requireArgNotNull("generatorName", generatorName);
+        Contract.requireArgNotNull("artifactName", artifactName);
 
         return findTargetFolder(generatorName, artifactName, null);
 
@@ -308,10 +352,14 @@ public class SrcGen4JConfig {
      * @throws FolderNotFoundException
      *             The folder in the project based on the selection is unknown.
      */
-    public final Folder findTargetFolder(final String generatorName, final String artifactName,
-            final String targetPath) throws ProjectNameNotDefinedException,
-            ArtifactNotFoundException, FolderNameNotDefinedException, GeneratorNotFoundException,
-            ProjectNotFoundException, FolderNotFoundException {
+    public final Folder findTargetFolder(@NotNull final String generatorName,
+            @NotNull final String artifactName, final String targetPath)
+            throws ProjectNameNotDefinedException, ArtifactNotFoundException,
+            FolderNameNotDefinedException, GeneratorNotFoundException, ProjectNotFoundException,
+            FolderNotFoundException {
+
+        Contract.requireArgNotNull("generatorName", generatorName);
+        Contract.requireArgNotNull("artifactName", artifactName);
 
         final GeneratorConfig generator = generators.findByName(generatorName);
 
@@ -342,14 +390,14 @@ public class SrcGen4JConfig {
             throw new FolderNameNotDefinedException(generatorName, artifactName, targetPattern);
         }
 
-        idx = projects.indexOf(new Project(projectName));
+        idx = projects.indexOf(new Project(projectName, "dummy"));
         if (idx < 0) {
             throw new ProjectNotFoundException(generatorName, artifactName, targetPattern,
                     projectName);
         }
         final Project project = projects.get(idx);
 
-        idx = project.getFolders().indexOf(new Folder(folderName));
+        idx = project.getFolders().indexOf(new Folder(folderName, "NotUsed"));
         if (idx < 0) {
             throw new FolderNotFoundException(generatorName, artifactName, targetPattern,
                     projectName, folderName);
@@ -366,7 +414,10 @@ public class SrcGen4JConfig {
      * 
      * @return List of generators.
      */
-    public final List<GeneratorConfig> findGeneratorsForParser(final String parserName) {
+    @NeverNull
+    public final List<GeneratorConfig> findGeneratorsForParser(@NotNull final String parserName) {
+        Contract.requireArgNotNull("parserName", parserName);
+
         final List<GeneratorConfig> list = new ArrayList<GeneratorConfig>();
         final List<GeneratorConfig> gcList = generators.getList();
         for (final GeneratorConfig gc : gcList) {
@@ -382,17 +433,26 @@ public class SrcGen4JConfig {
      * structure.
      * 
      * @param context
-     *            Current context - Cannot be NULL.
+     *            Current context.
      * @param projectName
-     *            Name of the one and only project - Cannot be NULL.
+     *            Name of the one and only project.
      * @param rootDir
-     *            Root directory that is available as variable 'srcgen4jRootDir'
-     *            - Cannot be NULL.
+     *            Root directory that is available as variable
+     *            'srcgen4jRootDir'.
      * 
      * @return New initialized configuration instance.
      */
-    public static SrcGen4JConfig createMavenStyleSingleProject(final SrcGen4JContext context,
-            final String projectName, final File rootDir) {
+    @NeverNull
+    public static SrcGen4JConfig createMavenStyleSingleProject(
+            @NotNull final SrcGen4JContext context, @NotNull final String projectName,
+            @NotNull @FileExists @IsDirectory final File rootDir) {
+
+        Contract.requireArgNotNull("context", context);
+        Contract.requireArgNotNull("rootDir", rootDir);
+        FileExistsValidator.requireArgValid("rootDir", rootDir);
+        IsDirectoryValidator.requireArgValid("rootDir", rootDir);
+        Contract.requireArgNotNull("projectName", projectName);
+
         final SrcGen4JConfig config = new SrcGen4JConfig();
         final List<Project> projects = new ArrayList<Project>();
         final Project project = new Project(projectName, ".");

@@ -19,9 +19,12 @@ package org.fuin.srcgen4j.commons;
 
 import java.util.Map;
 
+import javax.validation.Valid;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
+
+import org.fuin.objects4j.common.Nullable;
 
 /**
  * Parser and Generator specific configurations are wrapped with a "config" tag.
@@ -33,13 +36,15 @@ import javax.xml.bind.annotation.XmlAnyElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Config<PARENT> implements InitializableElement<Config<PARENT>, PARENT> {
 
+    @Nullable
+    @Valid
     @XmlAnyElement(lax = true)
     private Object config;
 
     /**
-     * default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public Config() {
+    Config() {
         super();
     }
 
@@ -47,9 +52,9 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
      * Constructor with specific configuration.
      * 
      * @param config
-     *            Configuration or NULL.
+     *            Configuration.
      */
-    public Config(final Object config) {
+    public Config(@Nullable final Object config) {
         super();
         this.config = config;
     }
@@ -69,8 +74,9 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
     /**
      * Returns the specific configuration.
      * 
-     * @return Configuration or NULL.
+     * @return Configuration.
      */
+    @Nullable
     public final Object getConfig() {
         return config;
     }
@@ -79,9 +85,9 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
      * Sets the specific configuration.
      * 
      * @param config
-     *            Configuration or NULL.
+     *            Configuration.
      */
-    public final void setConfig(final Object config) {
+    public final void setConfig(@Nullable final Object config) {
         this.config = config;
     }
 

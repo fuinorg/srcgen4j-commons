@@ -18,12 +18,10 @@
 package org.fuin.srcgen4j.commons;
 
 import com.openpojo.validation.PojoValidator;
-import com.openpojo.validation.rule.impl.GetterMustExistRule;
 import com.openpojo.validation.rule.impl.NoFieldShadowingRule;
 import com.openpojo.validation.rule.impl.NoPublicFieldsRule;
 import com.openpojo.validation.test.impl.DefaultValuesNullTester;
 import com.openpojo.validation.test.impl.GetterTester;
-import com.openpojo.validation.test.impl.SetterTester;
 
 /**
  * Basic functions for all tests.
@@ -44,10 +42,8 @@ public abstract class AbstractTest {
 
         pv.addRule(new NoPublicFieldsRule());
         pv.addRule(new NoFieldShadowingRule());
-        pv.addRule(new GetterMustExistRule());
 
         pv.addTester(new DefaultValuesNullTester());
-        pv.addTester(new SetterTester());
         pv.addTester(new GetterTester());
 
         return pv;

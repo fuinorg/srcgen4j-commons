@@ -20,11 +20,17 @@ package org.fuin.srcgen4j.commons;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverEmpty;
+import org.fuin.objects4j.common.NotEmpty;
+import org.fuin.objects4j.common.Nullable;
 
 /**
  * Maps a single generated artifact based on a regular expression to a
@@ -35,17 +41,20 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = { "pattern" })
 public class Target extends AbstractTarget implements InitializableElement<Target, Artifact> {
 
+    @NotEmpty
     @XmlAttribute
     private String pattern;
 
+    @Nullable
     private transient Artifact parent;
 
+    @Nullable
     private transient Pattern regExpr;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public Target() {
+    Target() {
         super();
     }
 
@@ -59,8 +68,10 @@ public class Target extends AbstractTarget implements InitializableElement<Targe
      * @param folder
      *            Folder to set.
      */
-    public Target(final String pattern, final String project, final String folder) {
+    public Target(@NotEmpty final String pattern, @Nullable final String project,
+            @Nullable final String folder) {
         super(project, folder);
+        Contract.requireArgNotEmpty("pattern", pattern);
         this.pattern = pattern;
     }
 
@@ -69,18 +80,9 @@ public class Target extends AbstractTarget implements InitializableElement<Targe
      * 
      * @return Current pattern.
      */
+    @NeverEmpty
     public final String getPattern() {
         return pattern;
-    }
-
-    /**
-     * Sets the pattern.
-     * 
-     * @param pattern
-     *            Pattern to set.
-     */
-    public final void setPattern(final String pattern) {
-        this.pattern = pattern;
     }
 
     /**
@@ -88,25 +90,17 @@ public class Target extends AbstractTarget implements InitializableElement<Targe
      * 
      * @return Artifact.
      */
+    @Nullable
     public final Artifact getParent() {
         return parent;
     }
 
     /**
-     * Sets the parent of the object.
-     * 
-     * @param parent
-     *            Artifact.
-     */
-    public final void setParent(final Artifact parent) {
-        this.parent = parent;
-    }
-
-    /**
      * Returns the defined project from this object or any of it's parents.
      * 
-     * @return Project or <code>null</code>.
+     * @return Project.
      */
+    @Nullable
     public final String getDefProject() {
         if (getProject() == null) {
             if (parent == null) {
@@ -120,8 +114,9 @@ public class Target extends AbstractTarget implements InitializableElement<Targe
     /**
      * Returns the defined folder from this object or any of it's parents.
      * 
-     * @return Folder or <code>null</code>.
+     * @return Folder.
      */
+    @Nullable
     public final String getDefFolder() {
         if (getFolder() == null) {
             if (parent == null) {
@@ -155,7 +150,8 @@ public class Target extends AbstractTarget implements InitializableElement<Targe
      * 
      * @return If the target matches TRUE, else FALSE.
      */
-    public final boolean matches(final String targetPath) {
+    public final boolean matches(@NotNull final String targetPath) {
+        Contract.requireArgNotNull("targetPath", targetPath);
         if (regExpr == null) {
             return true;
         }

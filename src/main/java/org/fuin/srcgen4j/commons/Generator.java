@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Generates something using a given model.
  * 
@@ -31,21 +33,21 @@ public interface Generator<MODEL> {
      * as defined in {@link GeneratorConfig#getClassName()}.
      * 
      * @param config
-     *            Configuration to use - Cannot be NULL.
+     *            Configuration to use.
      */
-    public void initialize(GeneratorConfig config);
+    public void initialize(@NotNull GeneratorConfig config);
 
     /**
      * Generates something using the initially given configuration and model.
      * 
      * @param model
-     *            Model to use - Cannot be NULL.
+     *            Model to use.
      * @param incremental
      *            If this is an incremental build TRUE, else FALSE (full build).
      * 
      * @throws GenerateException
      *             Error when generating.
      */
-    public void generate(MODEL model, boolean incremental) throws GenerateException;
+    public void generate(@NotNull MODEL model, boolean incremental) throws GenerateException;
 
 }

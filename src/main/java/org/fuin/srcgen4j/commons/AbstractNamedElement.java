@@ -22,6 +22,10 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverEmpty;
+import org.fuin.objects4j.common.NotEmpty;
+
 /**
  * Base class with a name that is used as unique identifier. Equals and hash
  * code are also based on the name.
@@ -30,13 +34,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = { "name" })
 public abstract class AbstractNamedElement extends AbstractElement {
 
+    @NotEmpty
     @XmlAttribute
     private String name;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public AbstractNamedElement() {
+    AbstractNamedElement() {
         super();
     }
 
@@ -46,8 +51,9 @@ public abstract class AbstractNamedElement extends AbstractElement {
      * @param name
      *            Name to set.
      */
-    public AbstractNamedElement(final String name) {
+    public AbstractNamedElement(@NotEmpty final String name) {
         super();
+        Contract.requireArgNotEmpty("name", name);
         this.name = name;
     }
 
@@ -56,6 +62,7 @@ public abstract class AbstractNamedElement extends AbstractElement {
      * 
      * @return Current name.
      */
+    @NeverEmpty
     public final String getName() {
         return name;
     }
@@ -66,7 +73,8 @@ public abstract class AbstractNamedElement extends AbstractElement {
      * @param name
      *            Name to set.
      */
-    public final void setName(final String name) {
+    protected final void setName(@NotEmpty final String name) {
+        Contract.requireArgNotEmpty("name", name);
         this.name = name;
     }
 

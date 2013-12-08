@@ -21,53 +21,49 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.fuin.objects4j.common.NeverNull;
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * Represents a folder in a target folder.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "folder")
-@XmlType(propOrder = { "clean", "override", "create", "path", "name" })
-public class Folder extends AbstractElement implements InitializableElement<Folder, Project> {
+@XmlType(propOrder = { "clean", "override", "create", "path" })
+public final class Folder extends AbstractNamedElement implements
+        InitializableElement<Folder, Project> {
 
-    @XmlAttribute
-    private String name;
-
+    @NotNull
     @XmlAttribute
     private String path;
 
+    @Nullable
     @XmlAttribute
     private Boolean create;
 
+    @Nullable
     @XmlAttribute
     private Boolean override;
 
+    @Nullable
     @XmlAttribute
     private Boolean clean;
 
+    @Nullable
     private transient Project parent;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public Folder() {
+    Folder() {
         super();
-    }
-
-    /**
-     * Constructor with name.
-     * 
-     * @param name
-     *            Name to set.
-     */
-    public Folder(final String name) {
-        super();
-        this.name = name;
     }
 
     /**
@@ -78,14 +74,13 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
      * @param path
      *            path to set.
      */
-    public Folder(final String name, final String path) {
-        super();
-        this.name = name;
+    public Folder(@NotNull final String name, @NotNull final String path) {
+        super(name);
         this.path = path;
     }
 
     /**
-     * Constructor all data.
+     * Constructor with all data.
      * 
      * @param parent
      *            Parent folder.
@@ -100,11 +95,10 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
      * @param clean
      *            Clean directory (TRUE) or not (NULL or FALSE).
      */
-    Folder(final Project parent, final String name, final String path, final boolean create,
-            final boolean override, final boolean clean) {
-        super();
+    Folder(@NotNull final Project parent, @NotNull final String name, @NotNull final String path,
+            final boolean create, final boolean override, final boolean clean) {
+        super(name);
         this.parent = parent;
-        this.name = name;
         this.path = path;
         this.create = create;
         this.override = override;
@@ -112,41 +106,13 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
     }
 
     /**
-     * Returns the name.
-     * 
-     * @return Current name.
-     */
-    public final String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the name.
-     * 
-     * @param name
-     *            Name to set.
-     */
-    public final void setName(final String name) {
-        this.name = name;
-    }
-
-    /**
      * Returns the path.
      * 
      * @return Current path.
      */
+    @NeverNull
     public final String getPath() {
         return path;
-    }
-
-    /**
-     * Sets the path.
-     * 
-     * @param path
-     *            Path to set.
-     */
-    public final void setPath(final String path) {
-        this.path = path;
     }
 
     /**
@@ -168,6 +134,7 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
      * 
      * @return Create directories (TRUE) or not (NULL or FALSE).
      */
+    @Nullable
     public final Boolean getCreate() {
         return create;
     }
@@ -179,7 +146,7 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
      * @param create
      *            Create directories (TRUE) or not (NULL or FALSE).
      */
-    public final void setCreate(final Boolean create) {
+    public final void setCreate(@Nullable final Boolean create) {
         this.create = create;
     }
 
@@ -202,6 +169,7 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
      * 
      * @return Clean directory (TRUE) or not (NULL or FALSE).
      */
+    @Nullable
     public final Boolean getClean() {
         return clean;
     }
@@ -213,7 +181,7 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
      * @param clean
      *            Clean directory (TRUE) or not (NULL or FALSE).
      */
-    public final void setClean(final Boolean clean) {
+    public final void setClean(@Nullable final Boolean clean) {
         this.clean = clean;
     }
 
@@ -236,6 +204,7 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
      * 
      * @return Override files (TRUE) or not (NULL or FALSE).
      */
+    @Nullable
     public final Boolean getOverride() {
         return override;
     }
@@ -247,15 +216,16 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
      * @param override
      *            Override files (TRUE) or not (NULL or FALSE).
      */
-    public final void setOverride(final Boolean override) {
+    public final void setOverride(@Nullable final Boolean override) {
         this.override = override;
     }
 
     /**
      * Returns the parent for the folder.
      * 
-     * @return Parent or <code>null</code>.
+     * @return Parent.
      */
+    @Nullable
     public final Project getParent() {
         return parent;
     }
@@ -266,7 +236,7 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
      * @param parent
      *            Parent or <code>null</code>.
      */
-    public final void setParent(final Project parent) {
+    final void setParent(final Project parent) {
         this.parent = parent;
     }
 
@@ -274,7 +244,7 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
     public final Folder init(final SrcGen4JContext context, final Project parent,
             final Map<String, String> vars) {
         this.parent = parent;
-        name = replaceVars(name, vars);
+        setName(replaceVars(getName(), vars));
         path = replaceVars(path, vars);
         return this;
     }
@@ -282,8 +252,9 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
     /**
      * Returns the full path from project and folder.
      * 
-     * @return Path or NULL.
+     * @return Path.
      */
+    @Nullable
     public final String getDirectory() {
         if (parent == null) {
             return null;
@@ -294,8 +265,9 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
     /**
      * Returns the full path from project and folder.
      * 
-     * @return Directory or NULL.
+     * @return Directory.
      */
+    @Nullable
     public final File getCanonicalDir() {
         final String dir = getDirectory();
         if (dir == null) {
@@ -307,32 +279,5 @@ public class Folder extends AbstractElement implements InitializableElement<Fold
             throw new RuntimeException("Couldn't determine canonical file: " + dir, ex);
         }
     }
-
-    // CHECKSTYLE:OFF Generated code
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Folder other = (Folder) obj;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        return true;
-    }
-    // CHECKSTYLE:ON
 
 }

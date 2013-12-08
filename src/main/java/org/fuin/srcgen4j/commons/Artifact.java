@@ -21,11 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.Nullable;
 
 /**
  * Single generated artifact.
@@ -33,18 +38,21 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "artifact")
 @XmlType(propOrder = { "targets" })
-public class Artifact extends AbstractNamedTarget implements
+public final class Artifact extends AbstractNamedTarget implements
         InitializableElement<Artifact, GeneratorConfig> {
 
+    @Nullable
+    @Valid
     @XmlElement(name = "target")
     private List<Target> targets;
 
+    @Nullable
     private transient GeneratorConfig parent;
 
     /**
-     * Default constructor.
+     * Package visible default constructor for deserialization.
      */
-    public Artifact() {
+    Artifact() {
         super();
     }
 
@@ -54,7 +62,7 @@ public class Artifact extends AbstractNamedTarget implements
      * @param name
      *            Name to set.
      */
-    public Artifact(final String name) {
+    public Artifact(@NotNull final String name) {
         super(name, null, null);
     }
 
@@ -68,15 +76,17 @@ public class Artifact extends AbstractNamedTarget implements
      * @param folder
      *            Folder to set.
      */
-    public Artifact(final String name, final String project, final String folder) {
+    public Artifact(@NotNull final String name, @Nullable final String project,
+            @Nullable final String folder) {
         super(name, project, folder);
     }
 
     /**
      * Returns the list of targets.
      * 
-     * @return Targets or NULL.
+     * @return Targets.
      */
+    @Nullable
     public final List<Target> getTargets() {
         return targets;
     }
@@ -85,9 +95,9 @@ public class Artifact extends AbstractNamedTarget implements
      * Sets the list of targets.
      * 
      * @param targets
-     *            Targets or NULL.
+     *            Targets.
      */
-    public final void setTargets(final List<Target> targets) {
+    public final void setTargets(@Nullable final List<Target> targets) {
         this.targets = targets;
     }
 
@@ -95,9 +105,10 @@ public class Artifact extends AbstractNamedTarget implements
      * Adds a target to the list. If the list does not exist it's created.
      * 
      * @param target
-     *            Target to add - Cannot be NULL.
+     *            Target to add.
      */
-    public final void addTarget(final Target target) {
+    public final void addTarget(@NotNull final Target target) {
+        Contract.requireArgNotNull("target", target);
         if (targets == null) {
             targets = new ArrayList<Target>();
         }
@@ -107,8 +118,9 @@ public class Artifact extends AbstractNamedTarget implements
     /**
      * Returns the defined project from this object or any of it's parents.
      * 
-     * @return Project or <code>null</code>.
+     * @return Project.
      */
+    @Nullable
     public final String getDefProject() {
         if (getProject() == null) {
             if (parent == null) {
@@ -122,8 +134,9 @@ public class Artifact extends AbstractNamedTarget implements
     /**
      * Returns the defined folder from this object or any of it's parents.
      * 
-     * @return Folder or <code>null</code>.
+     * @return Folder.
      */
+    @Nullable
     public final String getDefFolder() {
         if (getFolder() == null) {
             if (parent == null) {
@@ -139,18 +152,9 @@ public class Artifact extends AbstractNamedTarget implements
      * 
      * @return Generator.
      */
+    @Nullable
     public final GeneratorConfig getParent() {
         return parent;
-    }
-
-    /**
-     * Sets the parent of the object.
-     * 
-     * @param parent
-     *            Generator.
-     */
-    public final void setParent(final GeneratorConfig parent) {
-        this.parent = parent;
     }
 
     /**
@@ -158,11 +162,12 @@ public class Artifact extends AbstractNamedTarget implements
      * patterns. Returns null if the argument is <code>null</code>.
      * 
      * @param targetPath
-     *            Path to find or <code>null</code>.
+     *            Path to find.
      * 
-     * @return Target or <code>null</code>.
+     * @return Target.
      */
-    public final Target findTargetFor(final String targetPath) {
+    @Nullable
+    public final Target findTargetFor(@Nullable final String targetPath) {
         if (targets == null) {
             return null;
         }

@@ -20,7 +20,10 @@ package org.fuin.srcgen4j.commons;
 import java.io.File;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.io.filefilter.IOFileFilter;
+import org.fuin.objects4j.common.NeverNull;
 
 /**
  * Parses some kind of model in a full or an incremental mode.
@@ -33,21 +36,23 @@ public interface IncrementalParser<MODEL> extends Parser<MODEL> {
     /**
      * Returns a file filter to use for selecting the appropriate files.
      * 
-     * @return File filter - Never NULL.
+     * @return File filter.
      */
+    @NeverNull
     public IOFileFilter getFileFilter();
 
     /**
      * Parses a model using the initially given configuration and a file list.
      * 
      * @param files
-     *            Set of files to parse - Cannot be NULL.
+     *            Set of files to parse.
      * 
      * @return Model.
      * 
      * @throws ParseException
      *             Error during parse process.
      */
-    public MODEL parse(Set<File> files) throws ParseException;
+    @NeverNull
+    public MODEL parse(@NotNull Set<File> files) throws ParseException;
 
 }

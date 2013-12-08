@@ -20,7 +20,8 @@ package org.fuin.srcgen4j.commons;
 import java.io.File;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
+import org.fuin.objects4j.common.NeverNull;
+import org.fuin.objects4j.common.Nullable;
 
 /**
  * Provides a context for the build process.
@@ -33,7 +34,7 @@ public interface SrcGen4JContext {
      * 
      * @return Class loader.
      */
-    @NotNull
+    @NeverNull
     public ClassLoader getClassLoader();
 
     /**
@@ -42,6 +43,7 @@ public interface SrcGen4JContext {
      * 
      * @return Unmodifiable list of JAR files.
      */
+    @Nullable
     public List<File> getJarFiles();
 
     /**
@@ -50,6 +52,7 @@ public interface SrcGen4JContext {
      * 
      * @return Unmodifiable list of "bin"/"classes" directories.
      */
+    @Nullable
     public List<File> getBinDirs();
 
 }

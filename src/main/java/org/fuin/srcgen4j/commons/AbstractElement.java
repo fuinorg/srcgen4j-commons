@@ -19,25 +19,28 @@ package org.fuin.srcgen4j.commons;
 
 import java.util.Map;
 
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * Basic functionality used by all configuration sub classes.
  */
 public abstract class AbstractElement {
 
     /**
-     * Replaces all variables inside a string with values from a map.
+     * Replaces all variables inside a string with values from a map. A
+     * <code>null</code> input string value will return <code>null</code>.
      * 
      * @param str
-     *            Text with variables (Format: ${key} ) - May be
-     *            <code>null</code> or empty.
+     *            Text with variables (Format: ${key} ).
      * @param vars
-     *            Map with key/values (both of type <code>String</code> - May be
-     *            <code>null</code>.
+     *            Map with key/values (both of type <code>String</code>.
      * 
      * @return String with replaced variables. Unknown variables will remain
      *         unchanged.
      */
-    public final String replaceVars(final String str, final Map<String, String> vars) {
+    @Nullable
+    public final String replaceVars(@Nullable final String str,
+            @Nullable final Map<String, String> vars) {
         return VariableResolver.replaceVars(str, vars);
     }
 

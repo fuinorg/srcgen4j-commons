@@ -30,7 +30,6 @@ import org.junit.Test;
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
 import com.openpojo.validation.PojoValidator;
-import com.openpojo.validation.rule.impl.SetterMustExistRule;
 
 /**
  * Tests for {@link Artifact}.
@@ -47,7 +46,6 @@ public class ArtifactTest extends AbstractTest {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(Artifact.class);
         final PojoValidator pv = createPojoValidator();
-        pv.addRule(new SetterMustExistRule());
         pv.runValidation(pc);
 
     }
@@ -179,8 +177,8 @@ public class ArtifactTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig config = new SrcGen4JConfig();
         final Generators generators = new Generators();
-        final GeneratorConfig generator = new GeneratorConfig();
-        final Artifact testee = new Artifact();
+        final GeneratorConfig generator = new GeneratorConfig("NAME1", "a.b.c.D", "PARSER1");
+        final Artifact testee = new Artifact("ARTIFACT");
 
         config.setGenerators(generators);
         generators.addGenerator(generator);

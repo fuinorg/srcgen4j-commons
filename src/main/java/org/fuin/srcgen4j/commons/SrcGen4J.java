@@ -29,6 +29,8 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.OrFileFilter;
+import org.fuin.objects4j.common.Contract;
+import org.fuin.objects4j.common.NeverNull;
 import org.fuin.utils4j.Utils4J;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,20 +52,18 @@ public final class SrcGen4J {
      * Constructor with configuration.
      * 
      * @param config
-     *            Configuration.
+     *            Initialized configuration (Method
+     *            {@link SrcGen4JConfig#init(SrcGen4JContext, File)} was at
+     *            least called once before).
      * @param context
      *            Build context.
      */
     public SrcGen4J(@NotNull final SrcGen4JConfig config, @NotNull final SrcGen4JContext context) {
         super();
-        if (config == null) {
-            throw new IllegalArgumentException("Argument 'config' cannot be NULL");
-        }
+        Contract.requireArgNotNull("config", config);
+        Contract.requireArgNotNull("context", context);
         if (!config.isInitialized()) {
             throw new IllegalArgumentException("The configuration is not initialized");
-        }
-        if (context == null) {
-            throw new IllegalArgumentException("Argument 'context' cannot be NULL");
         }
         this.config = config;
         this.context = context;
@@ -179,8 +179,9 @@ public final class SrcGen4J {
      * Returns a file filter that combines all filters for all incremental
      * parsers. It should be used for selecting the appropriate files.
      * 
-     * @return File filter - Never NULL.
+     * @return File filter.
      */
+    @NeverNull
     public FileFilter getFileFilter() {
         if (fileFilter == null) {
             final List<IOFileFilter> filters = new ArrayList<IOFileFilter>();
@@ -204,14 +205,17 @@ public final class SrcGen4J {
      * used.
      * 
      * @param files
-     *            Set of files to parse for the model - Cannot be NULL.
+     *            Set of files to parse for the model.
      * 
      * @throws ParseException
      *             Error during parse process.
      * @throws GenerateException
      *             Error during generation process.
      */
-    public final void execute(final Set<File> files) throws ParseException, GenerateException {
+    public final void execute(@NotNull final Set<File> files) throws ParseException,
+            GenerateException {
+
+        Contract.requireArgNotNull("files", files);
 
         LOG.info("Executing incremental build (" + files.size() + " files)");
         if (LOG.isDebugEnabled()) {

@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import org.fuin.objects4j.common.Nullable;
+
 /**
  * For a given generator/artifact/target was no project found in a generator
  * configuration.
@@ -29,14 +31,16 @@ public class ProjectNameNotDefinedException extends Exception {
      * Constructor with names.
      * 
      * @param generatorName
-     *            Name of the generator with the requested artifact.
+     *            Name of the generator with the requested artifact - Should not
+     *            be <code>null</code>.
      * @param artifactName
-     *            Name of the artifact with the request target.
+     *            Name of the artifact with the request target - Should not be
+     *            <code>null</code>.
      * @param targetPattern
-     *            Target pattern.
+     *            Target pattern - Should not be <code>null</code>.
      */
-    public ProjectNameNotDefinedException(final String generatorName, final String artifactName,
-            final String targetPattern) {
+    public ProjectNameNotDefinedException(@Nullable final String generatorName,
+            @Nullable final String artifactName, @Nullable final String targetPattern) {
         super("No project name is defined for: " + generatorName + " / " + artifactName + " / "
                 + targetPattern);
     }
