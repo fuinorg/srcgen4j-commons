@@ -41,7 +41,7 @@ public final class TestArtifactFactory implements ArtifactFactory<Object> {
 
     @Override
     public final GeneratedArtifact create(final Object modelObject) throws GenerateException {
-        return new GeneratedArtifact(artifact, "b/c/d.txt", "abcd");
+        return new GeneratedArtifact(artifact, "b/c/d.txt", "abcd".getBytes());
     }
 
 }

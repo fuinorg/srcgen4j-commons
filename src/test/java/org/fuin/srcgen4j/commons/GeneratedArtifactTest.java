@@ -49,7 +49,7 @@ public class GeneratedArtifactTest extends AbstractTest {
         // PREPARE
         final String name = "abc";
         final String pathAndName = "def";
-        final String source = "ghi";
+        final byte[] source = "ghi".getBytes();
 
         // TEST
         final GeneratedArtifact testee = new GeneratedArtifact(name, pathAndName, source);
@@ -57,7 +57,7 @@ public class GeneratedArtifactTest extends AbstractTest {
         // VERIFY
         assertThat(testee.getName()).isEqualTo(name);
         assertThat(testee.getPathAndName()).isEqualTo(pathAndName);
-        assertThat(testee.getSource()).isEqualTo(source);
+        assertThat(testee.getData()).isEqualTo(source);
 
     }
 

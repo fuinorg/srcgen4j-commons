@@ -28,7 +28,7 @@ public final class GeneratedArtifact {
 
     private final String pathAndName;
 
-    private final String source;
+    private final byte[] data;
 
     /**
      * Constructor with all data.
@@ -37,15 +37,15 @@ public final class GeneratedArtifact {
      *            Unique artifact name.
      * @param pathAndName
      *            Relative path and filename to write the source code to.
-     * @param source
-     *            Generated source code.
+     * @param data
+     *            Generated data.
      */
     public GeneratedArtifact(@NotNull final String name, @NotNull final String pathAndName,
-            @NotNull final String source) {
+            @NotNull final byte[] data) {
         super();
         this.name = name;
         this.pathAndName = pathAndName;
-        this.source = source;
+        this.data = data;
     }
 
     /**
@@ -69,13 +69,13 @@ public final class GeneratedArtifact {
     }
 
     /**
-     * Returns the generated source code.
+     * Returns the generated data (source code).
      * 
-     * @return Source code.
+     * @return Data.
      */
     @NotNull
-    public final String getSource() {
-        return source;
+    public final byte[] getData() {
+        return data;
     }
 
     @Override
