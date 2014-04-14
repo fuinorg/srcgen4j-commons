@@ -7,10 +7,10 @@ Bundle-Name: SrcGen4j Commons
 Bundle-SymbolicName: org.fuin.srcgen4j.commons
 Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
  ny)
-Bundle-Version: 0.3.0.SNAPSHOT
+Bundle-Version: 0.3.0
 Export-Package: org.fuin.srcgen4j.commons;uses:="javax.validation.constr
  aints,javax.xml.bind,javax.xml.bind.annotation,org.apache.commons.io.fi
- lefilter,org.fuin.objects4j.common";version="0.3.0.SNAPSHOT"
+ lefilter,org.fuin.objects4j.common";version="0.3.0"
 Import-Package: javax.validation,javax.validation.constraints,javax.xml.
  bind,javax.xml.bind.annotation,org.apache.commons.io;version="[1.4,2)",
  org.apache.commons.io.filefilter;version="[1.4,2)",org.fuin.objects4j.c
