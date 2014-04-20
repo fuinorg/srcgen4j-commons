@@ -29,10 +29,10 @@
   </xs:complexType>
   
   <xs:complexType name="classpathType">
-    <xs:attribute type="xs:boolean" name="context" use="optional" default="true" />
     <xs:sequence>
       <xs:element type="sg4jc:binType" name="bin" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
     </xs:sequence>
+    <xs:attribute type="xs:boolean" name="context" use="optional" default="true" />
   </xs:complexType>
   
   <xs:complexType name="folderType">
@@ -134,6 +134,9 @@
   </xs:complexType>
 
   	<xs:complexType name="artifactFactoryConfigType">
+	    <xs:sequence>
+		    <xs:element type="sg4jc:variablesType" name="variables" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+	    </xs:sequence>
 		<xs:attribute type="xs:string" name="artifact" use="required" />
 		<xs:attribute type="xs:string" name="class" use="required" />
 		<xs:attribute type="xs:boolean" name="incremental" use="optional" />
