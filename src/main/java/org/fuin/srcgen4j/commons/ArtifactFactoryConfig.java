@@ -17,17 +17,12 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -41,7 +36,7 @@ import org.fuin.utils4j.Utils4J;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "artifact-factory")
-@XmlType(propOrder = { "variables", "factoryClassName", "artifact" })
+@XmlType(propOrder = { "factoryClassName", "artifact" })
 public final class ArtifactFactoryConfig extends AbstractElement {
 
     @NotNull
@@ -55,15 +50,6 @@ public final class ArtifactFactoryConfig extends AbstractElement {
     @Nullable
     @XmlAttribute(name = "incremental")
     private Boolean incremental;
-
-    @Nullable
-    @Valid
-    @XmlElementWrapper(name = "variables")
-    @XmlElement(name = "variable")
-    private List<Variable> variables;
-
-    @Nullable
-    private transient Map<String, String> varMap;
 
     @Nullable
     private transient SrcGen4JContext context;
@@ -198,45 +184,18 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      * 
      * @param context
      *            Current context.
+     * @param vars
+     *            Variables from all parents.
      * 
      * @return This instance.
      */
     @NeverNull
-    public final ArtifactFactoryConfig init(@NotNull final SrcGen4JContext context) {
+    public final ArtifactFactoryConfig init(@NotNull final SrcGen4JContext context,
+            final Map<String, String> vars) {
         Contract.requireArgNotNull("context", context);
         this.context = context;
+        inheritVariables(vars);
         return this;
-    }
-
-    /**
-     * Returns a list of variables.
-     * 
-     * @return Variables.
-     */
-    @Nullable
-    public final List<Variable> getVariables() {
-        return variables;
-    }
-
-    /**
-     * Returns a map of variables.
-     * 
-     * @return Map of variables.
-     */
-    @Nullable
-    public final Map<String, String> getVarMap() {
-        if ((varMap == null) && (variables != null)) {
-            varMap = asMap(variables);
-        }
-        return varMap;
-    }
-
-    private static Map<String, String> asMap(final List<Variable> vars) {
-        final Map<String, String> map = new HashMap<String, String>();
-        for (final Variable var : vars) {
-            map.put(var.getName(), var.getValue());
-        }
-        return map;
     }
 
 }

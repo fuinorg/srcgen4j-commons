@@ -186,12 +186,13 @@ public final class Artifact extends AbstractNamedTarget implements
     public final Artifact init(final SrcGen4JContext context, final GeneratorConfig parent,
             final Map<String, String> vars) {
         this.parent = parent;
-        setName(replaceVars(getName(), vars));
-        setProject(replaceVars(getProject(), vars));
-        setFolder(replaceVars(getFolder(), vars));
+        inheritVariables(vars);
+        setName(replaceVars(getName(), getVarMap()));
+        setProject(replaceVars(getProject(), getVarMap()));
+        setFolder(replaceVars(getFolder(), getVarMap()));
         if (targets != null) {
             for (final Target target : targets) {
-                target.init(context, this, vars);
+                target.init(context, this, getVarMap());
             }
         }
         return this;

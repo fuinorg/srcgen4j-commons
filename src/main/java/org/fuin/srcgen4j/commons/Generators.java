@@ -117,11 +117,12 @@ public class Generators extends AbstractTarget implements
     public final Generators init(final SrcGen4JContext context, final SrcGen4JConfig parent,
             final Map<String, String> vars) {
         this.parent = parent;
-        setProject(replaceVars(getProject(), vars));
-        setFolder(replaceVars(getFolder(), vars));
+        inheritVariables(vars);
+        setProject(replaceVars(getProject(), getVarMap()));
+        setFolder(replaceVars(getFolder(), getVarMap()));
         if (list != null) {
             for (final GeneratorConfig generator : list) {
-                generator.init(context, this, vars);
+                generator.init(context, this, getVarMap());
             }
         }
         return this;

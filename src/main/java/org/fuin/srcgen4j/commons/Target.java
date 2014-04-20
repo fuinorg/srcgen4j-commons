@@ -131,9 +131,10 @@ public class Target extends AbstractTarget implements InitializableElement<Targe
     public final Target init(final SrcGen4JContext context, final Artifact parent,
             final Map<String, String> vars) {
         this.parent = parent;
-        pattern = replaceVars(pattern, vars);
-        setProject(replaceVars(getProject(), vars));
-        setFolder(replaceVars(getFolder(), vars));
+        inheritVariables(vars);
+        pattern = replaceVars(pattern, getVarMap());
+        setProject(replaceVars(getProject(), getVarMap()));
+        setFolder(replaceVars(getFolder(), getVarMap()));
         if (pattern == null) {
             regExpr = null;
         } else {

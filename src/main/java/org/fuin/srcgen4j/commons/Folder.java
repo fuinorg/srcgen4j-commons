@@ -244,8 +244,9 @@ public final class Folder extends AbstractNamedElement implements
     public final Folder init(final SrcGen4JContext context, final Project parent,
             final Map<String, String> vars) {
         this.parent = parent;
-        setName(replaceVars(getName(), vars));
-        path = replaceVars(path, vars);
+        inheritVariables(vars);
+        setName(replaceVars(getName(), getVarMap()));
+        path = replaceVars(path, getVarMap());
         return this;
     }
 

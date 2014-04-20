@@ -21,6 +21,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -90,7 +91,7 @@ public class ArtifactFactoryConfigTest extends AbstractTest {
             public List<File> getBinDirs() {
                 return new ArrayList<File>();
             }
-        });
+        }, new HashMap<String, String>());
 
         // TEST
         final ArtifactFactory<?> factory = testee.getFactory();

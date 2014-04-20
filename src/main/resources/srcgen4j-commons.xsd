@@ -82,6 +82,7 @@
   
   <xs:complexType name="parsersType">
     <xs:sequence>
+      <xs:element type="sg4jc:variableType" name="variable" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
       <xs:element type="sg4jc:parserType" minOccurs="1" maxOccurs="unbounded" name="parser" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
     </xs:sequence>
   </xs:complexType>
@@ -119,13 +120,14 @@
   
   <xs:complexType name="generatorsType">
     <xs:sequence>
+      <xs:element type="sg4jc:variableType" name="variable" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
       <xs:element type="sg4jc:generatorType" name="generator" minOccurs="1" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
     </xs:sequence>
   </xs:complexType>
   
   <xs:complexType name="srcgen4j-configType">
     <xs:sequence>
-      <xs:element type="sg4jc:variablesType" name="variables" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+      <xs:element type="sg4jc:variablesType" name="variables" minOccurs="0" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
       <xs:element type="sg4jc:classpathType" name="classpath" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
       <xs:element type="sg4jc:projectsType" name="projects" minOccurs="1" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
       <xs:element type="sg4jc:parsersType" name="parsers"  minOccurs="1" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
@@ -135,7 +137,7 @@
 
   	<xs:complexType name="artifactFactoryConfigType">
 	    <xs:sequence>
-		    <xs:element type="sg4jc:variablesType" name="variables" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+		    <xs:element type="sg4jc:variableType" name="variable" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
 	    </xs:sequence>
 		<xs:attribute type="xs:string" name="artifact" use="required" />
 		<xs:attribute type="xs:string" name="class" use="required" />

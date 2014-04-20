@@ -131,10 +131,11 @@ public class ParserConfig extends AbstractNamedElement implements
             final Map<String, String> vars) {
         this.context = context;
         this.parent = parent;
-        setName(replaceVars(getName(), vars));
-        this.className = replaceVars(className, vars);
+        inheritVariables(vars);
+        setName(replaceVars(getName(), getVarMap()));
+        this.className = replaceVars(className, getVarMap());
         if (config != null) {
-            config.init(context, this, vars);
+            config.init(context, this, getVarMap());
         }
         return this;
     }

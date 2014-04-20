@@ -256,16 +256,17 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
             final Map<String, String> vars) {
         this.context = context;
         this.parent = parent;
-        setName(replaceVars(getName(), vars));
-        setProject(replaceVars(getProject(), vars));
-        setFolder(replaceVars(getFolder(), vars));
+        inheritVariables(vars);
+        setName(replaceVars(getName(), getVarMap()));
+        setProject(replaceVars(getProject(), getVarMap()));
+        setFolder(replaceVars(getFolder(), getVarMap()));
         if (artifacts != null) {
             for (final Artifact artifact : artifacts) {
-                artifact.init(context, this, vars);
+                artifact.init(context, this, getVarMap());
             }
         }
         if (config != null) {
-            config.init(context, this, vars);
+            config.init(context, this, getVarMap());
         }
         return this;
     }

@@ -170,12 +170,13 @@ public class Project extends AbstractNamedElement implements
     public final Project init(final SrcGen4JContext context, final SrcGen4JConfig parent,
             final Map<String, String> vars) {
         this.parent = parent;
-        setName(replaceVars(getName(), vars));
-        path = replaceVars(path, vars);
+        inheritVariables(vars);
+        setName(replaceVars(getName(), getVarMap()));
+        path = replaceVars(path, getVarMap());
         if (folders != null) {
             for (final Folder folder : folders) {
                 folder.setParent(this);
-                folder.init(context, this, vars);
+                folder.init(context, this, getVarMap());
             }
         }
         if (isMaven()) {
