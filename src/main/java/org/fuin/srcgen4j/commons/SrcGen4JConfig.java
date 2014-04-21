@@ -71,9 +71,8 @@ public class SrcGen4JConfig {
 
     @Nullable
     @Valid
-    @XmlElementWrapper(name = "parsers")
-    @XmlElement(name = "parser")
-    private List<ParserConfig> parsers;
+    @XmlElement(name = "parsers")
+    private Parsers parsers;
 
     @Nullable
     @Valid
@@ -168,7 +167,7 @@ public class SrcGen4JConfig {
      * @return Parsers.
      */
     @Nullable
-    public final List<ParserConfig> getParsers() {
+    public final Parsers getParsers() {
         return parsers;
     }
 
@@ -178,7 +177,7 @@ public class SrcGen4JConfig {
      * @param parsers
      *            Parsers.
      */
-    public final void setParsers(@Nullable final List<ParserConfig> parsers) {
+    public final void setParsers(@Nullable final Parsers parsers) {
         this.parsers = parsers;
     }
 
@@ -192,9 +191,9 @@ public class SrcGen4JConfig {
     public final void addParser(@NotNull final ParserConfig parser) {
         Contract.requireArgNotNull("parser", parser);
         if (parsers == null) {
-            parsers = new ArrayList<ParserConfig>();
+            parsers = new Parsers();
         }
-        parsers.add(parser);
+        parsers.addParser(parser);
     }
 
     /**
@@ -282,9 +281,7 @@ public class SrcGen4JConfig {
             generators.init(context, this, varMap);
         }
         if (parsers != null) {
-            for (final ParserConfig parser : parsers) {
-                parser.init(context, this, varMap);
-            }
+            parsers.init(context, this, varMap);
         }
         initialized = true;
         return this;

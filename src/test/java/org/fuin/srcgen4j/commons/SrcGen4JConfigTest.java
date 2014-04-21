@@ -195,6 +195,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
         final Generators generators = new Generators("${generators.project}",
                 "${generators.folder}");
+        generators.addVariable(new Variable("a", "1"));
         generators.setList(genList);
 
         testee.setVariables(vars);
@@ -214,6 +215,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
         assertThat(resultFolder.getPath()).isEqualTo("7");
 
         assertThat(testee.getGenerators()).isNotNull();
+        assertThat(testee.getGenerators().getVarMap()).includes(entry("a", "1"));
         assertThat(testee.getGenerators().getProject()).isEqualTo("14");
         assertThat(testee.getGenerators().getFolder()).isEqualTo("15");
         assertThat(testee.getGenerators().getList()).isNotNull();
@@ -231,6 +233,56 @@ public class SrcGen4JConfigTest extends AbstractTest {
         assertThat(resultTarget.getPattern()).isEqualTo("11");
         assertThat(resultTarget.getProject()).isEqualTo("12");
         assertThat(resultTarget.getFolder()).isEqualTo("13");
+
+    }
+
+    @Test
+    public final void testDerivedVariables() throws Exception {
+
+        // PREPARE
+        final JAXBContext jaxbContext = JAXBContext.newInstance(SrcGen4JConfig.class);
+        final Reader reader = new InputStreamReader(getClass().getClassLoader()
+                .getResourceAsStream("test-variables.xml"));
+        try {
+            // TEST
+            final SrcGen4JConfig testee = new JaxbHelper().create(reader, jaxbContext);
+            testee.init(new DefaultContext(), new File("."));
+
+            // VERIFY
+            assertThat(testee.getVarMap()).includes(entry("root", "/var/tmp"), entry("a", "base"));
+
+            final Parsers parsers = testee.getParsers();
+            assertThat(parsers.getVarMap()).includes(entry("a", "base/parsers1"),
+                    entry("b", "base/parsers1/parsers2"));
+            final ParserConfig parserConfig = parsers.getList().get(0);
+            // @formatter:off
+            assertThat(parserConfig.getVarMap()).includes(
+                    entry("a", "base/parsers1/parser1"),
+                    entry("b", "base/parsers1/parsers2"), 
+                    entry("c", "base/parsers1/parser1/parser3"),
+                    entry("root", "/var/tmp"),
+                    entry("rootDir", ".")
+                    );
+            // @formatter:off
+            
+            final Generators generators = testee.getGenerators();
+            assertThat(generators.getVarMap()).includes(
+                    entry("a", "base/generators1"),
+                    entry("b", "base/generators1/generators2"));
+            final GeneratorConfig generatorConfig = generators.getList().get(0);
+            // @formatter:off
+            assertThat(generatorConfig.getVarMap()).includes(
+                    entry("a", "base/generators1/generator1"),
+                    entry("b", "base/generators1/generators2"), 
+                    entry("c", "base/generators1/generator1/generator3"),
+                    entry("root", "/var/tmp"),
+                    entry("rootDir", ".")
+                    );
+            // @formatter:off
+
+        } finally {
+            reader.close();
+        }
 
     }
 

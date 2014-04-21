@@ -17,12 +17,14 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -70,7 +72,9 @@ public abstract class AbstractElement {
      */
     @NeverNull
     protected final void inheritVariables(@Nullable final Map<String, String> parentVars) {
-        varMap = new HashMap<String, String>();
+        if (varMap == null) {
+            varMap = new HashMap<String, String>();
+        }
         if (parentVars != null) {
             varMap.putAll(parentVars);
         }
@@ -86,8 +90,35 @@ public abstract class AbstractElement {
      * 
      * @return Unmodifiable map of variables.
      */
+    @NeverNull
     public final Map<String, String> getVarMap() {
+        if (varMap == null) {
+            return Collections.emptyMap();
+        }
         return Collections.unmodifiableMap(varMap);
+    }
+
+    /**
+     * Adds a variable to the element.
+     * 
+     * @param variable
+     *            Variable to add.
+     */
+    public final void addVariable(@NotNull final Variable variable) {
+        if (variables == null) {
+            variables = new ArrayList<Variable>();
+        }
+        variables.add(variable);
+    }
+
+    /**
+     * Returns a list of variables.
+     * 
+     * @return Variables.
+     */
+    @Nullable
+    public final List<Variable> getVariables() {
+        return variables;
     }
 
 }

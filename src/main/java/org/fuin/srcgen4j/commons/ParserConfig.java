@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 @XmlRootElement(name = "parser")
 @XmlType(propOrder = { "config", "className" })
 public class ParserConfig extends AbstractNamedElement implements
-        InitializableElement<ParserConfig, SrcGen4JConfig> {
+        InitializableElement<ParserConfig, Parsers> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ParserConfig.class);
 
@@ -60,7 +60,7 @@ public class ParserConfig extends AbstractNamedElement implements
     private transient SrcGen4JContext context;
 
     @Nullable
-    private transient SrcGen4JConfig parent;
+    private transient Parsers parent;
 
     @Nullable
     private transient Parser<Object> parser;
@@ -122,12 +122,12 @@ public class ParserConfig extends AbstractNamedElement implements
      * @return GeneratorConfig.
      */
     @Nullable
-    public final SrcGen4JConfig getParent() {
+    public final Parsers getParent() {
         return parent;
     }
 
     @Override
-    public final ParserConfig init(final SrcGen4JContext context, final SrcGen4JConfig parent,
+    public final ParserConfig init(final SrcGen4JContext context, final Parsers parent,
             final Map<String, String> vars) {
         this.context = context;
         this.parent = parent;

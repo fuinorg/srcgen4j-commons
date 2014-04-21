@@ -98,7 +98,7 @@ public class ParserConfigTest extends AbstractTest {
     public final void testInit() {
 
         // PREPARE
-        final SrcGen4JConfig parent = new SrcGen4JConfig();
+        final Parsers parent = new Parsers();
         final ParserConfig testee = new ParserConfig("parser${a}", "a.${x}.c.TestParser");
         final TestInput testInput = new TestInput("a/b/${y}");
         final Config<ParserConfig> config = new Config<ParserConfig>(testInput);

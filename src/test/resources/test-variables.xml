@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<srcgen4j-config
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns="http://www.fuin.org/srcgen4j/commons"
+   xmlns:test="http://www.fuin.org/srcgen4j/commons/test">
+	
+	<variables>
+		<variable name="root" value="/var/tmp" />
+		<variable name="a" value="base" />
+	</variables>
+	
+	<projects>
+		<project name="example" path="${root}/example" maven="true" />
+	</projects>
+	
+	<parsers>
+		<variable name="a" value="${a}/parsers1" />
+		<variable name="b" value="${a}/parsers2" />
+		<parser name="parser1" class="org.fuin.srcgen4j.commons.TestParser">
+			<variable name="a" value="${a}/parser1" />
+			<variable name="c" value="${a}/parser3" />
+			<config>
+				<test:input path="${root}/xtext-ddd/TestModel/src/main/domain" />
+			</config>
+		</parser>
+	</parsers>
+	
+	<generators>
+		<variable name="a" value="${a}/generators1" />
+		<variable name="b" value="${a}/generators2" />
+		<generator name="gen1" class="org.fuin.srcgen4j.commons.TestGenerator" parser="parser1" project="example" folder="genMainJava">
+			<variable name="a" value="${a}/generator1" />
+			<variable name="c" value="${a}/generator3" />
+		</generator>
+	</generators>
+	
+</srcgen4j-config>
