@@ -31,218 +31,225 @@ import org.junit.Test;
  */
 public class DefaultContextTest {
 
-    // CHECKSTYLE:OFF
+	// CHECKSTYLE:OFF
 
-    private DefaultContext testee;
+	private DefaultContext testee;
 
-    @Before
-    public void setup() {
-        testee = new DefaultContext();
-    }
+	@Before
+	public void setup() {
+		testee = new DefaultContext();
+	}
 
-    @After
-    public void teardown() {
-        testee = null;
-    }
+	@After
+	public void teardown() {
+		testee = null;
+	}
 
-    @Test
-    public void testAdd() {
+	@Test
+	public void testAdd() {
 
-        // PREPARE
-        final File file = new File("./bla.txt");
-        final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
-        final String message = "Abc123Def";
+		// PREPARE
+		final File file = new File("./bla.txt");
+		final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
+		final String message = "Abc123Def";
 
-        // TEST
-        final FileMarker marker = testee.addMarker(file, severity, message);
+		// TEST
+		final FileMarker marker = testee.addMarker(file, severity, message);
 
-        // VERIFY
-        assertThat(marker).isNotNull();
-        assertThat(marker).isInstanceOf(DefaultFileMarker.class);
-        final Iterator<? extends FileMarker> markerIterator = testee.getMarkerIterator();
-        assertThat(markerIterator.next()).isSameAs(marker);
-        assertThat(markerIterator.hasNext()).isFalse();
+		// VERIFY
+		assertThat(marker).isNotNull();
+		assertThat(marker).isInstanceOf(DefaultFileMarker.class);
+		final Iterator<? extends FileMarker> markerIterator = testee
+				.getMarkerIterator();
+		assertThat(markerIterator.next()).isSameAs(marker);
+		assertThat(markerIterator.hasNext()).isFalse();
 
-        final DefaultFileMarker dm = (DefaultFileMarker) marker;
-        assertThat(dm.getSeverity()).isEqualTo(severity);
-        assertThat(dm.getMessage()).isEqualTo(message);
-        assertThat(dm.getLine()).isEqualTo(-1);
-        assertThat(dm.getStart()).isEqualTo(-1);
-        assertThat(dm.getLength()).isEqualTo(-1);
+		final DefaultFileMarker dm = (DefaultFileMarker) marker;
+		assertThat(dm.getSeverity()).isEqualTo(severity);
+		assertThat(dm.getMessage()).isEqualTo(message);
+		assertThat(dm.getLine()).isEqualTo(-1);
+		assertThat(dm.getStart()).isEqualTo(-1);
+		assertThat(dm.getLength()).isEqualTo(-1);
 
-    }
+	}
 
-    @Test
-    public void testAddLine() {
+	@Test
+	public void testAddLine() {
 
-        // PREPARE
-        final File file = new File("./bla.txt");
-        final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
-        final String message = "Abc123Def";
-        final int line = 123;
+		// PREPARE
+		final File file = new File("./bla.txt");
+		final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
+		final String message = "Abc123Def";
+		final int line = 123;
 
-        // TEST
-        final FileMarker marker = testee.addMarker(file, severity, message, line);
+		// TEST
+		final FileMarker marker = testee.addMarker(file, severity, message,
+				line);
 
-        // VERIFY
-        assertThat(marker).isNotNull();
-        assertThat(marker).isInstanceOf(DefaultFileMarker.class);
-        final Iterator<? extends FileMarker> markerIterator = testee.getMarkerIterator();
-        assertThat(markerIterator.next()).isSameAs(marker);
-        assertThat(markerIterator.hasNext()).isFalse();
+		// VERIFY
+		assertThat(marker).isNotNull();
+		assertThat(marker).isInstanceOf(DefaultFileMarker.class);
+		final Iterator<? extends FileMarker> markerIterator = testee
+				.getMarkerIterator();
+		assertThat(markerIterator.next()).isSameAs(marker);
+		assertThat(markerIterator.hasNext()).isFalse();
 
-        final DefaultFileMarker dm = (DefaultFileMarker) marker;
-        assertThat(dm.getSeverity()).isEqualTo(severity);
-        assertThat(dm.getMessage()).isEqualTo(message);
-        assertThat(dm.getLine()).isEqualTo(line);
-        assertThat(dm.getStart()).isEqualTo(-1);
-        assertThat(dm.getLength()).isEqualTo(-1);
+		final DefaultFileMarker dm = (DefaultFileMarker) marker;
+		assertThat(dm.getSeverity()).isEqualTo(severity);
+		assertThat(dm.getMessage()).isEqualTo(message);
+		assertThat(dm.getLine()).isEqualTo(line);
+		assertThat(dm.getStart()).isEqualTo(-1);
+		assertThat(dm.getLength()).isEqualTo(-1);
 
-    }
+	}
 
-    @Test
-    public void testAddPos() {
+	@Test
+	public void testAddPos() {
 
-        // PREPARE
-        final File file = new File("./bla.txt");
-        final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
-        final String message = "Abc123Def";
-        final int start = 123;
-        final int length = 45;
+		// PREPARE
+		final File file = new File("./bla.txt");
+		final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
+		final String message = "Abc123Def";
+		final int start = 123;
+		final int length = 45;
 
-        // TEST
-        final FileMarker marker = testee.addMarker(file, severity, message, start, length);
+		// TEST
+		final FileMarker marker = testee.addMarker(file, severity, message,
+				start, length);
 
-        // VERIFY
-        assertThat(marker).isNotNull();
-        assertThat(marker).isInstanceOf(DefaultFileMarker.class);
-        final Iterator<? extends FileMarker> markerIterator = testee.getMarkerIterator();
-        assertThat(markerIterator.next()).isSameAs(marker);
-        assertThat(markerIterator.hasNext()).isFalse();
+		// VERIFY
+		assertThat(marker).isNotNull();
+		assertThat(marker).isInstanceOf(DefaultFileMarker.class);
+		final Iterator<? extends FileMarker> markerIterator = testee
+				.getMarkerIterator();
+		assertThat(markerIterator.next()).isSameAs(marker);
+		assertThat(markerIterator.hasNext()).isFalse();
 
-        final DefaultFileMarker dm = (DefaultFileMarker) marker;
-        assertThat(dm.getSeverity()).isEqualTo(severity);
-        assertThat(dm.getMessage()).isEqualTo(message);
-        assertThat(dm.getLine()).isEqualTo(-1);
-        assertThat(dm.getStart()).isEqualTo(start);
-        assertThat(dm.getLength()).isEqualTo(length);
+		final DefaultFileMarker dm = (DefaultFileMarker) marker;
+		assertThat(dm.getSeverity()).isEqualTo(severity);
+		assertThat(dm.getMessage()).isEqualTo(message);
+		assertThat(dm.getLine()).isEqualTo(-1);
+		assertThat(dm.getStart()).isEqualTo(start);
+		assertThat(dm.getLength()).isEqualTo(length);
 
-    }
+	}
 
-    @Test
-    public void testRemoveSingleMarkerFromFile() {
+	@Test
+	public void testRemoveSingleMarkerFromFile() {
 
-        // PREPARE
+		// PREPARE
 
-        // First file
-        final File file1 = new File("./bla.txt");
+		// First file
+		final File file1 = new File("./bla.txt");
 
-        final FileMarkerSeverity severity1a = FileMarkerSeverity.INFO;
-        final String message1a = "Abc123";
-        final FileMarker marker1a = testee.addMarker(file1, severity1a, message1a);
+		final FileMarkerSeverity severity1a = FileMarkerSeverity.INFO;
+		final String message1a = "Abc123";
+		final FileMarker marker1a = testee.addMarker(file1, severity1a,
+				message1a);
 
-        final FileMarkerSeverity severity1b = FileMarkerSeverity.ERROR;
-        final String message1b = "Xyz456";
-        final FileMarker marker1b = testee.addMarker(file1, severity1b, message1b);
+		final FileMarkerSeverity severity1b = FileMarkerSeverity.ERROR;
+		final String message1b = "Xyz456";
+		final FileMarker marker1b = testee.addMarker(file1, severity1b,
+				message1b);
 
-        // Second file
-        final File file2 = new File("./blub.txt");
+		// Second file
+		final File file2 = new File("./blub.txt");
 
-        final FileMarkerSeverity severity2 = FileMarkerSeverity.INFO;
-        final String message2 = "Abc123Def";
-        final FileMarker marker2 = testee.addMarker(file2, severity2, message2);
+		final FileMarkerSeverity severity2 = FileMarkerSeverity.INFO;
+		final String message2 = "Abc123Def";
+		final FileMarker marker2 = testee.addMarker(file2, severity2, message2);
 
-        // TEST
-        testee.removeMarker(file1, marker1a);
+		// TEST
+		testee.removeMarker(file1, marker1a);
 
-        // VERIFY
-        Iterator<? extends FileMarker> markerIterator;
+		// VERIFY
+		Iterator<? extends FileMarker> markerIterator;
 
-        markerIterator = testee.getMarkerIterator(file1);
-        assertThat(markerIterator.next()).isSameAs(marker1b);
-        assertThat(markerIterator.hasNext()).isFalse();
+		markerIterator = testee.getMarkerIterator(file1);
+		assertThat(markerIterator.next()).isSameAs(marker1b);
+		assertThat(markerIterator.hasNext()).isFalse();
 
-        markerIterator = testee.getMarkerIterator(file2);
-        assertThat(markerIterator.next()).isSameAs(marker2);
-        assertThat(markerIterator.hasNext()).isFalse();
+		markerIterator = testee.getMarkerIterator(file2);
+		assertThat(markerIterator.next()).isSameAs(marker2);
+		assertThat(markerIterator.hasNext()).isFalse();
 
-    }
+	}
 
-    @Test
-    public void testRemoveAllMarkersFromFile() {
+	@Test
+	public void testRemoveAllMarkersFromFile() {
 
-        // PREPARE
+		// PREPARE
 
-        // First file
-        final File file1 = new File("./bla.txt");
+		// First file
+		final File file1 = new File("./bla.txt");
 
-        final FileMarkerSeverity severity1a = FileMarkerSeverity.INFO;
-        final String message1a = "Abc123";
-        testee.addMarker(file1, severity1a, message1a);
+		final FileMarkerSeverity severity1a = FileMarkerSeverity.INFO;
+		final String message1a = "Abc123";
+		testee.addMarker(file1, severity1a, message1a);
 
-        final FileMarkerSeverity severity1b = FileMarkerSeverity.ERROR;
-        final String message1b = "Xyz456";
-        testee.addMarker(file1, severity1b, message1b);
+		final FileMarkerSeverity severity1b = FileMarkerSeverity.ERROR;
+		final String message1b = "Xyz456";
+		testee.addMarker(file1, severity1b, message1b);
 
-        // Second file
-        final File file2 = new File("./blub.txt");
+		// Second file
+		final File file2 = new File("./blub.txt");
 
-        final FileMarkerSeverity severity2 = FileMarkerSeverity.INFO;
-        final String message2 = "Abc123Def";
-        final FileMarker marker2 = testee.addMarker(file2, severity2, message2);
+		final FileMarkerSeverity severity2 = FileMarkerSeverity.INFO;
+		final String message2 = "Abc123Def";
+		final FileMarker marker2 = testee.addMarker(file2, severity2, message2);
 
-        // TEST
-        testee.removeAllMarkers(file1);
+		// TEST
+		testee.removeAllMarkers(file1);
 
-        // VERIFY
-        Iterator<? extends FileMarker> markerIterator;
+		// VERIFY
+		Iterator<? extends FileMarker> markerIterator;
 
-        markerIterator = testee.getMarkerIterator(file1);
-        assertThat(markerIterator).isNull();
+		markerIterator = testee.getMarkerIterator(file1);
+		assertThat(markerIterator).isNull();
 
-        markerIterator = testee.getMarkerIterator(file2);
-        assertThat(markerIterator.next()).isSameAs(marker2);
-        assertThat(markerIterator.hasNext()).isFalse();
+		markerIterator = testee.getMarkerIterator(file2);
+		assertThat(markerIterator.next()).isSameAs(marker2);
+		assertThat(markerIterator.hasNext()).isFalse();
 
-    }
+	}
 
-    @Test
-    public void testRemoveAllMarkersFromAllFiles() {
+	@Test
+	public void testRemoveAllMarkersFromAllFiles() {
 
-        // PREPARE
+		// PREPARE
 
-        // First file
-        final File file1 = new File("./bla.txt");
+		// First file
+		final File file1 = new File("./bla.txt");
 
-        final FileMarkerSeverity severity1a = FileMarkerSeverity.INFO;
-        final String message1a = "Abc123";
-        testee.addMarker(file1, severity1a, message1a);
+		final FileMarkerSeverity severity1a = FileMarkerSeverity.INFO;
+		final String message1a = "Abc123";
+		testee.addMarker(file1, severity1a, message1a);
 
-        final FileMarkerSeverity severity1b = FileMarkerSeverity.ERROR;
-        final String message1b = "Xyz456";
-        testee.addMarker(file1, severity1b, message1b);
+		final FileMarkerSeverity severity1b = FileMarkerSeverity.ERROR;
+		final String message1b = "Xyz456";
+		testee.addMarker(file1, severity1b, message1b);
 
-        // Second file
-        final File file2 = new File("./blub.txt");
+		// Second file
+		final File file2 = new File("./blub.txt");
 
-        final FileMarkerSeverity severity2 = FileMarkerSeverity.INFO;
-        final String message2 = "Abc123Def";
-        testee.addMarker(file2, severity2, message2);
+		final FileMarkerSeverity severity2 = FileMarkerSeverity.INFO;
+		final String message2 = "Abc123Def";
+		testee.addMarker(file2, severity2, message2);
 
-        // TEST
-        testee.removeAllMarkers();
+		// TEST
+		testee.removeAllMarkers();
 
-        // VERIFY
-        Iterator<? extends FileMarker> markerIterator;
+		// VERIFY
+		Iterator<? extends FileMarker> markerIterator;
 
-        markerIterator = testee.getMarkerIterator(file1);
-        assertThat(markerIterator).isNull();
+		markerIterator = testee.getMarkerIterator(file1);
+		assertThat(markerIterator).isNull();
 
-        markerIterator = testee.getMarkerIterator(file2);
-        assertThat(markerIterator).isNull();
+		markerIterator = testee.getMarkerIterator(file2);
+		assertThat(markerIterator).isNull();
 
-    }
+	}
 
-    // CHECKSTYLE:ON
+	// CHECKSTYLE:ON
 
 }

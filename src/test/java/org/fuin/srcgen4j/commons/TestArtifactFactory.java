@@ -22,26 +22,27 @@ package org.fuin.srcgen4j.commons;
  */
 public final class TestArtifactFactory implements ArtifactFactory<Object> {
 
-    private String artifact;
+	private String artifact;
 
-    @Override
-    public final Class<? extends Object> getModelType() {
-        return Object.class;
-    }
+	@Override
+	public final Class<? extends Object> getModelType() {
+		return Object.class;
+	}
 
-    @Override
-    public final boolean isIncremental() {
-        return true;
-    }
+	@Override
+	public final boolean isIncremental() {
+		return true;
+	}
 
-    @Override
-    public final void init(final ArtifactFactoryConfig config) {
-        this.artifact = config.getArtifact();
-    }
+	@Override
+	public final void init(final ArtifactFactoryConfig config) {
+		this.artifact = config.getArtifact();
+	}
 
-    @Override
-    public final GeneratedArtifact create(final Object modelObject) throws GenerateException {
-        return new GeneratedArtifact(artifact, "b/c/d.txt", "abcd".getBytes());
-    }
+	@Override
+	public final GeneratedArtifact create(final Object modelObject)
+			throws GenerateException {
+		return new GeneratedArtifact(artifact, "b/c/d.txt", "abcd".getBytes());
+	}
 
 }

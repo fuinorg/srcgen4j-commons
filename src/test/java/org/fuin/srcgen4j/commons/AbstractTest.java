@@ -28,25 +28,25 @@ import com.openpojo.validation.test.impl.GetterTester;
  */
 public abstract class AbstractTest {
 
-    /** XML Prefix. */
-    protected static final String XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
+	/** XML Prefix. */
+	protected static final String XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
 
-    /**
-     * Creates a configured POJO validator.
-     * 
-     * @return New instance.
-     */
-    protected final PojoValidator createPojoValidator() {
+	/**
+	 * Creates a configured POJO validator.
+	 * 
+	 * @return New instance.
+	 */
+	protected final PojoValidator createPojoValidator() {
 
-        final PojoValidator pv = new PojoValidator();
+		final PojoValidator pv = new PojoValidator();
 
-        pv.addRule(new NoPublicFieldsRule());
-        pv.addRule(new NoFieldShadowingRule());
+		pv.addRule(new NoPublicFieldsRule());
+		pv.addRule(new NoFieldShadowingRule());
 
-        pv.addTester(new DefaultValuesNullTester());
-        pv.addTester(new GetterTester());
+		pv.addTester(new DefaultValuesNullTester());
+		pv.addTester(new GetterTester());
 
-        return pv;
-    }
+		return pv;
+	}
 
 }

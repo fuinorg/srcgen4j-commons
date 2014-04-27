@@ -31,36 +31,38 @@ import com.openpojo.validation.rule.impl.SetterMustExistRule;
  */
 public class GeneratedArtifactTest extends AbstractTest {
 
-    // CHECKSTYLE:OFF
+	// CHECKSTYLE:OFF
 
-    @Test
-    public final void testPojoStructureAndBehavior() {
+	@Test
+	public final void testPojoStructureAndBehavior() {
 
-        final PojoClass pc = PojoClassFactory.getPojoClass(GeneratedArtifact.class);
-        final PojoValidator pv = createPojoValidator();
-        pv.addRule(new SetterMustExistRule());
-        pv.runValidation(pc);
+		final PojoClass pc = PojoClassFactory
+				.getPojoClass(GeneratedArtifact.class);
+		final PojoValidator pv = createPojoValidator();
+		pv.addRule(new SetterMustExistRule());
+		pv.runValidation(pc);
 
-    }
+	}
 
-    @Test
-    public final void testConstructor() {
+	@Test
+	public final void testConstructor() {
 
-        // PREPARE
-        final String name = "abc";
-        final String pathAndName = "def";
-        final byte[] source = "ghi".getBytes();
+		// PREPARE
+		final String name = "abc";
+		final String pathAndName = "def";
+		final byte[] source = "ghi".getBytes();
 
-        // TEST
-        final GeneratedArtifact testee = new GeneratedArtifact(name, pathAndName, source);
+		// TEST
+		final GeneratedArtifact testee = new GeneratedArtifact(name,
+				pathAndName, source);
 
-        // VERIFY
-        assertThat(testee.getName()).isEqualTo(name);
-        assertThat(testee.getPathAndName()).isEqualTo(pathAndName);
-        assertThat(testee.getData()).isEqualTo(source);
+		// VERIFY
+		assertThat(testee.getName()).isEqualTo(name);
+		assertThat(testee.getPathAndName()).isEqualTo(pathAndName);
+		assertThat(testee.getData()).isEqualTo(source);
 
-    }
+	}
 
-    // CHECKSTYLE:ON
+	// CHECKSTYLE:ON
 
 }

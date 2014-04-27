@@ -35,75 +35,79 @@ import com.openpojo.validation.PojoValidator;
  */
 public class ClasspathTest extends AbstractTest {
 
-    // CHECKSTYLE:OFF
+	// CHECKSTYLE:OFF
 
-    @Test
-    public final void testPojoStructureAndBehavior() {
+	@Test
+	public final void testPojoStructureAndBehavior() {
 
-        final PojoClass pc = PojoClassFactory.getPojoClass(Classpath.class);
-        final PojoValidator pv = createPojoValidator();
-        pv.runValidation(pc);
+		final PojoClass pc = PojoClassFactory.getPojoClass(Classpath.class);
+		final PojoValidator pv = createPojoValidator();
+		pv.runValidation(pc);
 
-    }
+	}
 
-    @Test
-    public final void testMarshal() throws Exception {
+	@Test
+	public final void testMarshal() throws Exception {
 
-        // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Classpath.class);
-        final Classpath testee = new Classpath();
-        testee.addBin(new BinClasspathEntry("a/b/c"));
+		// PREPARE
+		final JAXBContext jaxbContext = JAXBContext
+				.newInstance(Classpath.class);
+		final Classpath testee = new Classpath();
+		testee.addBin(new BinClasspathEntry("a/b/c"));
 
-        // TEST
-        final String result = new JaxbHelper(false).write(testee, jaxbContext);
+		// TEST
+		final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
-        // VERIFY
-        assertThat(result).isEqualTo(
-                XML + "<classpath xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<bin path=\"a/b/c\"/></classpath>");
+		// VERIFY
+		assertThat(result)
+				.isEqualTo(
+						XML
+								+ "<classpath xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+								+ "<bin path=\"a/b/c\"/></classpath>");
 
-    }
+	}
 
-    @Test
-    public final void testUnmarshal() throws Exception {
+	@Test
+	public final void testUnmarshal() throws Exception {
 
-        // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Classpath.class);
+		// PREPARE
+		final JAXBContext jaxbContext = JAXBContext
+				.newInstance(Classpath.class);
 
-        // TEST
-        final Classpath testee = new JaxbHelper().create(
-                "<classpath xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<bin path=\"a/b/c\"/></classpath>", jaxbContext);
+		// TEST
+		final Classpath testee = new JaxbHelper().create(
+				"<classpath xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+						+ "<bin path=\"a/b/c\"/></classpath>", jaxbContext);
 
-        // VERIFY
-        assertThat(testee).isNotNull();
-        assertThat(testee.getBinList()).isNotNull();
-        assertThat(testee.getBinList()).hasSize(1);
-        assertThat(testee.getBinList().get(0).getPath()).isEqualTo("a/b/c");
+		// VERIFY
+		assertThat(testee).isNotNull();
+		assertThat(testee.getBinList()).isNotNull();
+		assertThat(testee.getBinList()).hasSize(1);
+		assertThat(testee.getBinList().get(0).getPath()).isEqualTo("a/b/c");
 
-    }
+	}
 
-    @Test
-    public final void testInit() {
+	@Test
+	public final void testInit() {
 
-        // PREPARE
-        final SrcGen4JConfig parent = new SrcGen4JConfig();
-        final Classpath testee = new Classpath();
-        testee.addBin(new BinClasspathEntry("a/${b}/c"));
+		// PREPARE
+		final SrcGen4JConfig parent = new SrcGen4JConfig();
+		final Classpath testee = new Classpath();
+		testee.addBin(new BinClasspathEntry("a/${b}/c"));
 
-        final Map<String, String> vars = new HashMap<String, String>();
-        vars.put("b", "b");
+		final Map<String, String> vars = new HashMap<String, String>();
+		vars.put("b", "b");
 
-        // TEST
-        testee.init(new DefaultContext(), parent, vars);
+		// TEST
+		testee.init(new DefaultContext(), parent, vars);
 
-        // VERIFY
-        assertThat(testee.getParent()).isSameAs(parent);
-        final BinClasspathEntry entry = testee.getBinList().get(0);
-        assertThat(entry.getPath()).isEqualTo("a/b/c");
+		// VERIFY
+		assertThat(testee.getParent()).isSameAs(parent);
+		final BinClasspathEntry entry = testee.getBinList().get(0);
+		assertThat(entry.getPath()).isEqualTo("a/b/c");
 
-    }
+	}
 
-    // CHECKSTYLE:ON
+	// CHECKSTYLE:ON
 
 }

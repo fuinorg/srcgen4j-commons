@@ -26,6 +26,7 @@ import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 
+import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Test;
 
 /**
@@ -33,74 +34,78 @@ import org.junit.Test;
  */
 public class ArtifactFactoryConfigTest extends AbstractTest {
 
-    // CHECKSTYLE:OFF
+	// CHECKSTYLE:OFF
 
-    @Test
-    public final void testMarshal() throws Exception {
+	@Test
+	public final void testMarshal() throws Exception {
 
-        // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(ArtifactFactoryConfig.class);
-        final ArtifactFactoryConfig testee = new ArtifactFactoryConfig("abc", "a.b.c.X");
+		// PREPARE
+		final JAXBContext jaxbContext = JAXBContext
+				.newInstance(ArtifactFactoryConfig.class);
+		final ArtifactFactoryConfig testee = new ArtifactFactoryConfig("abc",
+				"a.b.c.X");
 
-        // TEST
-        final String result = new JaxbHelper(false).write(testee, jaxbContext);
+		// TEST
+		final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
-        // VERIFY
-        assertThat(result).isEqualTo(
-                XML + "<artifact-factory artifact=\"abc\" class=\"a.b.c.X\""
-                        + " xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+		// VERIFY
+		XMLAssert.assertXMLEqual(XML
+				+ "<artifact-factory artifact=\"abc\" class=\"a.b.c.X\""
+				+ " xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", result);
 
-    }
+	}
 
-    @Test
-    public final void testUnmarshal() throws Exception {
+	@Test
+	public final void testUnmarshal() throws Exception {
 
-        // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(ArtifactFactoryConfig.class);
+		// PREPARE
+		final JAXBContext jaxbContext = JAXBContext
+				.newInstance(ArtifactFactoryConfig.class);
 
-        // TEST
-        final ArtifactFactoryConfig testee = new JaxbHelper().create(
-                "<artifact-factory artifact=\"abc\" class=\"a.b.c.X\""
-                        + " xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", jaxbContext);
+		// TEST
+		final ArtifactFactoryConfig testee = new JaxbHelper().create(
+				"<artifact-factory artifact=\"abc\" class=\"a.b.c.X\""
+						+ " xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
+				jaxbContext);
 
-        // VERIFY
-        assertThat(testee).isNotNull();
-        assertThat(testee.getArtifact()).isEqualTo("abc");
-        assertThat(testee.getFactoryClassName()).isEqualTo("a.b.c.X");
+		// VERIFY
+		assertThat(testee).isNotNull();
+		assertThat(testee.getArtifact()).isEqualTo("abc");
+		assertThat(testee.getFactoryClassName()).isEqualTo("a.b.c.X");
 
-    }
+	}
 
-    @Test
-    public final void testGetFactory() {
+	@Test
+	public final void testGetFactory() {
 
-        // PREPARE
-        final ArtifactFactoryConfig testee = new ArtifactFactoryConfig("abc",
-                "org.fuin.srcgen4j.commons.TestArtifactFactory");
-        testee.init(new SrcGen4JContext() {
-            @Override
-            public ClassLoader getClassLoader() {
-                return ArtifactFactoryConfigTest.class.getClassLoader();
-            }
+		// PREPARE
+		final ArtifactFactoryConfig testee = new ArtifactFactoryConfig("abc",
+				"org.fuin.srcgen4j.commons.TestArtifactFactory");
+		testee.init(new SrcGen4JContext() {
+			@Override
+			public ClassLoader getClassLoader() {
+				return ArtifactFactoryConfigTest.class.getClassLoader();
+			}
 
-            @Override
-            public List<File> getJarFiles() {
-                return new ArrayList<File>();
-            }
+			@Override
+			public List<File> getJarFiles() {
+				return new ArrayList<File>();
+			}
 
-            @Override
-            public List<File> getBinDirs() {
-                return new ArrayList<File>();
-            }
-        }, new HashMap<String, String>());
+			@Override
+			public List<File> getBinDirs() {
+				return new ArrayList<File>();
+			}
+		}, new HashMap<String, String>());
 
-        // TEST
-        final ArtifactFactory<?> factory = testee.getFactory();
+		// TEST
+		final ArtifactFactory<?> factory = testee.getFactory();
 
-        // VERIFY
-        assertThat(factory).isInstanceOf(TestArtifactFactory.class);
+		// VERIFY
+		assertThat(factory).isInstanceOf(TestArtifactFactory.class);
 
-    }
+	}
 
-    // CHECKSTYLE:ON
+	// CHECKSTYLE:ON
 
 }

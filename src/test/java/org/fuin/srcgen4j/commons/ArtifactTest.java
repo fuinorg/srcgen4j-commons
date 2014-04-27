@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
+import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Test;
 
 import com.openpojo.reflection.PojoClass;
@@ -36,188 +37,195 @@ import com.openpojo.validation.PojoValidator;
  */
 public class ArtifactTest extends AbstractTest {
 
-    // CHECKSTYLE:OFF
+	// CHECKSTYLE:OFF
 
-    /**
-     * Basic POJO test.
-     */
-    @Test
-    public final void testPojoStructureAndBehavior() {
+	/**
+	 * Basic POJO test.
+	 */
+	@Test
+	public final void testPojoStructureAndBehavior() {
 
-        final PojoClass pc = PojoClassFactory.getPojoClass(Artifact.class);
-        final PojoValidator pv = createPojoValidator();
-        pv.runValidation(pc);
+		final PojoClass pc = PojoClassFactory.getPojoClass(Artifact.class);
+		final PojoValidator pv = createPojoValidator();
+		pv.runValidation(pc);
 
-    }
+	}
 
-    @Test
-    public final void testMarshal() throws Exception {
+	@Test
+	public final void testMarshal() throws Exception {
 
-        // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Artifact.class, Target.class);
-        final Artifact testee = new Artifact("abc", "def", "ghi");
-        testee.addTarget(new Target("PATTERN", "PROJECT", "FOLDER"));
+		// PREPARE
+		final JAXBContext jaxbContext = JAXBContext.newInstance(Artifact.class,
+				Target.class);
+		final Artifact testee = new Artifact("abc", "def", "ghi");
+		testee.addTarget(new Target("PATTERN", "PROJECT", "FOLDER"));
 
-        // TEST
-        final String result = new JaxbHelper(false).write(testee, jaxbContext);
+		// TEST
+		final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
-        // VERIFY
-        assertThat(result)
-                .isEqualTo(
-                        XML
-                                + "<artifact name=\"abc\" "
-                                + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                                + "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>");
+		// VERIFY
+		XMLAssert
+				.assertXMLEqual(
+						XML
+								+ "<artifact name=\"abc\" "
+								+ "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+								+ "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>",
+						result);
 
-    }
+	}
 
-    @Test
-    public final void testUnmarshal() throws Exception {
+	@Test
+	public final void testUnmarshal() throws Exception {
 
-        // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Artifact.class, Folder.class);
+		// PREPARE
+		final JAXBContext jaxbContext = JAXBContext.newInstance(Artifact.class,
+				Folder.class);
 
-        // TEST
-        final Artifact testee = new JaxbHelper().create("<artifact name=\"abc\" "
-                + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                + "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>",
-                jaxbContext);
+		// TEST
+		final Artifact testee = new JaxbHelper()
+				.create("<artifact name=\"abc\" "
+						+ "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+						+ "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>",
+						jaxbContext);
 
-        // VERIFY
-        assertThat(testee).isNotNull();
-        assertThat(testee.getName()).isEqualTo("abc");
-        assertThat(testee.getProject()).isEqualTo("def");
-        assertThat(testee.getFolder()).isEqualTo("ghi");
-        assertThat(testee.getTargets()).isNotNull();
-        assertThat(testee.getTargets()).hasSize(1);
-        assertThat(testee.getTargets().get(0).getPattern()).isEqualTo("PATTERN");
-        assertThat(testee.getTargets().get(0).getProject()).isEqualTo("PROJECT");
-        assertThat(testee.getTargets().get(0).getFolder()).isEqualTo("FOLDER");
+		// VERIFY
+		assertThat(testee).isNotNull();
+		assertThat(testee.getName()).isEqualTo("abc");
+		assertThat(testee.getProject()).isEqualTo("def");
+		assertThat(testee.getFolder()).isEqualTo("ghi");
+		assertThat(testee.getTargets()).isNotNull();
+		assertThat(testee.getTargets()).hasSize(1);
+		assertThat(testee.getTargets().get(0).getPattern())
+				.isEqualTo("PATTERN");
+		assertThat(testee.getTargets().get(0).getProject())
+				.isEqualTo("PROJECT");
+		assertThat(testee.getTargets().get(0).getFolder()).isEqualTo("FOLDER");
 
-    }
+	}
 
-    @Test
-    public final void testInit() {
+	@Test
+	public final void testInit() {
 
-        // PREPARE
-        final Artifact testee = new Artifact("A ${x}", "${y}B", "a${z}c");
-        testee.addTarget(new Target("${a}name", "t${b}rj", "xy${c}"));
+		// PREPARE
+		final Artifact testee = new Artifact("A ${x}", "${y}B", "a${z}c");
+		testee.addTarget(new Target("${a}name", "t${b}rj", "xy${c}"));
 
-        final Map<String, String> vars = new HashMap<String, String>();
-        vars.put("x", "NAME");
-        vars.put("y", "PRJ");
-        vars.put("z", "b");
-        vars.put("a", "t");
-        vars.put("b", "p");
-        vars.put("c", "z");
+		final Map<String, String> vars = new HashMap<String, String>();
+		vars.put("x", "NAME");
+		vars.put("y", "PRJ");
+		vars.put("z", "b");
+		vars.put("a", "t");
+		vars.put("b", "p");
+		vars.put("c", "z");
 
-        final GeneratorConfig parent = new GeneratorConfig();
+		final GeneratorConfig parent = new GeneratorConfig();
 
-        // TEST
-        testee.init(new DefaultContext(), parent, vars);
+		// TEST
+		testee.init(new DefaultContext(), parent, vars);
 
-        // VERIFY
-        assertThat(testee.getParent()).isSameAs(parent);
-        assertThat(testee.getName()).isEqualTo("A NAME");
-        assertThat(testee.getProject()).isEqualTo("PRJB");
-        assertThat(testee.getFolder()).isEqualTo("abc");
-        final Target target = testee.getTargets().get(0);
-        assertThat(target.getPattern()).isEqualTo("tname");
-        assertThat(target.getProject()).isEqualTo("tprj");
-        assertThat(target.getFolder()).isEqualTo("xyz");
+		// VERIFY
+		assertThat(testee.getParent()).isSameAs(parent);
+		assertThat(testee.getName()).isEqualTo("A NAME");
+		assertThat(testee.getProject()).isEqualTo("PRJB");
+		assertThat(testee.getFolder()).isEqualTo("abc");
+		final Target target = testee.getTargets().get(0);
+		assertThat(target.getPattern()).isEqualTo("tname");
+		assertThat(target.getProject()).isEqualTo("tprj");
+		assertThat(target.getFolder()).isEqualTo("xyz");
 
-    }
+	}
 
-    @Test
-    public void testFindTargetForNoTargetsDefined() {
+	@Test
+	public void testFindTargetForNoTargetsDefined() {
 
-        // PREPARE
-        final Artifact testee = new Artifact("A", "B", "C");
+		// PREPARE
+		final Artifact testee = new Artifact("A", "B", "C");
 
-        // TEST & VERIFY
-        assertThat(testee.findTargetFor("whatever")).isNull();
+		// TEST & VERIFY
+		assertThat(testee.findTargetFor("whatever")).isNull();
 
-    }
+	}
 
-    @Test
-    public void testFindTargetForArgumentNull() {
+	@Test
+	public void testFindTargetForArgumentNull() {
 
-        // PREPARE
-        final Artifact testee = new Artifact("A", "B", "C");
+		// PREPARE
+		final Artifact testee = new Artifact("A", "B", "C");
 
-        // TEST & VERIFY
-        assertThat(testee.findTargetFor(null)).isNull();
+		// TEST & VERIFY
+		assertThat(testee.findTargetFor(null)).isNull();
 
-    }
+	}
 
-    @Test
-    public void testFindTarget() {
+	@Test
+	public void testFindTarget() {
 
-        // PREPARE
-        final GeneratorConfig parent = new GeneratorConfig();
-        final Artifact testee = new Artifact("A", "B", "C");
-        final Target targetA = new Target("a", "b", "c");
-        final Target targetB = new Target("d", "e", "f");
-        final Target targetC = new Target("g", "h", "i");
-        testee.addTarget(targetA);
-        testee.addTarget(targetB);
-        testee.addTarget(targetC);
-        testee.init(new DefaultContext(), parent, new HashMap<String, String>());
+		// PREPARE
+		final GeneratorConfig parent = new GeneratorConfig();
+		final Artifact testee = new Artifact("A", "B", "C");
+		final Target targetA = new Target("a", "b", "c");
+		final Target targetB = new Target("d", "e", "f");
+		final Target targetC = new Target("g", "h", "i");
+		testee.addTarget(targetA);
+		testee.addTarget(targetB);
+		testee.addTarget(targetC);
+		testee.init(new DefaultContext(), parent, new HashMap<String, String>());
 
-        // TEST & VERIFY
-        assertThat(testee.findTargetFor("a")).isSameAs(targetA);
-        assertThat(testee.findTargetFor("d")).isSameAs(targetB);
-        assertThat(testee.findTargetFor("g")).isSameAs(targetC);
+		// TEST & VERIFY
+		assertThat(testee.findTargetFor("a")).isSameAs(targetA);
+		assertThat(testee.findTargetFor("d")).isSameAs(targetB);
+		assertThat(testee.findTargetFor("g")).isSameAs(targetC);
 
-    }
+	}
 
-    @Test
-    public final void testGetDefProjectAndFolder() {
+	@Test
+	public final void testGetDefProjectAndFolder() {
 
-        // PREPARE
-        final SrcGen4JConfig config = new SrcGen4JConfig();
-        final Generators generators = new Generators();
-        final GeneratorConfig generator = new GeneratorConfig("NAME1", "a.b.c.D", "PARSER1");
-        final Artifact testee = new Artifact("ARTIFACT");
+		// PREPARE
+		final SrcGen4JConfig config = new SrcGen4JConfig();
+		final Generators generators = new Generators();
+		final GeneratorConfig generator = new GeneratorConfig("NAME1",
+				"a.b.c.D", "PARSER1");
+		final Artifact testee = new Artifact("ARTIFACT");
 
-        config.setGenerators(generators);
-        generators.addGenerator(generator);
-        generator.addArtifact(testee);
+		config.setGenerators(generators);
+		generators.addGenerator(generator);
+		generator.addArtifact(testee);
 
-        config.init(new DefaultContext(), new File("."));
+		config.init(new DefaultContext(), new File("."));
 
-        // TEST & VERIFY
+		// TEST & VERIFY
 
-        // No value set in hierarchy
-        assertThat(testee.getDefProject()).isNull();
-        assertThat(testee.getDefFolder()).isNull();
+		// No value set in hierarchy
+		assertThat(testee.getDefProject()).isNull();
+		assertThat(testee.getDefFolder()).isNull();
 
-        // Artifact level
-        testee.setProject("A");
-        testee.setFolder("B");
-        assertThat(testee.getDefProject()).isEqualTo("A");
-        assertThat(testee.getDefFolder()).isEqualTo("B");
-        testee.setProject(null);
-        testee.setFolder(null);
+		// Artifact level
+		testee.setProject("A");
+		testee.setFolder("B");
+		assertThat(testee.getDefProject()).isEqualTo("A");
+		assertThat(testee.getDefFolder()).isEqualTo("B");
+		testee.setProject(null);
+		testee.setFolder(null);
 
-        // Generator level
-        generator.setProject("C");
-        generator.setFolder("D");
-        assertThat(testee.getDefProject()).isEqualTo("C");
-        assertThat(testee.getDefFolder()).isEqualTo("D");
-        generator.setProject(null);
-        generator.setFolder(null);
+		// Generator level
+		generator.setProject("C");
+		generator.setFolder("D");
+		assertThat(testee.getDefProject()).isEqualTo("C");
+		assertThat(testee.getDefFolder()).isEqualTo("D");
+		generator.setProject(null);
+		generator.setFolder(null);
 
-        // Generators level
-        generators.setProject("E");
-        generators.setFolder("F");
-        assertThat(testee.getDefProject()).isEqualTo("E");
-        assertThat(testee.getDefFolder()).isEqualTo("F");
-        generators.setProject(null);
-        generators.setFolder(null);
+		// Generators level
+		generators.setProject("E");
+		generators.setFolder("F");
+		assertThat(testee.getDefProject()).isEqualTo("E");
+		assertThat(testee.getDefFolder()).isEqualTo("F");
+		generators.setProject(null);
+		generators.setFolder(null);
 
-    }
+	}
 
-    // CHECKSTYLE:ON
+	// CHECKSTYLE:ON
 
 }

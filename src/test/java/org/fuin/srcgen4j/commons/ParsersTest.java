@@ -36,81 +36,85 @@ import com.openpojo.validation.PojoValidator;
  */
 public class ParsersTest extends AbstractTest {
 
-    // CHECKSTYLE:OFF
+	// CHECKSTYLE:OFF
 
-    @Test
-    public final void testPojoStructureAndBehavior() {
+	@Test
+	public final void testPojoStructureAndBehavior() {
 
-        final PojoClass pc = PojoClassFactory.getPojoClass(Parsers.class);
-        final PojoValidator pv = createPojoValidator();
-        pv.runValidation(pc);
+		final PojoClass pc = PojoClassFactory.getPojoClass(Parsers.class);
+		final PojoValidator pv = createPojoValidator();
+		pv.runValidation(pc);
 
-    }
+	}
 
-    @Test
-    public final void testMarshal() throws Exception {
+	@Test
+	public final void testMarshal() throws Exception {
 
-        // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Parsers.class);
-        final Parsers testee = new Parsers();
-        testee.addVariable(new Variable("a", "1"));
-        testee.addParser(new ParserConfig("NAME", "a.b.c.D"));
+		// PREPARE
+		final JAXBContext jaxbContext = JAXBContext.newInstance(Parsers.class);
+		final Parsers testee = new Parsers();
+		testee.addVariable(new Variable("a", "1"));
+		testee.addParser(new ParserConfig("NAME", "a.b.c.D"));
 
-        // TEST
-        final String result = new JaxbHelper(false).write(testee, jaxbContext);
+		// TEST
+		final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
-        // VERIFY
-        assertThat(result).isEqualTo(
-                XML + "<parsers xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<variable value=\"1\" name=\"a\"/>"
-                        + "<parser class=\"a.b.c.D\" name=\"NAME\"/>" + "</parsers>");
+		// VERIFY
+		assertThat(result)
+				.isEqualTo(
+						XML
+								+ "<parsers xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+								+ "<variable value=\"1\" name=\"a\"/>"
+								+ "<parser class=\"a.b.c.D\" name=\"NAME\"/>"
+								+ "</parsers>");
 
-    }
+	}
 
-    @Test
-    public final void testUnmarshal() throws Exception {
+	@Test
+	public final void testUnmarshal() throws Exception {
 
-        // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Parsers.class);
+		// PREPARE
+		final JAXBContext jaxbContext = JAXBContext.newInstance(Parsers.class);
 
-        // TEST
-        final Parsers testee = new JaxbHelper().create(
-                "<parsers xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<parser name=\"NAME\" class=\"a.b.c.D\"/>"
-                        + "<variable name=\"a\" value=\"1\"/>" + "</parsers>", jaxbContext);
-        testee.inheritVariables(new HashMap<String, String>());
+		// TEST
+		final Parsers testee = new JaxbHelper().create(
+				"<parsers xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+						+ "<parser name=\"NAME\" class=\"a.b.c.D\"/>"
+						+ "<variable name=\"a\" value=\"1\"/>" + "</parsers>",
+				jaxbContext);
+		testee.inheritVariables(new HashMap<String, String>());
 
-        // VERIFY
-        assertThat(testee).isNotNull();
-        assertThat(testee.getVarMap()).includes(entry("a", "1"));
-        assertThat(testee.getList()).isNotNull();
-        assertThat(testee.getList()).hasSize(1);
-        assertThat(testee.getList().get(0).getName()).isEqualTo("NAME");
-        assertThat(testee.getList().get(0).getClassName()).isEqualTo("a.b.c.D");
+		// VERIFY
+		assertThat(testee).isNotNull();
+		assertThat(testee.getVarMap()).includes(entry("a", "1"));
+		assertThat(testee.getList()).isNotNull();
+		assertThat(testee.getList()).hasSize(1);
+		assertThat(testee.getList().get(0).getName()).isEqualTo("NAME");
+		assertThat(testee.getList().get(0).getClassName()).isEqualTo("a.b.c.D");
 
-    }
+	}
 
-    @Test
-    public final void testInit() {
+	@Test
+	public final void testInit() {
 
-        // PREPARE
-        final SrcGen4JConfig parent = new SrcGen4JConfig();
-        final Parsers testee = new Parsers();
-        testee.addParser(new ParserConfig("A ${x}", "CLASS"));
+		// PREPARE
+		final SrcGen4JConfig parent = new SrcGen4JConfig();
+		final Parsers testee = new Parsers();
+		testee.addParser(new ParserConfig("A ${x}", "CLASS"));
 
-        final Map<String, String> vars = new HashMap<String, String>();
-        vars.put("x", "NAME");
+		final Map<String, String> vars = new HashMap<String, String>();
+		vars.put("x", "NAME");
 
-        // TEST
-        testee.init(new DefaultContext(), parent, vars);
+		// TEST
+		testee.init(new DefaultContext(), parent, vars);
 
-        // VERIFY
-        assertThat(testee.getParent()).isSameAs(parent);
-        final ParserConfig parser = testee.getList().get(0);
-        assertThat(parser.getName()).isEqualTo("A NAME");
+		// VERIFY
+		assertThat(testee.getParent()).isSameAs(parent);
+		final ParserConfig parser = testee.getList().get(0);
+		assertThat(parser.getName()).isEqualTo("A NAME");
 
-    }
+	}
 
-    // CHECKSTYLE:ON
+	// CHECKSTYLE:ON
 
 }

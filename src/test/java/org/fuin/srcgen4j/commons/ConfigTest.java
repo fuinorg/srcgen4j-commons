@@ -29,18 +29,18 @@ import com.openpojo.validation.rule.impl.SetterMustExistRule;
  */
 public class ConfigTest extends AbstractTest {
 
-    // CHECKSTYLE:OFF
+	// CHECKSTYLE:OFF
 
-    @Test
-    public final void testPojoStructureAndBehavior() {
+	@Test
+	public final void testPojoStructureAndBehavior() {
 
-        final PojoClass pc = PojoClassFactory.getPojoClass(Config.class);
-        final PojoValidator pv = createPojoValidator();
-        pv.addRule(new SetterMustExistRule());
-        pv.runValidation(pc);
+		final PojoClass pc = PojoClassFactory.getPojoClass(Config.class);
+		final PojoValidator pv = createPojoValidator();
+		pv.addRule(new SetterMustExistRule());
+		pv.runValidation(pc);
 
-    }
+	}
 
-    // CHECKSTYLE:ON
+	// CHECKSTYLE:ON
 
 }
