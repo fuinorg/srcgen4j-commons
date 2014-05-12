@@ -35,72 +35,72 @@ public class DefaultFileMarkerTest {
 
     @Test
     public void testPojo() {
-	final PojoValidator pv = new PojoValidator();
-	pv.addRule(new NoPublicFieldsRule());
-	pv.addRule(new NoFieldShadowingRule());
-	pv.addRule(new GetterMustExistRule());
+        final PojoValidator pv = new PojoValidator();
+        pv.addRule(new NoPublicFieldsRule());
+        pv.addRule(new NoFieldShadowingRule());
+        pv.addRule(new GetterMustExistRule());
     }
 
     @Test
     public void testConstruction() {
 
-	// PREPARE
-	final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
-	final String message = "Abc123Def";
+        // PREPARE
+        final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
+        final String message = "Abc123Def";
 
-	// TEST
-	final DefaultFileMarker testee = new DefaultFileMarker(severity,
-		message);
+        // TEST
+        final DefaultFileMarker testee = new DefaultFileMarker(severity,
+                message);
 
-	// VERIFY
-	assertThat(testee.getSeverity()).isEqualTo(severity);
-	assertThat(testee.getMessage()).isEqualTo(message);
-	assertThat(testee.getLine()).isEqualTo(-1);
-	assertThat(testee.getStart()).isEqualTo(-1);
-	assertThat(testee.getLength()).isEqualTo(-1);
+        // VERIFY
+        assertThat(testee.getSeverity()).isEqualTo(severity);
+        assertThat(testee.getMessage()).isEqualTo(message);
+        assertThat(testee.getLine()).isEqualTo(-1);
+        assertThat(testee.getStart()).isEqualTo(-1);
+        assertThat(testee.getLength()).isEqualTo(-1);
 
     }
 
     @Test
     public void testConstructionLine() {
 
-	// PREPARE
-	final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
-	final String message = "Abc123Def";
-	final int line = 123;
+        // PREPARE
+        final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
+        final String message = "Abc123Def";
+        final int line = 123;
 
-	// TEST
-	final DefaultFileMarker testee = new DefaultFileMarker(severity,
-		message, line);
+        // TEST
+        final DefaultFileMarker testee = new DefaultFileMarker(severity,
+                message, line);
 
-	// VERIFY
-	assertThat(testee.getSeverity()).isEqualTo(severity);
-	assertThat(testee.getMessage()).isEqualTo(message);
-	assertThat(testee.getLine()).isEqualTo(line);
-	assertThat(testee.getStart()).isEqualTo(-1);
-	assertThat(testee.getLength()).isEqualTo(-1);
+        // VERIFY
+        assertThat(testee.getSeverity()).isEqualTo(severity);
+        assertThat(testee.getMessage()).isEqualTo(message);
+        assertThat(testee.getLine()).isEqualTo(line);
+        assertThat(testee.getStart()).isEqualTo(-1);
+        assertThat(testee.getLength()).isEqualTo(-1);
 
     }
 
     @Test
     public void testConstructionPos() {
 
-	// PREPARE
-	final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
-	final String message = "Abc123Def";
-	final int start = 123;
-	final int length = 45;
+        // PREPARE
+        final FileMarkerSeverity severity = FileMarkerSeverity.INFO;
+        final String message = "Abc123Def";
+        final int start = 123;
+        final int length = 45;
 
-	// TEST
-	final DefaultFileMarker testee = new DefaultFileMarker(severity,
-		message, start, length);
+        // TEST
+        final DefaultFileMarker testee = new DefaultFileMarker(severity,
+                message, start, length);
 
-	// VERIFY
-	assertThat(testee.getSeverity()).isEqualTo(severity);
-	assertThat(testee.getMessage()).isEqualTo(message);
-	assertThat(testee.getLine()).isEqualTo(-1);
-	assertThat(testee.getStart()).isEqualTo(start);
-	assertThat(testee.getLength()).isEqualTo(length);
+        // VERIFY
+        assertThat(testee.getSeverity()).isEqualTo(severity);
+        assertThat(testee.getMessage()).isEqualTo(message);
+        assertThat(testee.getLine()).isEqualTo(-1);
+        assertThat(testee.getStart()).isEqualTo(start);
+        assertThat(testee.getLength()).isEqualTo(length);
 
     }
 

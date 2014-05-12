@@ -42,7 +42,7 @@ import org.fuin.objects4j.common.Nullable;
 @XmlRootElement(name = "project")
 @XmlType(propOrder = { "folders", "maven", "path" })
 public class Project extends AbstractNamedElement implements
-	InitializableElement<Project, SrcGen4JConfig> {
+        InitializableElement<Project, SrcGen4JConfig> {
 
     @NotEmpty
     @XmlAttribute
@@ -63,7 +63,7 @@ public class Project extends AbstractNamedElement implements
      * Package visible default constructor for deserialization.
      */
     Project() {
-	super();
+        super();
     }
 
     /**
@@ -75,9 +75,9 @@ public class Project extends AbstractNamedElement implements
      *            path to set.
      */
     public Project(@NotEmpty final String name, @NotEmpty final String path) {
-	super(name);
-	Contract.requireArgNotNull("path", path);
-	this.path = path;
+        super(name);
+        Contract.requireArgNotNull("path", path);
+        this.path = path;
     }
 
     /**
@@ -87,7 +87,7 @@ public class Project extends AbstractNamedElement implements
      */
     @NeverEmpty
     public final String getPath() {
-	return path;
+        return path;
     }
 
     /**
@@ -96,10 +96,10 @@ public class Project extends AbstractNamedElement implements
      * @return Maven default path setup (TRUE) or not (FALSE).
      */
     public final boolean isMaven() {
-	if (maven == null) {
-	    return true;
-	}
-	return maven.booleanValue();
+        if (maven == null) {
+            return true;
+        }
+        return maven.booleanValue();
     }
 
     /**
@@ -109,7 +109,7 @@ public class Project extends AbstractNamedElement implements
      */
     @Nullable
     public final Boolean getMaven() {
-	return maven;
+        return maven;
     }
 
     /**
@@ -119,7 +119,7 @@ public class Project extends AbstractNamedElement implements
      */
     @Nullable
     public final List<Folder> getFolders() {
-	return folders;
+        return folders;
     }
 
     /**
@@ -129,7 +129,7 @@ public class Project extends AbstractNamedElement implements
      *            Folders or NULL.
      */
     public final void setFolders(@Nullable final List<Folder> folders) {
-	this.folders = folders;
+        this.folders = folders;
     }
 
     /**
@@ -139,7 +139,7 @@ public class Project extends AbstractNamedElement implements
      *            Maven default path setup (TRUE) or not (NULL or FALSE).
      */
     public final void setMaven(@Nullable final Boolean maven) {
-	this.maven = maven;
+        this.maven = maven;
     }
 
     /**
@@ -149,11 +149,11 @@ public class Project extends AbstractNamedElement implements
      *            Folder to add.
      */
     public final void addFolder(@NotNull final Folder folder) {
-	Contract.requireArgNotNull("folder", folder);
-	if (folders == null) {
-	    folders = new ArrayList<Folder>();
-	}
-	folders.add(folder);
+        Contract.requireArgNotNull("folder", folder);
+        if (folders == null) {
+            folders = new ArrayList<Folder>();
+        }
+        folders.add(folder);
     }
 
     /**
@@ -163,51 +163,51 @@ public class Project extends AbstractNamedElement implements
      */
     @Nullable
     public final SrcGen4JConfig getParent() {
-	return parent;
+        return parent;
     }
 
     @Override
     public final Project init(final SrcGen4JContext context,
-	    final SrcGen4JConfig parent, final Map<String, String> vars) {
-	this.parent = parent;
-	inheritVariables(vars);
-	setName(replaceVars(getName(), getVarMap()));
-	path = replaceVars(path, getVarMap());
-	if (folders != null) {
-	    for (final Folder folder : folders) {
-		folder.setParent(this);
-		folder.init(context, this, getVarMap());
-	    }
-	}
-	if (isMaven()) {
-	    addIfNotExists(new Folder(this, "mainJava", "src/main/java", false,
-		    false, false));
-	    addIfNotExists(new Folder(this, "mainRes", "src/main/resources",
-		    false, false, false));
-	    addIfNotExists(new Folder(this, "genMainJava", "src-gen/main/java",
-		    true, true, true));
-	    addIfNotExists(new Folder(this, "genMainRes",
-		    "src-gen/main/resources", true, true, true));
-	    addIfNotExists(new Folder(this, "testJava", "src/test/java", false,
-		    false, false));
-	    addIfNotExists(new Folder(this, "testRes", "src/test/resources",
-		    false, false, false));
-	    addIfNotExists(new Folder(this, "genTestJava", "src-gen/test/java",
-		    true, true, true));
-	    addIfNotExists(new Folder(this, "genTestRes",
-		    "src-gen/test/resources", true, true, true));
-	}
-	return this;
+            final SrcGen4JConfig parent, final Map<String, String> vars) {
+        this.parent = parent;
+        inheritVariables(vars);
+        setName(replaceVars(getName(), getVarMap()));
+        path = replaceVars(path, getVarMap());
+        if (folders != null) {
+            for (final Folder folder : folders) {
+                folder.setParent(this);
+                folder.init(context, this, getVarMap());
+            }
+        }
+        if (isMaven()) {
+            addIfNotExists(new Folder(this, "mainJava", "src/main/java", false,
+                    false, false));
+            addIfNotExists(new Folder(this, "mainRes", "src/main/resources",
+                    false, false, false));
+            addIfNotExists(new Folder(this, "genMainJava", "src-gen/main/java",
+                    true, true, true));
+            addIfNotExists(new Folder(this, "genMainRes",
+                    "src-gen/main/resources", true, true, true));
+            addIfNotExists(new Folder(this, "testJava", "src/test/java", false,
+                    false, false));
+            addIfNotExists(new Folder(this, "testRes", "src/test/resources",
+                    false, false, false));
+            addIfNotExists(new Folder(this, "genTestJava", "src-gen/test/java",
+                    true, true, true));
+            addIfNotExists(new Folder(this, "genTestRes",
+                    "src-gen/test/resources", true, true, true));
+        }
+        return this;
     }
 
     private void addIfNotExists(final Folder folder) {
-	if (folders == null) {
-	    folders = new ArrayList<Folder>();
-	}
-	final int idx = folders.indexOf(folder);
-	if (idx < 0) {
-	    folders.add(folder);
-	}
+        if (folders == null) {
+            folders = new ArrayList<Folder>();
+        }
+        final int idx = folders.indexOf(folder);
+        if (idx < 0) {
+            folders.add(folder);
+        }
     }
 
 }

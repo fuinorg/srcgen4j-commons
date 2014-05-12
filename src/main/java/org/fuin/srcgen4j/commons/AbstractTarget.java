@@ -43,7 +43,7 @@ public abstract class AbstractTarget extends AbstractElement {
      * Package visible default constructor for deserialization.
      */
     AbstractTarget() {
-	super();
+        super();
     }
 
     /**
@@ -55,10 +55,10 @@ public abstract class AbstractTarget extends AbstractElement {
      *            Folder to set.
      */
     public AbstractTarget(@Nullable final String project,
-	    @Nullable final String folder) {
-	super();
-	this.project = project;
-	this.folder = folder;
+            @Nullable final String folder) {
+        super();
+        this.project = project;
+        this.folder = folder;
     }
 
     /**
@@ -68,7 +68,7 @@ public abstract class AbstractTarget extends AbstractElement {
      */
     @Nullable
     public final String getProject() {
-	return project;
+        return project;
     }
 
     /**
@@ -78,7 +78,7 @@ public abstract class AbstractTarget extends AbstractElement {
      *            Project to set.
      */
     protected final void setProject(@Nullable final String project) {
-	this.project = project;
+        this.project = project;
     }
 
     /**
@@ -88,7 +88,7 @@ public abstract class AbstractTarget extends AbstractElement {
      */
     @Nullable
     public final String getFolder() {
-	return folder;
+        return folder;
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class AbstractTarget extends AbstractElement {
      *            Folder to set.
      */
     protected final void setFolder(@Nullable final String folder) {
-	this.folder = folder;
+        this.folder = folder;
     }
 
 }

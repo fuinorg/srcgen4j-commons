@@ -37,9 +37,9 @@ public class ArtifactNotFoundException extends Exception {
      *            <code>null</code>.
      */
     public ArtifactNotFoundException(@Nullable final String generatorName,
-	    @Nullable final String artifactName) {
-	super("The artifact '" + artifactName
-		+ "' is not configured for generator '" + generatorName + "'");
+            @Nullable final String artifactName) {
+        super("The artifact '" + artifactName
+                + "' is not configured for generator '" + generatorName + "'");
     }
 
 }

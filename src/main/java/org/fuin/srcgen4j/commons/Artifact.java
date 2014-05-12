@@ -39,7 +39,7 @@ import org.fuin.objects4j.common.Nullable;
 @XmlRootElement(name = "artifact")
 @XmlType(propOrder = { "targets" })
 public final class Artifact extends AbstractNamedTarget implements
-	InitializableElement<Artifact, GeneratorConfig> {
+        InitializableElement<Artifact, GeneratorConfig> {
 
     @Nullable
     @Valid
@@ -53,7 +53,7 @@ public final class Artifact extends AbstractNamedTarget implements
      * Package visible default constructor for deserialization.
      */
     Artifact() {
-	super();
+        super();
     }
 
     /**
@@ -63,7 +63,7 @@ public final class Artifact extends AbstractNamedTarget implements
      *            Name to set.
      */
     public Artifact(@NotNull final String name) {
-	super(name, null, null);
+        super(name, null, null);
     }
 
     /**
@@ -77,8 +77,8 @@ public final class Artifact extends AbstractNamedTarget implements
      *            Folder to set.
      */
     public Artifact(@NotNull final String name, @Nullable final String project,
-	    @Nullable final String folder) {
-	super(name, project, folder);
+            @Nullable final String folder) {
+        super(name, project, folder);
     }
 
     /**
@@ -88,7 +88,7 @@ public final class Artifact extends AbstractNamedTarget implements
      */
     @Nullable
     public final List<Target> getTargets() {
-	return targets;
+        return targets;
     }
 
     /**
@@ -98,7 +98,7 @@ public final class Artifact extends AbstractNamedTarget implements
      *            Targets.
      */
     public final void setTargets(@Nullable final List<Target> targets) {
-	this.targets = targets;
+        this.targets = targets;
     }
 
     /**
@@ -108,11 +108,11 @@ public final class Artifact extends AbstractNamedTarget implements
      *            Target to add.
      */
     public final void addTarget(@NotNull final Target target) {
-	Contract.requireArgNotNull("target", target);
-	if (targets == null) {
-	    targets = new ArrayList<Target>();
-	}
-	targets.add(target);
+        Contract.requireArgNotNull("target", target);
+        if (targets == null) {
+            targets = new ArrayList<Target>();
+        }
+        targets.add(target);
     }
 
     /**
@@ -122,13 +122,13 @@ public final class Artifact extends AbstractNamedTarget implements
      */
     @Nullable
     public final String getDefProject() {
-	if (getProject() == null) {
-	    if (parent == null) {
-		return null;
-	    }
-	    return parent.getDefProject();
-	}
-	return getProject();
+        if (getProject() == null) {
+            if (parent == null) {
+                return null;
+            }
+            return parent.getDefProject();
+        }
+        return getProject();
     }
 
     /**
@@ -138,13 +138,13 @@ public final class Artifact extends AbstractNamedTarget implements
      */
     @Nullable
     public final String getDefFolder() {
-	if (getFolder() == null) {
-	    if (parent == null) {
-		return null;
-	    }
-	    return parent.getDefFolder();
-	}
-	return getFolder();
+        if (getFolder() == null) {
+            if (parent == null) {
+                return null;
+            }
+            return parent.getDefFolder();
+        }
+        return getFolder();
     }
 
     /**
@@ -154,7 +154,7 @@ public final class Artifact extends AbstractNamedTarget implements
      */
     @Nullable
     public final GeneratorConfig getParent() {
-	return parent;
+        return parent;
     }
 
     /**
@@ -168,34 +168,34 @@ public final class Artifact extends AbstractNamedTarget implements
      */
     @Nullable
     public final Target findTargetFor(@Nullable final String targetPath) {
-	if (targets == null) {
-	    return null;
-	}
-	if (targetPath == null) {
-	    return null;
-	}
-	for (final Target target : targets) {
-	    if (target.matches(targetPath)) {
-		return target;
-	    }
-	}
-	return null;
+        if (targets == null) {
+            return null;
+        }
+        if (targetPath == null) {
+            return null;
+        }
+        for (final Target target : targets) {
+            if (target.matches(targetPath)) {
+                return target;
+            }
+        }
+        return null;
     }
 
     @Override
     public final Artifact init(final SrcGen4JContext context,
-	    final GeneratorConfig parent, final Map<String, String> vars) {
-	this.parent = parent;
-	inheritVariables(vars);
-	setName(replaceVars(getName(), getVarMap()));
-	setProject(replaceVars(getProject(), getVarMap()));
-	setFolder(replaceVars(getFolder(), getVarMap()));
-	if (targets != null) {
-	    for (final Target target : targets) {
-		target.init(context, this, getVarMap());
-	    }
-	}
-	return this;
+            final GeneratorConfig parent, final Map<String, String> vars) {
+        this.parent = parent;
+        inheritVariables(vars);
+        setName(replaceVars(getName(), getVarMap()));
+        setProject(replaceVars(getProject(), getVarMap()));
+        setFolder(replaceVars(getFolder(), getVarMap()));
+        if (targets != null) {
+            for (final Target target : targets) {
+                target.init(context, this, getVarMap());
+            }
+        }
+        return this;
     }
 
 }

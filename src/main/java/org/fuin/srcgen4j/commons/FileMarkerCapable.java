@@ -44,7 +44,7 @@ public interface FileMarkerCapable {
      */
     @Nullable
     public FileMarker addMarker(@NotNull File file,
-	    @NotNull FileMarkerSeverity severity, @NotNull String message);
+            @NotNull FileMarkerSeverity severity, @NotNull String message);
 
     /**
      * Adds a line marker to a file.
@@ -63,8 +63,8 @@ public interface FileMarkerCapable {
      */
     @Nullable
     public FileMarker addMarker(@NotNull File file,
-	    @NotNull FileMarkerSeverity severity, @NotNull String message,
-	    int line);
+            @NotNull FileMarkerSeverity severity, @NotNull String message,
+            int line);
 
     /**
      * Adds a position marker to a file.
@@ -85,8 +85,8 @@ public interface FileMarkerCapable {
      */
     @Nullable
     public FileMarker addMarker(@NotNull File file,
-	    @NotNull FileMarkerSeverity severity, @NotNull String message,
-	    int start, int length);
+            @NotNull FileMarkerSeverity severity, @NotNull String message,
+            int start, int length);
 
     /**
      * Removes the given marker from a file. Does nothing if the file was not

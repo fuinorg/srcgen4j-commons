@@ -33,7 +33,7 @@ public final class ParseException extends Exception {
      *            Message.
      */
     public ParseException(@NotNull final String message) {
-	super(message);
+        super(message);
     }
 
     /**
@@ -45,8 +45,8 @@ public final class ParseException extends Exception {
      *            Cause.
      */
     public ParseException(@NotNull final String message,
-	    @NotNull final Throwable cause) {
-	super(message, cause);
+            @NotNull final Throwable cause) {
+        super(message, cause);
     }
 
 }

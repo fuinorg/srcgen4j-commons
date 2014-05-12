@@ -36,30 +36,30 @@ public class GeneratedArtifactTest extends AbstractTest {
     @Test
     public final void testPojoStructureAndBehavior() {
 
-	final PojoClass pc = PojoClassFactory
-		.getPojoClass(GeneratedArtifact.class);
-	final PojoValidator pv = createPojoValidator();
-	pv.addRule(new SetterMustExistRule());
-	pv.runValidation(pc);
+        final PojoClass pc = PojoClassFactory
+                .getPojoClass(GeneratedArtifact.class);
+        final PojoValidator pv = createPojoValidator();
+        pv.addRule(new SetterMustExistRule());
+        pv.runValidation(pc);
 
     }
 
     @Test
     public final void testConstructor() {
 
-	// PREPARE
-	final String name = "abc";
-	final String pathAndName = "def";
-	final byte[] source = "ghi".getBytes();
+        // PREPARE
+        final String name = "abc";
+        final String pathAndName = "def";
+        final byte[] source = "ghi".getBytes();
 
-	// TEST
-	final GeneratedArtifact testee = new GeneratedArtifact(name,
-		pathAndName, source);
+        // TEST
+        final GeneratedArtifact testee = new GeneratedArtifact(name,
+                pathAndName, source);
 
-	// VERIFY
-	assertThat(testee.getName()).isEqualTo(name);
-	assertThat(testee.getPathAndName()).isEqualTo(pathAndName);
-	assertThat(testee.getData()).isEqualTo(source);
+        // VERIFY
+        assertThat(testee.getName()).isEqualTo(name);
+        assertThat(testee.getPathAndName()).isEqualTo(pathAndName);
+        assertThat(testee.getData()).isEqualTo(source);
 
     }
 

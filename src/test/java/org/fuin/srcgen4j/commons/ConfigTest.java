@@ -34,10 +34,10 @@ public class ConfigTest extends AbstractTest {
     @Test
     public final void testPojoStructureAndBehavior() {
 
-	final PojoClass pc = PojoClassFactory.getPojoClass(Config.class);
-	final PojoValidator pv = createPojoValidator();
-	pv.addRule(new SetterMustExistRule());
-	pv.runValidation(pc);
+        final PojoClass pc = PojoClassFactory.getPojoClass(Config.class);
+        final PojoValidator pv = createPojoValidator();
+        pv.addRule(new SetterMustExistRule());
+        pv.runValidation(pc);
 
     }
 

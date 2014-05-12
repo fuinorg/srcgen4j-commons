@@ -43,7 +43,7 @@ public abstract class AbstractNamedTarget extends AbstractTarget {
      * Package visible default constructor for deserialization.
      */
     AbstractNamedTarget() {
-	super();
+        super();
     }
 
     /**
@@ -57,10 +57,10 @@ public abstract class AbstractNamedTarget extends AbstractTarget {
      *            Folder to set.
      */
     public AbstractNamedTarget(@NotEmpty final String name,
-	    @Nullable final String project, @Nullable final String folder) {
-	super(project, folder);
-	Contract.requireArgNotEmpty("name", name);
-	this.name = name;
+            @Nullable final String project, @Nullable final String folder) {
+        super(project, folder);
+        Contract.requireArgNotEmpty("name", name);
+        this.name = name;
     }
 
     /**
@@ -70,7 +70,7 @@ public abstract class AbstractNamedTarget extends AbstractTarget {
      */
     @NeverEmpty
     public final String getName() {
-	return name;
+        return name;
     }
 
     /**
@@ -80,34 +80,34 @@ public abstract class AbstractNamedTarget extends AbstractTarget {
      *            Name to set.
      */
     protected final void setName(@NotEmpty final String name) {
-	Contract.requireArgNotEmpty("name", name);
-	this.name = name;
+        Contract.requireArgNotEmpty("name", name);
+        this.name = name;
     }
 
     // CHECKSTYLE:OFF Generated code
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((name == null) ? 0 : name.hashCode());
-	return result;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
     }
 
     @Override
     public boolean equals(final Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (getClass() != obj.getClass())
-	    return false;
-	AbstractNamedTarget other = (AbstractNamedTarget) obj;
-	if (name == null) {
-	    if (other.name != null)
-		return false;
-	} else if (!name.equals(other.name))
-	    return false;
-	return true;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        AbstractNamedTarget other = (AbstractNamedTarget) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        return true;
     }
     // CHECKSTYLE:ON
 

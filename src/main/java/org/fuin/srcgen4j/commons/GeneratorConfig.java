@@ -45,10 +45,10 @@ import org.slf4j.LoggerFactory;
 @XmlRootElement(name = "generator")
 @XmlType(propOrder = { "config", "artifacts", "parser", "className" })
 public final class GeneratorConfig extends AbstractNamedTarget implements
-	InitializableElement<GeneratorConfig, Generators> {
+        InitializableElement<GeneratorConfig, Generators> {
 
     private static final Logger LOG = LoggerFactory
-	    .getLogger(GeneratorConfig.class);
+            .getLogger(GeneratorConfig.class);
 
     @NotNull
     @XmlAttribute(name = "class")
@@ -81,7 +81,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      * Package visible default constructor for deserialization.
      */
     GeneratorConfig() {
-	super();
+        super();
     }
 
     /**
@@ -96,8 +96,8 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      *            generator to set.
      */
     public GeneratorConfig(@NotEmpty final String name,
-	    @NotEmpty final String className, @NotEmpty final String parser) {
-	this(name, className, parser, null, null);
+            @NotEmpty final String className, @NotEmpty final String parser) {
+        this(name, className, parser, null, null);
     }
 
     /**
@@ -116,13 +116,13 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      *            Folder to set.
      */
     public GeneratorConfig(@NotEmpty final String name,
-	    @NotEmpty final String className, @NotEmpty final String parser,
-	    @Nullable final String project, @Nullable final String folder) {
-	super(name, project, folder);
-	Contract.requireArgNotNull("className", className);
-	Contract.requireArgNotNull("parser", parser);
-	this.className = className;
-	this.parser = parser;
+            @NotEmpty final String className, @NotEmpty final String parser,
+            @Nullable final String project, @Nullable final String folder) {
+        super(name, project, folder);
+        Contract.requireArgNotNull("className", className);
+        Contract.requireArgNotNull("parser", parser);
+        this.className = className;
+        this.parser = parser;
     }
 
     /**
@@ -132,7 +132,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      */
     @NeverEmpty
     public final String getClassName() {
-	return className;
+        return className;
     }
 
     /**
@@ -143,7 +143,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      */
     @NeverEmpty
     public final String getParser() {
-	return parser;
+        return parser;
     }
 
     /**
@@ -153,7 +153,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      */
     @Nullable
     public final List<Artifact> getArtifacts() {
-	return artifacts;
+        return artifacts;
     }
 
     /**
@@ -163,7 +163,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      *            Artifacts.
      */
     public final void setArtifacts(@Nullable final List<Artifact> artifacts) {
-	this.artifacts = artifacts;
+        this.artifacts = artifacts;
     }
 
     /**
@@ -173,11 +173,11 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      *            Artifact to add.
      */
     public final void addArtifact(@NotNull final Artifact artifact) {
-	Contract.requireArgNotNull("artifact", artifact);
-	if (artifacts == null) {
-	    artifacts = new ArrayList<Artifact>();
-	}
-	artifacts.add(artifact);
+        Contract.requireArgNotNull("artifact", artifact);
+        if (artifacts == null) {
+            artifacts = new ArrayList<Artifact>();
+        }
+        artifacts.add(artifact);
     }
 
     /**
@@ -187,7 +187,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      */
     @Nullable
     public final Config<GeneratorConfig> getConfig() {
-	return config;
+        return config;
     }
 
     /**
@@ -197,7 +197,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      *            Configuration for the parser.
      */
     public final void setConfig(@Nullable final Config<GeneratorConfig> config) {
-	this.config = config;
+        this.config = config;
     }
 
     /**
@@ -207,7 +207,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      */
     @Nullable
     public final Generators getParent() {
-	return parent;
+        return parent;
     }
 
     /**
@@ -217,7 +217,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      *            Generators.
      */
     public final void setParent(@Nullable final Generators parent) {
-	this.parent = parent;
+        this.parent = parent;
     }
 
     /**
@@ -227,13 +227,13 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      */
     @Nullable
     public final String getDefProject() {
-	if (getProject() == null) {
-	    if (parent == null) {
-		return null;
-	    }
-	    return parent.getProject();
-	}
-	return getProject();
+        if (getProject() == null) {
+            if (parent == null) {
+                return null;
+            }
+            return parent.getProject();
+        }
+        return getProject();
     }
 
     /**
@@ -243,33 +243,33 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      */
     @Nullable
     public final String getDefFolder() {
-	if (getFolder() == null) {
-	    if (parent == null) {
-		return null;
-	    }
-	    return parent.getFolder();
-	}
-	return getFolder();
+        if (getFolder() == null) {
+            if (parent == null) {
+                return null;
+            }
+            return parent.getFolder();
+        }
+        return getFolder();
     }
 
     @Override
     public final GeneratorConfig init(final SrcGen4JContext context,
-	    final Generators parent, final Map<String, String> vars) {
-	this.context = context;
-	this.parent = parent;
-	inheritVariables(vars);
-	setName(replaceVars(getName(), getVarMap()));
-	setProject(replaceVars(getProject(), getVarMap()));
-	setFolder(replaceVars(getFolder(), getVarMap()));
-	if (artifacts != null) {
-	    for (final Artifact artifact : artifacts) {
-		artifact.init(context, this, getVarMap());
-	    }
-	}
-	if (config != null) {
-	    config.init(context, this, getVarMap());
-	}
-	return this;
+            final Generators parent, final Map<String, String> vars) {
+        this.context = context;
+        this.parent = parent;
+        inheritVariables(vars);
+        setName(replaceVars(getName(), getVarMap()));
+        setProject(replaceVars(getProject(), getVarMap()));
+        setFolder(replaceVars(getFolder(), getVarMap()));
+        if (artifacts != null) {
+            for (final Artifact artifact : artifacts) {
+                artifact.init(context, this, getVarMap());
+            }
+        }
+        if (config != null) {
+            config.init(context, this, getVarMap());
+        }
+        return this;
     }
 
     /**
@@ -280,28 +280,28 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      */
     @SuppressWarnings("unchecked")
     public final Generator<Object> getGenerator() {
-	if (generator != null) {
-	    return generator;
-	}
-	LOG.info("Creating generator: " + className);
-	if (className == null) {
-	    throw new IllegalStateException("Class name was not set: "
-		    + getName());
-	}
-	if (context == null) {
-	    throw new IllegalStateException(
-		    "Context class loader was not set: " + getName() + " / "
-			    + className);
-	}
-	final Object obj = Utils4J.createInstance(className,
-		context.getClassLoader());
-	if (!(obj instanceof Generator<?>)) {
-	    throw new IllegalStateException("Expected class to be of type '"
-		    + Generator.class.getName() + "', but was: " + className);
-	}
-	generator = (Generator<Object>) obj;
-	generator.initialize(this);
-	return generator;
+        if (generator != null) {
+            return generator;
+        }
+        LOG.info("Creating generator: " + className);
+        if (className == null) {
+            throw new IllegalStateException("Class name was not set: "
+                    + getName());
+        }
+        if (context == null) {
+            throw new IllegalStateException(
+                    "Context class loader was not set: " + getName() + " / "
+                            + className);
+        }
+        final Object obj = Utils4J.createInstance(className,
+                context.getClassLoader());
+        if (!(obj instanceof Generator<?>)) {
+            throw new IllegalStateException("Expected class to be of type '"
+                    + Generator.class.getName() + "', but was: " + className);
+        }
+        generator = (Generator<Object>) obj;
+        generator.initialize(this);
+        return generator;
     }
 
     /**
@@ -313,11 +313,11 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      * @return Target folder.
      */
     public final Folder findTargetFolder(final String artifactName) {
-	if (parent == null) {
-	    throw new IllegalStateException(
-		    "Parent for generator config is not set: " + getName());
-	}
-	return parent.findTargetFolder(getName(), artifactName);
+        if (parent == null) {
+            throw new IllegalStateException(
+                    "Parent for generator config is not set: " + getName());
+        }
+        return parent.findTargetFolder(getName(), artifactName);
     }
 
     /**
@@ -326,7 +326,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements
      * @return Current context.
      */
     public final SrcGen4JContext getContext() {
-	return context;
+        return context;
     }
 
 }

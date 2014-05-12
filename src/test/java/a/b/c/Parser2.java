@@ -13,20 +13,20 @@ public class Parser2 implements Parser<String> {
 
     @Override
     public void initialize(SrcGen4JContext context, ParserConfig config) {
-	this.config = config;
+        this.config = config;
     }
 
     @Override
     public String parse() {
-	return model;
+        return model;
     }
 
     public ParserConfig getConfig() {
-	return config;
+        return config;
     }
 
     public String getModel() {
-	return model;
+        return model;
     }
 
 }

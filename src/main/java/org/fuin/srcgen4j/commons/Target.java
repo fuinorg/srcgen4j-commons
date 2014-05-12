@@ -40,7 +40,7 @@ import org.fuin.objects4j.common.Nullable;
 @XmlRootElement(name = "target")
 @XmlType(propOrder = { "pattern" })
 public class Target extends AbstractTarget implements
-	InitializableElement<Target, Artifact> {
+        InitializableElement<Target, Artifact> {
 
     @NotEmpty
     @XmlAttribute
@@ -56,7 +56,7 @@ public class Target extends AbstractTarget implements
      * Package visible default constructor for deserialization.
      */
     Target() {
-	super();
+        super();
     }
 
     /**
@@ -70,10 +70,10 @@ public class Target extends AbstractTarget implements
      *            Folder to set.
      */
     public Target(@NotEmpty final String pattern,
-	    @Nullable final String project, @Nullable final String folder) {
-	super(project, folder);
-	Contract.requireArgNotEmpty("pattern", pattern);
-	this.pattern = pattern;
+            @Nullable final String project, @Nullable final String folder) {
+        super(project, folder);
+        Contract.requireArgNotEmpty("pattern", pattern);
+        this.pattern = pattern;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Target extends AbstractTarget implements
      */
     @NeverEmpty
     public final String getPattern() {
-	return pattern;
+        return pattern;
     }
 
     /**
@@ -93,7 +93,7 @@ public class Target extends AbstractTarget implements
      */
     @Nullable
     public final Artifact getParent() {
-	return parent;
+        return parent;
     }
 
     /**
@@ -103,13 +103,13 @@ public class Target extends AbstractTarget implements
      */
     @Nullable
     public final String getDefProject() {
-	if (getProject() == null) {
-	    if (parent == null) {
-		return null;
-	    }
-	    return parent.getDefProject();
-	}
-	return getProject();
+        if (getProject() == null) {
+            if (parent == null) {
+                return null;
+            }
+            return parent.getDefProject();
+        }
+        return getProject();
     }
 
     /**
@@ -119,29 +119,29 @@ public class Target extends AbstractTarget implements
      */
     @Nullable
     public final String getDefFolder() {
-	if (getFolder() == null) {
-	    if (parent == null) {
-		return null;
-	    }
-	    return parent.getDefFolder();
-	}
-	return getFolder();
+        if (getFolder() == null) {
+            if (parent == null) {
+                return null;
+            }
+            return parent.getDefFolder();
+        }
+        return getFolder();
     }
 
     @Override
     public final Target init(final SrcGen4JContext context,
-	    final Artifact parent, final Map<String, String> vars) {
-	this.parent = parent;
-	inheritVariables(vars);
-	pattern = replaceVars(pattern, getVarMap());
-	setProject(replaceVars(getProject(), getVarMap()));
-	setFolder(replaceVars(getFolder(), getVarMap()));
-	if (pattern == null) {
-	    regExpr = null;
-	} else {
-	    regExpr = Pattern.compile(pattern);
-	}
-	return this;
+            final Artifact parent, final Map<String, String> vars) {
+        this.parent = parent;
+        inheritVariables(vars);
+        pattern = replaceVars(pattern, getVarMap());
+        setProject(replaceVars(getProject(), getVarMap()));
+        setFolder(replaceVars(getFolder(), getVarMap()));
+        if (pattern == null) {
+            regExpr = null;
+        } else {
+            regExpr = Pattern.compile(pattern);
+        }
+        return this;
     }
 
     /**
@@ -153,11 +153,11 @@ public class Target extends AbstractTarget implements
      * @return If the target matches TRUE, else FALSE.
      */
     public final boolean matches(@NotNull final String targetPath) {
-	Contract.requireArgNotNull("targetPath", targetPath);
-	if (regExpr == null) {
-	    return true;
-	}
-	return regExpr.matcher(targetPath).find();
+        Contract.requireArgNotNull("targetPath", targetPath);
+        if (regExpr == null) {
+            return true;
+        }
+        return regExpr.matcher(targetPath).find();
     }
 
 }

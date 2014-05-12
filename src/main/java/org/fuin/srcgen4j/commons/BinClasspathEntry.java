@@ -36,7 +36,7 @@ import org.fuin.objects4j.common.Nullable;
 @XmlRootElement(name = "bin")
 @XmlType(propOrder = "path")
 public final class BinClasspathEntry extends AbstractElement implements
-	InitializableElement<BinClasspathEntry, Classpath> {
+        InitializableElement<BinClasspathEntry, Classpath> {
 
     @NotNull
     @XmlAttribute
@@ -49,7 +49,7 @@ public final class BinClasspathEntry extends AbstractElement implements
      * Package visible default constructor for deserialization.
      */
     BinClasspathEntry() {
-	super();
+        super();
     }
 
     /**
@@ -59,8 +59,8 @@ public final class BinClasspathEntry extends AbstractElement implements
      *            Path to set.
      */
     public BinClasspathEntry(@NotNull final String path) {
-	super();
-	this.path = path;
+        super();
+        this.path = path;
     }
 
     /**
@@ -70,7 +70,7 @@ public final class BinClasspathEntry extends AbstractElement implements
      */
     @NeverNull
     public final String getPath() {
-	return path;
+        return path;
     }
 
     /**
@@ -80,7 +80,7 @@ public final class BinClasspathEntry extends AbstractElement implements
      */
     @Nullable
     public final Classpath getParent() {
-	return parent;
+        return parent;
     }
 
     /**
@@ -90,16 +90,16 @@ public final class BinClasspathEntry extends AbstractElement implements
      *            Parent.
      */
     public final void setParent(@Nullable final Classpath parent) {
-	this.parent = parent;
+        this.parent = parent;
     }
 
     @Override
     public final BinClasspathEntry init(final SrcGen4JContext context,
-	    final Classpath parent, final Map<String, String> vars) {
-	this.parent = parent;
-	inheritVariables(vars);
-	path = replaceVars(path, getVarMap());
-	return this;
+            final Classpath parent, final Map<String, String> vars) {
+        this.parent = parent;
+        inheritVariables(vars);
+        path = replaceVars(path, getVarMap());
+        return this;
     }
 
 }

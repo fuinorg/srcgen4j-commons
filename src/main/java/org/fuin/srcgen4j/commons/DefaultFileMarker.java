@@ -52,17 +52,17 @@ public final class DefaultFileMarker implements FileMarker {
      *            Message.
      */
     public DefaultFileMarker(@NotNull final FileMarkerSeverity severity,
-	    @NotNull final String message) {
-	super();
-	Contract.requireArgNotNull("severity", severity);
-	Contract.requireArgNotNull("message", message);
+            @NotNull final String message) {
+        super();
+        Contract.requireArgNotNull("severity", severity);
+        Contract.requireArgNotNull("message", message);
 
-	this.type = DefaultFileMarkerType.FILE;
-	this.severity = severity;
-	this.message = message;
-	this.line = -1;
-	this.start = -1;
-	this.length = -1;
+        this.type = DefaultFileMarkerType.FILE;
+        this.severity = severity;
+        this.message = message;
+        this.line = -1;
+        this.start = -1;
+        this.length = -1;
     }
 
     /**
@@ -76,17 +76,17 @@ public final class DefaultFileMarker implements FileMarker {
      *            Line number.
      */
     public DefaultFileMarker(@NotNull final FileMarkerSeverity severity,
-	    @NotNull final String message, @Min(0) final int line) {
-	super();
-	Contract.requireArgNotNull("severity", severity);
-	Contract.requireArgNotNull("message", message);
+            @NotNull final String message, @Min(0) final int line) {
+        super();
+        Contract.requireArgNotNull("severity", severity);
+        Contract.requireArgNotNull("message", message);
 
-	this.type = DefaultFileMarkerType.LINE;
-	this.severity = severity;
-	this.message = message;
-	this.line = line;
-	this.start = -1;
-	this.length = -1;
+        this.type = DefaultFileMarkerType.LINE;
+        this.severity = severity;
+        this.message = message;
+        this.line = line;
+        this.start = -1;
+        this.length = -1;
     }
 
     /**
@@ -102,18 +102,18 @@ public final class DefaultFileMarker implements FileMarker {
      *            Length of the marked block.
      */
     public DefaultFileMarker(@NotNull final FileMarkerSeverity severity,
-	    @NotNull final String message, @Min(0) final int start,
-	    @Min(1) final int length) {
-	super();
-	Contract.requireArgNotNull("severity", severity);
-	Contract.requireArgNotNull("message", message);
+            @NotNull final String message, @Min(0) final int start,
+            @Min(1) final int length) {
+        super();
+        Contract.requireArgNotNull("severity", severity);
+        Contract.requireArgNotNull("message", message);
 
-	this.type = DefaultFileMarkerType.POS_LENGTH;
-	this.severity = severity;
-	this.message = message;
-	this.line = -1;
-	this.start = start;
-	this.length = length;
+        this.type = DefaultFileMarkerType.POS_LENGTH;
+        this.severity = severity;
+        this.message = message;
+        this.line = -1;
+        this.start = start;
+        this.length = length;
     }
 
     /**
@@ -123,7 +123,7 @@ public final class DefaultFileMarker implements FileMarker {
      */
     @NeverNull
     public final DefaultFileMarkerType getType() {
-	return type;
+        return type;
     }
 
     /**
@@ -133,7 +133,7 @@ public final class DefaultFileMarker implements FileMarker {
      */
     @NeverNull
     public final FileMarkerSeverity getSeverity() {
-	return severity;
+        return severity;
     }
 
     /**
@@ -143,7 +143,7 @@ public final class DefaultFileMarker implements FileMarker {
      */
     @NeverNull
     public final String getMessage() {
-	return message;
+        return message;
     }
 
     /**
@@ -153,7 +153,7 @@ public final class DefaultFileMarker implements FileMarker {
      *         zero.
      */
     public final int getLine() {
-	return line;
+        return line;
     }
 
     /**
@@ -163,7 +163,7 @@ public final class DefaultFileMarker implements FileMarker {
      *         {@link DefaultFileMarkerType#POS_LENGTH}), otherwise zero.
      */
     public final int getStart() {
-	return start;
+        return start;
     }
 
     /**
@@ -173,22 +173,22 @@ public final class DefaultFileMarker implements FileMarker {
      *         ), otherwise zero.
      */
     public final int getLength() {
-	return length;
+        return length;
     }
 
     @Override
     public final String toString() {
-	if (type == DefaultFileMarkerType.FILE) {
-	    return severity + " " + message;
-	}
-	if (type == DefaultFileMarkerType.LINE) {
-	    return severity + " [Line " + line + "]" + message;
-	}
-	if (type == DefaultFileMarkerType.POS_LENGTH) {
-	    return severity + " [" + start + "-" + (start + length) + "]"
-		    + message;
-	}
-	throw new IllegalStateException("Unknown enum value: " + type);
+        if (type == DefaultFileMarkerType.FILE) {
+            return severity + " " + message;
+        }
+        if (type == DefaultFileMarkerType.LINE) {
+            return severity + " [Line " + line + "]" + message;
+        }
+        if (type == DefaultFileMarkerType.POS_LENGTH) {
+            return severity + " [" + start + "-" + (start + length) + "]"
+                    + message;
+        }
+        throw new IllegalStateException("Unknown enum value: " + type);
     }
 
 }

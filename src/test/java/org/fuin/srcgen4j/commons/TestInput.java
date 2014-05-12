@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "input", namespace = "http://www.fuin.org/srcgen4j/commons/test")
 public class TestInput extends AbstractElement implements
-	InitializableElement<TestInput, Config<ParserConfig>> {
+        InitializableElement<TestInput, Config<ParserConfig>> {
 
     @XmlAttribute
     private String path;
@@ -39,7 +39,7 @@ public class TestInput extends AbstractElement implements
      * Default constructor.
      */
     public TestInput() {
-	super();
+        super();
     }
 
     /**
@@ -49,8 +49,8 @@ public class TestInput extends AbstractElement implements
      *            Path.
      */
     public TestInput(final String path) {
-	super();
-	this.path = path;
+        super();
+        this.path = path;
     }
 
     /**
@@ -59,7 +59,7 @@ public class TestInput extends AbstractElement implements
      * @return Path information.
      */
     public final String getPath() {
-	return path;
+        return path;
     }
 
     /**
@@ -69,14 +69,14 @@ public class TestInput extends AbstractElement implements
      *            Path information to set.
      */
     public final void setPath(final String path) {
-	this.path = path;
+        this.path = path;
     }
 
     @Override
     public final TestInput init(final SrcGen4JContext context,
-	    final Config<ParserConfig> parent, final Map<String, String> vars) {
-	setPath(replaceVars(getPath(), vars));
-	return this;
+            final Config<ParserConfig> parent, final Map<String, String> vars) {
+        setPath(replaceVars(getPath(), vars));
+        return this;
     }
 
 }

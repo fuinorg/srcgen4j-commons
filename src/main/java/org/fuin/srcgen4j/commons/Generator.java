@@ -49,6 +49,6 @@ public interface Generator<MODEL> {
      *             Error when generating.
      */
     public void generate(@NotNull MODEL model, boolean incremental)
-	    throws GenerateException;
+            throws GenerateException;
 
 }

@@ -33,7 +33,7 @@ public final class GenerateException extends Exception {
      *            Message.
      */
     public GenerateException(@NotNull final String message) {
-	super(message);
+        super(message);
     }
 
     /**
@@ -45,8 +45,8 @@ public final class GenerateException extends Exception {
      *            Cause.
      */
     public GenerateException(@NotNull final String message,
-	    @NotNull final Throwable cause) {
-	super(message, cause);
+            @NotNull final Throwable cause) {
+        super(message, cause);
     }
 
 }
