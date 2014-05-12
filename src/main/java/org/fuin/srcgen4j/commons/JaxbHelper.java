@@ -50,7 +50,7 @@ public final class JaxbHelper {
      * Default constructor.
      */
     public JaxbHelper() {
-        super();
+	super();
     }
 
     /**
@@ -60,8 +60,8 @@ public final class JaxbHelper {
      *            If XML is formatted TRUE else FALSE.
      */
     public JaxbHelper(final boolean formattedOutput) {
-        super();
-        this.formattedOutput = formattedOutput;
+	super();
+	this.formattedOutput = formattedOutput;
     }
 
 /** 
@@ -74,31 +74,33 @@ public final class JaxbHelper {
     * 
     * @return If the file contains the start tag TRUE else FALSE.
     */
-    public boolean containsStartTag(@NotNull @FileExists @IsFile final File file,
-            @NotNull final String tagName) {
-        Contract.requireArgNotNull("file", file);
-        FileExistsValidator.requireArgValid("file", file);
-        IsFileValidator.requireArgValid("file", file);
-        Contract.requireArgNotNull("tagName", tagName);
+    public boolean containsStartTag(
+	    @NotNull @FileExists @IsFile final File file,
+	    @NotNull final String tagName) {
+	Contract.requireArgNotNull("file", file);
+	FileExistsValidator.requireArgValid("file", file);
+	IsFileValidator.requireArgValid("file", file);
+	Contract.requireArgNotNull("tagName", tagName);
 
-        final String xml = readFirstPartOfFile(file);
-        return xml.indexOf("<" + tagName) > -1;
+	final String xml = readFirstPartOfFile(file);
+	return xml.indexOf("<" + tagName) > -1;
     }
 
     private String readFirstPartOfFile(final File file) {
-        try {
-            final Reader reader = new FileReader(file);
-            try {
+	try {
+	    final Reader reader = new FileReader(file);
+	    try {
 
-                final char[] buf = new char[1024];
-                reader.read(buf);
-                return String.copyValueOf(buf);
-            } finally {
-                reader.close();
-            }
-        } catch (final IOException ex) {
-            throw new RuntimeException("Could not read first part of file: " + file, ex);
-        }
+		final char[] buf = new char[1024];
+		reader.read(buf);
+		return String.copyValueOf(buf);
+	    } finally {
+		reader.close();
+	    }
+	} catch (final IOException ex) {
+	    throw new RuntimeException("Could not read first part of file: "
+		    + file, ex);
+	}
     }
 
     /**
@@ -119,17 +121,19 @@ public final class JaxbHelper {
      */
     @SuppressWarnings("unchecked")
     @NeverNull
-    public <TYPE> TYPE create(@NotNull final Reader reader, @NotNull final JAXBContext jaxbContext)
-            throws UnmarshalObjectException {
-        Contract.requireArgNotNull("reader", reader);
-        Contract.requireArgNotNull("jaxbContext", jaxbContext);
-        try {
-            final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            final TYPE obj = (TYPE) unmarshaller.unmarshal(reader);
-            return obj;
-        } catch (final JAXBException ex) {
-            throw new UnmarshalObjectException("Unable to parse XML from reader", ex);
-        }
+    public <TYPE> TYPE create(@NotNull final Reader reader,
+	    @NotNull final JAXBContext jaxbContext)
+	    throws UnmarshalObjectException {
+	Contract.requireArgNotNull("reader", reader);
+	Contract.requireArgNotNull("jaxbContext", jaxbContext);
+	try {
+	    final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+	    final TYPE obj = (TYPE) unmarshaller.unmarshal(reader);
+	    return obj;
+	} catch (final JAXBException ex) {
+	    throw new UnmarshalObjectException(
+		    "Unable to parse XML from reader", ex);
+	}
     }
 
     /**
@@ -151,21 +155,23 @@ public final class JaxbHelper {
     @SuppressWarnings("unchecked")
     @NeverNull
     public <TYPE> TYPE create(@NotNull @FileExists @IsFile final File file,
-            @NotNull final JAXBContext jaxbContext) throws UnmarshalObjectException {
-        Contract.requireArgNotNull("file", file);
-        FileExistsValidator.requireArgValid("file", file);
-        IsFileValidator.requireArgValid("file", file);
-        Contract.requireArgNotNull("jaxbContext", jaxbContext);
-        try {
-            final FileReader fr = new FileReader(file);
-            try {
-                return (TYPE) create(fr, jaxbContext);
-            } finally {
-                fr.close();
-            }
-        } catch (final IOException ex) {
-            throw new UnmarshalObjectException("Unable to parse XML from file: " + file, ex);
-        }
+	    @NotNull final JAXBContext jaxbContext)
+	    throws UnmarshalObjectException {
+	Contract.requireArgNotNull("file", file);
+	FileExistsValidator.requireArgValid("file", file);
+	IsFileValidator.requireArgValid("file", file);
+	Contract.requireArgNotNull("jaxbContext", jaxbContext);
+	try {
+	    final FileReader fr = new FileReader(file);
+	    try {
+		return (TYPE) create(fr, jaxbContext);
+	    } finally {
+		fr.close();
+	    }
+	} catch (final IOException ex) {
+	    throw new UnmarshalObjectException(
+		    "Unable to parse XML from file: " + file, ex);
+	}
     }
 
     /**
@@ -186,13 +192,14 @@ public final class JaxbHelper {
      */
     @SuppressWarnings("unchecked")
     @NeverNull
-    public <TYPE> TYPE create(@NotNull final String xml, @NotNull final JAXBContext jaxbContext)
-            throws UnmarshalObjectException {
+    public <TYPE> TYPE create(@NotNull final String xml,
+	    @NotNull final JAXBContext jaxbContext)
+	    throws UnmarshalObjectException {
 
-        Contract.requireArgNotNull("xml", xml);
-        Contract.requireArgNotNull("jaxbContext", jaxbContext);
+	Contract.requireArgNotNull("xml", xml);
+	Contract.requireArgNotNull("jaxbContext", jaxbContext);
 
-        return (TYPE) create(new StringReader(xml), jaxbContext);
+	return (TYPE) create(new StringReader(xml), jaxbContext);
 
     }
 
@@ -213,22 +220,24 @@ public final class JaxbHelper {
      *            Type of the object.
      */
     public <TYPE> void write(@NotNull final TYPE obj, @NotNull final File file,
-            @NotNull final JAXBContext jaxbContext) throws MarshalObjectException {
+	    @NotNull final JAXBContext jaxbContext)
+	    throws MarshalObjectException {
 
-        Contract.requireArgNotNull("obj", obj);
-        Contract.requireArgNotNull("file", file);
-        Contract.requireArgNotNull("jaxbContext", jaxbContext);
+	Contract.requireArgNotNull("obj", obj);
+	Contract.requireArgNotNull("file", file);
+	Contract.requireArgNotNull("jaxbContext", jaxbContext);
 
-        try {
-            final FileWriter fw = new FileWriter(file);
-            try {
-                write(obj, fw, jaxbContext);
-            } finally {
-                fw.close();
-            }
-        } catch (final IOException ex) {
-            throw new MarshalObjectException("Unable to write XML to file: " + file, ex);
-        }
+	try {
+	    final FileWriter fw = new FileWriter(file);
+	    try {
+		write(obj, fw, jaxbContext);
+	    } finally {
+		fw.close();
+	    }
+	} catch (final IOException ex) {
+	    throw new MarshalObjectException("Unable to write XML to file: "
+		    + file, ex);
+	}
     }
 
     /**
@@ -247,15 +256,16 @@ public final class JaxbHelper {
      * @param <TYPE>
      *            Type of the object.
      */
-    public <TYPE> String write(@NotNull final TYPE obj, @NotNull final JAXBContext jaxbContext)
-            throws MarshalObjectException {
+    public <TYPE> String write(@NotNull final TYPE obj,
+	    @NotNull final JAXBContext jaxbContext)
+	    throws MarshalObjectException {
 
-        Contract.requireArgNotNull("obj", obj);
-        Contract.requireArgNotNull("jaxbContext", jaxbContext);
+	Contract.requireArgNotNull("obj", obj);
+	Contract.requireArgNotNull("jaxbContext", jaxbContext);
 
-        final StringWriter writer = new StringWriter();
-        write(obj, writer, jaxbContext);
-        return writer.toString();
+	final StringWriter writer = new StringWriter();
+	write(obj, writer, jaxbContext);
+	return writer.toString();
     }
 
     /**
@@ -274,20 +284,23 @@ public final class JaxbHelper {
      * @param <TYPE>
      *            Type of the object.
      */
-    public <TYPE> void write(@NotNull final TYPE obj, @NotNull final Writer writer,
-            @NotNull final JAXBContext jaxbContext) throws MarshalObjectException {
+    public <TYPE> void write(@NotNull final TYPE obj,
+	    @NotNull final Writer writer, @NotNull final JAXBContext jaxbContext)
+	    throws MarshalObjectException {
 
-        Contract.requireArgNotNull("obj", obj);
-        Contract.requireArgNotNull("writer", writer);
-        Contract.requireArgNotNull("jaxbContext", jaxbContext);
+	Contract.requireArgNotNull("obj", obj);
+	Contract.requireArgNotNull("writer", writer);
+	Contract.requireArgNotNull("jaxbContext", jaxbContext);
 
-        try {
-            final Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, formattedOutput);
-            marshaller.marshal(obj, writer);
-        } catch (final JAXBException ex) {
-            throw new MarshalObjectException("Unable to write XML to writer", ex);
-        }
+	try {
+	    final Marshaller marshaller = jaxbContext.createMarshaller();
+	    marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+		    formattedOutput);
+	    marshaller.marshal(obj, writer);
+	} catch (final JAXBException ex) {
+	    throw new MarshalObjectException("Unable to write XML to writer",
+		    ex);
+	}
     }
 
     /**
@@ -296,7 +309,7 @@ public final class JaxbHelper {
      * @return If XML is formatted TRUE else FALSE.
      */
     public final boolean isFormattedOutput() {
-        return formattedOutput;
+	return formattedOutput;
     }
 
     /**
@@ -306,7 +319,7 @@ public final class JaxbHelper {
      *            If XML is formatted TRUE else FALSE.
      */
     public final void setFormattedOutput(final boolean formattedOutput) {
-        this.formattedOutput = formattedOutput;
+	this.formattedOutput = formattedOutput;
     }
 
 }

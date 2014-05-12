@@ -39,7 +39,7 @@ import org.fuin.objects4j.common.Nullable;
 @XmlRootElement(name = "parsers")
 @XmlType(propOrder = { "list" })
 public class Parsers extends AbstractElement implements
-        InitializableElement<Parsers, SrcGen4JConfig> {
+	InitializableElement<Parsers, SrcGen4JConfig> {
 
     @Nullable
     @Valid
@@ -56,7 +56,7 @@ public class Parsers extends AbstractElement implements
      */
     @Nullable
     public final List<ParserConfig> getList() {
-        return list;
+	return list;
     }
 
     /**
@@ -66,7 +66,7 @@ public class Parsers extends AbstractElement implements
      *            Parsers.
      */
     public final void setList(@Nullable final List<ParserConfig> list) {
-        this.list = list;
+	this.list = list;
     }
 
     /**
@@ -76,11 +76,11 @@ public class Parsers extends AbstractElement implements
      *            Parser to add.
      */
     public final void addParser(@NotNull final ParserConfig parser) {
-        Contract.requireArgNotNull("parser", parser);
-        if (list == null) {
-            list = new ArrayList<ParserConfig>();
-        }
-        list.add(parser);
+	Contract.requireArgNotNull("parser", parser);
+	if (list == null) {
+	    list = new ArrayList<ParserConfig>();
+	}
+	list.add(parser);
     }
 
     /**
@@ -90,20 +90,20 @@ public class Parsers extends AbstractElement implements
      */
     @Nullable
     public final SrcGen4JConfig getParent() {
-        return parent;
+	return parent;
     }
 
     @Override
-    public final Parsers init(final SrcGen4JContext context, final SrcGen4JConfig parent,
-            final Map<String, String> vars) {
-        this.parent = parent;
-        inheritVariables(vars);
-        if (list != null) {
-            for (final ParserConfig parser : list) {
-                parser.init(context, this, getVarMap());
-            }
-        }
-        return this;
+    public final Parsers init(final SrcGen4JContext context,
+	    final SrcGen4JConfig parent, final Map<String, String> vars) {
+	this.parent = parent;
+	inheritVariables(vars);
+	if (list != null) {
+	    for (final ParserConfig parser : list) {
+		parser.init(context, this, getVarMap());
+	    }
+	}
+	return this;
     }
 
 }

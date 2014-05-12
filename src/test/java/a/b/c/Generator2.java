@@ -12,20 +12,20 @@ public class Generator2 implements Generator<String> {
 
     @Override
     public void initialize(GeneratorConfig config) {
-        this.config = config;
+	this.config = config;
     }
 
     @Override
     public void generate(String model, boolean incremental) {
-        this.model = model;
+	this.model = model;
     }
 
     public GeneratorConfig getConfig() {
-        return config;
+	return config;
     }
 
     public String getModel() {
-        return model;
+	return model;
     }
 
 }

@@ -40,7 +40,7 @@ import org.fuin.objects4j.common.Nullable;
 @XmlRootElement(name = "classpath")
 @XmlType(propOrder = { "binList" })
 public final class Classpath extends AbstractElement implements
-        InitializableElement<Classpath, SrcGen4JConfig> {
+	InitializableElement<Classpath, SrcGen4JConfig> {
 
     @Nullable
     @XmlAttribute(name = "context")
@@ -58,7 +58,7 @@ public final class Classpath extends AbstractElement implements
      * Package visible default constructor for deserialization.
      */
     Classpath() {
-        super();
+	super();
     }
 
     /**
@@ -69,7 +69,7 @@ public final class Classpath extends AbstractElement implements
      */
     @Nullable
     public final Boolean getAddContextCP() {
-        return addContextCP;
+	return addContextCP;
     }
 
     /**
@@ -79,7 +79,7 @@ public final class Classpath extends AbstractElement implements
      *            If the context's class path should be added TRUE, else FALSE.
      */
     public final void setAddContextCP(@Nullable final Boolean addContextCP) {
-        this.addContextCP = addContextCP;
+	this.addContextCP = addContextCP;
     }
 
     /**
@@ -90,10 +90,10 @@ public final class Classpath extends AbstractElement implements
      * @return If the context's class path should be added TRUE, else FALSE.
      */
     public final boolean isAddContextCP() {
-        if (addContextCP == null) {
-            return true;
-        }
-        return addContextCP;
+	if (addContextCP == null) {
+	    return true;
+	}
+	return addContextCP;
     }
 
     /**
@@ -103,7 +103,7 @@ public final class Classpath extends AbstractElement implements
      */
     @Nullable
     public final List<BinClasspathEntry> getBinList() {
-        return binList;
+	return binList;
     }
 
     /**
@@ -113,7 +113,7 @@ public final class Classpath extends AbstractElement implements
      *            List.
      */
     public final void setBinList(@Nullable final List<BinClasspathEntry> list) {
-        this.binList = list;
+	this.binList = list;
     }
 
     /**
@@ -124,11 +124,11 @@ public final class Classpath extends AbstractElement implements
      *            Binaries directory to add.
      */
     public final void addBin(@NotNull final BinClasspathEntry entry) {
-        Contract.requireArgNotNull("entry", entry);
-        if (binList == null) {
-            binList = new ArrayList<BinClasspathEntry>();
-        }
-        binList.add(entry);
+	Contract.requireArgNotNull("entry", entry);
+	if (binList == null) {
+	    binList = new ArrayList<BinClasspathEntry>();
+	}
+	binList.add(entry);
     }
 
     /**
@@ -138,19 +138,19 @@ public final class Classpath extends AbstractElement implements
      */
     @Nullable
     public final SrcGen4JConfig getParent() {
-        return parent;
+	return parent;
     }
 
     @Override
-    public final Classpath init(final SrcGen4JContext context, final SrcGen4JConfig parent,
-            final Map<String, String> vars) {
-        this.parent = parent;
-        if (binList != null) {
-            for (final BinClasspathEntry bin : binList) {
-                bin.init(context, this, vars);
-            }
-        }
-        return this;
+    public final Classpath init(final SrcGen4JContext context,
+	    final SrcGen4JConfig parent, final Map<String, String> vars) {
+	this.parent = parent;
+	if (binList != null) {
+	    for (final BinClasspathEntry bin : binList) {
+		bin.init(context, this, vars);
+	    }
+	}
+	return this;
     }
 
 }

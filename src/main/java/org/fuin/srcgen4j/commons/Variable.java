@@ -50,7 +50,7 @@ public class Variable extends AbstractNamedElement {
      * Package visible default constructor for deserialization.
      */
     Variable() {
-        super();
+	super();
     }
 
     /**
@@ -62,9 +62,9 @@ public class Variable extends AbstractNamedElement {
      *            Value to set.
      */
     public Variable(@NotEmpty final String name, @NotEmpty final String value) {
-        super(name);
-        Contract.requireArgNotEmpty("value", value);
-        this.value = value;
+	super(name);
+	Contract.requireArgNotEmpty("value", value);
+	this.value = value;
     }
 
     /**
@@ -78,12 +78,12 @@ public class Variable extends AbstractNamedElement {
      *            Value to set.
      */
     public Variable(@NotEmpty final String name, @NotEmpty final String value,
-            @NotEmpty final String xpath) {
-        super(name);
-        Contract.requireArgNotEmpty("value", value);
-        Contract.requireArgNotEmpty("xpath", xpath);
-        this.value = value;
-        this.xpath = xpath;
+	    @NotEmpty final String xpath) {
+	super(name);
+	Contract.requireArgNotEmpty("value", value);
+	Contract.requireArgNotEmpty("xpath", xpath);
+	this.value = value;
+	this.xpath = xpath;
     }
 
     /**
@@ -93,7 +93,7 @@ public class Variable extends AbstractNamedElement {
      */
     @NeverEmpty
     public final String getValue() {
-        return value;
+	return value;
     }
 
     /**
@@ -103,7 +103,7 @@ public class Variable extends AbstractNamedElement {
      */
     @Nullable
     public final String getXpath() {
-        return xpath;
+	return xpath;
     }
 
     /**
@@ -113,7 +113,7 @@ public class Variable extends AbstractNamedElement {
      *            Variables to use.
      */
     public final void init(@Nullable final Map<String, String> vars) {
-        value = replaceVars(value, vars);
+	value = replaceVars(value, vars);
     }
 
     // CHECKSTYLE:ON

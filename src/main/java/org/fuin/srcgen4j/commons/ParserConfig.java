@@ -43,9 +43,10 @@ import org.slf4j.LoggerFactory;
 @XmlRootElement(name = "parser")
 @XmlType(propOrder = { "config", "className" })
 public class ParserConfig extends AbstractNamedElement implements
-        InitializableElement<ParserConfig, Parsers> {
+	InitializableElement<ParserConfig, Parsers> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ParserConfig.class);
+    private static final Logger LOG = LoggerFactory
+	    .getLogger(ParserConfig.class);
 
     @NotEmpty
     @XmlAttribute(name = "class")
@@ -69,7 +70,7 @@ public class ParserConfig extends AbstractNamedElement implements
      * Package visible default constructor for deserialization.
      */
     ParserConfig() {
-        super();
+	super();
     }
 
     /**
@@ -80,10 +81,11 @@ public class ParserConfig extends AbstractNamedElement implements
      * @param className
      *            Full qualified name of the class to set.
      */
-    public ParserConfig(@NotEmpty final String name, @NotEmpty final String className) {
-        super(name);
-        Contract.requireArgNotEmpty("className", className);
-        this.className = className;
+    public ParserConfig(@NotEmpty final String name,
+	    @NotEmpty final String className) {
+	super(name);
+	Contract.requireArgNotEmpty("className", className);
+	this.className = className;
     }
 
     /**
@@ -93,7 +95,7 @@ public class ParserConfig extends AbstractNamedElement implements
      */
     @NeverEmpty
     public final String getClassName() {
-        return className;
+	return className;
     }
 
     /**
@@ -103,7 +105,7 @@ public class ParserConfig extends AbstractNamedElement implements
      */
     @Nullable
     public final Config<ParserConfig> getConfig() {
-        return config;
+	return config;
     }
 
     /**
@@ -113,7 +115,7 @@ public class ParserConfig extends AbstractNamedElement implements
      *            Configuration for the parser.
      */
     public final void setConfig(@Nullable final Config<ParserConfig> config) {
-        this.config = config;
+	this.config = config;
     }
 
     /**
@@ -123,21 +125,21 @@ public class ParserConfig extends AbstractNamedElement implements
      */
     @Nullable
     public final Parsers getParent() {
-        return parent;
+	return parent;
     }
 
     @Override
-    public final ParserConfig init(final SrcGen4JContext context, final Parsers parent,
-            final Map<String, String> vars) {
-        this.context = context;
-        this.parent = parent;
-        inheritVariables(vars);
-        setName(replaceVars(getName(), getVarMap()));
-        this.className = replaceVars(className, getVarMap());
-        if (config != null) {
-            config.init(context, this, getVarMap());
-        }
-        return this;
+    public final ParserConfig init(final SrcGen4JContext context,
+	    final Parsers parent, final Map<String, String> vars) {
+	this.context = context;
+	this.parent = parent;
+	inheritVariables(vars);
+	setName(replaceVars(getName(), getVarMap()));
+	this.className = replaceVars(className, getVarMap());
+	if (config != null) {
+	    config.init(context, this, getVarMap());
+	}
+	return this;
     }
 
     /**
@@ -149,25 +151,28 @@ public class ParserConfig extends AbstractNamedElement implements
     @SuppressWarnings("unchecked")
     @NeverNull
     public final Parser<Object> getParser() {
-        if (parser != null) {
-            return parser;
-        }
-        LOG.info("Creating parser: " + className);
-        if (className == null) {
-            throw new IllegalStateException("Class name was not set: " + getName());
-        }
-        if (context == null) {
-            throw new IllegalStateException("Context class loader was not set: " + getName()
-                    + " / " + className);
-        }
-        final Object obj = Utils4J.createInstance(className, context.getClassLoader());
-        if (!(obj instanceof Parser<?>)) {
-            throw new IllegalStateException("Expected class to be of type '"
-                    + Parser.class.getName() + "', but was: " + className);
-        }
-        parser = (Parser<Object>) obj;
-        parser.initialize(context, this);
-        return parser;
+	if (parser != null) {
+	    return parser;
+	}
+	LOG.info("Creating parser: " + className);
+	if (className == null) {
+	    throw new IllegalStateException("Class name was not set: "
+		    + getName());
+	}
+	if (context == null) {
+	    throw new IllegalStateException(
+		    "Context class loader was not set: " + getName() + " / "
+			    + className);
+	}
+	final Object obj = Utils4J.createInstance(className,
+		context.getClassLoader());
+	if (!(obj instanceof Parser<?>)) {
+	    throw new IllegalStateException("Expected class to be of type '"
+		    + Parser.class.getName() + "', but was: " + className);
+	}
+	parser = (Parser<Object>) obj;
+	parser.initialize(context, this);
+	return parser;
     }
 
     /**
@@ -177,7 +182,7 @@ public class ParserConfig extends AbstractNamedElement implements
      */
     @Nullable
     public final SrcGen4JContext getContext() {
-        return context;
+	return context;
     }
 
 }

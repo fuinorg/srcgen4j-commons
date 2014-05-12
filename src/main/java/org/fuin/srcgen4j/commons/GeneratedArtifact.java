@@ -45,15 +45,15 @@ public final class GeneratedArtifact {
      * @param data
      *            Generated data.
      */
-    public GeneratedArtifact(@NotEmpty final String name, @NotEmpty final String pathAndName,
-            @NotNull final byte[] data) {
-        super();
-        Contract.requireArgNotEmpty("name", name);
-        Contract.requireArgNotEmpty("pathAndName", pathAndName);
-        Contract.requireArgNotNull("data", data);
-        this.name = name;
-        this.pathAndName = pathAndName;
-        this.data = data;
+    public GeneratedArtifact(@NotEmpty final String name,
+	    @NotEmpty final String pathAndName, @NotNull final byte[] data) {
+	super();
+	Contract.requireArgNotEmpty("name", name);
+	Contract.requireArgNotEmpty("pathAndName", pathAndName);
+	Contract.requireArgNotNull("data", data);
+	this.name = name;
+	this.pathAndName = pathAndName;
+	this.data = data;
     }
 
     /**
@@ -63,7 +63,7 @@ public final class GeneratedArtifact {
      */
     @NeverEmpty
     public final String getName() {
-        return name;
+	return name;
     }
 
     /**
@@ -73,7 +73,7 @@ public final class GeneratedArtifact {
      */
     @NeverEmpty
     public final String getPathAndName() {
-        return pathAndName;
+	return pathAndName;
     }
 
     /**
@@ -83,12 +83,12 @@ public final class GeneratedArtifact {
      */
     @NeverNull
     public final byte[] getData() {
-        return data;
+	return data;
     }
 
     @Override
     public final String toString() {
-        return pathAndName + " [" + name + "]";
+	return pathAndName + " [" + name + "]";
     }
 
 }

@@ -58,86 +58,91 @@ public final class SrcGen4J {
      * @param context
      *            Build context.
      */
-    public SrcGen4J(@NotNull final SrcGen4JConfig config, @NotNull final SrcGen4JContext context) {
-        super();
-        Contract.requireArgNotNull("config", config);
-        Contract.requireArgNotNull("context", context);
-        if (!config.isInitialized()) {
-            throw new IllegalArgumentException("The configuration is not initialized");
-        }
-        this.config = config;
-        this.context = context;
+    public SrcGen4J(@NotNull final SrcGen4JConfig config,
+	    @NotNull final SrcGen4JContext context) {
+	super();
+	Contract.requireArgNotNull("config", config);
+	Contract.requireArgNotNull("context", context);
+	if (!config.isInitialized()) {
+	    throw new IllegalArgumentException(
+		    "The configuration is not initialized");
+	}
+	this.config = config;
+	this.context = context;
     }
 
     private void enhanceClasspath() {
-        final Classpath cp = config.getClasspath();
-        if (cp == null) {
-            LOG.debug("No additional classpath found");
-        } else {
+	final Classpath cp = config.getClasspath();
+	if (cp == null) {
+	    LOG.debug("No additional classpath found");
+	} else {
 
-            // Add context class path
-            if (cp.isAddContextCP()) {
-                addToClasspath(context.getJarFiles(), "Context jar files");
-                addToClasspath(context.getBinDirs(), "Context bin directories");
-            }
+	    // Add context class path
+	    if (cp.isAddContextCP()) {
+		addToClasspath(context.getJarFiles(), "Context jar files");
+		addToClasspath(context.getBinDirs(), "Context bin directories");
+	    }
 
-            // Add class paths from configuration
-            final List<BinClasspathEntry> binList = cp.getBinList();
-            if (binList == null) {
-                LOG.debug("No binary classpath list found");
-            } else {
-                for (final BinClasspathEntry entry : binList) {
-                    final String url;
-                    if (entry.getPath().startsWith("file:")) {
-                        url = entry.getPath();
-                    } else {
-                        url = "file:///" + entry.getPath();
-                    }
-                    LOG.info("Adding to classpath: " + url);
-                    Utils4J.addToClasspath(url, context.getClassLoader());
-                }
-            }
-        }
+	    // Add class paths from configuration
+	    final List<BinClasspathEntry> binList = cp.getBinList();
+	    if (binList == null) {
+		LOG.debug("No binary classpath list found");
+	    } else {
+		for (final BinClasspathEntry entry : binList) {
+		    final String url;
+		    if (entry.getPath().startsWith("file:")) {
+			url = entry.getPath();
+		    } else {
+			url = "file:///" + entry.getPath();
+		    }
+		    LOG.info("Adding to classpath: " + url);
+		    Utils4J.addToClasspath(url, context.getClassLoader());
+		}
+	    }
+	}
     }
 
     private void addToClasspath(final List<File> files, final String message) {
-        if (files.size() == 0) {
-            LOG.debug("No files found (" + message + ")");
-        } else {
-            for (final File file : files) {
-                LOG.info("Adding to classpath (" + message + "): " + file);
-                Utils4J.addToClasspath(file, context.getClassLoader());
-            }
-        }
+	if (files.size() == 0) {
+	    LOG.debug("No files found (" + message + ")");
+	} else {
+	    for (final File file : files) {
+		LOG.info("Adding to classpath (" + message + "): " + file);
+		Utils4J.addToClasspath(file, context.getClassLoader());
+	    }
+	}
     }
 
     private void cleanFolders() {
-        final List<Project> projects = config.getProjects();
-        if (projects == null) {
-            LOG.warn("No projects configured!");
-        } else {
-            for (final Project project : projects) {
-                final List<Folder> folders = project.getFolders();
-                if (folders == null) {
-                    LOG.warn("No project folders configured for: " + project.getName());
-                } else {
-                    for (final Folder folder : folders) {
-                        final File dir = folder.getCanonicalDir();
-                        if (folder.isClean() && dir.exists()) {
-                            try {
-                                LOG.info("Cleaning: " + dir);
-                                FileUtils.cleanDirectory(dir);
-                            } catch (final IOException ex) {
-                                throw new RuntimeException("Error cleaning: " + dir, ex);
-                            }
-                        } else {
-                            LOG.debug("Nothing to to [clean=" + folder.isClean() + ", exists="
-                                    + dir.exists() + "]: " + dir);
-                        }
-                    }
-                }
-            }
-        }
+	final List<Project> projects = config.getProjects();
+	if (projects == null) {
+	    LOG.warn("No projects configured!");
+	} else {
+	    for (final Project project : projects) {
+		final List<Folder> folders = project.getFolders();
+		if (folders == null) {
+		    LOG.warn("No project folders configured for: "
+			    + project.getName());
+		} else {
+		    for (final Folder folder : folders) {
+			final File dir = folder.getCanonicalDir();
+			if (folder.isClean() && dir.exists()) {
+			    try {
+				LOG.info("Cleaning: " + dir);
+				FileUtils.cleanDirectory(dir);
+			    } catch (final IOException ex) {
+				throw new RuntimeException("Error cleaning: "
+					+ dir, ex);
+			    }
+			} else {
+			    LOG.debug("Nothing to to [clean="
+				    + folder.isClean() + ", exists="
+				    + dir.exists() + "]: " + dir);
+			}
+		    }
+		}
+	    }
+	}
     }
 
     /**
@@ -150,33 +155,33 @@ public final class SrcGen4J {
      */
     public final void execute() throws ParseException, GenerateException {
 
-        LOG.info("Executing full build");
+	LOG.info("Executing full build");
 
-        enhanceClasspath();
+	enhanceClasspath();
 
-        cleanFolders();
+	cleanFolders();
 
-        // Parse models & generate
-        final Parsers parsers = config.getParsers();
-        if (parsers == null) {
-            LOG.warn("No parsers element");
-        } else {
-            final List<ParserConfig> parserConfigs = parsers.getList();
-            if (parserConfigs == null) {
-                LOG.warn("No parsers configured");
-            } else {
-                for (final ParserConfig pc : parserConfigs) {
-                    final Parser<Object> parser = pc.getParser();
-                    final Object model = parser.parse();
-                    final List<GeneratorConfig> generatorConfigs = config
-                            .findGeneratorsForParser(pc.getName());
-                    for (final GeneratorConfig gc : generatorConfigs) {
-                        final Generator<Object> generator = gc.getGenerator();
-                        generator.generate(model, false);
-                    }
-                }
-            }
-        }
+	// Parse models & generate
+	final Parsers parsers = config.getParsers();
+	if (parsers == null) {
+	    LOG.warn("No parsers element");
+	} else {
+	    final List<ParserConfig> parserConfigs = parsers.getList();
+	    if (parserConfigs == null) {
+		LOG.warn("No parsers configured");
+	    } else {
+		for (final ParserConfig pc : parserConfigs) {
+		    final Parser<Object> parser = pc.getParser();
+		    final Object model = parser.parse();
+		    final List<GeneratorConfig> generatorConfigs = config
+			    .findGeneratorsForParser(pc.getName());
+		    for (final GeneratorConfig gc : generatorConfigs) {
+			final Generator<Object> generator = gc.getGenerator();
+			generator.generate(model, false);
+		    }
+		}
+	    }
+	}
 
     }
 
@@ -188,24 +193,24 @@ public final class SrcGen4J {
      */
     @NeverNull
     public FileFilter getFileFilter() {
-        if (fileFilter == null) {
-            final List<IOFileFilter> filters = new ArrayList<IOFileFilter>();
-            final Parsers parsers = config.getParsers();
-            if (parsers != null) {
-                final List<ParserConfig> parserConfigs = parsers.getList();
-                if (parserConfigs != null) {
-                    for (final ParserConfig pc : parserConfigs) {
-                        final Parser<Object> pars = pc.getParser();
-                        if (pars instanceof IncrementalParser) {
-                            final IncrementalParser<?> parser = (IncrementalParser<?>) pars;
-                            filters.add(parser.getFileFilter());
-                        }
-                    }
-                }
-            }
-            fileFilter = new OrFileFilter(filters);
-        }
-        return fileFilter;
+	if (fileFilter == null) {
+	    final List<IOFileFilter> filters = new ArrayList<IOFileFilter>();
+	    final Parsers parsers = config.getParsers();
+	    if (parsers != null) {
+		final List<ParserConfig> parserConfigs = parsers.getList();
+		if (parserConfigs != null) {
+		    for (final ParserConfig pc : parserConfigs) {
+			final Parser<Object> pars = pc.getParser();
+			if (pars instanceof IncrementalParser) {
+			    final IncrementalParser<?> parser = (IncrementalParser<?>) pars;
+			    filters.add(parser.getFileFilter());
+			}
+		    }
+		}
+	    }
+	    fileFilter = new OrFileFilter(filters);
+	}
+	return fileFilter;
     }
 
     /**
@@ -220,49 +225,51 @@ public final class SrcGen4J {
      * @throws GenerateException
      *             Error during generation process.
      */
-    public final void execute(@NotNull final Set<File> files) throws ParseException,
-            GenerateException {
+    public final void execute(@NotNull final Set<File> files)
+	    throws ParseException, GenerateException {
 
-        Contract.requireArgNotNull("files", files);
+	Contract.requireArgNotNull("files", files);
 
-        LOG.info("Executing incremental build (" + files.size() + " files)");
-        if (LOG.isDebugEnabled()) {
-            for (final File file : files) {
-                LOG.debug(file.toString());
-            }
-        }
+	LOG.info("Executing incremental build (" + files.size() + " files)");
+	if (LOG.isDebugEnabled()) {
+	    for (final File file : files) {
+		LOG.debug(file.toString());
+	    }
+	}
 
-        if (files.size() == 0) {
-            // Nothing to do...
-            return;
-        }
+	if (files.size() == 0) {
+	    // Nothing to do...
+	    return;
+	}
 
-        // Parse models & generate
-        final Parsers parsers = config.getParsers();
-        if (parsers == null) {
-            LOG.warn("No parsers element");
-        } else {
-            final List<ParserConfig> parserConfigs = parsers.getList();
-            if (parserConfigs == null) {
-                LOG.warn("No parsers configured");
-            } else {
-                for (final ParserConfig pc : parserConfigs) {
-                    final Parser<Object> pars = pc.getParser();
-                    if (pars instanceof IncrementalParser) {
-                        final IncrementalParser<?> parser = (IncrementalParser<?>) pars;
-                        final Object model = parser.parse(files);
-                        final List<GeneratorConfig> generatorConfigs = config
-                                .findGeneratorsForParser(pc.getName());
-                        for (final GeneratorConfig gc : generatorConfigs) {
-                            final Generator<Object> generator = gc.getGenerator();
-                            generator.generate(model, true);
-                        }
-                    } else {
-                        LOG.debug("No incremental parser: " + pars.getClass().getName());
-                    }
-                }
-            }
-        }
+	// Parse models & generate
+	final Parsers parsers = config.getParsers();
+	if (parsers == null) {
+	    LOG.warn("No parsers element");
+	} else {
+	    final List<ParserConfig> parserConfigs = parsers.getList();
+	    if (parserConfigs == null) {
+		LOG.warn("No parsers configured");
+	    } else {
+		for (final ParserConfig pc : parserConfigs) {
+		    final Parser<Object> pars = pc.getParser();
+		    if (pars instanceof IncrementalParser) {
+			final IncrementalParser<?> parser = (IncrementalParser<?>) pars;
+			final Object model = parser.parse(files);
+			final List<GeneratorConfig> generatorConfigs = config
+				.findGeneratorsForParser(pc.getName());
+			for (final GeneratorConfig gc : generatorConfigs) {
+			    final Generator<Object> generator = gc
+				    .getGenerator();
+			    generator.generate(model, true);
+			}
+		    } else {
+			LOG.debug("No incremental parser: "
+				+ pars.getClass().getName());
+		    }
+		}
+	    }
+	}
 
     }
 

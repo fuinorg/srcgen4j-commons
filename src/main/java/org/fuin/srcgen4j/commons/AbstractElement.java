@@ -59,8 +59,8 @@ public abstract class AbstractElement {
      */
     @Nullable
     public final String replaceVars(@Nullable final String str,
-            @Nullable final Map<String, String> vars) {
-        return VariableResolver.replaceVars(str, vars);
+	    @Nullable final Map<String, String> vars) {
+	return VariableResolver.replaceVars(str, vars);
     }
 
     /**
@@ -71,18 +71,20 @@ public abstract class AbstractElement {
      *            Variables defined by the parent.
      */
     @NeverNull
-    protected final void inheritVariables(@Nullable final Map<String, String> parentVars) {
-        if (varMap == null) {
-            varMap = new HashMap<String, String>();
-        }
-        if (parentVars != null) {
-            varMap.putAll(parentVars);
-        }
-        if (variables != null) {
-            for (Variable variable : variables) {
-                varMap.put(variable.getName(), replaceVars(variable.getValue(), varMap));
-            }
-        }
+    protected final void inheritVariables(
+	    @Nullable final Map<String, String> parentVars) {
+	if (varMap == null) {
+	    varMap = new HashMap<String, String>();
+	}
+	if (parentVars != null) {
+	    varMap.putAll(parentVars);
+	}
+	if (variables != null) {
+	    for (Variable variable : variables) {
+		varMap.put(variable.getName(),
+			replaceVars(variable.getValue(), varMap));
+	    }
+	}
     }
 
     /**
@@ -92,10 +94,10 @@ public abstract class AbstractElement {
      */
     @NeverNull
     public final Map<String, String> getVarMap() {
-        if (varMap == null) {
-            return Collections.emptyMap();
-        }
-        return Collections.unmodifiableMap(varMap);
+	if (varMap == null) {
+	    return Collections.emptyMap();
+	}
+	return Collections.unmodifiableMap(varMap);
     }
 
     /**
@@ -105,10 +107,10 @@ public abstract class AbstractElement {
      *            Variable to add.
      */
     public final void addVariable(@NotNull final Variable variable) {
-        if (variables == null) {
-            variables = new ArrayList<Variable>();
-        }
-        variables.add(variable);
+	if (variables == null) {
+	    variables = new ArrayList<Variable>();
+	}
+	variables.add(variable);
     }
 
     /**
@@ -118,7 +120,7 @@ public abstract class AbstractElement {
      */
     @Nullable
     public final List<Variable> getVariables() {
-        return variables;
+	return variables;
     }
 
 }

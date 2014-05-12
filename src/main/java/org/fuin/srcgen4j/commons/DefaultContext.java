@@ -39,7 +39,8 @@ import org.slf4j.LoggerFactory;
  */
 public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DefaultContext.class);
+    private static final Logger LOG = LoggerFactory
+	    .getLogger(DefaultContext.class);
 
     @NotNull
     private final Map<File, Set<DefaultFileMarker>> markers;
@@ -57,7 +58,7 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
      * Default constructor.
      */
     public DefaultContext() {
-        this(DefaultContext.class.getClassLoader());
+	this(DefaultContext.class.getClassLoader());
     }
 
     /**
@@ -67,12 +68,12 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
      *            Class loader to use in this context.
      */
     public DefaultContext(@NotNull final ClassLoader classLoader) {
-        super();
-        Contract.requireArgNotNull("classLoader", classLoader);
-        this.markers = new HashMap<File, Set<DefaultFileMarker>>();
-        this.classLoader = classLoader;
-        this.jarFiles = Collections.unmodifiableList(new ArrayList<File>());
-        this.binDirs = Collections.unmodifiableList(new ArrayList<File>());
+	super();
+	Contract.requireArgNotNull("classLoader", classLoader);
+	this.markers = new HashMap<File, Set<DefaultFileMarker>>();
+	this.classLoader = classLoader;
+	this.jarFiles = Collections.unmodifiableList(new ArrayList<File>());
+	this.binDirs = Collections.unmodifiableList(new ArrayList<File>());
     }
 
     /**
@@ -83,116 +84,122 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
      * @param cp
      *            Class path with JAR files and binary directories.
      */
-    public DefaultContext(@NotNull final ClassLoader classLoader, @NotNull final List<File> cp) {
-        super();
-        Contract.requireArgNotNull("classLoader", classLoader);
-        Contract.requireArgNotNull("cp", cp);
+    public DefaultContext(@NotNull final ClassLoader classLoader,
+	    @NotNull final List<File> cp) {
+	super();
+	Contract.requireArgNotNull("classLoader", classLoader);
+	Contract.requireArgNotNull("cp", cp);
 
-        markers = new HashMap<File, Set<DefaultFileMarker>>();
-        this.classLoader = classLoader;
-        final List<File> files = new ArrayList<File>();
-        final List<File> dirs = new ArrayList<File>();
-        for (final File file : cp) {
-            if (file.isDirectory()) {
-                dirs.add(file);
-            } else {
-                files.add(file);
-            }
-        }
-        jarFiles = Collections.unmodifiableList(files);
-        binDirs = Collections.unmodifiableList(dirs);
+	markers = new HashMap<File, Set<DefaultFileMarker>>();
+	this.classLoader = classLoader;
+	final List<File> files = new ArrayList<File>();
+	final List<File> dirs = new ArrayList<File>();
+	for (final File file : cp) {
+	    if (file.isDirectory()) {
+		dirs.add(file);
+	    } else {
+		files.add(file);
+	    }
+	}
+	jarFiles = Collections.unmodifiableList(files);
+	binDirs = Collections.unmodifiableList(dirs);
     }
 
-    private DefaultFileMarker add(final File file, final DefaultFileMarker marker) {
-        Set<DefaultFileMarker> set = markers.get(file);
-        if (set == null) {
-            set = new HashSet<DefaultFileMarker>();
-            markers.put(file, set);
-        }
-        set.add(marker);
-        if (marker.getSeverity() == FileMarkerSeverity.ERROR) {
-            LOG.error(marker.toString());
-        }
-        if (marker.getSeverity() == FileMarkerSeverity.WARNING) {
-            LOG.warn(marker.toString());
-        }
-        if (marker.getSeverity() == FileMarkerSeverity.INFO) {
-            LOG.info(marker.toString());
-        }
-        return marker;
-    }
-
-    @Override
-    public final FileMarker addMarker(final File file, final FileMarkerSeverity severity,
-            final String message) {
-        return add(file, new DefaultFileMarker(severity, message));
+    private DefaultFileMarker add(final File file,
+	    final DefaultFileMarker marker) {
+	Set<DefaultFileMarker> set = markers.get(file);
+	if (set == null) {
+	    set = new HashSet<DefaultFileMarker>();
+	    markers.put(file, set);
+	}
+	set.add(marker);
+	if (marker.getSeverity() == FileMarkerSeverity.ERROR) {
+	    LOG.error(marker.toString());
+	}
+	if (marker.getSeverity() == FileMarkerSeverity.WARNING) {
+	    LOG.warn(marker.toString());
+	}
+	if (marker.getSeverity() == FileMarkerSeverity.INFO) {
+	    LOG.info(marker.toString());
+	}
+	return marker;
     }
 
     @Override
-    public final FileMarker addMarker(final File file, final FileMarkerSeverity severity,
-            final String message, final int line) {
-        return add(file, new DefaultFileMarker(severity, message, line));
+    public final FileMarker addMarker(final File file,
+	    final FileMarkerSeverity severity, final String message) {
+	return add(file, new DefaultFileMarker(severity, message));
     }
 
     @Override
-    public final FileMarker addMarker(final File file, final FileMarkerSeverity severity,
-            final String message, final int start, final int length) {
-        return add(file, new DefaultFileMarker(severity, message, start, length));
+    public final FileMarker addMarker(final File file,
+	    final FileMarkerSeverity severity, final String message,
+	    final int line) {
+	return add(file, new DefaultFileMarker(severity, message, line));
+    }
+
+    @Override
+    public final FileMarker addMarker(final File file,
+	    final FileMarkerSeverity severity, final String message,
+	    final int start, final int length) {
+	return add(file,
+		new DefaultFileMarker(severity, message, start, length));
     }
 
     @Override
     public final Iterator<? extends FileMarker> getMarkerIterator() {
-        final Set<DefaultFileMarker> all = new HashSet<DefaultFileMarker>();
-        final Iterator<File> fileIt = markers.keySet().iterator();
-        while (fileIt.hasNext()) {
-            final Set<DefaultFileMarker> set = markers.get(fileIt.next());
-            for (final DefaultFileMarker marker : set) {
-                all.add(marker);
-            }
-        }
-        return all.iterator();
+	final Set<DefaultFileMarker> all = new HashSet<DefaultFileMarker>();
+	final Iterator<File> fileIt = markers.keySet().iterator();
+	while (fileIt.hasNext()) {
+	    final Set<DefaultFileMarker> set = markers.get(fileIt.next());
+	    for (final DefaultFileMarker marker : set) {
+		all.add(marker);
+	    }
+	}
+	return all.iterator();
     }
 
     @Override
-    public final Iterator<? extends FileMarker> getMarkerIterator(final File file) {
-        final Set<DefaultFileMarker> set = markers.get(file);
-        if (set == null) {
-            return null;
-        }
-        return set.iterator();
+    public final Iterator<? extends FileMarker> getMarkerIterator(
+	    final File file) {
+	final Set<DefaultFileMarker> set = markers.get(file);
+	if (set == null) {
+	    return null;
+	}
+	return set.iterator();
     }
 
     @Override
     public final void removeAllMarkers() {
-        markers.clear();
+	markers.clear();
     }
 
     @Override
     public final void removeAllMarkers(final File file) {
-        markers.remove(file);
+	markers.remove(file);
     }
 
     @Override
     public final void removeMarker(final File file, final FileMarker marker) {
-        final Set<DefaultFileMarker> set = markers.get(file);
-        if (set != null) {
-            set.remove(marker);
-        }
+	final Set<DefaultFileMarker> set = markers.get(file);
+	if (set != null) {
+	    set.remove(marker);
+	}
     }
 
     @Override
     public final ClassLoader getClassLoader() {
-        return classLoader;
+	return classLoader;
     }
 
     @Override
     public final List<File> getJarFiles() {
-        return jarFiles;
+	return jarFiles;
     }
 
     @Override
     public final List<File> getBinDirs() {
-        return binDirs;
+	return binDirs;
     }
 
 }

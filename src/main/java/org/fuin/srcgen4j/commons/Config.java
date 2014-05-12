@@ -34,7 +34,8 @@ import org.fuin.objects4j.common.Nullable;
  *            Parent type.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public final class Config<PARENT> implements InitializableElement<Config<PARENT>, PARENT> {
+public final class Config<PARENT> implements
+	InitializableElement<Config<PARENT>, PARENT> {
 
     @Nullable
     @Valid
@@ -45,7 +46,7 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
      * Package visible default constructor for deserialization.
      */
     Config() {
-        super();
+	super();
     }
 
     /**
@@ -55,20 +56,20 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
      *            Configuration.
      */
     public Config(@Nullable final Object config) {
-        super();
-        this.config = config;
+	super();
+	this.config = config;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final Config<PARENT> init(final SrcGen4JContext context, final PARENT parent,
-            final Map<String, String> vars) {
-        if (config instanceof InitializableElement) {
-            final InitializableElement<?, Config<PARENT>> ie;
-            ie = (InitializableElement<?, Config<PARENT>>) config;
-            ie.init(context, this, vars);
-        }
-        return this;
+    public final Config<PARENT> init(final SrcGen4JContext context,
+	    final PARENT parent, final Map<String, String> vars) {
+	if (config instanceof InitializableElement) {
+	    final InitializableElement<?, Config<PARENT>> ie;
+	    ie = (InitializableElement<?, Config<PARENT>>) config;
+	    ie.init(context, this, vars);
+	}
+	return this;
     }
 
     /**
@@ -78,7 +79,7 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
      */
     @Nullable
     public final Object getConfig() {
-        return config;
+	return config;
     }
 
     /**
@@ -88,7 +89,7 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
      *            Configuration.
      */
     public final void setConfig(@Nullable final Object config) {
-        this.config = config;
+	this.config = config;
     }
 
 }

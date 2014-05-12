@@ -35,71 +35,71 @@ import com.openpojo.validation.PojoValidator;
  */
 public class VariableTest extends AbstractTest {
 
-	// CHECKSTYLE:OFF
+    // CHECKSTYLE:OFF
 
-	@Test
-	public final void testPojoStructureAndBehavior() {
+    @Test
+    public final void testPojoStructureAndBehavior() {
 
-		final PojoClass pc = PojoClassFactory.getPojoClass(Variable.class);
-		final PojoValidator pv = createPojoValidator();
-		pv.runValidation(pc);
+	final PojoClass pc = PojoClassFactory.getPojoClass(Variable.class);
+	final PojoValidator pv = createPojoValidator();
+	pv.runValidation(pc);
 
-	}
+    }
 
-	@Test
-	public final void testMarshal() throws Exception {
+    @Test
+    public final void testMarshal() throws Exception {
 
-		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Variable.class,
-				Folder.class);
-		final Variable testee = new Variable("abc", "def");
+	// PREPARE
+	final JAXBContext jaxbContext = JAXBContext.newInstance(Variable.class,
+		Folder.class);
+	final Variable testee = new Variable("abc", "def");
 
-		// TEST
-		final String result = new JaxbHelper(false).write(testee, jaxbContext);
+	// TEST
+	final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
-		// VERIFY
-		assertThat(result).isEqualTo(
-				XML + "<variable value=\"def\" name=\"abc\" "
-						+ "xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+	// VERIFY
+	assertThat(result).isEqualTo(
+		XML + "<variable value=\"def\" name=\"abc\" "
+			+ "xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
 
-	}
+    }
 
-	@Test
-	public final void testUnmarshal() throws Exception {
+    @Test
+    public final void testUnmarshal() throws Exception {
 
-		// PREPARE
-		final JAXBContext jaxbContext = JAXBContext.newInstance(Variable.class,
-				Folder.class);
+	// PREPARE
+	final JAXBContext jaxbContext = JAXBContext.newInstance(Variable.class,
+		Folder.class);
 
-		// TEST
-		final Variable testee = new JaxbHelper()
-				.create("<variable name=\"abc\" value=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
-						jaxbContext);
+	// TEST
+	final Variable testee = new JaxbHelper()
+		.create("<variable name=\"abc\" value=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
+			jaxbContext);
 
-		// VERIFY
-		assertThat(testee).isNotNull();
-		assertThat(testee.getName()).isEqualTo("abc");
-		assertThat(testee.getValue()).isEqualTo("def");
+	// VERIFY
+	assertThat(testee).isNotNull();
+	assertThat(testee.getName()).isEqualTo("abc");
+	assertThat(testee.getValue()).isEqualTo("def");
 
-	}
+    }
 
-	@Test
-	public final void testInit() {
+    @Test
+    public final void testInit() {
 
-		// PREPARE
-		final Map<String, String> vars = new HashMap<String, String>();
-		vars.put("a", "1");
+	// PREPARE
+	final Map<String, String> vars = new HashMap<String, String>();
+	vars.put("a", "1");
 
-		final Variable testee = new Variable("x", "${a}");
+	final Variable testee = new Variable("x", "${a}");
 
-		// TEST
-		testee.init(vars);
+	// TEST
+	testee.init(vars);
 
-		// VERIFY
-		assertThat(testee.getValue()).isEqualTo("1");
+	// VERIFY
+	assertThat(testee.getValue()).isEqualTo("1");
 
-	}
+    }
 
-	// CHECKSTYLE:ON
+    // CHECKSTYLE:ON
 
 }

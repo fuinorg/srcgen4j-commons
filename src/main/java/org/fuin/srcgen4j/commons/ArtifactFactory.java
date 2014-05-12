@@ -66,6 +66,7 @@ public interface ArtifactFactory<TYPE> {
      *             Error when generating.
      */
     @Nullable
-    public GeneratedArtifact create(@NotNull TYPE modelObject) throws GenerateException;
+    public GeneratedArtifact create(@NotNull TYPE modelObject)
+	    throws GenerateException;
 
 }

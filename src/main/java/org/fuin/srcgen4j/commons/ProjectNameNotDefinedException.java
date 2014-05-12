@@ -40,9 +40,10 @@ public class ProjectNameNotDefinedException extends Exception {
      *            Target pattern - Should not be <code>null</code>.
      */
     public ProjectNameNotDefinedException(@Nullable final String generatorName,
-            @Nullable final String artifactName, @Nullable final String targetPattern) {
-        super("No project name is defined for: " + generatorName + " / " + artifactName + " / "
-                + targetPattern);
+	    @Nullable final String artifactName,
+	    @Nullable final String targetPattern) {
+	super("No project name is defined for: " + generatorName + " / "
+		+ artifactName + " / " + targetPattern);
     }
 
 }

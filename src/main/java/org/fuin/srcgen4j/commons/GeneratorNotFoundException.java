@@ -34,7 +34,7 @@ public class GeneratorNotFoundException extends Exception {
      *            <code>null</code>.
      */
     public GeneratorNotFoundException(@Nullable final String generatorName) {
-        super("The generator '" + generatorName + "' is not configured");
+	super("The generator '" + generatorName + "' is not configured");
     }
 
 }

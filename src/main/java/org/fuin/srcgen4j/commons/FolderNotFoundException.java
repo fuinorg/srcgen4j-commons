@@ -43,11 +43,13 @@ public class FolderNotFoundException extends Exception {
      *            Folder name - Should not be <code>null</code>.
      */
     public FolderNotFoundException(@Nullable final String generatorName,
-            @Nullable final String artifactName, @Nullable final String targetPath,
-            @Nullable final String projectName, @Nullable final String folderName) {
-        super("The folder name '" + folderName + "' in project '" + projectName
-                + "' is not known - Selection was: " + generatorName + " / " + artifactName + " / "
-                + targetPath);
+	    @Nullable final String artifactName,
+	    @Nullable final String targetPath,
+	    @Nullable final String projectName,
+	    @Nullable final String folderName) {
+	super("The folder name '" + folderName + "' in project '" + projectName
+		+ "' is not known - Selection was: " + generatorName + " / "
+		+ artifactName + " / " + targetPath);
     }
 
 }

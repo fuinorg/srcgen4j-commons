@@ -30,53 +30,53 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "input", namespace = "http://www.fuin.org/srcgen4j/commons/test")
 public class TestInput extends AbstractElement implements
-		InitializableElement<TestInput, Config<ParserConfig>> {
+	InitializableElement<TestInput, Config<ParserConfig>> {
 
-	@XmlAttribute
-	private String path;
+    @XmlAttribute
+    private String path;
 
-	/**
-	 * Default constructor.
-	 */
-	public TestInput() {
-		super();
-	}
+    /**
+     * Default constructor.
+     */
+    public TestInput() {
+	super();
+    }
 
-	/**
-	 * Constructor with path.
-	 * 
-	 * @param path
-	 *            Path.
-	 */
-	public TestInput(final String path) {
-		super();
-		this.path = path;
-	}
+    /**
+     * Constructor with path.
+     * 
+     * @param path
+     *            Path.
+     */
+    public TestInput(final String path) {
+	super();
+	this.path = path;
+    }
 
-	/**
-	 * Returns the path.
-	 * 
-	 * @return Path information.
-	 */
-	public final String getPath() {
-		return path;
-	}
+    /**
+     * Returns the path.
+     * 
+     * @return Path information.
+     */
+    public final String getPath() {
+	return path;
+    }
 
-	/**
-	 * Sets the path to a new value.
-	 * 
-	 * @param path
-	 *            Path information to set.
-	 */
-	public final void setPath(final String path) {
-		this.path = path;
-	}
+    /**
+     * Sets the path to a new value.
+     * 
+     * @param path
+     *            Path information to set.
+     */
+    public final void setPath(final String path) {
+	this.path = path;
+    }
 
-	@Override
-	public final TestInput init(final SrcGen4JContext context,
-			final Config<ParserConfig> parent, final Map<String, String> vars) {
-		setPath(replaceVars(getPath(), vars));
-		return this;
-	}
+    @Override
+    public final TestInput init(final SrcGen4JContext context,
+	    final Config<ParserConfig> parent, final Map<String, String> vars) {
+	setPath(replaceVars(getPath(), vars));
+	return this;
+    }
 
 }

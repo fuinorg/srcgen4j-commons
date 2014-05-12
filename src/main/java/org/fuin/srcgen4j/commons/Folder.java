@@ -38,7 +38,7 @@ import org.fuin.objects4j.common.Nullable;
 @XmlRootElement(name = "folder")
 @XmlType(propOrder = { "clean", "override", "create", "path" })
 public final class Folder extends AbstractNamedElement implements
-        InitializableElement<Folder, Project> {
+	InitializableElement<Folder, Project> {
 
     @NotNull
     @XmlAttribute
@@ -63,7 +63,7 @@ public final class Folder extends AbstractNamedElement implements
      * Package visible default constructor for deserialization.
      */
     Folder() {
-        super();
+	super();
     }
 
     /**
@@ -75,8 +75,8 @@ public final class Folder extends AbstractNamedElement implements
      *            path to set.
      */
     public Folder(@NotNull final String name, @NotNull final String path) {
-        super(name);
-        this.path = path;
+	super(name);
+	this.path = path;
     }
 
     /**
@@ -95,14 +95,15 @@ public final class Folder extends AbstractNamedElement implements
      * @param clean
      *            Clean directory (TRUE) or not (NULL or FALSE).
      */
-    Folder(@NotNull final Project parent, @NotNull final String name, @NotNull final String path,
-            final boolean create, final boolean override, final boolean clean) {
-        super(name);
-        this.parent = parent;
-        this.path = path;
-        this.create = create;
-        this.override = override;
-        this.clean = clean;
+    Folder(@NotNull final Project parent, @NotNull final String name,
+	    @NotNull final String path, final boolean create,
+	    final boolean override, final boolean clean) {
+	super(name);
+	this.parent = parent;
+	this.path = path;
+	this.create = create;
+	this.override = override;
+	this.clean = clean;
     }
 
     /**
@@ -112,7 +113,7 @@ public final class Folder extends AbstractNamedElement implements
      */
     @NeverNull
     public final String getPath() {
-        return path;
+	return path;
     }
 
     /**
@@ -122,10 +123,10 @@ public final class Folder extends AbstractNamedElement implements
      * @return Create directories (TRUE) or not (FALSE).
      */
     public final boolean isCreate() {
-        if (create == null) {
-            return false;
-        }
-        return create.booleanValue();
+	if (create == null) {
+	    return false;
+	}
+	return create.booleanValue();
     }
 
     /**
@@ -136,7 +137,7 @@ public final class Folder extends AbstractNamedElement implements
      */
     @Nullable
     public final Boolean getCreate() {
-        return create;
+	return create;
     }
 
     /**
@@ -147,7 +148,7 @@ public final class Folder extends AbstractNamedElement implements
      *            Create directories (TRUE) or not (NULL or FALSE).
      */
     public final void setCreate(@Nullable final Boolean create) {
-        this.create = create;
+	this.create = create;
     }
 
     /**
@@ -157,10 +158,10 @@ public final class Folder extends AbstractNamedElement implements
      * @return Clean directory (TRUE) or not (FALSE).
      */
     public final boolean isClean() {
-        if (clean == null) {
-            return false;
-        }
-        return clean.booleanValue();
+	if (clean == null) {
+	    return false;
+	}
+	return clean.booleanValue();
     }
 
     /**
@@ -171,7 +172,7 @@ public final class Folder extends AbstractNamedElement implements
      */
     @Nullable
     public final Boolean getClean() {
-        return clean;
+	return clean;
     }
 
     /**
@@ -182,7 +183,7 @@ public final class Folder extends AbstractNamedElement implements
      *            Clean directory (TRUE) or not (NULL or FALSE).
      */
     public final void setClean(@Nullable final Boolean clean) {
-        this.clean = clean;
+	this.clean = clean;
     }
 
     /**
@@ -192,10 +193,10 @@ public final class Folder extends AbstractNamedElement implements
      * @return Override files (TRUE) or not (FALSE).
      */
     public final boolean isOverride() {
-        if (override == null) {
-            return false;
-        }
-        return override.booleanValue();
+	if (override == null) {
+	    return false;
+	}
+	return override.booleanValue();
     }
 
     /**
@@ -206,7 +207,7 @@ public final class Folder extends AbstractNamedElement implements
      */
     @Nullable
     public final Boolean getOverride() {
-        return override;
+	return override;
     }
 
     /**
@@ -217,7 +218,7 @@ public final class Folder extends AbstractNamedElement implements
      *            Override files (TRUE) or not (NULL or FALSE).
      */
     public final void setOverride(@Nullable final Boolean override) {
-        this.override = override;
+	this.override = override;
     }
 
     /**
@@ -227,7 +228,7 @@ public final class Folder extends AbstractNamedElement implements
      */
     @Nullable
     public final Project getParent() {
-        return parent;
+	return parent;
     }
 
     /**
@@ -237,17 +238,17 @@ public final class Folder extends AbstractNamedElement implements
      *            Parent or <code>null</code>.
      */
     final void setParent(final Project parent) {
-        this.parent = parent;
+	this.parent = parent;
     }
 
     @Override
-    public final Folder init(final SrcGen4JContext context, final Project parent,
-            final Map<String, String> vars) {
-        this.parent = parent;
-        inheritVariables(vars);
-        setName(replaceVars(getName(), getVarMap()));
-        path = replaceVars(path, getVarMap());
-        return this;
+    public final Folder init(final SrcGen4JContext context,
+	    final Project parent, final Map<String, String> vars) {
+	this.parent = parent;
+	inheritVariables(vars);
+	setName(replaceVars(getName(), getVarMap()));
+	path = replaceVars(path, getVarMap());
+	return this;
     }
 
     /**
@@ -257,10 +258,10 @@ public final class Folder extends AbstractNamedElement implements
      */
     @Nullable
     public final String getDirectory() {
-        if (parent == null) {
-            return null;
-        }
-        return parent.getPath() + "/" + getPath();
+	if (parent == null) {
+	    return null;
+	}
+	return parent.getPath() + "/" + getPath();
     }
 
     /**
@@ -270,15 +271,16 @@ public final class Folder extends AbstractNamedElement implements
      */
     @Nullable
     public final File getCanonicalDir() {
-        final String dir = getDirectory();
-        if (dir == null) {
-            return null;
-        }
-        try {
-            return new File(dir).getCanonicalFile();
-        } catch (final IOException ex) {
-            throw new RuntimeException("Couldn't determine canonical file: " + dir, ex);
-        }
+	final String dir = getDirectory();
+	if (dir == null) {
+	    return null;
+	}
+	try {
+	    return new File(dir).getCanonicalFile();
+	} catch (final IOException ex) {
+	    throw new RuntimeException("Couldn't determine canonical file: "
+		    + dir, ex);
+	}
     }
 
 }

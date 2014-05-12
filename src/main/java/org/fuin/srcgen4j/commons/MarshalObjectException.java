@@ -34,8 +34,9 @@ public final class MarshalObjectException extends Exception {
      * @param cause
      *            Cause.
      */
-    public MarshalObjectException(@NotNull final String message, @NotNull final Throwable cause) {
-        super(message, cause);
+    public MarshalObjectException(@NotNull final String message,
+	    @NotNull final Throwable cause) {
+	super(message, cause);
     }
 
 }

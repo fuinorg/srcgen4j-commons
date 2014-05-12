@@ -61,7 +61,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      * Package visible default constructor for deserialization.
      */
     ArtifactFactoryConfig() {
-        super();
+	super();
     }
 
     /**
@@ -73,8 +73,8 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      *            Full qualified factory class name.
      */
     public ArtifactFactoryConfig(@NotNull final String artifact,
-            @NotNull final String factoryClassName) {
-        this(artifact, factoryClassName, null);
+	    @NotNull final String factoryClassName) {
+	this(artifact, factoryClassName, null);
     }
 
     /**
@@ -89,10 +89,11 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      *            (default), else FALSE.
      */
     public ArtifactFactoryConfig(@NotNull final String artifact,
-            @NotNull final String factoryClassName, @Nullable final Boolean incremental) {
-        super();
-        this.artifact = artifact;
-        this.factoryClassName = factoryClassName;
+	    @NotNull final String factoryClassName,
+	    @Nullable final Boolean incremental) {
+	super();
+	this.artifact = artifact;
+	this.factoryClassName = factoryClassName;
     }
 
     /**
@@ -102,7 +103,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      */
     @NeverNull
     public final String getArtifact() {
-        return artifact;
+	return artifact;
     }
 
     /**
@@ -112,7 +113,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      */
     @NeverNull
     public final String getFactoryClassName() {
-        return factoryClassName;
+	return factoryClassName;
     }
 
     /**
@@ -123,7 +124,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      */
     @Nullable
     public final Boolean getIncremental() {
-        return incremental;
+	return incremental;
     }
 
     /**
@@ -135,7 +136,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      *            FALSE.
      */
     public final void setIncremental(@Nullable final Boolean incremental) {
-        this.incremental = incremental;
+	this.incremental = incremental;
     }
 
     /**
@@ -147,10 +148,10 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      *         else FALSE.
      */
     public final boolean isIncremental() {
-        if (incremental == null) {
-            return true;
-        }
-        return incremental;
+	if (incremental == null) {
+	    return true;
+	}
+	return incremental;
     }
 
     /**
@@ -161,22 +162,26 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      */
     @NeverNull
     public final ArtifactFactory<?> getFactory() {
-        if (factory == null) {
-            if (factoryClassName == null) {
-                throw new IllegalStateException("Factory class name was not set: " + artifact);
-            }
-            if (context == null) {
-                throw new IllegalStateException("Context class loader was not set: " + artifact);
-            }
-            final Object obj = Utils4J.createInstance(factoryClassName, context.getClassLoader());
-            if (!ArtifactFactory.class.isAssignableFrom(obj.getClass())) {
-                throw new IllegalStateException("Expected an object of type '"
-                        + ArtifactFactory.class.getName() + "', but was: " + obj.getClass());
-            }
-            factory = (ArtifactFactory<?>) obj;
-            factory.init(this);
-        }
-        return factory;
+	if (factory == null) {
+	    if (factoryClassName == null) {
+		throw new IllegalStateException(
+			"Factory class name was not set: " + artifact);
+	    }
+	    if (context == null) {
+		throw new IllegalStateException(
+			"Context class loader was not set: " + artifact);
+	    }
+	    final Object obj = Utils4J.createInstance(factoryClassName,
+		    context.getClassLoader());
+	    if (!ArtifactFactory.class.isAssignableFrom(obj.getClass())) {
+		throw new IllegalStateException("Expected an object of type '"
+			+ ArtifactFactory.class.getName() + "', but was: "
+			+ obj.getClass());
+	    }
+	    factory = (ArtifactFactory<?>) obj;
+	    factory.init(this);
+	}
+	return factory;
     }
 
     /**
@@ -190,12 +195,13 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      * @return This instance.
      */
     @NeverNull
-    public final ArtifactFactoryConfig init(@NotNull final SrcGen4JContext context,
-            final Map<String, String> vars) {
-        Contract.requireArgNotNull("context", context);
-        this.context = context;
-        inheritVariables(vars);
-        return this;
+    public final ArtifactFactoryConfig init(
+	    @NotNull final SrcGen4JContext context,
+	    final Map<String, String> vars) {
+	Contract.requireArgNotNull("context", context);
+	this.context = context;
+	inheritVariables(vars);
+	return this;
     }
 
 }

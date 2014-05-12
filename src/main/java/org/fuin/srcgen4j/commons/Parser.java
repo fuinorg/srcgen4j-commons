@@ -39,7 +39,8 @@ public interface Parser<MODEL> {
      * @param config
      *            Configuration to use.
      */
-    public void initialize(@NotNull SrcGen4JContext context, @Nullable ParserConfig config);
+    public void initialize(@NotNull SrcGen4JContext context,
+	    @Nullable ParserConfig config);
 
     /**
      * Parses a model using the initially given configuration.

@@ -47,10 +47,12 @@ import org.slf4j.LoggerFactory;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "srcgen4j-config")
-@XmlType(propOrder = { "generators", "parsers", "projects", "classpath", "variables" })
+@XmlType(propOrder = { "generators", "parsers", "projects", "classpath",
+	"variables" })
 public class SrcGen4JConfig {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SrcGen4JConfig.class);
+    private static final Logger LOG = LoggerFactory
+	    .getLogger(SrcGen4JConfig.class);
 
     @Nullable
     @Valid
@@ -88,7 +90,7 @@ public class SrcGen4JConfig {
      * Default constructor.
      */
     public SrcGen4JConfig() {
-        super();
+	super();
     }
 
     /**
@@ -98,7 +100,7 @@ public class SrcGen4JConfig {
      */
     @Nullable
     public final List<Variable> getVariables() {
-        return variables;
+	return variables;
     }
 
     /**
@@ -108,7 +110,7 @@ public class SrcGen4JConfig {
      */
     @Nullable
     public final Map<String, String> getVarMap() {
-        return varMap;
+	return varMap;
     }
 
     /**
@@ -118,7 +120,7 @@ public class SrcGen4JConfig {
      *            Variables.
      */
     public final void setVariables(@Nullable final List<Variable> variables) {
-        this.variables = variables;
+	this.variables = variables;
     }
 
     /**
@@ -128,7 +130,7 @@ public class SrcGen4JConfig {
      */
     @Nullable
     public final Classpath getClasspath() {
-        return classpath;
+	return classpath;
     }
 
     /**
@@ -138,7 +140,7 @@ public class SrcGen4JConfig {
      *            Value to set.
      */
     public final void setClasspath(@Nullable final Classpath classpath) {
-        this.classpath = classpath;
+	this.classpath = classpath;
     }
 
     /**
@@ -148,7 +150,7 @@ public class SrcGen4JConfig {
      */
     @Nullable
     public final List<Project> getProjects() {
-        return projects;
+	return projects;
     }
 
     /**
@@ -158,7 +160,7 @@ public class SrcGen4JConfig {
      *            Projects.
      */
     public final void setProjects(@Nullable final List<Project> projects) {
-        this.projects = projects;
+	this.projects = projects;
     }
 
     /**
@@ -168,7 +170,7 @@ public class SrcGen4JConfig {
      */
     @Nullable
     public final Parsers getParsers() {
-        return parsers;
+	return parsers;
     }
 
     /**
@@ -178,7 +180,7 @@ public class SrcGen4JConfig {
      *            Parsers.
      */
     public final void setParsers(@Nullable final Parsers parsers) {
-        this.parsers = parsers;
+	this.parsers = parsers;
     }
 
     /**
@@ -189,11 +191,11 @@ public class SrcGen4JConfig {
      *            Parser to add.
      */
     public final void addParser(@NotNull final ParserConfig parser) {
-        Contract.requireArgNotNull("parser", parser);
-        if (parsers == null) {
-            parsers = new Parsers();
-        }
-        parsers.addParser(parser);
+	Contract.requireArgNotNull("parser", parser);
+	if (parsers == null) {
+	    parsers = new Parsers();
+	}
+	parsers.addParser(parser);
     }
 
     /**
@@ -203,7 +205,7 @@ public class SrcGen4JConfig {
      */
     @Nullable
     public final Generators getGenerators() {
-        return generators;
+	return generators;
     }
 
     /**
@@ -213,7 +215,7 @@ public class SrcGen4JConfig {
      *            Generators.
      */
     public final void setGenerators(@Nullable final Generators generators) {
-        this.generators = generators;
+	this.generators = generators;
     }
 
     /**
@@ -223,25 +225,26 @@ public class SrcGen4JConfig {
      *         TRUE, else FALSE.
      */
     public final boolean isInitialized() {
-        return initialized;
+	return initialized;
     }
 
     private void initVarMap(final File rootDir) {
-        if (variables == null) {
-            varMap = new HashMap<String, String>();
-            varMap.put("rootDir", rootDir.toString());
-        } else {
-            final Variable rootDirVar = new Variable("rootDir", rootDir.toString());
-            final int idx = variables.indexOf(rootDirVar);
-            if (idx > -1) {
-                final Variable old = variables.set(idx, rootDirVar);
-                LOG.warn("Replaced existing root directory variable '" + old.getValue()
-                        + "' with: " + rootDir);
-            } else {
-                variables.add(rootDirVar);
-            }
-            varMap = new VariableResolver(variables).getResolved();
-        }
+	if (variables == null) {
+	    varMap = new HashMap<String, String>();
+	    varMap.put("rootDir", rootDir.toString());
+	} else {
+	    final Variable rootDirVar = new Variable("rootDir",
+		    rootDir.toString());
+	    final int idx = variables.indexOf(rootDirVar);
+	    if (idx > -1) {
+		final Variable old = variables.set(idx, rootDirVar);
+		LOG.warn("Replaced existing root directory variable '"
+			+ old.getValue() + "' with: " + rootDir);
+	    } else {
+		variables.add(rootDirVar);
+	    }
+	    varMap = new VariableResolver(variables).getResolved();
+	}
     }
 
     /**
@@ -259,32 +262,32 @@ public class SrcGen4JConfig {
      * @return This instance.
      */
     public final SrcGen4JConfig init(@NotNull final SrcGen4JContext context,
-            @NotNull @FileExists @IsDirectory final File rootDir) {
+	    @NotNull @FileExists @IsDirectory final File rootDir) {
 
-        Contract.requireArgNotNull("context", context);
-        Contract.requireArgNotNull("rootDir", rootDir);
-        FileExistsValidator.requireArgValid("rootDir", rootDir);
-        IsDirectoryValidator.requireArgValid("rootDir", rootDir);
+	Contract.requireArgNotNull("context", context);
+	Contract.requireArgNotNull("rootDir", rootDir);
+	FileExistsValidator.requireArgValid("rootDir", rootDir);
+	IsDirectoryValidator.requireArgValid("rootDir", rootDir);
 
-        initVarMap(rootDir);
-        if (variables != null) {
-            for (final Variable variable : variables) {
-                variable.init(varMap);
-            }
-        }
-        if (projects != null) {
-            for (final Project project : projects) {
-                project.init(context, this, varMap);
-            }
-        }
-        if (generators != null) {
-            generators.init(context, this, varMap);
-        }
-        if (parsers != null) {
-            parsers.init(context, this, varMap);
-        }
-        initialized = true;
-        return this;
+	initVarMap(rootDir);
+	if (variables != null) {
+	    for (final Variable variable : variables) {
+		variable.init(varMap);
+	    }
+	}
+	if (projects != null) {
+	    for (final Project project : projects) {
+		project.init(context, this, varMap);
+	    }
+	}
+	if (generators != null) {
+	    generators.init(context, this, varMap);
+	}
+	if (parsers != null) {
+	    parsers.init(context, this, varMap);
+	}
+	initialized = true;
+	return this;
     }
 
     /**
@@ -312,14 +315,15 @@ public class SrcGen4JConfig {
      *             The folder in the project based on the selection is unknown.
      */
     public final Folder findTargetFolder(@NotNull final String generatorName,
-            @NotNull final String artifactName) throws ProjectNameNotDefinedException,
-            ArtifactNotFoundException, FolderNameNotDefinedException, GeneratorNotFoundException,
-            ProjectNotFoundException, FolderNotFoundException {
+	    @NotNull final String artifactName)
+	    throws ProjectNameNotDefinedException, ArtifactNotFoundException,
+	    FolderNameNotDefinedException, GeneratorNotFoundException,
+	    ProjectNotFoundException, FolderNotFoundException {
 
-        Contract.requireArgNotNull("generatorName", generatorName);
-        Contract.requireArgNotNull("artifactName", artifactName);
+	Contract.requireArgNotNull("generatorName", generatorName);
+	Contract.requireArgNotNull("artifactName", artifactName);
 
-        return findTargetFolder(generatorName, artifactName, null);
+	return findTargetFolder(generatorName, artifactName, null);
 
     }
 
@@ -350,56 +354,58 @@ public class SrcGen4JConfig {
      *             The folder in the project based on the selection is unknown.
      */
     public final Folder findTargetFolder(@NotNull final String generatorName,
-            @NotNull final String artifactName, final String targetPath)
-            throws ProjectNameNotDefinedException, ArtifactNotFoundException,
-            FolderNameNotDefinedException, GeneratorNotFoundException, ProjectNotFoundException,
-            FolderNotFoundException {
+	    @NotNull final String artifactName, final String targetPath)
+	    throws ProjectNameNotDefinedException, ArtifactNotFoundException,
+	    FolderNameNotDefinedException, GeneratorNotFoundException,
+	    ProjectNotFoundException, FolderNotFoundException {
 
-        Contract.requireArgNotNull("generatorName", generatorName);
-        Contract.requireArgNotNull("artifactName", artifactName);
+	Contract.requireArgNotNull("generatorName", generatorName);
+	Contract.requireArgNotNull("artifactName", artifactName);
 
-        final GeneratorConfig generator = generators.findByName(generatorName);
+	final GeneratorConfig generator = generators.findByName(generatorName);
 
-        int idx = generator.getArtifacts().indexOf(new Artifact(artifactName));
-        if (idx < 0) {
-            throw new ArtifactNotFoundException(generatorName, artifactName);
-        }
-        final Artifact artifact = generator.getArtifacts().get(idx);
+	int idx = generator.getArtifacts().indexOf(new Artifact(artifactName));
+	if (idx < 0) {
+	    throw new ArtifactNotFoundException(generatorName, artifactName);
+	}
+	final Artifact artifact = generator.getArtifacts().get(idx);
 
-        final String projectName;
-        final String folderName;
-        final String targetPattern;
-        final Target target = artifact.findTargetFor(targetPath);
-        if (target == null) {
-            projectName = artifact.getDefProject();
-            folderName = artifact.getDefFolder();
-            targetPattern = null;
-        } else {
-            projectName = target.getDefProject();
-            folderName = target.getDefFolder();
-            targetPattern = target.getPattern();
-        }
+	final String projectName;
+	final String folderName;
+	final String targetPattern;
+	final Target target = artifact.findTargetFor(targetPath);
+	if (target == null) {
+	    projectName = artifact.getDefProject();
+	    folderName = artifact.getDefFolder();
+	    targetPattern = null;
+	} else {
+	    projectName = target.getDefProject();
+	    folderName = target.getDefFolder();
+	    targetPattern = target.getPattern();
+	}
 
-        if (projectName == null) {
-            throw new ProjectNameNotDefinedException(generatorName, artifactName, targetPattern);
-        }
-        if (folderName == null) {
-            throw new FolderNameNotDefinedException(generatorName, artifactName, targetPattern);
-        }
+	if (projectName == null) {
+	    throw new ProjectNameNotDefinedException(generatorName,
+		    artifactName, targetPattern);
+	}
+	if (folderName == null) {
+	    throw new FolderNameNotDefinedException(generatorName,
+		    artifactName, targetPattern);
+	}
 
-        idx = projects.indexOf(new Project(projectName, "dummy"));
-        if (idx < 0) {
-            throw new ProjectNotFoundException(generatorName, artifactName, targetPattern,
-                    projectName);
-        }
-        final Project project = projects.get(idx);
+	idx = projects.indexOf(new Project(projectName, "dummy"));
+	if (idx < 0) {
+	    throw new ProjectNotFoundException(generatorName, artifactName,
+		    targetPattern, projectName);
+	}
+	final Project project = projects.get(idx);
 
-        idx = project.getFolders().indexOf(new Folder(folderName, "NotUsed"));
-        if (idx < 0) {
-            throw new FolderNotFoundException(generatorName, artifactName, targetPattern,
-                    projectName, folderName);
-        }
-        return project.getFolders().get(idx);
+	idx = project.getFolders().indexOf(new Folder(folderName, "NotUsed"));
+	if (idx < 0) {
+	    throw new FolderNotFoundException(generatorName, artifactName,
+		    targetPattern, projectName, folderName);
+	}
+	return project.getFolders().get(idx);
 
     }
 
@@ -412,17 +418,18 @@ public class SrcGen4JConfig {
      * @return List of generators.
      */
     @NeverNull
-    public final List<GeneratorConfig> findGeneratorsForParser(@NotNull final String parserName) {
-        Contract.requireArgNotNull("parserName", parserName);
+    public final List<GeneratorConfig> findGeneratorsForParser(
+	    @NotNull final String parserName) {
+	Contract.requireArgNotNull("parserName", parserName);
 
-        final List<GeneratorConfig> list = new ArrayList<GeneratorConfig>();
-        final List<GeneratorConfig> gcList = generators.getList();
-        for (final GeneratorConfig gc : gcList) {
-            if (gc.getParser().equals(parserName)) {
-                list.add(gc);
-            }
-        }
-        return list;
+	final List<GeneratorConfig> list = new ArrayList<GeneratorConfig>();
+	final List<GeneratorConfig> gcList = generators.getList();
+	for (final GeneratorConfig gc : gcList) {
+	    if (gc.getParser().equals(parserName)) {
+		list.add(gc);
+	    }
+	}
+	return list;
     }
 
     /**
@@ -441,23 +448,24 @@ public class SrcGen4JConfig {
      */
     @NeverNull
     public static SrcGen4JConfig createMavenStyleSingleProject(
-            @NotNull final SrcGen4JContext context, @NotNull final String projectName,
-            @NotNull @FileExists @IsDirectory final File rootDir) {
+	    @NotNull final SrcGen4JContext context,
+	    @NotNull final String projectName,
+	    @NotNull @FileExists @IsDirectory final File rootDir) {
 
-        Contract.requireArgNotNull("context", context);
-        Contract.requireArgNotNull("rootDir", rootDir);
-        FileExistsValidator.requireArgValid("rootDir", rootDir);
-        IsDirectoryValidator.requireArgValid("rootDir", rootDir);
-        Contract.requireArgNotNull("projectName", projectName);
+	Contract.requireArgNotNull("context", context);
+	Contract.requireArgNotNull("rootDir", rootDir);
+	FileExistsValidator.requireArgValid("rootDir", rootDir);
+	IsDirectoryValidator.requireArgValid("rootDir", rootDir);
+	Contract.requireArgNotNull("projectName", projectName);
 
-        final SrcGen4JConfig config = new SrcGen4JConfig();
-        final List<Project> projects = new ArrayList<Project>();
-        final Project project = new Project(projectName, ".");
-        project.setMaven(true);
-        projects.add(project);
-        config.setProjects(projects);
-        config.init(context, rootDir);
-        return config;
+	final SrcGen4JConfig config = new SrcGen4JConfig();
+	final List<Project> projects = new ArrayList<Project>();
+	final Project project = new Project(projectName, ".");
+	project.setMaven(true);
+	projects.add(project);
+	config.setProjects(projects);
+	config.init(context, rootDir);
+	return config;
     }
 
 }

@@ -41,10 +41,12 @@ public class ProjectNotFoundException extends Exception {
      *            Project name - Should not be <code>null</code>.
      */
     public ProjectNotFoundException(@Nullable final String generatorName,
-            @Nullable final String artifactName, @Nullable final String targetPattern,
-            @Nullable final String projectName) {
-        super("The project name '" + projectName + "' is not known - Selection was: "
-                + generatorName + " / " + artifactName + " / " + targetPattern);
+	    @Nullable final String artifactName,
+	    @Nullable final String targetPattern,
+	    @Nullable final String projectName) {
+	super("The project name '" + projectName
+		+ "' is not known - Selection was: " + generatorName + " / "
+		+ artifactName + " / " + targetPattern);
     }
 
 }
