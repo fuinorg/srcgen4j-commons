@@ -22,8 +22,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
-import org.jboss.weld.exceptions.IllegalArgumentException;
-
 /**
  * Stream handler that reads from the class path.
  */

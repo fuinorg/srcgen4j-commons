@@ -14,7 +14,7 @@ Export-Package: org.fuin.srcgen4j.commons;version="0.4.0.SNAPSHOT";uses:
 Import-Package: javax.validation,javax.validation.constraints,javax.xml.
  bind,javax.xml.bind.annotation,org.apache.commons.io;version="[1.4,2)",
  org.apache.commons.io.filefilter;version="[1.4,2)",org.fuin.objects4j.c
- ommon;version="[0.5,1)",org.fuin.utils4j;version="[0.8,1)",org.jboss.we
- ld.exceptions,org.slf4j;version="[1.6,2)"
+ ommon;version="[0.5,1)",org.fuin.utils4j;version="[0.8,1)",org.slf4j;ve
+ rsion="[1.6,2)"
 Include-Resource: srcgen4j-commons.xsd=src/main/resources/srcgen4j-commo
  ns.xsd
