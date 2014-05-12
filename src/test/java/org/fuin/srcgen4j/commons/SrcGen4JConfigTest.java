@@ -265,7 +265,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
 	    // VERIFY
 	    assertThat(testee.getVarMap()).includes(entry("root", "/var/tmp"),
-		    entry("a", "base"));
+		    entry("a", "base"), entry("res", "/**\n * Test base.\n */"));
 
 	    final Parsers parsers = testee.getParsers();
 	    assertThat(parsers.getVarMap()).includes(
@@ -277,6 +277,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
 		    entry("a", "base/parsers1/parser1"),
 		    entry("b", "base/parsers1/parsers2"),
 		    entry("c", "base/parsers1/parser1/parser3"),
+		    entry("x", "/**\n * Test base/parsers1/parser1.\n */"),
 		    entry("root", "/var/tmp"), entry("rootDir", "."));
 	    // @formatter:off
 

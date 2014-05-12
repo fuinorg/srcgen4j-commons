@@ -7,6 +7,7 @@
 	<variables>
 		<variable name="root" value="/var/tmp" />
 		<variable name="a" value="base" />
+		<variable name="res" url="classpath:header.txt" encoding="utf-8" />
 	</variables>
 	
 	<projects>
@@ -19,6 +20,7 @@
 		<parser name="parser1" class="org.fuin.srcgen4j.commons.TestParser">
 			<variable name="a" value="${a}/parser1" />
 			<variable name="c" value="${a}/parser3" />
+			<variable name="x" url="classpath:header.txt" encoding="utf-8" />
 			<config>
 				<test:input path="${root}/xtext-ddd/TestModel/src/main/domain" />
 			</config>

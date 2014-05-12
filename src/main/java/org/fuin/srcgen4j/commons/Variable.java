@@ -17,8 +17,14 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -26,7 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverEmpty;
 import org.fuin.objects4j.common.NotEmpty;
 import org.fuin.objects4j.common.Nullable;
 
@@ -46,11 +51,21 @@ public class Variable extends AbstractNamedElement {
     @XmlAttribute
     private String xpath;
 
+    @Nullable
+    @XmlAttribute(name = "url")
+    private String urlStr;
+
+    @Nullable
+    @XmlAttribute(name = "encoding")
+    private String encoding;
+
+    private transient URL url;
+
     /**
      * Package visible default constructor for deserialization.
      */
     Variable() {
-	super();
+        super();
     }
 
     /**
@@ -62,9 +77,9 @@ public class Variable extends AbstractNamedElement {
      *            Value to set.
      */
     public Variable(@NotEmpty final String name, @NotEmpty final String value) {
-	super(name);
-	Contract.requireArgNotEmpty("value", value);
-	this.value = value;
+        super(name);
+        Contract.requireArgNotEmpty("value", value);
+        this.value = value;
     }
 
     /**
@@ -78,12 +93,32 @@ public class Variable extends AbstractNamedElement {
      *            Value to set.
      */
     public Variable(@NotEmpty final String name, @NotEmpty final String value,
-	    @NotEmpty final String xpath) {
-	super(name);
-	Contract.requireArgNotEmpty("value", value);
-	Contract.requireArgNotEmpty("xpath", xpath);
-	this.value = value;
-	this.xpath = xpath;
+            @NotEmpty final String xpath) {
+        super(name);
+        Contract.requireArgNotEmpty("value", value);
+        Contract.requireArgNotEmpty("xpath", xpath);
+        this.value = value;
+        this.xpath = xpath;
+    }
+
+    /**
+     * Constructor with name and URL.
+     * 
+     * @param name
+     *            Name to set.
+     * @param url
+     *            URL that references a text resource.
+     * @param encoding
+     *            Encoding of the text resource the URL points to.
+     */
+    public Variable(@NotEmpty final String name, @NotNull final URL url,
+            @NotNull final String encoding) {
+        super(name);
+        Contract.requireArgNotNull("url", url);
+        Contract.requireArgNotNull("encoding", encoding);
+        this.url = url;
+        this.urlStr = url.toString();
+        this.encoding = encoding;
     }
 
     /**
@@ -91,9 +126,12 @@ public class Variable extends AbstractNamedElement {
      * 
      * @return Current value.
      */
-    @NeverEmpty
+    @Nullable
     public final String getValue() {
-	return value;
+        if ((value == null) && (urlStr != null)) {
+            value = read(getURL(), encoding);
+        }
+        return value;
     }
 
     /**
@@ -103,7 +141,32 @@ public class Variable extends AbstractNamedElement {
      */
     @Nullable
     public final String getXpath() {
-	return xpath;
+        return xpath;
+    }
+
+    /**
+     * Returns the URL.
+     * 
+     * @return URL.
+     */
+    @Nullable
+    public final URL getURL() {
+        if (url == null) {
+            url = asURL(getName(), urlStr);
+        }
+        return url;
+    }
+
+    private static URL asURL(final String variable, final String url) {
+        try {
+            if (url.startsWith("classpath:")) {
+                return new URL(null, url, new ClasspathURLStreamHandler());
+            }
+            return new URL(url);
+        } catch (final MalformedURLException ex) {
+            throw new IllegalArgumentException("Variable '" + variable
+                    + "' has invalid URL: " + url, ex);
+        }
     }
 
     /**
@@ -113,7 +176,32 @@ public class Variable extends AbstractNamedElement {
      *            Variables to use.
      */
     public final void init(@Nullable final Map<String, String> vars) {
-	value = replaceVars(value, vars);
+        value = replaceVars(value, vars);
+    }
+
+    private static String read(final URL url, final String encoding) {
+        final String enc;
+        if (encoding == null) {
+            enc = "utf-8";
+        } else {
+            enc = encoding;
+        }
+        try {
+            final Reader reader = new InputStreamReader(url.openStream(), enc);
+            try {
+                final StringBuilder sb = new StringBuilder();
+                final char[] cbuf = new char[1024];
+                int count;
+                while ((count = reader.read(cbuf)) > -1) {
+                    sb.append(String.valueOf(cbuf, 0, count));
+                }
+                return sb.toString();
+            } finally {
+                reader.close();
+            }
+        } catch (final IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     // CHECKSTYLE:ON
