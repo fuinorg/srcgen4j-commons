@@ -138,6 +138,9 @@ public class SrcGen4JConfigTest extends AbstractTest {
                     new Folder("genMainRes", ""), new Folder("testJava", ""),
                     new Folder("testRes", ""), new Folder("genTestJava", ""),
                     new Folder("genTestRes", ""));
+            final int idxGenMainJava = prj.getFolders().indexOf(new Folder("genMainJava", ""));
+            assertThat(idxGenMainJava).isGreaterThan(-1);
+            assertThat(prj.getFolders().get(idxGenMainJava).getCleanExclude()).isEqualTo("\\..*");
 
             assertThat(testee.getGenerators()).isNotNull();
             assertThat(testee.getGenerators().getList()).hasSize(1);

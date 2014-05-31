@@ -29,6 +29,7 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.OrFileFilter;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.NeverNull;
 import org.fuin.utils4j.Utils4J;
@@ -115,25 +116,22 @@ public final class SrcGen4J {
 
     private void cleanFolders() {
         final List<Project> projects = config.getProjects();
-        if (projects == null) {
+        if ((projects == null) || (projects.size() == 0)) {
             LOG.warn("No projects configured!");
         } else {
             for (final Project project : projects) {
                 final List<Folder> folders = project.getFolders();
-                if (folders == null) {
+                if ((folders == null) || (folders.size() == 0)) {
                     LOG.warn("No project folders configured for: "
                             + project.getName());
                 } else {
                     for (final Folder folder : folders) {
                         final File dir = folder.getCanonicalDir();
                         if (folder.isClean() && dir.exists()) {
-                            try {
-                                LOG.info("Cleaning: " + dir);
-                                FileUtils.cleanDirectory(dir);
-                            } catch (final IOException ex) {
-                                throw new RuntimeException("Error cleaning: "
-                                        + dir, ex);
-                            }
+                            LOG.info("Cleaning: " + dir);
+                            cleanDirectory(
+                                    dir,
+                                    folder);
                         } else {
                             LOG.debug("Nothing to to [clean="
                                     + folder.isClean() + ", exists="
@@ -145,6 +143,45 @@ public final class SrcGen4J {
         }
     }
 
+    private boolean cleanDirectory(final File dir,
+            final Folder folder) {
+
+        File[] files = dir.listFiles();
+        if (files == null) {
+            return true;
+        }
+        for (final File file : files) {
+            if (folder.cleanAllowed(file)) {
+                LOG.info("Excluded from cleaning: " + file);
+            } else {
+                if (file.isDirectory()) {
+                    if (cleanDirectory(file, folder)) {
+                        delete(file);
+                    }
+                } else {
+                    delete(file);
+                }
+            }
+        }
+        files = dir.listFiles();
+        final boolean empty = (files == null || files.length == 0);
+        if (!empty) {
+            LOG.debug("Directory still contains " + files.length + " files after cleaning");
+        }
+        return empty;
+    }
+
+    private void delete(final File file) {
+        final boolean ok = file.delete();
+        if (!ok) {
+            if (file.isDirectory()) {
+                LOG.error("Couldn't delete directory: " + file);
+            } else {
+                LOG.error("Couldn't delete file: " + file);
+            }
+        }
+    }
+    
     /**
      * Parse and generate.
      * 

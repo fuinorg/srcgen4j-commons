@@ -181,21 +181,21 @@ public class Project extends AbstractNamedElement implements
         }
         if (isMaven()) {
             addIfNotExists(new Folder(this, "mainJava", "src/main/java", false,
-                    false, false));
+                    false, null, false, null));
             addIfNotExists(new Folder(this, "mainRes", "src/main/resources",
-                    false, false, false));
+                    false, false, null, false, null));
             addIfNotExists(new Folder(this, "genMainJava", "src-gen/main/java",
-                    true, true, true));
+                    true, false, null, true, null));
             addIfNotExists(new Folder(this, "genMainRes",
-                    "src-gen/main/resources", true, true, true));
+                    "src-gen/main/resources", true, false, null, true, null));
             addIfNotExists(new Folder(this, "testJava", "src/test/java", false,
-                    false, false));
+                    false, null, false, null));
             addIfNotExists(new Folder(this, "testRes", "src/test/resources",
-                    false, false, false));
+                    false, false, null, false, null));
             addIfNotExists(new Folder(this, "genTestJava", "src-gen/test/java",
-                    true, true, true));
+                    true, false, null, true, null));
             addIfNotExists(new Folder(this, "genTestRes",
-                    "src-gen/test/resources", true, true, true));
+                    "src-gen/test/resources", true, false, null, true, null));
         }
         return this;
     }

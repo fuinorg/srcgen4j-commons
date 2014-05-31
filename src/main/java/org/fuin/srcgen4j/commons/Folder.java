@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.common.Nullable;
 
@@ -54,8 +55,22 @@ public final class Folder extends AbstractNamedElement implements
 
     @Nullable
     @XmlAttribute
+    private String overrideExclude;
+
+    @Nullable
+    @XmlAttribute
     private Boolean clean;
 
+    @Nullable
+    @XmlAttribute
+    private String cleanExclude;
+
+    @Nullable
+    private transient RegexFileFilter overrideExcludeFilter;
+    
+    @Nullable
+    private transient RegexFileFilter cleanExcludeFilter;
+    
     @Nullable
     private transient Project parent;
 
@@ -92,18 +107,25 @@ public final class Folder extends AbstractNamedElement implements
      *            Create directories (TRUE) or not (NULL or FALSE).
      * @param override
      *            Override files (TRUE) or not (NULL or FALSE).
+     * @param overrideExclude
+     *            Regular expression of files to exclude from override.
      * @param clean
      *            Clean directory (TRUE) or not (NULL or FALSE).
+     * @param cleanExclude
+     *            Regular expression of files to exclude from cleaning.
      */
     Folder(@NotNull final Project parent, @NotNull final String name,
             @NotNull final String path, final boolean create,
-            final boolean override, final boolean clean) {
+            final boolean override, final String overrideExclude,
+            final boolean clean, final String cleanExclude) {
         super(name);
         this.parent = parent;
         this.path = path;
         this.create = create;
         this.override = override;
+        this.overrideExclude = overrideExclude;
         this.clean = clean;
+        this.cleanExclude = cleanExclude;
     }
 
     /**
@@ -221,6 +243,79 @@ public final class Folder extends AbstractNamedElement implements
         this.override = override;
     }
 
+    /**
+     * Returns a regular expression of the files to exclude.
+     *  
+     * @return Regular expression used to exclude files.
+     */
+    @Nullable
+    public final String getOverrideExclude() {
+        return overrideExclude;
+    }
+
+    /**
+     * Sets a regular expression of the files not to override.
+     *  
+     * @param overrideExclude Regular expression used to exclude files.
+     */
+    public final void setOverrideExclude(final String overrideExclude) {
+        this.overrideExclude = overrideExclude;
+    }
+
+
+    /**
+     * Checks if a file can be overridden.
+     * 
+     * @param file File to check against the exlude condition.
+     * 
+     * @return TRUE if the file can be overridden. 
+     */
+    public final boolean overrideAllowed(final File file) {
+        if (overrideExclude == null) {
+            return true;
+        }
+        if (overrideExcludeFilter == null) {
+            overrideExcludeFilter = new RegexFileFilter(overrideExclude);
+        }
+        return !overrideExcludeFilter.accept(file);
+    }
+    
+    /**
+     * Returns a regular expression of the files to exclude.
+     *  
+     * @return Regular expression used to exclude files.
+     */
+    @Nullable
+    public final String getCleanExclude() {
+        return cleanExclude;
+    }
+
+    /**
+     * Sets a regular expression of the files to exclude from cleaning.
+     *  
+     * @param cleanExclude Regular expression used to exclude files.
+     */
+    public final void setCleanExclude(final String cleanExclude) {
+        this.cleanExclude = cleanExclude;
+    }
+    
+    /**
+     * Checks if a file should be excluded from cleaning.
+     * 
+     * @param file File to check against the exlcude condition.
+     * 
+     * @return TRUE if the file can be cleaned. 
+     */
+    public final boolean cleanAllowed(final File file) {
+        if (cleanExclude == null) {
+            return true;
+        }
+        if (cleanExcludeFilter == null) {
+            cleanExcludeFilter = new RegexFileFilter(cleanExclude);
+        }
+        return !cleanExcludeFilter.accept(file);
+    }
+    
     /**
      * Returns the parent for the folder.
      * 

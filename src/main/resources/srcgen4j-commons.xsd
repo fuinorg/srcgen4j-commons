@@ -44,7 +44,9 @@
         <xs:attribute type="xs:string" name="path" use="required"/>
         <xs:attribute type="xs:boolean" name="create" use="optional" default="false"/>
         <xs:attribute type="xs:boolean" name="override" use="optional" default="false"/>
+        <xs:attribute type="xs:string" name="overrideExclude" use="optional"/>
         <xs:attribute type="xs:boolean" name="clean" use="optional" default="false"/>
+        <xs:attribute type="xs:string" name="cleanExclude" use="optional"/>
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>

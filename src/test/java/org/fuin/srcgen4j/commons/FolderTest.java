@@ -55,18 +55,18 @@ public class FolderTest extends AbstractTest {
         final Folder testee = new Folder("abc", "def");
         testee.setCreate(true);
         testee.setClean(true);
+        testee.setCleanExclude("ce");
         testee.setOverride(true);
+        testee.setOverrideExclude("oe");
 
         // TEST
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert
-                .assertXMLEqual(
-                        XML
-                                + "<folder path=\"def\" create=\"true\""
-                                + " override=\"true\" clean=\"true\" name=\"abc\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
-                        result);
+        final String expected = "<folder cleanExclude=\"ce\" overrideExclude=\"oe\" "
+                + "path=\"def\" create=\"true\" override=\"true\" clean=\"true\" "
+                + "name=\"abc\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>";
+        XMLAssert.assertXMLEqual(XML + expected, result);
 
     }
 
@@ -79,7 +79,8 @@ public class FolderTest extends AbstractTest {
         // TEST
         final Folder testee = new JaxbHelper()
                 .create("<folder name=\"abc\" path=\"def\" create=\"true\""
-                        + " override=\"true\" clean=\"true\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
+                        + " override=\"true\" overrideExclude=\"oe\" clean=\"true\" cleanExclude=\"ce\" "
+                        + "xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
                         jaxbContext);
 
         // VERIFY
@@ -88,7 +89,9 @@ public class FolderTest extends AbstractTest {
         assertThat(testee.getPath()).isEqualTo("def");
         assertThat(testee.isCreate()).isTrue();
         assertThat(testee.isClean()).isTrue();
+        assertThat(testee.getCleanExclude()).isEqualTo("ce");
         assertThat(testee.isOverride()).isTrue();
+        assertThat(testee.getOverrideExclude()).isEqualTo("oe");
 
     }
 

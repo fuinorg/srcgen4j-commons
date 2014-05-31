@@ -18,12 +18,12 @@
 			<!-- Maven default folder --> 
 			<folder name="mainJava" path="src/main/java" create="false" override="false" clean="false" />
 			<folder name="mainRes" path="src/main/resources" create="false" override="false" clean="false" />
-			<folder name="genMainJava" path="src-gen/main/java" create="true" override="true" clean="true" />
-			<folder name="genMainRes" path="src-gen/main/resources" create="true" override="true" clean="true" />
+			<folder name="genMainJava" path="src-gen/main/java" clean="true" cleanExclude="\..*" />
+			<folder name="genMainRes" path="src-gen/main/resources" create="true" clean="true" />
 			<folder name="testJava" path="src/test/java" create="false" override="false" clean="false" />
 			<folder name="testRes" path="src/test/resources" create="false" override="false" clean="false" />
-			<folder name="genTestJava" path="src-gen/test/java" create="true" override="true" clean="true" />
-			<folder name="genTestRes" path="src-gen/test/resources" create="true" override="true" clean="true" />
+			<folder name="genTestJava" path="src-gen/test/java" create="true" clean="true" />
+			<folder name="genTestRes" path="src-gen/test/resources" create="true" clean="true" />
 		</project>
 	</projects>
 	
