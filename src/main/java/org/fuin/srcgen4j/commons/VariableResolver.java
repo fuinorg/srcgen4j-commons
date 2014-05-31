@@ -27,6 +27,7 @@ import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.common.Nullable;
 
@@ -242,7 +243,8 @@ public final class VariableResolver {
 
         sb.append(str.substring(from));
 
-        return sb.toString();
+        return StringUtils.replaceEach(sb.toString(), new String[] { "\\n",
+                "\\r", "\\t" }, new String[] { "\n", "\r", "\t" });
 
     }
 

@@ -265,8 +265,10 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
             // VERIFY
             assertThat(testee.getVarMap())
-                    .includes(entry("root", "/var/tmp"), entry("a", "base"),
-                            entry("res", "/**\n * Test base.\n */"));
+                    .includes(entry("root", "/var/tmp"), 
+                            entry("a", "base"),
+                            entry("res", "/**\n * Test base.\n */"),
+                            entry("esacpes", "\r\n\t"));
 
             final Parsers parsers = testee.getParsers();
             assertThat(parsers.getVarMap()).includes(

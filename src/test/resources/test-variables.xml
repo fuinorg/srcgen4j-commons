@@ -8,6 +8,7 @@
 		<variable name="root" value="/var/tmp" />
 		<variable name="a" value="base" />
 		<variable name="res" url="classpath:header.txt" encoding="utf-8" />
+		<variable name="esacpes" value="\r\n\t" />
 	</variables>
 	
 	<projects>
