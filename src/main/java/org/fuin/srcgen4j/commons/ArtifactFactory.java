@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.util.Map;
+
 import javax.validation.constraints.NotNull;
 
 import org.fuin.objects4j.common.Nullable;
@@ -58,6 +60,11 @@ public interface ArtifactFactory<TYPE> {
      * 
      * @param modelObject
      *            Model object to create the artifact for.
+     * @param context
+     *            Map used to store information during the generation process.
+     * @param preparationRun
+     *            TRUE if this is a (dry) preparation run. May be used to
+     *            prepare a following real generation run.
      * 
      * @return The generated artifact. A <code>null</code> value signals that
      *         nothing was generated.
@@ -66,7 +73,8 @@ public interface ArtifactFactory<TYPE> {
      *             Error when generating.
      */
     @Nullable
-    public GeneratedArtifact create(@NotNull TYPE modelObject)
+    public GeneratedArtifact create(@NotNull TYPE modelObject,
+            @NotNull Map<String, Object> context, boolean preparationRun)
             throws GenerateException;
 
 }

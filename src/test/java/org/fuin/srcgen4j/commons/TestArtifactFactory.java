@@ -17,6 +17,10 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.util.Map;
+
+import javax.validation.constraints.NotNull;
+
 /**
  * Test artifact factory.
  */
@@ -40,8 +44,9 @@ public final class TestArtifactFactory implements ArtifactFactory<Object> {
     }
 
     @Override
-    public final GeneratedArtifact create(final Object modelObject)
-            throws GenerateException {
+    public final GeneratedArtifact create(@NotNull final Object modelObject,
+            @NotNull final Map<String, Object> context,
+            final boolean preparationRun) throws GenerateException {
         return new GeneratedArtifact(artifact, "b/c/d.txt", "abcd".getBytes());
     }
 
