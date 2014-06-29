@@ -152,8 +152,6 @@ public final class SrcGen4J {
         }
         for (final File file : files) {
             if (folder.cleanAllowed(file)) {
-                LOG.info("Excluded from cleaning: " + file);
-            } else {
                 if (file.isDirectory()) {
                     if (cleanDirectory(file, folder)) {
                         delete(file);
@@ -161,6 +159,8 @@ public final class SrcGen4J {
                 } else {
                     delete(file);
                 }
+            } else {
+                LOG.info("Excluded from cleaning: " + file);
             }
         }
         files = dir.listFiles();
