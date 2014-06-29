@@ -59,6 +59,10 @@ public final class Folder extends AbstractNamedElement implements
 
     @Nullable
     @XmlAttribute
+    private String overrideInclude;
+
+    @Nullable
+    @XmlAttribute
     private Boolean clean;
 
     @Nullable
@@ -67,10 +71,13 @@ public final class Folder extends AbstractNamedElement implements
 
     @Nullable
     private transient RegexFileFilter overrideExcludeFilter;
-    
+
+    @Nullable
+    private transient RegexFileFilter overrideIncludeFilter;
+
     @Nullable
     private transient RegexFileFilter cleanExcludeFilter;
-    
+
     @Nullable
     private transient Project parent;
 
@@ -245,7 +252,7 @@ public final class Folder extends AbstractNamedElement implements
 
     /**
      * Returns a regular expression of the files to exclude.
-     *  
+     * 
      * @return Regular expression used to exclude files.
      */
     @Nullable
@@ -255,34 +262,79 @@ public final class Folder extends AbstractNamedElement implements
 
     /**
      * Sets a regular expression of the files not to override.
-     *  
-     * @param overrideExclude Regular expression used to exclude files.
+     * 
+     * @param overrideExclude
+     *            Regular expression used to exclude files.
      */
     public final void setOverrideExclude(final String overrideExclude) {
         this.overrideExclude = overrideExclude;
     }
 
+    /**
+     * Returns a regular expression of the files to include if the directory
+     * itself is set to override=false.
+     * 
+     * @return Regular expression used to include files.
+     */
+    @Nullable
+    public final String getOverrideInclude() {
+        return overrideInclude;
+    }
+
+    /**
+     * Sets a regular expression of the files to override if the directory
+     * itself is set to override=false.
+     * 
+     * @param overrideInclude
+     *            Regular expression used to include files.
+     */
+    public final void setOverrideInclude(final String overrideInclude) {
+        this.overrideInclude = overrideInclude;
+    }
 
     /**
      * Checks if a file can be overridden.
      * 
-     * @param file File to check against the exlude condition.
+     * @param file
+     *            File to check against the exclude condition.
      * 
-     * @return TRUE if the file can be overridden. 
+     * @return TRUE if the file can be overridden.
      */
     public final boolean overrideAllowed(final File file) {
-        if (overrideExclude == null) {
-            return true;
+        if (isOverride()) {
+            // In general it's allowed to recreate existing files
+            if (overrideExclude == null) {
+                return true;
+            } else {
+                return !getOverrideExcludeFilter().accept(file);
+            }
+        } else {
+            // It's NOT allowed to recreate existing files
+            if (overrideInclude == null) {
+                return false;
+            } else {
+                return getOverrideIncludeFilter().accept(file);
+            }
         }
+    }
+
+    private RegexFileFilter getOverrideIncludeFilter() {
+        if (overrideIncludeFilter == null) {
+            overrideIncludeFilter = new RegexFileFilter(overrideInclude);
+        }
+        return overrideIncludeFilter;
+    }
+
+    private RegexFileFilter getOverrideExcludeFilter() {
         if (overrideExcludeFilter == null) {
             overrideExcludeFilter = new RegexFileFilter(overrideExclude);
         }
-        return !overrideExcludeFilter.accept(file);
+        return overrideExcludeFilter;
     }
-    
+
     /**
      * Returns a regular expression of the files to exclude.
-     *  
+     * 
      * @return Regular expression used to exclude files.
      */
     @Nullable
@@ -292,19 +344,21 @@ public final class Folder extends AbstractNamedElement implements
 
     /**
      * Sets a regular expression of the files to exclude from cleaning.
-     *  
-     * @param cleanExclude Regular expression used to exclude files.
+     * 
+     * @param cleanExclude
+     *            Regular expression used to exclude files.
      */
     public final void setCleanExclude(final String cleanExclude) {
         this.cleanExclude = cleanExclude;
     }
-    
+
     /**
      * Checks if a file should be excluded from cleaning.
      * 
-     * @param file File to check against the exlcude condition.
+     * @param file
+     *            File to check against the exlcude condition.
      * 
-     * @return TRUE if the file can be cleaned. 
+     * @return TRUE if the file can be cleaned.
      */
     public final boolean cleanAllowed(final File file) {
         if (cleanExclude == null) {
@@ -315,7 +369,7 @@ public final class Folder extends AbstractNamedElement implements
         }
         return !cleanExcludeFilter.accept(file);
     }
-    
+
     /**
      * Returns the parent for the folder.
      * 
