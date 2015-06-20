@@ -19,17 +19,14 @@ package org.fuin.srcgen4j.commons;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.OrFileFilter;
-import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.NeverNull;
 import org.fuin.utils4j.Utils4J;
