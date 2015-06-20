@@ -8,9 +8,9 @@ Bundle-SymbolicName: org.fuin.srcgen4j.commons
 Bundle-Vendor: Future Invent Informationsmanagement GmbH, Hamburg (Germa
  ny)
 Bundle-Version: 0.4.0.SNAPSHOT
-Export-Package: org.fuin.srcgen4j.commons;uses:="javax.validation.constr
- aints,javax.xml.bind,javax.xml.bind.annotation,org.apache.commons.io.fi
- lefilter,org.fuin.objects4j.common";version="0.4.0.SNAPSHOT"
+Export-Package: org.fuin.srcgen4j.commons;version="0.4.0.SNAPSHOT";uses:
+ ="javax.validation.constraints,javax.xml.bind,javax.xml.bind.annotation
+ ,org.apache.commons.io.filefilter,org.fuin.objects4j.common"
 Import-Package: javax.validation,javax.validation.constraints,javax.xml.
  bind,javax.xml.bind.annotation,org.apache.commons.io.filefilter;version
  ="[1.4,2)",org.apache.commons.lang3;version="[3.3,4)",org.fuin.objects4
