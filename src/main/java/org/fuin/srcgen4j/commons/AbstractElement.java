@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.common.Nullable;
-import org.fuin.utils4j.VariableResolver;
+import org.fuin.utils4j.Utils4J;
 
 /**
  * Basic functionality used by all configuration sub classes.
@@ -61,7 +61,7 @@ public abstract class AbstractElement {
     @Nullable
     public final String replaceVars(@Nullable final String str,
             @Nullable final Map<String, String> vars) {
-        return VariableResolver.replaceVars(str, vars);
+        return Utils4J.replaceVars(str, vars);
     }
 
     /**
