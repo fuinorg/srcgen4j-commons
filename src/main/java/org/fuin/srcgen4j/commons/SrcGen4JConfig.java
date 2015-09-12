@@ -39,6 +39,7 @@ import org.fuin.objects4j.common.IsDirectory;
 import org.fuin.objects4j.common.IsDirectoryValidator;
 import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.common.Nullable;
+import org.fuin.utils4j.VariableResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

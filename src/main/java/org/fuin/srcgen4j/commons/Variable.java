@@ -17,10 +17,6 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
@@ -34,6 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.NotEmpty;
 import org.fuin.objects4j.common.Nullable;
+import org.fuin.utils4j.Utils4J;
 
 /**
  * Represents a variable definition (name and value).
@@ -41,7 +38,8 @@ import org.fuin.objects4j.common.Nullable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "variable")
 @XmlType(propOrder = { "xpath", "value" })
-public class Variable extends AbstractNamedElement {
+public class Variable extends AbstractNamedElement implements
+        org.fuin.utils4j.Variable {
 
     @NotEmpty
     @XmlAttribute
@@ -121,15 +119,11 @@ public class Variable extends AbstractNamedElement {
         this.encoding = encoding;
     }
 
-    /**
-     * Returns the value of the variable.
-     * 
-     * @return Current value.
-     */
-    @Nullable
+    @Override
     public final String getValue() {
         if ((value == null) && (urlStr != null)) {
-            value = read(getURL(), encoding);
+            value = Utils4J
+                    .readAsString(getURL(), getEncodingOrDefault(), 1024);
         }
         return value;
     }
@@ -144,29 +138,30 @@ public class Variable extends AbstractNamedElement {
         return xpath;
     }
 
-    /**
-     * Returns the URL.
-     * 
-     * @return URL.
-     */
-    @Nullable
+    @Override
     public final URL getURL() {
         if (url == null) {
-            url = asURL(getName(), urlStr);
+            try {
+                url = Utils4J.url(urlStr);
+            } catch (final RuntimeException ex) {
+                throw new RuntimeException("Variable '" + getName()
+                        + "' has illegal URL: " + urlStr, ex);
+            }
         }
         return url;
     }
 
-    private static URL asURL(final String variable, final String url) {
-        try {
-            if (url.startsWith("classpath:")) {
-                return new URL(null, url, new ClasspathURLStreamHandler());
-            }
-            return new URL(url);
-        } catch (final MalformedURLException ex) {
-            throw new IllegalArgumentException("Variable '" + variable
-                    + "' has invalid URL: " + url, ex);
+    @Override
+    public final String getEncoding() {
+        return encoding;
+    }
+
+    @Override
+    public final String getEncodingOrDefault() {
+        if (encoding == null) {
+            return "utf-8";
         }
+        return encoding;
     }
 
     /**
@@ -177,31 +172,6 @@ public class Variable extends AbstractNamedElement {
      */
     public final void init(@Nullable final Map<String, String> vars) {
         value = replaceVars(value, vars);
-    }
-
-    private static String read(final URL url, final String encoding) {
-        final String enc;
-        if (encoding == null) {
-            enc = "utf-8";
-        } else {
-            enc = encoding;
-        }
-        try {
-            final Reader reader = new InputStreamReader(url.openStream(), enc);
-            try {
-                final StringBuilder sb = new StringBuilder();
-                final char[] cbuf = new char[1024];
-                int count;
-                while ((count = reader.read(cbuf)) > -1) {
-                    sb.append(String.valueOf(cbuf, 0, count));
-                }
-                return sb.toString();
-            } finally {
-                reader.close();
-            }
-        } catch (final IOException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
     // CHECKSTYLE:ON

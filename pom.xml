@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.fuin</groupId>
 		<artifactId>pom-osgi</artifactId>
-		<version>1.1.1</version>
+		<version>1.2.0</version>
 	</parent>
 
 	<groupId>org.fuin.srcgen4j</groupId>
 	<artifactId>srcgen4j-commons</artifactId>
 	<packaging>jar</packaging>
-	<version>0.4.0</version>
+	<version>0.4.1-SNAPSHOT</version>
 	<name>SrcGen4j Commons</name>
 	<description>Source code generation for Java (Commons)</description>
 	<url>http://www.fuin.org/srcgen4j/commons/</url>
@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>org.fuin</groupId>
 			<artifactId>utils4j</artifactId>
-			<version>0.8.0</version>
+			<version>0.9.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>

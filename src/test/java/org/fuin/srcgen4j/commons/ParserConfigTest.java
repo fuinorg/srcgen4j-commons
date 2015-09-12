@@ -66,8 +66,8 @@ public class ParserConfigTest extends AbstractTest {
                 .isEqualTo(
                         XML
                                 + "<parser class=\"a.b.c.TestParser\" name=\"parser1\" "
-                                + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons/test\" "
-                                + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+                                + "xmlns=\"http://www.fuin.org/srcgen4j/commons\" "
+                                + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons/test\">"
                                 + "<config><ns2:input path=\"a/b/c\"/></config>"
                                 + "</parser>");
 
