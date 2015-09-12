@@ -244,8 +244,19 @@ public class SrcGen4JConfig {
             } else {
                 variables.add(rootDirVar);
             }
-            varMap = new VariableResolver(variables).getResolved();
+            varMap = new VariableResolver(asMap(variables)).getResolved();
         }
+    }
+
+    private static Map<String, String> asMap(final List<Variable> vars) {
+        if (vars == null) {
+            return null;
+        }
+        final Map<String, String> map = new HashMap<>();
+        for (final Variable var : vars) {
+            map.put(var.getName(), var.getValue());
+        }
+        return map;
     }
 
     /**

@@ -38,8 +38,7 @@ import org.fuin.utils4j.Utils4J;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "variable")
 @XmlType(propOrder = { "xpath", "value" })
-public class Variable extends AbstractNamedElement implements
-        org.fuin.utils4j.Variable {
+public class Variable extends AbstractNamedElement {
 
     @NotEmpty
     @XmlAttribute
@@ -119,7 +118,12 @@ public class Variable extends AbstractNamedElement implements
         this.encoding = encoding;
     }
 
-    @Override
+    /**
+     * Returns the value. If no value but an URL is defined, the value will be
+     * loaded once from the URL. Later calls will only return the cached value.
+     * 
+     * @return Value or <code>null</code>.
+     */
     public final String getValue() {
         if ((value == null) && (urlStr != null)) {
             value = Utils4J
@@ -138,7 +142,11 @@ public class Variable extends AbstractNamedElement implements
         return xpath;
     }
 
-    @Override
+    /**
+     * Returns the URL.
+     * 
+     * @return URL or <code>null</code>.
+     */
     public final URL getURL() {
         if (url == null) {
             try {
@@ -151,12 +159,21 @@ public class Variable extends AbstractNamedElement implements
         return url;
     }
 
-    @Override
+    /**
+     * Returns the encoding to use for reading the value from the URL.
+     * 
+     * @return Encoding or <code>null</code>.
+     */
     public final String getEncoding() {
         return encoding;
     }
 
-    @Override
+    /**
+     * Returns the encoding to use for reading the value from the URL. If no
+     * encoding is defined this method returns 'utf-8' as default.
+     * 
+     * @return Encoding - Never <code>null</code>.
+     */
     public final String getEncodingOrDefault() {
         if (encoding == null) {
             return "utf-8";
