@@ -156,7 +156,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
 
     /**
      * Returns the factory instance. If it does not exist, it will be created.
-     * Requires that {@link #init(SrcGen4JContext)} was called once before.
+     * Requires that {@link #init(SrcGen4JContext, Map)} was called once before.
      * 
      * @return Factory.
      */

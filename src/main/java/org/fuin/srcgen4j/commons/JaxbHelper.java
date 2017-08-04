@@ -70,7 +70,7 @@ public final class JaxbHelper {
     * @param file
     *            File to check.
     * @param tagName
-    *            Name of the tag. A "<" will be added to this name internally to locate the start tag.
+    *            Name of the tag. A "&lt;" will be added to this name internally to locate the start tag.
     * 
     * @return If the file contains the start tag TRUE else FALSE.
     */
