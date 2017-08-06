@@ -148,9 +148,10 @@ Every generator has a unique name and a full qualified class name that is used t
 Some generators might require a special configuration that can be added in the config section.
 A generator creates one or more artifacts that are written to the configured folder of the project.
 
+- - - - - - - - -
 
 Snapshots
----------
+=========
 
 Snapshots can be found on the [OSS Sonatype Snapshots Repository](http://oss.sonatype.org/content/repositories/snapshots/org/fuin "Snapshot Repository"). 
 
