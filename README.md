@@ -23,13 +23,13 @@ The pipeline is configured using a single XML configuration file:
 <srcgen4j-config
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xmlns="http://www.fuin.org/srcgen4j/commons">
-	
-	<variables />
-	<classpath/>
-	<projects />
-	<parsers />
-	<generators />
-	
+    
+    <variables />
+    <classpath/>
+    <projects />
+    <parsers />
+    <generators />
+    
 </srcgen4j-config>
 ```
 There is currently a Maven plugin ([srcgen4j-maven](https://github.com/fuinorg/srcgen4j-maven/)) that executes the pipeline during a build or on manually.
@@ -40,10 +40,10 @@ Variables
 The variables section allows defining globally visible variables.
 ```xml
 <variables>
-	<variable name="path" value="/var/tmp" />
-	<variable name="sub" value="${path}/mypath" />
-	<variable name="esacpes" value="\r\n\t" />
-	<variable name="res" url="classpath:header.txt" encoding="utf-8" />
+    <variable name="path" value="/var/tmp" />
+    <variable name="sub" value="${path}/mypath" />
+    <variable name="esacpes" value="\r\n\t" />
+    <variable name="res" url="classpath:header.txt" encoding="utf-8" />
 </variables>
 ```
 A variable definition is either a simple name/value combination or an URL that points to the content.
@@ -55,10 +55,10 @@ executed the 'mvn' command.
 Variables can be overwritten in the sub-sections:
 ```xml
 <variables>
-	<variable name="a" value="/var/tmp" />
+    <variable name="a" value="/var/tmp" />
 </variables>
 <parsers>
-	<variable name="a" value="${a}/parsers1" />
+    <variable name="a" value="${a}/parsers1" />
 </parsers>
 ```
 The result is only visible inside the defining section.
@@ -68,7 +68,7 @@ Classpath
 The classpath section allows adding additional binary classpaths.
 ```xml
 <classpath>
-	<bin path="${project_path}/target/classes" />
+    <bin path="${project_path}/target/classes" />
 </classpath>
 ```
 
@@ -78,33 +78,33 @@ A project is used to define the folders where the generated output can be placed
 ```xml
 <projects>
   <project name="myprj" path="." maven="false">
-		<folder name="doc" path="doc" create="true" override="true" clean="true" />
+        <folder name="doc" path="doc" create="true" override="true" clean="true" />
   </project>
 </projects>
 ```
 A Maven directory structure is assumed by default. This can be disabled with *maven="false"*.
 ```xml
 <project name="myprj" path=".">
-	<!-- It's NOT necessary to add the following! It's just to show the default folder structure. -->
-	<folder name="mainJava" path="src/main/java" create="false" override="false" clean="false" />
-	<folder name="mainRes" path="src/main/resources" create="false" override="false" clean="false" />
-	<folder name="genMainJava" path="src-gen/main/java" clean="true" cleanExclude="\..*" />
-	<folder name="genMainRes" path="src-gen/main/resources" create="true" clean="true" />
-	<folder name="testJava" path="src/test/java" create="false" override="false" clean="false" />
-	<folder name="testRes" path="src/test/resources" create="false" override="false" clean="false" />
-	<folder name="genTestJava" path="src-gen/test/java" create="true" clean="true" />
-	<folder name="genTestRes" path="src-gen/test/resources" create="true" clean="true" />
+    <!-- It's NOT necessary to add the following! It's just to show the default folder structure. -->
+    <folder name="mainJava" path="src/main/java" create="false" override="false" clean="false" />
+    <folder name="mainRes" path="src/main/resources" create="false" override="false" clean="false" />
+    <folder name="genMainJava" path="src-gen/main/java" clean="true" cleanExclude="\..*" />
+    <folder name="genMainRes" path="src-gen/main/resources" create="true" clean="true" />
+    <folder name="testJava" path="src/test/java" create="false" override="false" clean="false" />
+    <folder name="testRes" path="src/test/resources" create="false" override="false" clean="false" />
+    <folder name="genTestJava" path="src-gen/test/java" create="true" clean="true" />
+    <folder name="genTestRes" path="src-gen/test/resources" create="true" clean="true" />
 </project>
 ```
 A folder is defined by a name that is unique within the project and a path inside the project's directory.
 ```xml
-	<folder name="mainJava" 
-					path="src/main/java" 
-					create="false"
-					override="false" 
-					overrideExclude="[A\.java|B\.java]"
-					clean="false"
-					cleanExclude="\..*" />
+<folder name="mainJava" 
+        path="src/main/java" 
+        create="false"
+        override="false" 
+        overrideExclude="[A\.java|B\.java]"
+        clean="false"
+        cleanExclude="\..*" />
 ```
 Other attributes that indluence the generation process are:
 * *create* Create the directory if it does not exist
@@ -136,8 +136,8 @@ The generator section defines one or more generators that use the input of a par
 <generators>
     <generator name="dddGenerator" class="org.fuin.srcgen4j.core.emf.EMFGenerator" parser="dddParser" project="current">
         <config>
-        	<!-- Generator specific configuration -->
-          <emf:artifact-factory artifact="AbstractAggregate" class="org.fuin.dsl.ddd.gen.aggregate.AbstractAggregateArtifactFactory" />
+            <!-- Generator specific configuration -->
+            <emf:artifact-factory artifact="AbstractAggregate" class="org.fuin.dsl.ddd.gen.aggregate.AbstractAggregateArtifactFactory" />
         </config>
         <artifact name="AbstractAggregate" folder="genMainJava" />
         <!-- More artifact definition -->
