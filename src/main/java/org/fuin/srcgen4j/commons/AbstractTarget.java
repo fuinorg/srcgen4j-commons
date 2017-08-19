@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 import org.fuin.objects4j.common.Nullable;
+import org.fuin.xmlcfg4j.AbstractElement;
 
 /**
  * Base class for assigning generated artifacts to a project folder.

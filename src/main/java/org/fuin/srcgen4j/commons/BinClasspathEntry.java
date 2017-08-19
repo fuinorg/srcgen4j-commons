@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import static org.fuin.utils4j.Utils4J.replaceVars;
+
 import java.util.Map;
 
 import javax.validation.constraints.NotNull;
@@ -28,6 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.common.Nullable;
+import org.fuin.xmlcfg4j.AbstractElement;
 
 /**
  * Represents a folder in a target folder.

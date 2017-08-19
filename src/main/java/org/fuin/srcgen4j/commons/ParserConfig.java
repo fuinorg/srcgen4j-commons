@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import static org.fuin.utils4j.Utils4J.replaceVars;
+
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -33,6 +35,7 @@ import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.common.NotEmpty;
 import org.fuin.objects4j.common.Nullable;
 import org.fuin.utils4j.Utils4J;
+import org.fuin.xmlcfg4j.AbstractNamedElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

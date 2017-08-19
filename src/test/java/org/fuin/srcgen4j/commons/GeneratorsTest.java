@@ -17,8 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.assertions.MapAssert.entry;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.xml.bind.JAXBContext;
 
 import org.custommonkey.xmlunit.XMLAssert;
+import org.fuin.xmlcfg4j.Variable;
 import org.junit.Test;
 
 import com.openpojo.reflection.PojoClass;
@@ -63,15 +64,12 @@ public class GeneratorsTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert
-                .assertXMLEqual(
-                        XML
-                                + "<generators project=\"abc\" folder=\"def\" "
-                                + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                                + "<variable value=\"1\" name=\"a\"/>"
-                                + "<generator class=\"a.b.c.D\" parser=\"PARSER\" name=\"NAME\""
-                                + " project=\"PROJECT\" folder=\"FOLDER\"/>"
-                                + "</generators>", result);
+        XMLAssert.assertXMLEqual(XML
+                + "<ns2:generators project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
+                + "<variable value=\"1\" name=\"a\"/>"
+                + "<ns2:generator class=\"a.b.c.D\" parser=\"PARSER\" name=\"NAME\""
+                + " project=\"PROJECT\" folder=\"FOLDER\"/>"
+                + "</ns2:generators>", result);
 
     }
 
@@ -83,16 +81,17 @@ public class GeneratorsTest extends AbstractTest {
                 .newInstance(Generators.class);
 
         // TEST
-        final Generators testee = new JaxbHelper()
-                .create("<generators project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/>"
+        final Generators testee = new JaxbHelper().create(
+                "<ns2:generators project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<ns2:generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/>"
                         + "<variable name=\"a\" value=\"1\"/>"
-                        + "</generators>", jaxbContext);
-        testee.inheritVariables(new HashMap<String, String>());
+                        + "</ns2:generators>",
+                jaxbContext);
+        testee.init(new DefaultContext(), null, new HashMap<>());
 
         // VERIFY
         assertThat(testee).isNotNull();
-        assertThat(testee.getVarMap()).includes(entry("a", "1"));
+        assertThat(testee.getVarMap()).containsOnly(entry("a", "1"));
         assertThat(testee.getProject()).isEqualTo("abc");
         assertThat(testee.getFolder()).isEqualTo("def");
         assertThat(testee.getList()).isNotNull();

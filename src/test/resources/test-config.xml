@@ -2,12 +2,13 @@
 <srcgen4j-config
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xmlns="http://www.fuin.org/srcgen4j/commons"
+   xmlns:cfg="http://www.fuin.org/xmlcfg4j"
    xmlns:test="http://www.fuin.org/srcgen4j/commons/test">
 	
-	<variables>
-		<variable name="root" value="/var/tmp" />
-		<variable name="project_example_path" value="${root}/example" />
-	</variables>
+	<cfg:variables>
+		<cfg:variable name="root" value="/var/tmp" />
+		<cfg:variable name="project_example_path" value="${root}/example" />
+	</cfg:variables>
 	
 	<classpath context="true">
 		<bin path="${project_example_path}/target/classes" />

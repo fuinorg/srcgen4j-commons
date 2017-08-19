@@ -17,7 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,8 +50,8 @@ public class ParserConfigTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(
-                ParserConfig.class, TestInput.class);
+        final JAXBContext jaxbContext = JAXBContext
+                .newInstance(ParserConfig.class, TestInput.class);
         final ParserConfig testee = new ParserConfig("parser1",
                 "a.b.c.TestParser");
         final TestInput testInput = new TestInput("a/b/c");
@@ -62,14 +62,11 @@ public class ParserConfigTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        assertThat(result)
-                .isEqualTo(
-                        XML
-                                + "<parser class=\"a.b.c.TestParser\" name=\"parser1\" "
-                                + "xmlns=\"http://www.fuin.org/srcgen4j/commons\" "
-                                + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons/test\">"
-                                + "<config><ns2:input path=\"a/b/c\"/></config>"
-                                + "</parser>");
+        assertThat(result).isEqualTo(XML
+                + "<ns2:parser class=\"a.b.c.TestParser\" name=\"parser1\" xmlns=\"http://www.fuin.org/xmlcfg4j\" "
+                + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\" "
+                + "xmlns:ns3=\"http://www.fuin.org/srcgen4j/commons/test\">"
+                + "<ns2:config><ns3:input path=\"a/b/c\"/></ns2:config></ns2:parser>");
 
     }
 
@@ -77,8 +74,8 @@ public class ParserConfigTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(
-                ParserConfig.class, TestInput.class);
+        final JAXBContext jaxbContext = JAXBContext
+                .newInstance(ParserConfig.class, TestInput.class);
 
         // TEST
         final ParserConfig testee = new JaxbHelper()

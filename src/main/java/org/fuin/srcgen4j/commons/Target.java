@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import static org.fuin.utils4j.Utils4J.replaceVars;
+
 import java.util.Map;
 import java.util.regex.Pattern;
 

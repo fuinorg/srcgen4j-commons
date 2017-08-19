@@ -17,6 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import static org.fuin.utils4j.Utils4J.replaceVars;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.NeverEmpty;
 import org.fuin.objects4j.common.NotEmpty;
 import org.fuin.objects4j.common.Nullable;
+import org.fuin.xmlcfg4j.AbstractNamedElement;
 
 /**
  * Represents a target project.

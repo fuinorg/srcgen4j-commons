@@ -17,14 +17,15 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.assertions.MapAssert.entry;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
+import org.fuin.xmlcfg4j.Variable;
 import org.junit.Test;
 
 import com.openpojo.reflection.PojoClass;
@@ -60,13 +61,9 @@ public class ParsersTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        assertThat(result)
-                .isEqualTo(
-                        XML
-                                + "<parsers xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                                + "<variable value=\"1\" name=\"a\"/>"
-                                + "<parser class=\"a.b.c.D\" name=\"NAME\"/>"
-                                + "</parsers>");
+        assertThat(result).isEqualTo(XML
+                + "<ns2:parsers xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
+                + "<variable name=\"a\" value=\"1\"/><ns2:parser class=\"a.b.c.D\" name=\"NAME\"/></ns2:parsers>");
 
     }
 
@@ -77,16 +74,16 @@ public class ParsersTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(Parsers.class);
 
         // TEST
-        final Parsers testee = new JaxbHelper().create(
-                "<parsers xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<parser name=\"NAME\" class=\"a.b.c.D\"/>"
-                        + "<variable name=\"a\" value=\"1\"/>" + "</parsers>",
+        final Parsers testee = new JaxbHelper().create(XML
+                + "<ns2:parsers xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
+                + "<parser name=\"NAME\" class=\"a.b.c.D\"/>"
+                + "<variable name=\"a\" value=\"1\"/>" + "</ns2:parsers>",
                 jaxbContext);
-        testee.inheritVariables(new HashMap<String, String>());
+        testee.init(new DefaultContext(), null, new HashMap<>());
 
         // VERIFY
         assertThat(testee).isNotNull();
-        assertThat(testee.getVarMap()).includes(entry("a", "1"));
+        assertThat(testee.getVarMap()).containsOnly(entry("a", "1"));
         assertThat(testee.getList()).isNotNull();
         assertThat(testee.getList()).hasSize(1);
         assertThat(testee.getList().get(0).getName()).isEqualTo("NAME");

@@ -17,12 +17,16 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import static org.fuin.utils4j.Utils4J.replaceVars;
+
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.fuin.xmlcfg4j.AbstractElement;
 
 /**
  * Specific parser configuration example.

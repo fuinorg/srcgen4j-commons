@@ -17,8 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.assertions.MapAssert.entry;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -30,6 +30,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
+import org.fuin.xmlcfg4j.Variable;
+import org.fuin.xmlcfg4j.Variables;
 import org.junit.Test;
 
 import com.openpojo.reflection.PojoClass;
@@ -58,10 +60,8 @@ public class SrcGen4JConfigTest extends AbstractTest {
     public final void testGetVarMap() {
 
         // PREPARE
-        final List<Variable> vars = new ArrayList<Variable>();
-        vars.add(new Variable("a", "1"));
-        vars.add(new Variable("B", "b"));
-        vars.add(new Variable("x", "2"));
+        final Variables vars = new Variables(new Variable("a", "1"),
+                new Variable("B", "b"), new Variable("x", "2"));
         final SrcGen4JConfig testee = new SrcGen4JConfig();
         testee.setVariables(vars);
         testee.init(new DefaultContext(), new File("."));
@@ -71,9 +71,8 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
         // VERIFY
         assertThat(varMap).isNotNull();
-        assertThat(varMap).includes(entry("rootDir", "."), entry("a", "1"),
+        assertThat(varMap).containsOnly(entry("rootDir", "."), entry("a", "1"),
                 entry("B", "b"), entry("x", "2"));
-        assertThat(varMap).hasSize(vars.size());
 
     }
 
@@ -85,9 +84,9 @@ public class SrcGen4JConfigTest extends AbstractTest {
                 .newInstance(SrcGen4JConfig.class);
 
         // TEST
-        final SrcGen4JConfig testee = new JaxbHelper()
-                .create("<srcgen4j-config xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
-                        jaxbContext);
+        final SrcGen4JConfig testee = new JaxbHelper().create(
+                "<srcgen4j-config xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
+                jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();
@@ -111,12 +110,14 @@ public class SrcGen4JConfigTest extends AbstractTest {
             // VERIFY
             assertThat(testee).isNotNull();
 
-            assertThat(testee.getVariables()).isNotNull();
-            assertThat(testee.getVariables()).hasSize(2);
-            final Variable var0 = testee.getVariables().get(0);
+            final Variables variables = testee.getVariables();
+            assertThat(variables).isNotNull();
+            final List<Variable> varList = variables.asList();
+            assertThat(varList).hasSize(2);
+            final Variable var0 = varList.get(0);
             assertThat(var0.getName()).isEqualTo("root");
             assertThat(var0.getValue()).isEqualTo("/var/tmp");
-            final Variable var1 = testee.getVariables().get(1);
+            final Variable var1 = varList.get(1);
             assertThat(var1.getName()).isEqualTo("project_example_path");
             assertThat(var1.getValue()).isEqualTo("${root}/example");
 
@@ -124,8 +125,8 @@ public class SrcGen4JConfigTest extends AbstractTest {
             assertThat(testee.getClasspath().getBinList()).hasSize(1);
             final BinClasspathEntry entry = testee.getClasspath().getBinList()
                     .get(0);
-            assertThat(entry.getPath()).isEqualTo(
-                    "${project_example_path}/target/classes");
+            assertThat(entry.getPath())
+                    .isEqualTo("${project_example_path}/target/classes");
 
             assertThat(testee.getProjects()).isNotNull();
             assertThat(testee.getProjects()).hasSize(1);
@@ -138,9 +139,11 @@ public class SrcGen4JConfigTest extends AbstractTest {
                     new Folder("genMainRes", ""), new Folder("testJava", ""),
                     new Folder("testRes", ""), new Folder("genTestJava", ""),
                     new Folder("genTestRes", ""));
-            final int idxGenMainJava = prj.getFolders().indexOf(new Folder("genMainJava", ""));
+            final int idxGenMainJava = prj.getFolders()
+                    .indexOf(new Folder("genMainJava", ""));
             assertThat(idxGenMainJava).isGreaterThan(-1);
-            assertThat(prj.getFolders().get(idxGenMainJava).getCleanExclude()).isEqualTo("\\..*");
+            assertThat(prj.getFolders().get(idxGenMainJava).getCleanExclude())
+                    .isEqualTo("\\..*");
 
             assertThat(testee.getGenerators()).isNotNull();
             assertThat(testee.getGenerators().getList()).hasSize(1);
@@ -157,8 +160,8 @@ public class SrcGen4JConfigTest extends AbstractTest {
             assertThat(one.getTargets()).isNotNull();
             assertThat(one.getTargets()).hasSize(1);
             final Target target = one.getTargets().get(0);
-            assertThat(target.getPattern()).isEqualTo(
-                    ".*//abc//def//ghi//.*//.java");
+            assertThat(target.getPattern())
+                    .isEqualTo(".*//abc//def//ghi//.*//.java");
             assertThat(target.getProject()).isEqualTo("example");
             assertThat(target.getFolder()).isEqualTo("genMainJava");
 
@@ -173,22 +176,21 @@ public class SrcGen4JConfigTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig testee = new SrcGen4JConfig();
 
-        final List<Variable> vars = new ArrayList<Variable>();
-        vars.add(new Variable("project.name", "1"));
-        vars.add(new Variable("project.path", "2"));
-        vars.add(new Variable("generator.name", "3"));
-        vars.add(new Variable("generator.project", "4"));
-        vars.add(new Variable("generator.folder", "5"));
-        vars.add(new Variable("folder.name", "6"));
-        vars.add(new Variable("folder.path", "7"));
-        vars.add(new Variable("artifact.name", "8"));
-        vars.add(new Variable("artifact.project", "9"));
-        vars.add(new Variable("artifact.folder", "10"));
-        vars.add(new Variable("target.pattern", "11"));
-        vars.add(new Variable("target.project", "12"));
-        vars.add(new Variable("target.folder", "13"));
-        vars.add(new Variable("generators.project", "14"));
-        vars.add(new Variable("generators.folder", "15"));
+        final Variables vars = new Variables(new Variable("project.name", "1"),
+                new Variable("project.path", "2"),
+                new Variable("generator.name", "3"),
+                new Variable("generator.project", "4"),
+                new Variable("generator.folder", "5"),
+                new Variable("folder.name", "6"),
+                new Variable("folder.path", "7"),
+                new Variable("artifact.name", "8"),
+                new Variable("artifact.project", "9"),
+                new Variable("artifact.folder", "10"),
+                new Variable("target.pattern", "11"),
+                new Variable("target.project", "12"),
+                new Variable("target.folder", "13"),
+                new Variable("generators.project", "14"),
+                new Variable("generators.folder", "15"));
 
         final List<Project> projects = new ArrayList<Project>();
         final Project project = new Project("${project.name}",
@@ -230,14 +232,14 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
         assertThat(testee.getGenerators()).isNotNull();
         assertThat(testee.getGenerators().getVarMap())
-                .includes(entry("a", "1"));
+                .contains(entry("a", "1"));
         assertThat(testee.getGenerators().getProject()).isEqualTo("14");
         assertThat(testee.getGenerators().getFolder()).isEqualTo("15");
         assertThat(testee.getGenerators().getList()).isNotNull();
         assertThat(testee.getGenerators().getList()).hasSize(1);
 
-        final GeneratorConfig resultGenerator = testee.getGenerators()
-                .getList().get(0);
+        final GeneratorConfig resultGenerator = testee.getGenerators().getList()
+                .get(0);
         assertThat(resultGenerator.getName()).isEqualTo("3");
         assertThat(resultGenerator.getProject()).isEqualTo("4");
         assertThat(resultGenerator.getFolder()).isEqualTo("5");
@@ -267,19 +269,20 @@ public class SrcGen4JConfigTest extends AbstractTest {
             testee.init(new DefaultContext(), new File("."));
 
             // VERIFY
-            assertThat(testee.getVarMap())
-                    .includes(entry("root", "/var/tmp"), 
-                            entry("a", "base"),
-                            entry("res", "/**\n * Test base.\n */"),
-                            entry("esacpes", "\r\n\t"));
+            assertThat(testee.getVarMap()).containsOnly(
+                    entry("rootDir", "."),
+                    entry("root", "/var/tmp"),
+                    entry("a", "base"), 
+                    entry("res", "/**\n * Test base.\n */"),
+                    entry("escapes", "\r\n\t"));
 
             final Parsers parsers = testee.getParsers();
-            assertThat(parsers.getVarMap()).includes(
+            assertThat(parsers.getVarMap()).contains(
                     entry("a", "base/parsers1"),
                     entry("b", "base/parsers1/parsers2"));
             final ParserConfig parserConfig = parsers.getList().get(0);
             // @formatter:off
-            assertThat(parserConfig.getVarMap()).includes(
+            assertThat(parserConfig.getVarMap()).contains(
                     entry("a", "base/parsers1/parser1"),
                     entry("b", "base/parsers1/parsers2"),
                     entry("c", "base/parsers1/parser1/parser3"),
@@ -288,12 +291,12 @@ public class SrcGen4JConfigTest extends AbstractTest {
             // @formatter:off
 
             final Generators generators = testee.getGenerators();
-            assertThat(generators.getVarMap()).includes(
+            assertThat(generators.getVarMap()).contains(
                     entry("a", "base/generators1"),
                     entry("b", "base/generators1/generators2"));
             final GeneratorConfig generatorConfig = generators.getList().get(0);
             // @formatter:off
-            assertThat(generatorConfig.getVarMap()).includes(
+            assertThat(generatorConfig.getVarMap()).contains(
                     entry("a", "base/generators1/generator1"),
                     entry("b", "base/generators1/generators2"),
                     entry("c", "base/generators1/generator1/generator3"),
@@ -384,8 +387,8 @@ public class SrcGen4JConfigTest extends AbstractTest {
     private SrcGen4JConfig load(final String resourceName) throws Exception {
         final JAXBContext jaxbContext = JAXBContext
                 .newInstance(SrcGen4JConfig.class);
-        final Reader reader = new InputStreamReader(getClass().getClassLoader()
-                .getResourceAsStream(resourceName));
+        final Reader reader = new InputStreamReader(
+                getClass().getClassLoader().getResourceAsStream(resourceName));
         try {
             return new JaxbHelper().create(reader, jaxbContext);
         } finally {

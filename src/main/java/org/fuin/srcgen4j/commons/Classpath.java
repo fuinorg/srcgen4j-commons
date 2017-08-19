@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.Nullable;
+import org.fuin.xmlcfg4j.AbstractElement;
 
 /**
  * Represents a class path.

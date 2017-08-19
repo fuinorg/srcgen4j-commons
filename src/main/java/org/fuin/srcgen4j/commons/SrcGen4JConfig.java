@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -40,6 +41,8 @@ import org.fuin.objects4j.common.IsDirectoryValidator;
 import org.fuin.objects4j.common.NeverNull;
 import org.fuin.objects4j.common.Nullable;
 import org.fuin.utils4j.VariableResolver;
+import org.fuin.xmlcfg4j.Variable;
+import org.fuin.xmlcfg4j.Variables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,14 +55,15 @@ import org.slf4j.LoggerFactory;
         "variables" })
 public class SrcGen4JConfig {
 
+    private static final String ROOT_DIR_VAR = "rootDir";
+
     private static final Logger LOG = LoggerFactory
             .getLogger(SrcGen4JConfig.class);
 
     @Nullable
     @Valid
-    @XmlElementWrapper(name = "variables")
-    @XmlElement(name = "variable")
-    private List<Variable> variables;
+    @XmlElement(name = "variables", namespace = "http://www.fuin.org/xmlcfg4j")
+    private Variables variables;
 
     @Nullable
     @Valid
@@ -100,7 +104,7 @@ public class SrcGen4JConfig {
      * @return Variables.
      */
     @Nullable
-    public final List<Variable> getVariables() {
+    public final Variables getVariables() {
         return variables;
     }
 
@@ -120,7 +124,7 @@ public class SrcGen4JConfig {
      * @param variables
      *            Variables.
      */
-    public final void setVariables(@Nullable final List<Variable> variables) {
+    public final void setVariables(@Nullable final Variables variables) {
         this.variables = variables;
     }
 
@@ -230,33 +234,20 @@ public class SrcGen4JConfig {
     }
 
     private void initVarMap(final File rootDir) {
-        if (variables == null) {
-            varMap = new HashMap<String, String>();
-            varMap.put("rootDir", rootDir.toString());
-        } else {
-            final Variable rootDirVar = new Variable("rootDir",
-                    rootDir.toString());
-            final int idx = variables.indexOf(rootDirVar);
-            if (idx > -1) {
-                final Variable old = variables.set(idx, rootDirVar);
-                LOG.warn("Replaced existing root directory variable '"
-                        + old.getValue() + "' with: " + rootDir);
-            } else {
-                variables.add(rootDirVar);
+        varMap = new HashMap<String, String>();
+        varMap.put(ROOT_DIR_VAR, rootDir.toString());
+        if (variables != null) {
+            final List<Variable> vars = variables.asList();
+            for (final Variable var : vars) {
+                if (var.getName().equals(ROOT_DIR_VAR)) {
+                    LOG.warn("Replaced root directory '" + var.getValue()
+                            + "' with: '" + rootDir + "'");
+                } else {
+                    varMap.put(var.getName(), var.getValue());
+                }
             }
-            varMap = new VariableResolver(asMap(variables)).getResolved();
+            varMap = new VariableResolver(varMap).getResolved();
         }
-    }
-
-    private static Map<String, String> asMap(final List<Variable> vars) {
-        if (vars == null) {
-            return null;
-        }
-        final Map<String, String> map = new HashMap<>();
-        for (final Variable var : vars) {
-            map.put(var.getName(), var.getValue());
-        }
-        return map;
     }
 
     /**
@@ -277,15 +268,13 @@ public class SrcGen4JConfig {
             @NotNull @FileExists @IsDirectory final File rootDir) {
 
         Contract.requireArgNotNull("context", context);
-        Contract.requireArgNotNull("rootDir", rootDir);
-        FileExistsValidator.requireArgValid("rootDir", rootDir);
-        IsDirectoryValidator.requireArgValid("rootDir", rootDir);
+        Contract.requireArgNotNull(ROOT_DIR_VAR, rootDir);
+        FileExistsValidator.requireArgValid(ROOT_DIR_VAR, rootDir);
+        IsDirectoryValidator.requireArgValid(ROOT_DIR_VAR, rootDir);
 
         initVarMap(rootDir);
         if (variables != null) {
-            for (final Variable variable : variables) {
-                variable.init(varMap);
-            }
+            variables.init(varMap);
         }
         if (projects != null) {
             for (final Project project : projects) {
@@ -401,8 +390,8 @@ public class SrcGen4JConfig {
                     artifactName, targetPattern);
         }
         if (folderName == null) {
-            throw new FolderNameNotDefinedException(generatorName,
-                    artifactName, targetPattern);
+            throw new FolderNameNotDefinedException(generatorName, artifactName,
+                    targetPattern);
         }
 
         idx = projects.indexOf(new Project(projectName, "dummy"));
@@ -465,9 +454,9 @@ public class SrcGen4JConfig {
             @NotNull @FileExists @IsDirectory final File rootDir) {
 
         Contract.requireArgNotNull("context", context);
-        Contract.requireArgNotNull("rootDir", rootDir);
-        FileExistsValidator.requireArgValid("rootDir", rootDir);
-        IsDirectoryValidator.requireArgValid("rootDir", rootDir);
+        Contract.requireArgNotNull(ROOT_DIR_VAR, rootDir);
+        FileExistsValidator.requireArgValid(ROOT_DIR_VAR, rootDir);
+        IsDirectoryValidator.requireArgValid(ROOT_DIR_VAR, rootDir);
         Contract.requireArgNotNull("projectName", projectName);
 
         final SrcGen4JConfig config = new SrcGen4JConfig();

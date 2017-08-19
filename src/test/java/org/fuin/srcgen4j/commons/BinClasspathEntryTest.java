@@ -17,7 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,10 +59,8 @@ public class BinClasspathEntryTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        assertThat(result)
-                .isEqualTo(
-                        XML
-                                + "<bin path=\"a/b/c\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+        assertThat(result).isEqualTo(XML
+                + "<ns2:bin path=\"a/b/c\" xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\"/>");
 
     }
 
@@ -74,9 +72,9 @@ public class BinClasspathEntryTest extends AbstractTest {
                 .newInstance(BinClasspathEntry.class);
 
         // TEST
-        final BinClasspathEntry testee = new JaxbHelper()
-                .create("<bin path=\"a/b/c\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
-                        jaxbContext);
+        final BinClasspathEntry testee = new JaxbHelper().create(
+                "<bin path=\"a/b/c\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
+                jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();
