@@ -9,12 +9,12 @@ Bundle-Vendor: fuin.org (Germany)
 Bundle-Version: 0.4.1.SNAPSHOT
 Export-Package: org.fuin.srcgen4j.commons;uses:="javax.validation.constr
  aints,javax.xml.bind,javax.xml.bind.annotation,org.apache.commons.io.fi
- lefilter,org.fuin.objects4j.common";version="0.4.1"
-Import-Package: javax.validation;version="[1.1,2)",javax.validation.cons
- traints;version="[1.1,2)",javax.xml.bind,javax.xml.bind.annotation,org.
+ lefilter,org.fuin.objects4j.common,org.fuin.xmlcfg4j";version="0.4.1"
+Import-Package: javax.validation;version="[2.0,3)",javax.validation.cons
+ traints;version="[2.0,3)",javax.xml.bind,javax.xml.bind.annotation,org.
  apache.commons.io.filefilter;version="[1.4,2)",org.fuin.objects4j.commo
- n;version="[0.6,1)",org.fuin.utils4j;version="[0.9,1)",org.slf4j;versio
- n="[1.7,2)"
+ n;version="[0.6,1)",org.fuin.utils4j;version="[0.9,1)",org.fuin.xmlcfg4
+ j,org.slf4j;version="[1.7,2)"
 Include-Resource: srcgen4j-commons.xsd=src/main/resources/srcgen4j-commo
  ns.xsd
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
