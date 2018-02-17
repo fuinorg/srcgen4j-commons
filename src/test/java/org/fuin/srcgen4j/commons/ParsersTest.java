@@ -76,7 +76,7 @@ public class ParsersTest extends AbstractTest {
         // TEST
         final Parsers testee = new JaxbHelper().create(XML
                 + "<ns2:parsers xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
-                + "<parser name=\"NAME\" class=\"a.b.c.D\"/>"
+                + "<ns2:parser name=\"NAME\" class=\"a.b.c.D\"/>"
                 + "<variable name=\"a\" value=\"1\"/>" + "</ns2:parsers>",
                 jaxbContext);
         testee.init(new DefaultContext(), null, new HashMap<>());
