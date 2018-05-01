@@ -2,5 +2,5 @@
 !.gitignore
 !.checkstyle
 target
-META-INF
+META-INF/MANIFEST.MF
 *.log
