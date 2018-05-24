@@ -13,7 +13,6 @@
 	<artifactId>srcgen4j-commons</artifactId>
 	<packaging>jar</packaging>
 	<version>0.4.1-SNAPSHOT</version>
-	<name>SrcGen4j Commons</name>
 	<description>Source code generation for Java (Commons)</description>
 	<url>http://www.fuin.org/srcgen4j/commons/</url>
 
