@@ -6,6 +6,10 @@ Source code generation for Java (Commons)
 __CAUTION: *Project is in early stage (Work in progress)*__
 
 [![Build Status](https://fuin-org.ci.cloudbees.com/job/srcgen4j-commons/badge/icon)](https://fuin-org.ci.cloudbees.com/job/srcgen4j-commons/)
+[![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=org.fuin.srcgen4j%3Asrcgen4j-commons&metric=coverage)](https://sonarcloud.io/dashboard?id=org.fuin.srcgen4j%3Asrcgen4j-commons)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fuin.srcgen4j/srcgen4j-commons/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fuin.srcgen4j/srcgen4j-commons/)
+[![LGPLv3 License](http://img.shields.io/badge/license-LGPLv3-blue.svg)](https://www.gnu.org/licenses/lgpl.html)
+[![Java Development Kit 1.8](https://img.shields.io/badge/JDK-1.8-green.svg)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 <a href="https://fuin-org.ci.cloudbees.com/job/srcgen4j-commons"><img src="http://www.fuin.org/images/Button-Built-on-CB-1.png" width="213" height="72" border="0" alt="Built on CloudBees"/></a>
 
