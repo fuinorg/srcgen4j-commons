@@ -152,7 +152,7 @@ public class Project extends AbstractNamedElement implements InitializableElemen
     public final void addFolder(@NotNull final Folder folder) {
         Contract.requireArgNotNull("folder", folder);
         if (folders == null) {
-            folders = new ArrayList<Folder>();
+            folders = new ArrayList<>();
         }
         folders.add(folder);
     }
@@ -194,7 +194,7 @@ public class Project extends AbstractNamedElement implements InitializableElemen
 
     private void addIfNotExists(final Folder folder) {
         if (folders == null) {
-            folders = new ArrayList<Folder>();
+            folders = new ArrayList<>();
         }
         final int idx = folders.indexOf(folder);
         if (idx < 0) {

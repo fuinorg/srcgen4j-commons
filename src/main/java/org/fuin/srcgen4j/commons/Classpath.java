@@ -123,7 +123,7 @@ public final class Classpath extends AbstractElement implements InitializableEle
     public final void addBin(@NotNull final BinClasspathEntry entry) {
         Contract.requireArgNotNull("entry", entry);
         if (binList == null) {
-            binList = new ArrayList<BinClasspathEntry>();
+            binList = new ArrayList<>();
         }
         binList.add(entry);
     }

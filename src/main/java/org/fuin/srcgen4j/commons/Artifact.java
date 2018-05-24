@@ -110,7 +110,7 @@ public final class Artifact extends AbstractNamedTarget implements Initializable
     public final void addTarget(@NotNull final Target target) {
         Contract.requireArgNotNull("target", target);
         if (targets == null) {
-            targets = new ArrayList<Target>();
+            targets = new ArrayList<>();
         }
         targets.add(target);
     }

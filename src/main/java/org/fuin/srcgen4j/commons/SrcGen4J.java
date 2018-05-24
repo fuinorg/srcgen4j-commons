@@ -215,7 +215,7 @@ public final class SrcGen4J {
     @NotNull
     public FileFilter getFileFilter() {
         if (fileFilter == null) {
-            final List<IOFileFilter> filters = new ArrayList<IOFileFilter>();
+            final List<IOFileFilter> filters = new ArrayList<>();
             final Parsers parsers = config.getParsers();
             if (parsers != null) {
                 final List<ParserConfig> parserConfigs = parsers.getList();

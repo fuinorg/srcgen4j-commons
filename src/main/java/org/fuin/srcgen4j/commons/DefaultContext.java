@@ -70,8 +70,8 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
         Contract.requireArgNotNull("classLoader", classLoader);
         this.markers = new HashMap<File, Set<DefaultFileMarker>>();
         this.classLoader = classLoader;
-        this.jarFiles = Collections.unmodifiableList(new ArrayList<File>());
-        this.binDirs = Collections.unmodifiableList(new ArrayList<File>());
+        this.jarFiles = Collections.unmodifiableList(new ArrayList<>());
+        this.binDirs = Collections.unmodifiableList(new ArrayList<>());
     }
 
     /**
@@ -89,8 +89,8 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
 
         markers = new HashMap<File, Set<DefaultFileMarker>>();
         this.classLoader = classLoader;
-        final List<File> files = new ArrayList<File>();
-        final List<File> dirs = new ArrayList<File>();
+        final List<File> files = new ArrayList<>();
+        final List<File> dirs = new ArrayList<>();
         for (final File file : cp) {
             if (file.isDirectory()) {
                 dirs.add(file);
@@ -105,7 +105,7 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
     private DefaultFileMarker add(final File file, final DefaultFileMarker marker) {
         Set<DefaultFileMarker> set = markers.get(file);
         if (set == null) {
-            set = new HashSet<DefaultFileMarker>();
+            set = new HashSet<>();
             markers.put(file, set);
         }
         set.add(marker);
@@ -139,7 +139,7 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
 
     @Override
     public final Iterator<? extends FileMarker> getMarkerIterator() {
-        final Set<DefaultFileMarker> all = new HashSet<DefaultFileMarker>();
+        final Set<DefaultFileMarker> all = new HashSet<>();
         final Iterator<File> fileIt = markers.keySet().iterator();
         while (fileIt.hasNext()) {
             final Set<DefaultFileMarker> set = markers.get(fileIt.next());

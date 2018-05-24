@@ -99,7 +99,7 @@ public class Generators extends AbstractTarget implements InitializableElement<G
     public final void addGenerator(@NotNull final GeneratorConfig generator) {
         Contract.requireArgNotNull("generator", generator);
         if (list == null) {
-            list = new ArrayList<GeneratorConfig>();
+            list = new ArrayList<>();
         }
         list.add(generator);
     }

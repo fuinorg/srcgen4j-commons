@@ -169,7 +169,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements Initia
     public final void addArtifact(@NotNull final Artifact artifact) {
         Contract.requireArgNotNull("artifact", artifact);
         if (artifacts == null) {
-            artifacts = new ArrayList<Artifact>();
+            artifacts = new ArrayList<>();
         }
         artifacts.add(artifact);
     }

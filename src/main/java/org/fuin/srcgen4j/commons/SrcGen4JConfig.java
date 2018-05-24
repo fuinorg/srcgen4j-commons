@@ -403,7 +403,7 @@ public class SrcGen4JConfig {
     public final List<GeneratorConfig> findGeneratorsForParser(@NotNull final String parserName) {
         Contract.requireArgNotNull("parserName", parserName);
 
-        final List<GeneratorConfig> list = new ArrayList<GeneratorConfig>();
+        final List<GeneratorConfig> list = new ArrayList<>();
         final List<GeneratorConfig> gcList = generators.getList();
         for (final GeneratorConfig gc : gcList) {
             if (gc.getParser().equals(parserName)) {
@@ -436,7 +436,7 @@ public class SrcGen4JConfig {
         Contract.requireArgNotNull("projectName", projectName);
 
         final SrcGen4JConfig config = new SrcGen4JConfig();
-        final List<Project> projects = new ArrayList<Project>();
+        final List<Project> projects = new ArrayList<>();
         final Project project = new Project(projectName, ".");
         project.setMaven(true);
         projects.add(project);

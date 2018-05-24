@@ -78,7 +78,7 @@ public class Parsers extends AbstractElement implements InitializableElement<Par
     public final void addParser(@NotNull final ParserConfig parser) {
         Contract.requireArgNotNull("parser", parser);
         if (list == null) {
-            list = new ArrayList<ParserConfig>();
+            list = new ArrayList<>();
         }
         list.add(parser);
     }
