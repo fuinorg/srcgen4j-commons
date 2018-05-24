@@ -60,7 +60,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
     /**
      * Package visible default constructor for deserialization.
      */
-    ArtifactFactoryConfig() { //NOSONAR Ignore not initialized fields
+    ArtifactFactoryConfig() { // NOSONAR Ignore not initialized fields
         super();
     }
 
@@ -86,8 +86,8 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      * @param incremental
      *            If the factory executes on an incremental build TRUE (default), else FALSE.
      */
-    public ArtifactFactoryConfig(@NotNull final String artifact, @NotNull final String factoryClassName,
-            @Nullable final Boolean incremental) { //NOSONAR Ignore not initialized fields
+    public ArtifactFactoryConfig(@NotNull final String artifact, @NotNull final String factoryClassName, // NOSONAR
+            @Nullable final Boolean incremental) {
         super();
         this.artifact = artifact;
         this.factoryClassName = factoryClassName;
