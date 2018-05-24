@@ -3,8 +3,6 @@ srcgen4j-commons
 
 Source code generation for Java (Commons)
 
-__CAUTION: *Project is in early stage (Work in progress)*__
-
 [![Build Status](https://fuin-org.ci.cloudbees.com/job/srcgen4j-commons/badge/icon)](https://fuin-org.ci.cloudbees.com/job/srcgen4j-commons/)
 [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=org.fuin.srcgen4j%3Asrcgen4j-commons&metric=coverage)](https://sonarcloud.io/dashboard?id=org.fuin.srcgen4j%3Asrcgen4j-commons)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fuin.srcgen4j/srcgen4j-commons/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fuin.srcgen4j/srcgen4j-commons/)
