@@ -79,7 +79,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements Initia
     /**
      * Package visible default constructor for deserialization.
      */
-    GeneratorConfig() {
+    GeneratorConfig() { //NOSONAR Ignore not initialized fields
         super();
     }
 
@@ -112,7 +112,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements Initia
      *            Folder to set.
      */
     public GeneratorConfig(@NotEmpty final String name, @NotEmpty final String className, @NotEmpty final String parser,
-            @Nullable final String project, @Nullable final String folder) {
+            @Nullable final String project, @Nullable final String folder) { //NOSONAR Ignore not initialized fields
         super(name, project, folder);
         Contract.requireArgNotNull("className", className);
         Contract.requireArgNotNull("parser", parser);

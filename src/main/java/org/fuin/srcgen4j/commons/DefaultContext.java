@@ -65,7 +65,7 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
      * @param classLoader
      *            Class loader to use in this context.
      */
-    public DefaultContext(@NotNull final ClassLoader classLoader) {
+    public DefaultContext(@NotNull final ClassLoader classLoader) { //NOSONAR Ignore not initialized fields
         super();
         Contract.requireArgNotNull("classLoader", classLoader);
         this.markers = new HashMap<File, Set<DefaultFileMarker>>();

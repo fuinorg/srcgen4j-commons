@@ -49,7 +49,7 @@ public final class BinClasspathEntry extends AbstractElement implements Initiali
     /**
      * Package visible default constructor for deserialization.
      */
-    BinClasspathEntry() {
+    BinClasspathEntry() { //NOSONAR Ignore not initialized fields
         super();
     }
 

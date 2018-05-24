@@ -85,7 +85,7 @@ public final class Folder extends AbstractNamedElement implements InitializableE
     /**
      * Package visible default constructor for deserialization.
      */
-    Folder() {
+    Folder() { //NOSONAR Ignore not initialized fields
         super();
     }
 
