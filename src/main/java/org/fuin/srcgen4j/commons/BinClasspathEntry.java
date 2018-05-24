@@ -38,8 +38,7 @@ import org.fuin.xmlcfg4j.AbstractElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "bin")
 @XmlType(propOrder = "path")
-public final class BinClasspathEntry extends AbstractElement implements
-        InitializableElement<BinClasspathEntry, Classpath> {
+public final class BinClasspathEntry extends AbstractElement implements InitializableElement<BinClasspathEntry, Classpath> {
 
     @NotNull
     @XmlAttribute
@@ -97,8 +96,7 @@ public final class BinClasspathEntry extends AbstractElement implements
     }
 
     @Override
-    public final BinClasspathEntry init(final SrcGen4JContext context,
-            final Classpath parent, final Map<String, String> vars) {
+    public final BinClasspathEntry init(final SrcGen4JContext context, final Classpath parent, final Map<String, String> vars) {
         this.parent = parent;
         inheritVariables(vars);
         path = replaceVars(path, getVarMap());

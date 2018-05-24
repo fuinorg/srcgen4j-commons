@@ -30,16 +30,12 @@ public class ArtifactNotFoundException extends Exception {
      * Constructor with names.
      * 
      * @param generatorName
-     *            Name of the generator with the requested artifact - Should not
-     *            be <code>null</code>.
+     *            Name of the generator with the requested artifact - Should not be <code>null</code>.
      * @param artifactName
-     *            Name of the generator that was not found - Should not be
-     *            <code>null</code>.
+     *            Name of the generator that was not found - Should not be <code>null</code>.
      */
-    public ArtifactNotFoundException(@Nullable final String generatorName,
-            @Nullable final String artifactName) {
-        super("The artifact '" + artifactName
-                + "' is not configured for generator '" + generatorName + "'");
+    public ArtifactNotFoundException(@Nullable final String generatorName, @Nullable final String artifactName) {
+        super("The artifact '" + artifactName + "' is not configured for generator '" + generatorName + "'");
     }
 
 }

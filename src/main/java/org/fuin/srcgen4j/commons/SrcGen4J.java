@@ -50,20 +50,16 @@ public final class SrcGen4J {
      * Constructor with configuration.
      * 
      * @param config
-     *            Initialized configuration (Method
-     *            {@link SrcGen4JConfig#init(SrcGen4JContext, File)} was at
-     *            least called once before).
+     *            Initialized configuration (Method {@link SrcGen4JConfig#init(SrcGen4JContext, File)} was at least called once before).
      * @param context
      *            Build context.
      */
-    public SrcGen4J(@NotNull final SrcGen4JConfig config,
-            @NotNull final SrcGen4JContext context) {
+    public SrcGen4J(@NotNull final SrcGen4JConfig config, @NotNull final SrcGen4JContext context) {
         super();
         Contract.requireArgNotNull("config", config);
         Contract.requireArgNotNull("context", context);
         if (!config.isInitialized()) {
-            throw new IllegalArgumentException(
-                    "The configuration is not initialized");
+            throw new IllegalArgumentException("The configuration is not initialized");
         }
         this.config = config;
         this.context = context;
@@ -119,20 +115,15 @@ public final class SrcGen4J {
             for (final Project project : projects) {
                 final List<Folder> folders = project.getFolders();
                 if ((folders == null) || (folders.size() == 0)) {
-                    LOG.warn("No project folders configured for: "
-                            + project.getName());
+                    LOG.warn("No project folders configured for: " + project.getName());
                 } else {
                     for (final Folder folder : folders) {
                         final File dir = folder.getCanonicalDir();
                         if (folder.isClean() && dir.exists()) {
                             LOG.info("Cleaning: " + dir);
-                            cleanDirectory(
-                                    dir,
-                                    folder);
+                            cleanDirectory(dir, folder);
                         } else {
-                            LOG.debug("Nothing to to [clean="
-                                    + folder.isClean() + ", exists="
-                                    + dir.exists() + "]: " + dir);
+                            LOG.debug("Nothing to to [clean=" + folder.isClean() + ", exists=" + dir.exists() + "]: " + dir);
                         }
                     }
                 }
@@ -140,8 +131,7 @@ public final class SrcGen4J {
         }
     }
 
-    private boolean cleanDirectory(final File dir,
-            final Folder folder) {
+    private boolean cleanDirectory(final File dir, final Folder folder) {
 
         File[] files = dir.listFiles();
         if (files == null) {
@@ -178,7 +168,7 @@ public final class SrcGen4J {
             }
         }
     }
-    
+
     /**
      * Parse and generate.
      * 
@@ -207,8 +197,7 @@ public final class SrcGen4J {
                 for (final ParserConfig pc : parserConfigs) {
                     final Parser<Object> parser = pc.getParser();
                     final Object model = parser.parse();
-                    final List<GeneratorConfig> generatorConfigs = config
-                            .findGeneratorsForParser(pc.getName());
+                    final List<GeneratorConfig> generatorConfigs = config.findGeneratorsForParser(pc.getName());
                     for (final GeneratorConfig gc : generatorConfigs) {
                         final Generator<Object> generator = gc.getGenerator();
                         generator.generate(model, false);
@@ -220,8 +209,7 @@ public final class SrcGen4J {
     }
 
     /**
-     * Returns a file filter that combines all filters for all incremental
-     * parsers. It should be used for selecting the appropriate files.
+     * Returns a file filter that combines all filters for all incremental parsers. It should be used for selecting the appropriate files.
      * 
      * @return File filter.
      */
@@ -248,8 +236,7 @@ public final class SrcGen4J {
     }
 
     /**
-     * Incremental parse and generate. The class loader of this class will be
-     * used.
+     * Incremental parse and generate. The class loader of this class will be used.
      * 
      * @param files
      *            Set of files to parse for the model.
@@ -259,8 +246,7 @@ public final class SrcGen4J {
      * @throws GenerateException
      *             Error during generation process.
      */
-    public final void execute(@NotNull final Set<File> files)
-            throws ParseException, GenerateException {
+    public final void execute(@NotNull final Set<File> files) throws ParseException, GenerateException {
 
         Contract.requireArgNotNull("files", files);
 
@@ -290,16 +276,13 @@ public final class SrcGen4J {
                     if (pars instanceof IncrementalParser) {
                         final IncrementalParser<?> parser = (IncrementalParser<?>) pars;
                         final Object model = parser.parse(files);
-                        final List<GeneratorConfig> generatorConfigs = config
-                                .findGeneratorsForParser(pc.getName());
+                        final List<GeneratorConfig> generatorConfigs = config.findGeneratorsForParser(pc.getName());
                         for (final GeneratorConfig gc : generatorConfigs) {
-                            final Generator<Object> generator = gc
-                                    .getGenerator();
+                            final Generator<Object> generator = gc.getGenerator();
                             generator.generate(model, true);
                         }
                     } else {
-                        LOG.debug("No incremental parser: "
-                                + pars.getClass().getName());
+                        LOG.debug("No incremental parser: " + pars.getClass().getName());
                     }
                 }
             }

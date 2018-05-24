@@ -28,8 +28,7 @@ import org.fuin.objects4j.common.NotEmpty;
 import org.fuin.objects4j.common.Nullable;
 
 /**
- * Base class for assigning generated artifacts to a project folder and a name
- * as unique identifier.
+ * Base class for assigning generated artifacts to a project folder and a name as unique identifier.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "name" })
@@ -56,8 +55,7 @@ public abstract class AbstractNamedTarget extends AbstractTarget {
      * @param folder
      *            Folder to set.
      */
-    public AbstractNamedTarget(@NotEmpty final String name,
-            @Nullable final String project, @Nullable final String folder) {
+    public AbstractNamedTarget(@NotEmpty final String name, @Nullable final String project, @Nullable final String folder) {
         super(project, folder);
         Contract.requireArgNotEmpty("name", name);
         this.name = name;

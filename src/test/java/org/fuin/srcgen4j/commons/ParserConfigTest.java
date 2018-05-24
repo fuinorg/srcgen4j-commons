@@ -50,10 +50,8 @@ public class ParserConfigTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext
-                .newInstance(ParserConfig.class, TestInput.class);
-        final ParserConfig testee = new ParserConfig("parser1",
-                "a.b.c.TestParser");
+        final JAXBContext jaxbContext = JAXBContext.newInstance(ParserConfig.class, TestInput.class);
+        final ParserConfig testee = new ParserConfig("parser1", "a.b.c.TestParser");
         final TestInput testInput = new TestInput("a/b/c");
         final Config<ParserConfig> config = new Config<ParserConfig>(testInput);
         testee.setConfig(config);
@@ -62,10 +60,8 @@ public class ParserConfigTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        assertThat(result).isEqualTo(XML
-                + "<ns2:parser class=\"a.b.c.TestParser\" name=\"parser1\" xmlns=\"http://www.fuin.org/xmlcfg4j\" "
-                + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\" "
-                + "xmlns:ns3=\"http://www.fuin.org/srcgen4j/commons/test\">"
+        assertThat(result).isEqualTo(XML + "<ns2:parser class=\"a.b.c.TestParser\" name=\"parser1\" xmlns=\"http://www.fuin.org/xmlcfg4j\" "
+                + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\" " + "xmlns:ns3=\"http://www.fuin.org/srcgen4j/commons/test\">"
                 + "<ns2:config><ns3:input path=\"a/b/c\"/></ns2:config></ns2:parser>");
 
     }
@@ -74,24 +70,20 @@ public class ParserConfigTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext
-                .newInstance(ParserConfig.class, TestInput.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(ParserConfig.class, TestInput.class);
 
         // TEST
-        final ParserConfig testee = new JaxbHelper()
-                .create("<parser class=\"a.b.c.TestParser\" name=\"parser1\" "
-                        + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons/test\" "
-                        + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<config><ns2:input path=\"a/b/c\"/></config>"
-                        + "</parser>", jaxbContext);
+        final ParserConfig testee = new JaxbHelper().create(
+                "<parser class=\"a.b.c.TestParser\" name=\"parser1\" " + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons/test\" "
+                        + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">" + "<config><ns2:input path=\"a/b/c\"/></config>" + "</parser>",
+                jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();
         assertThat(testee.getName()).isEqualTo("parser1");
         assertThat(testee.getClassName()).isEqualTo("a.b.c.TestParser");
         assertThat(testee.getConfig()).isNotNull();
-        assertThat(testee.getConfig().getConfig())
-                .isInstanceOf(TestInput.class);
+        assertThat(testee.getConfig().getConfig()).isInstanceOf(TestInput.class);
         final TestInput testInput = (TestInput) testee.getConfig().getConfig();
         assertThat(testInput.getPath()).isEqualTo("a/b/c");
 
@@ -102,8 +94,7 @@ public class ParserConfigTest extends AbstractTest {
 
         // PREPARE
         final Parsers parent = new Parsers();
-        final ParserConfig testee = new ParserConfig("parser${a}",
-                "a.${x}.c.TestParser");
+        final ParserConfig testee = new ParserConfig("parser${a}", "a.${x}.c.TestParser");
         final TestInput testInput = new TestInput("a/b/${y}");
         final Config<ParserConfig> config = new Config<ParserConfig>(testInput);
         testee.setConfig(config);

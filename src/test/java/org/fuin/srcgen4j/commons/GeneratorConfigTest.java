@@ -42,8 +42,7 @@ public class GeneratorConfigTest extends AbstractTest {
     @Test
     public final void testPojoStructureAndBehavior() {
 
-        final PojoClass pc = PojoClassFactory
-                .getPojoClass(GeneratorConfig.class);
+        final PojoClass pc = PojoClassFactory.getPojoClass(GeneratorConfig.class);
         final PojoValidator pv = createPojoValidator();
         pv.runValidation(pc);
 
@@ -53,23 +52,17 @@ public class GeneratorConfigTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(
-                GeneratorConfig.class, Artifact.class);
-        final GeneratorConfig testee = new GeneratorConfig("NAME", "CLASS",
-                "PARSER", "PRJ", "FLD");
+        final JAXBContext jaxbContext = JAXBContext.newInstance(GeneratorConfig.class, Artifact.class);
+        final GeneratorConfig testee = new GeneratorConfig("NAME", "CLASS", "PARSER", "PRJ", "FLD");
         testee.addArtifact(new Artifact("NAME", "PROJECT", "FOLDER"));
 
         // TEST
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert
-                .assertXMLEqual(
-                        XML
-                                + "<generator class=\"CLASS\" parser=\"PARSER\" name=\"NAME\" project=\"PRJ\" folder=\"FLD\""
-                                + " xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                                + "<artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generator>",
-                        result);
+        XMLAssert.assertXMLEqual(XML + "<generator class=\"CLASS\" parser=\"PARSER\" name=\"NAME\" project=\"PRJ\" folder=\"FLD\""
+                + " xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+                + "<artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generator>", result);
 
     }
 
@@ -77,15 +70,12 @@ public class GeneratorConfigTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(
-                GeneratorConfig.class, Folder.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(GeneratorConfig.class, Folder.class);
 
         // TEST
         final GeneratorConfig testee = new JaxbHelper()
-                .create("<generator name=\"abc\" "
-                        + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generator>",
-                        jaxbContext);
+                .create("<generator name=\"abc\" " + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generator>", jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();
@@ -95,10 +85,8 @@ public class GeneratorConfigTest extends AbstractTest {
         assertThat(testee.getArtifacts()).isNotNull();
         assertThat(testee.getArtifacts()).hasSize(1);
         assertThat(testee.getArtifacts().get(0).getName()).isEqualTo("NAME");
-        assertThat(testee.getArtifacts().get(0).getProject()).isEqualTo(
-                "PROJECT");
-        assertThat(testee.getArtifacts().get(0).getFolder())
-                .isEqualTo("FOLDER");
+        assertThat(testee.getArtifacts().get(0).getProject()).isEqualTo("PROJECT");
+        assertThat(testee.getArtifacts().get(0).getFolder()).isEqualTo("FOLDER");
 
     }
 
@@ -107,8 +95,7 @@ public class GeneratorConfigTest extends AbstractTest {
 
         // PREPARE
         final Generators parent = new Generators();
-        final GeneratorConfig testee = new GeneratorConfig("A${a}A", "CLASS",
-                "PARSER", "${b}2B", "C3${c}");
+        final GeneratorConfig testee = new GeneratorConfig("A${a}A", "CLASS", "PARSER", "${b}2B", "C3${c}");
         testee.addArtifact(new Artifact("A ${x}", "${y}B", "a${z}c"));
 
         final Map<String, String> vars = new HashMap<String, String>();
@@ -140,8 +127,7 @@ public class GeneratorConfigTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig config = new SrcGen4JConfig();
         final Generators generators = new Generators();
-        final GeneratorConfig testee = new GeneratorConfig("NAME1", "a.b.c.D",
-                "PARSER1");
+        final GeneratorConfig testee = new GeneratorConfig("NAME1", "a.b.c.D", "PARSER1");
 
         config.setGenerators(generators);
         generators.addGenerator(testee);

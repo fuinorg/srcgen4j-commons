@@ -49,8 +49,7 @@ public class DefaultFileMarkerTest {
         final String message = "Abc123Def";
 
         // TEST
-        final DefaultFileMarker testee = new DefaultFileMarker(severity,
-                message);
+        final DefaultFileMarker testee = new DefaultFileMarker(severity, message);
 
         // VERIFY
         assertThat(testee.getSeverity()).isEqualTo(severity);
@@ -70,8 +69,7 @@ public class DefaultFileMarkerTest {
         final int line = 123;
 
         // TEST
-        final DefaultFileMarker testee = new DefaultFileMarker(severity,
-                message, line);
+        final DefaultFileMarker testee = new DefaultFileMarker(severity, message, line);
 
         // VERIFY
         assertThat(testee.getSeverity()).isEqualTo(severity);
@@ -92,8 +90,7 @@ public class DefaultFileMarkerTest {
         final int length = 45;
 
         // TEST
-        final DefaultFileMarker testee = new DefaultFileMarker(severity,
-                message, start, length);
+        final DefaultFileMarker testee = new DefaultFileMarker(severity, message, start, length);
 
         // VERIFY
         assertThat(testee.getSeverity()).isEqualTo(severity);

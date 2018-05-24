@@ -39,12 +39,10 @@ public interface FileMarkerCapable {
      * @param message
      *            Message to associate with the file.
      * 
-     * @return New marker instance or NULL if the file was not found in the
-     *         context.
+     * @return New marker instance or NULL if the file was not found in the context.
      */
     @Nullable
-    public FileMarker addMarker(@NotNull File file,
-            @NotNull FileMarkerSeverity severity, @NotNull String message);
+    public FileMarker addMarker(@NotNull File file, @NotNull FileMarkerSeverity severity, @NotNull String message);
 
     /**
      * Adds a line marker to a file.
@@ -58,13 +56,10 @@ public interface FileMarkerCapable {
      * @param line
      *            Line number the message is related to.
      * 
-     * @return New marker instance or NULL if the file was not found in the
-     *         context.
+     * @return New marker instance or NULL if the file was not found in the context.
      */
     @Nullable
-    public FileMarker addMarker(@NotNull File file,
-            @NotNull FileMarkerSeverity severity, @NotNull String message,
-            int line);
+    public FileMarker addMarker(@NotNull File file, @NotNull FileMarkerSeverity severity, @NotNull String message, int line);
 
     /**
      * Adds a position marker to a file.
@@ -80,17 +75,13 @@ public interface FileMarkerCapable {
      * @param length
      *            Length of the part.
      * 
-     * @return New marker instance or NULL if the file was not found in the
-     *         context.
+     * @return New marker instance or NULL if the file was not found in the context.
      */
     @Nullable
-    public FileMarker addMarker(@NotNull File file,
-            @NotNull FileMarkerSeverity severity, @NotNull String message,
-            int start, int length);
+    public FileMarker addMarker(@NotNull File file, @NotNull FileMarkerSeverity severity, @NotNull String message, int start, int length);
 
     /**
-     * Removes the given marker from a file. Does nothing if the file was not
-     * found in the context.
+     * Removes the given marker from a file. Does nothing if the file was not found in the context.
      * 
      * @param file
      *            File to remove the marker from.
@@ -100,8 +91,7 @@ public interface FileMarkerCapable {
     public void removeMarker(@NotNull File file, @NotNull FileMarker marker);
 
     /**
-     * Removes all markers associated with a file. Does nothing if the file was
-     * not found in the context.
+     * Removes all markers associated with a file. Does nothing if the file was not found in the context.
      * 
      * @param file
      *            File to remove all markers from.
@@ -114,8 +104,7 @@ public interface FileMarkerCapable {
      * @param file
      *            File to return a marker iterator for.
      * 
-     * @return Iterator or NULL if the file was not found in the context or has
-     *         no markers.
+     * @return Iterator or NULL if the file was not found in the context or has no markers.
      */
     @Nullable
     public Iterator<? extends FileMarker> getMarkerIterator(@NotNull File file);

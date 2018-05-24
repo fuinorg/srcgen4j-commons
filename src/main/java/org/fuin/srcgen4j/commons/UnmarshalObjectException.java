@@ -34,8 +34,7 @@ public final class UnmarshalObjectException extends Exception {
      * @param cause
      *            Cause.
      */
-    public UnmarshalObjectException(@NotNull final String message,
-            @NotNull final Throwable cause) {
+    public UnmarshalObjectException(@NotNull final String message, @NotNull final Throwable cause) {
         super(message, cause);
     }
 

@@ -40,8 +40,7 @@ import org.fuin.objects4j.common.Nullable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "artifact")
 @XmlType(propOrder = { "targets" })
-public final class Artifact extends AbstractNamedTarget implements
-        InitializableElement<Artifact, GeneratorConfig> {
+public final class Artifact extends AbstractNamedTarget implements InitializableElement<Artifact, GeneratorConfig> {
 
     @Nullable
     @Valid
@@ -78,8 +77,7 @@ public final class Artifact extends AbstractNamedTarget implements
      * @param folder
      *            Folder to set.
      */
-    public Artifact(@NotNull final String name, @Nullable final String project,
-            @Nullable final String folder) {
+    public Artifact(@NotNull final String name, @Nullable final String project, @Nullable final String folder) {
         super(name, project, folder);
     }
 
@@ -160,8 +158,8 @@ public final class Artifact extends AbstractNamedTarget implements
     }
 
     /**
-     * Returns the first target that matched the given path based on the defined
-     * patterns. Returns null if the argument is <code>null</code>.
+     * Returns the first target that matched the given path based on the defined patterns. Returns null if the argument is
+     * <code>null</code>.
      * 
      * @param targetPath
      *            Path to find.
@@ -185,8 +183,7 @@ public final class Artifact extends AbstractNamedTarget implements
     }
 
     @Override
-    public final Artifact init(final SrcGen4JContext context,
-            final GeneratorConfig parent, final Map<String, String> vars) {
+    public final Artifact init(final SrcGen4JContext context, final GeneratorConfig parent, final Map<String, String> vars) {
         this.parent = parent;
         inheritVariables(vars);
         setName(replaceVars(getName(), getVarMap()));

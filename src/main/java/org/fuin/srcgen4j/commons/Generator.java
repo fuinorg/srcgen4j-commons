@@ -28,9 +28,8 @@ import javax.validation.constraints.NotNull;
 public interface Generator<MODEL> {
 
     /**
-     * Initializes the generator with a given configuration. This is only called
-     * once per instance. The type of the generator implementation is the same
-     * as defined in {@link GeneratorConfig#getClassName()}.
+     * Initializes the generator with a given configuration. This is only called once per instance. The type of the generator implementation
+     * is the same as defined in {@link GeneratorConfig#getClassName()}.
      * 
      * @param config
      *            Configuration to use.
@@ -48,7 +47,6 @@ public interface Generator<MODEL> {
      * @throws GenerateException
      *             Error when generating.
      */
-    public void generate(@NotNull MODEL model, boolean incremental)
-            throws GenerateException;
+    public void generate(@NotNull MODEL model, boolean incremental) throws GenerateException;
 
 }

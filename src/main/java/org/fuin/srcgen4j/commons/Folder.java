@@ -41,8 +41,7 @@ import org.fuin.xmlcfg4j.AbstractNamedElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "folder")
 @XmlType(propOrder = { "clean", "override", "create", "path" })
-public final class Folder extends AbstractNamedElement implements
-        InitializableElement<Folder, Project> {
+public final class Folder extends AbstractNamedElement implements InitializableElement<Folder, Project> {
 
     @NotNull
     @XmlAttribute
@@ -124,10 +123,8 @@ public final class Folder extends AbstractNamedElement implements
      * @param cleanExclude
      *            Regular expression of files to exclude from cleaning.
      */
-    Folder(@NotNull final Project parent, @NotNull final String name,
-            @NotNull final String path, final boolean create,
-            final boolean override, final String overrideExclude,
-            final boolean clean, final String cleanExclude) {
+    Folder(@NotNull final Project parent, @NotNull final String name, @NotNull final String path, final boolean create,
+            final boolean override, final String overrideExclude, final boolean clean, final String cleanExclude) {
         super(name);
         this.parent = parent;
         this.path = path;
@@ -149,8 +146,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     /**
-     * Returns the information if the directories should be created if they
-     * don't exist.
+     * Returns the information if the directories should be created if they don't exist.
      * 
      * @return Create directories (TRUE) or not (FALSE).
      */
@@ -162,8 +158,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     /**
-     * Returns the information if the directories should be created if they
-     * don't exist.
+     * Returns the information if the directories should be created if they don't exist.
      * 
      * @return Create directories (TRUE) or not (NULL or FALSE).
      */
@@ -173,8 +168,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     /**
-     * Sets the information if the directories should be created if they don't
-     * exist.
+     * Sets the information if the directories should be created if they don't exist.
      * 
      * @param create
      *            Create directories (TRUE) or not (NULL or FALSE).
@@ -184,8 +178,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     /**
-     * Returns the information if the directory should be cleaned (delete all
-     * files in it).
+     * Returns the information if the directory should be cleaned (delete all files in it).
      * 
      * @return Clean directory (TRUE) or not (FALSE).
      */
@@ -197,8 +190,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     /**
-     * Returns the information if the directory should be cleaned (delete all
-     * files in it).
+     * Returns the information if the directory should be cleaned (delete all files in it).
      * 
      * @return Clean directory (TRUE) or not (NULL or FALSE).
      */
@@ -208,8 +200,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     /**
-     * Sets the information if the directory should be cleaned (delete all files
-     * in it).
+     * Sets the information if the directory should be cleaned (delete all files in it).
      * 
      * @param clean
      *            Clean directory (TRUE) or not (NULL or FALSE).
@@ -219,8 +210,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     /**
-     * Returns the information if existing files in the directory should be
-     * overridden.
+     * Returns the information if existing files in the directory should be overridden.
      * 
      * @return Override files (TRUE) or not (FALSE).
      */
@@ -232,8 +222,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     /**
-     * Returns the information if existing files in the directory should be
-     * overridden.
+     * Returns the information if existing files in the directory should be overridden.
      * 
      * @return Override files (TRUE) or not (NULL or FALSE).
      */
@@ -243,8 +232,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     /**
-     * Sets the information if existing files in the directory should be
-     * overridden.
+     * Sets the information if existing files in the directory should be overridden.
      * 
      * @param override
      *            Override files (TRUE) or not (NULL or FALSE).
@@ -274,8 +262,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     /**
-     * Returns a regular expression of the files to include if the directory
-     * itself is set to override=false.
+     * Returns a regular expression of the files to include if the directory itself is set to override=false.
      * 
      * @return Regular expression used to include files.
      */
@@ -285,8 +272,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     /**
-     * Sets a regular expression of the files to override if the directory
-     * itself is set to override=false.
+     * Sets a regular expression of the files to override if the directory itself is set to override=false.
      * 
      * @param overrideInclude
      *            Regular expression used to include files.
@@ -394,8 +380,7 @@ public final class Folder extends AbstractNamedElement implements
     }
 
     @Override
-    public final Folder init(final SrcGen4JContext context,
-            final Project parent, final Map<String, String> vars) {
+    public final Folder init(final SrcGen4JContext context, final Project parent, final Map<String, String> vars) {
         this.parent = parent;
         inheritVariables(vars);
         setName(replaceVars(getName(), getVarMap()));
@@ -430,8 +415,7 @@ public final class Folder extends AbstractNamedElement implements
         try {
             return new File(dir).getCanonicalFile();
         } catch (final IOException ex) {
-            throw new RuntimeException("Couldn't determine canonical file: "
-                    + dir, ex);
+            throw new RuntimeException("Couldn't determine canonical file: " + dir, ex);
         }
     }
 

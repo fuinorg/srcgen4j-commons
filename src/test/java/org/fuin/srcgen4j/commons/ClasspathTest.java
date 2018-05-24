@@ -50,8 +50,7 @@ public class ClasspathTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext
-                .newInstance(Classpath.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Classpath.class);
         final Classpath testee = new Classpath();
         testee.addBin(new BinClasspathEntry("a/b/c"));
 
@@ -68,14 +67,11 @@ public class ClasspathTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext
-                .newInstance(Classpath.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Classpath.class);
 
         // TEST
-        final Classpath testee = new JaxbHelper().create(
-                "<classpath xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<bin path=\"a/b/c\"/></classpath>",
-                jaxbContext);
+        final Classpath testee = new JaxbHelper()
+                .create("<classpath xmlns=\"http://www.fuin.org/srcgen4j/commons\">" + "<bin path=\"a/b/c\"/></classpath>", jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();

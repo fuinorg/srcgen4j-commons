@@ -27,15 +27,14 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import org.fuin.objects4j.common.Nullable;
 
 /**
- * Parser and Generator specific configurations are wrapped with a "config" tag.
- * Otherwise the "xs:any" causes problems together with other elements.
+ * Parser and Generator specific configurations are wrapped with a "config" tag. Otherwise the "xs:any" causes problems together with other
+ * elements.
  * 
  * @param <PARENT>
  *            Parent type.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public final class Config<PARENT> implements
-        InitializableElement<Config<PARENT>, PARENT> {
+public final class Config<PARENT> implements InitializableElement<Config<PARENT>, PARENT> {
 
     @Nullable
     @Valid
@@ -62,8 +61,7 @@ public final class Config<PARENT> implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public final Config<PARENT> init(final SrcGen4JContext context,
-            final PARENT parent, final Map<String, String> vars) {
+    public final Config<PARENT> init(final SrcGen4JContext context, final PARENT parent, final Map<String, String> vars) {
         if (config instanceof InitializableElement) {
             final InitializableElement<?, Config<PARENT>> ie;
             ie = (InitializableElement<?, Config<PARENT>>) config;

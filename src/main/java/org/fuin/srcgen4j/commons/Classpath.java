@@ -40,8 +40,7 @@ import org.fuin.xmlcfg4j.AbstractElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "classpath")
 @XmlType(propOrder = { "binList" })
-public final class Classpath extends AbstractElement implements
-        InitializableElement<Classpath, SrcGen4JConfig> {
+public final class Classpath extends AbstractElement implements InitializableElement<Classpath, SrcGen4JConfig> {
 
     @Nullable
     @XmlAttribute(name = "context")
@@ -63,8 +62,7 @@ public final class Classpath extends AbstractElement implements
     }
 
     /**
-     * Returns the information if the class path from the context should be
-     * added.
+     * Returns the information if the class path from the context should be added.
      * 
      * @return If the context's class path should be added TRUE, else FALSE.
      */
@@ -84,9 +82,8 @@ public final class Classpath extends AbstractElement implements
     }
 
     /**
-     * Returns the information the information if the class path from the
-     * context should be added. If the information is not set (NULL) the value
-     * defaults to TRUE.
+     * Returns the information the information if the class path from the context should be added. If the information is not set (NULL) the
+     * value defaults to TRUE.
      * 
      * @return If the context's class path should be added TRUE, else FALSE.
      */
@@ -118,8 +115,7 @@ public final class Classpath extends AbstractElement implements
     }
 
     /**
-     * Adds a classes directory to the list. If the list does not exist it's
-     * created.
+     * Adds a classes directory to the list. If the list does not exist it's created.
      * 
      * @param entry
      *            Binaries directory to add.
@@ -143,8 +139,7 @@ public final class Classpath extends AbstractElement implements
     }
 
     @Override
-    public final Classpath init(final SrcGen4JContext context,
-            final SrcGen4JConfig parent, final Map<String, String> vars) {
+    public final Classpath init(final SrcGen4JContext context, final SrcGen4JConfig parent, final Map<String, String> vars) {
         this.parent = parent;
         if (binList != null) {
             for (final BinClasspathEntry bin : binList) {

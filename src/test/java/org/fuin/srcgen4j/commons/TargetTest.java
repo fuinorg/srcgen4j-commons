@@ -66,20 +66,16 @@ public class TargetTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Target.class,
-                AbstractTarget.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Target.class, AbstractTarget.class);
         final Target testee = new Target(".*", "abc", "def");
 
         // TEST
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert
-                .assertXMLEqual(
-                        XML
-                                + "<target pattern=\".*\" "
-                                + "project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
-                        result);
+        XMLAssert.assertXMLEqual(
+                XML + "<target pattern=\".*\" " + "project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
+                result);
 
     }
 
@@ -87,14 +83,11 @@ public class TargetTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Target.class,
-                AbstractTarget.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Target.class, AbstractTarget.class);
 
         // TEST
-        final Target testee = new JaxbHelper()
-                .create("<target pattern=\".*\" "
-                        + "project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
-                        jaxbContext);
+        final Target testee = new JaxbHelper().create(
+                "<target pattern=\".*\" " + "project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();
@@ -134,27 +127,13 @@ public class TargetTest extends AbstractTest {
         final Artifact parent = new Artifact();
 
         // TEST & VERIFY
-        assertThat(
-                new Target("MyName\\.java", "prj", "folder").init(
-                        new DefaultContext(), parent, null).matches(
-                        "MyName.java")).isTrue();
-        assertThat(
-                new Target(".*MyName\\.java", "prj", "folder").init(
-                        new DefaultContext(), parent, null).matches(
-                        "MyName.java")).isTrue();
-        assertThat(
-                new Target(".*MyName\\.java", "prj", "folder").init(
-                        new DefaultContext(), parent, null).matches(
-                        "/MyName.java")).isTrue();
-        assertThat(
-                new Target(".*a/b/c", "prj", "folder").init(
-                        new DefaultContext(), parent, null).matches(
-                        "a/b/c/MyName.java")).isTrue();
+        assertThat(new Target("MyName\\.java", "prj", "folder").init(new DefaultContext(), parent, null).matches("MyName.java")).isTrue();
+        assertThat(new Target(".*MyName\\.java", "prj", "folder").init(new DefaultContext(), parent, null).matches("MyName.java")).isTrue();
+        assertThat(new Target(".*MyName\\.java", "prj", "folder").init(new DefaultContext(), parent, null).matches("/MyName.java"))
+                .isTrue();
+        assertThat(new Target(".*a/b/c", "prj", "folder").init(new DefaultContext(), parent, null).matches("a/b/c/MyName.java")).isTrue();
 
-        assertThat(
-                new Target("MyName\\.java", "prj", "folder").init(
-                        new DefaultContext(), parent, null).matches(
-                        "Another.java")).isFalse();
+        assertThat(new Target("MyName\\.java", "prj", "folder").init(new DefaultContext(), parent, null).matches("Another.java")).isFalse();
 
     }
 
@@ -164,8 +143,7 @@ public class TargetTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig config = new SrcGen4JConfig();
         final Generators generators = new Generators();
-        final GeneratorConfig generator = new GeneratorConfig("NAME1",
-                "a.b.c.D", "PARSER1");
+        final GeneratorConfig generator = new GeneratorConfig("NAME1", "a.b.c.D", "PARSER1");
         final Artifact artifact = new Artifact("ARTIFACT");
         final Target testee = new Target();
 

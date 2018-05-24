@@ -39,8 +39,7 @@ import org.fuin.xmlcfg4j.AbstractElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "parsers")
 @XmlType(propOrder = { "list" })
-public class Parsers extends AbstractElement implements
-        InitializableElement<Parsers, SrcGen4JConfig> {
+public class Parsers extends AbstractElement implements InitializableElement<Parsers, SrcGen4JConfig> {
 
     @Nullable
     @Valid
@@ -95,8 +94,7 @@ public class Parsers extends AbstractElement implements
     }
 
     @Override
-    public final Parsers init(final SrcGen4JContext context,
-            final SrcGen4JConfig parent, final Map<String, String> vars) {
+    public final Parsers init(final SrcGen4JContext context, final SrcGen4JConfig parent, final Map<String, String> vars) {
         this.parent = parent;
         inheritVariables(vars);
         if (list != null) {

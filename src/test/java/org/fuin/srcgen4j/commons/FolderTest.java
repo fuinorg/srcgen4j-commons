@@ -77,11 +77,9 @@ public class FolderTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(Folder.class);
 
         // TEST
-        final Folder testee = new JaxbHelper()
-                .create("<folder name=\"abc\" path=\"def\" create=\"true\""
-                        + " override=\"true\" overrideExclude=\"oe\" clean=\"true\" cleanExclude=\"ce\" "
-                        + "xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
-                        jaxbContext);
+        final Folder testee = new JaxbHelper().create("<folder name=\"abc\" path=\"def\" create=\"true\""
+                + " override=\"true\" overrideExclude=\"oe\" clean=\"true\" cleanExclude=\"ce\" "
+                + "xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();

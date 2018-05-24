@@ -35,14 +35,12 @@ import org.fuin.objects4j.common.NotEmpty;
 import org.fuin.objects4j.common.Nullable;
 
 /**
- * Maps a single generated artifact based on a regular expression to a
- * project/folder.
+ * Maps a single generated artifact based on a regular expression to a project/folder.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "target")
 @XmlType(propOrder = { "pattern" })
-public class Target extends AbstractTarget implements
-        InitializableElement<Target, Artifact> {
+public class Target extends AbstractTarget implements InitializableElement<Target, Artifact> {
 
     @NotEmpty
     @XmlAttribute
@@ -71,8 +69,7 @@ public class Target extends AbstractTarget implements
      * @param folder
      *            Folder to set.
      */
-    public Target(@NotEmpty final String pattern,
-            @Nullable final String project, @Nullable final String folder) {
+    public Target(@NotEmpty final String pattern, @Nullable final String project, @Nullable final String folder) {
         super(project, folder);
         Contract.requireArgNotEmpty("pattern", pattern);
         this.pattern = pattern;
@@ -131,8 +128,7 @@ public class Target extends AbstractTarget implements
     }
 
     @Override
-    public final Target init(final SrcGen4JContext context,
-            final Artifact parent, final Map<String, String> vars) {
+    public final Target init(final SrcGen4JContext context, final Artifact parent, final Map<String, String> vars) {
         this.parent = parent;
         inheritVariables(vars);
         pattern = replaceVars(pattern, getVarMap());

@@ -50,8 +50,7 @@ public interface ArtifactFactory<TYPE> {
     /**
      * Determines if the factory supports an incremental build.
      * 
-     * @return If the factory supports an incremental build TRUE (default), else
-     *         FALSE (only full build).
+     * @return If the factory supports an incremental build TRUE (default), else FALSE (only full build).
      */
     public boolean isIncremental();
 
@@ -63,18 +62,15 @@ public interface ArtifactFactory<TYPE> {
      * @param context
      *            Map used to store information during the generation process.
      * @param preparationRun
-     *            TRUE if this is a (dry) preparation run. May be used to
-     *            prepare a following real generation run.
+     *            TRUE if this is a (dry) preparation run. May be used to prepare a following real generation run.
      * 
-     * @return The generated artifact. A <code>null</code> value signals that
-     *         nothing was generated.
+     * @return The generated artifact. A <code>null</code> value signals that nothing was generated.
      * 
      * @throws GenerateException
      *             Error when generating.
      */
     @Nullable
-    public GeneratedArtifact create(@NotNull TYPE modelObject,
-            @NotNull Map<String, Object> context, boolean preparationRun)
+    public GeneratedArtifact create(@NotNull TYPE modelObject, @NotNull Map<String, Object> context, boolean preparationRun)
             throws GenerateException;
 
 }

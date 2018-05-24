@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -51,14 +50,12 @@ import org.slf4j.LoggerFactory;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "srcgen4j-config")
-@XmlType(propOrder = { "generators", "parsers", "projects", "classpath",
-        "variables" })
+@XmlType(propOrder = { "generators", "parsers", "projects", "classpath", "variables" })
 public class SrcGen4JConfig {
 
     private static final String ROOT_DIR_VAR = "rootDir";
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(SrcGen4JConfig.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SrcGen4JConfig.class);
 
     @Nullable
     @Valid
@@ -189,8 +186,7 @@ public class SrcGen4JConfig {
     }
 
     /**
-     * Adds a parser to the configuration. If the list of parsers does not exist
-     * it will be created.
+     * Adds a parser to the configuration. If the list of parsers does not exist it will be created.
      * 
      * @param parser
      *            Parser to add.
@@ -226,8 +222,7 @@ public class SrcGen4JConfig {
     /**
      * Returns the information if the object has been initialized.
      * 
-     * @return If the method {@link #init(SrcGen4JContext, File)} was called
-     *         TRUE, else FALSE.
+     * @return If the method {@link #init(SrcGen4JContext, File)} was called TRUE, else FALSE.
      */
     public final boolean isInitialized() {
         return initialized;
@@ -240,8 +235,7 @@ public class SrcGen4JConfig {
             final List<Variable> vars = variables.asList();
             for (final Variable var : vars) {
                 if (var.getName().equals(ROOT_DIR_VAR)) {
-                    LOG.warn("Replaced root directory '" + var.getValue()
-                            + "' with: '" + rootDir + "'");
+                    LOG.warn("Replaced root directory '" + var.getValue() + "' with: '" + rootDir + "'");
                 } else {
                     varMap.put(var.getName(), var.getValue());
                 }
@@ -253,9 +247,8 @@ public class SrcGen4JConfig {
     /**
      * Initializes this object and it's childs.<br>
      * <br>
-     * <b>CAUTION:</b> Elements contained in this configuration may be changed.
-     * If you serialize the object after calling this method the new state will
-     * be saved.
+     * <b>CAUTION:</b> Elements contained in this configuration may be changed. If you serialize the object after calling this method the
+     * new state will be saved.
      * 
      * @param context
      *            Current context.
@@ -264,8 +257,7 @@ public class SrcGen4JConfig {
      * 
      * @return This instance.
      */
-    public final SrcGen4JConfig init(@NotNull final SrcGen4JContext context,
-            @NotNull @FileExists @IsDirectory final File rootDir) {
+    public final SrcGen4JConfig init(@NotNull final SrcGen4JContext context, @NotNull @FileExists @IsDirectory final File rootDir) {
 
         Contract.requireArgNotNull("context", context);
         Contract.requireArgNotNull(ROOT_DIR_VAR, rootDir);
@@ -292,8 +284,7 @@ public class SrcGen4JConfig {
     }
 
     /**
-     * Returns a target directory for a given combination of generator name and
-     * artifact name.
+     * Returns a target directory for a given combination of generator name and artifact name.
      * 
      * @param generatorName
      *            Name of the generator.
@@ -315,10 +306,8 @@ public class SrcGen4JConfig {
      * @throws FolderNotFoundException
      *             The folder in the project based on the selection is unknown.
      */
-    public final Folder findTargetFolder(@NotNull final String generatorName,
-            @NotNull final String artifactName)
-            throws ProjectNameNotDefinedException, ArtifactNotFoundException,
-            FolderNameNotDefinedException, GeneratorNotFoundException,
+    public final Folder findTargetFolder(@NotNull final String generatorName, @NotNull final String artifactName)
+            throws ProjectNameNotDefinedException, ArtifactNotFoundException, FolderNameNotDefinedException, GeneratorNotFoundException,
             ProjectNotFoundException, FolderNotFoundException {
 
         Contract.requireArgNotNull("generatorName", generatorName);
@@ -329,8 +318,7 @@ public class SrcGen4JConfig {
     }
 
     /**
-     * Returns a target directory for a given combination of generator name,
-     * artifact name and target sub path.
+     * Returns a target directory for a given combination of generator name, artifact name and target sub path.
      * 
      * @param generatorName
      *            Name of the generator.
@@ -354,10 +342,8 @@ public class SrcGen4JConfig {
      * @throws FolderNotFoundException
      *             The folder in the project based on the selection is unknown.
      */
-    public final Folder findTargetFolder(@NotNull final String generatorName,
-            @NotNull final String artifactName, final String targetPath)
-            throws ProjectNameNotDefinedException, ArtifactNotFoundException,
-            FolderNameNotDefinedException, GeneratorNotFoundException,
+    public final Folder findTargetFolder(@NotNull final String generatorName, @NotNull final String artifactName, final String targetPath)
+            throws ProjectNameNotDefinedException, ArtifactNotFoundException, FolderNameNotDefinedException, GeneratorNotFoundException,
             ProjectNotFoundException, FolderNotFoundException {
 
         Contract.requireArgNotNull("generatorName", generatorName);
@@ -386,25 +372,21 @@ public class SrcGen4JConfig {
         }
 
         if (projectName == null) {
-            throw new ProjectNameNotDefinedException(generatorName,
-                    artifactName, targetPattern);
+            throw new ProjectNameNotDefinedException(generatorName, artifactName, targetPattern);
         }
         if (folderName == null) {
-            throw new FolderNameNotDefinedException(generatorName, artifactName,
-                    targetPattern);
+            throw new FolderNameNotDefinedException(generatorName, artifactName, targetPattern);
         }
 
         idx = projects.indexOf(new Project(projectName, "dummy"));
         if (idx < 0) {
-            throw new ProjectNotFoundException(generatorName, artifactName,
-                    targetPattern, projectName);
+            throw new ProjectNotFoundException(generatorName, artifactName, targetPattern, projectName);
         }
         final Project project = projects.get(idx);
 
         idx = project.getFolders().indexOf(new Folder(folderName, "NotUsed"));
         if (idx < 0) {
-            throw new FolderNotFoundException(generatorName, artifactName,
-                    targetPattern, projectName, folderName);
+            throw new FolderNotFoundException(generatorName, artifactName, targetPattern, projectName, folderName);
         }
         return project.getFolders().get(idx);
 
@@ -419,8 +401,7 @@ public class SrcGen4JConfig {
      * @return List of generators.
      */
     @NeverNull
-    public final List<GeneratorConfig> findGeneratorsForParser(
-            @NotNull final String parserName) {
+    public final List<GeneratorConfig> findGeneratorsForParser(@NotNull final String parserName) {
         Contract.requireArgNotNull("parserName", parserName);
 
         final List<GeneratorConfig> list = new ArrayList<GeneratorConfig>();
@@ -434,23 +415,19 @@ public class SrcGen4JConfig {
     }
 
     /**
-     * Creates a new configuration with a single project and a Maven directory
-     * structure.
+     * Creates a new configuration with a single project and a Maven directory structure.
      * 
      * @param context
      *            Current context.
      * @param projectName
      *            Name of the one and only project.
      * @param rootDir
-     *            Root directory that is available as variable
-     *            'srcgen4jRootDir'.
+     *            Root directory that is available as variable 'srcgen4jRootDir'.
      * 
      * @return New initialized configuration instance.
      */
     @NeverNull
-    public static SrcGen4JConfig createMavenStyleSingleProject(
-            @NotNull final SrcGen4JContext context,
-            @NotNull final String projectName,
+    public static SrcGen4JConfig createMavenStyleSingleProject(@NotNull final SrcGen4JContext context, @NotNull final String projectName,
             @NotNull @FileExists @IsDirectory final File rootDir) {
 
         Contract.requireArgNotNull("context", context);

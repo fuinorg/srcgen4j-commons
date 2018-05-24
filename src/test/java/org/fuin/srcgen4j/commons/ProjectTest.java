@@ -51,8 +51,7 @@ public class ProjectTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Project.class,
-                Folder.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Project.class, Folder.class);
         final Project testee = new Project("abc", "def");
         testee.setMaven(true);
         testee.addFolder(new Folder("NAME", "PATH"));
@@ -61,10 +60,8 @@ public class ProjectTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert.assertXMLEqual(XML
-                + "<project path=\"def\" maven=\"true\" name=\"abc\" "
-                + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                + "<folder path=\"PATH\" name=\"NAME\"/></project>", result);
+        XMLAssert.assertXMLEqual(XML + "<project path=\"def\" maven=\"true\" name=\"abc\" "
+                + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">" + "<folder path=\"PATH\" name=\"NAME\"/></project>", result);
 
     }
 
@@ -72,13 +69,12 @@ public class ProjectTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Project.class,
-                Folder.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Project.class, Folder.class);
 
         // TEST
-        final Project testee = new JaxbHelper()
-                .create("<project name=\"abc\" path=\"def\" maven=\"true\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"><folder name=\"NAME\" path=\"PATH\"/></project>",
-                        jaxbContext);
+        final Project testee = new JaxbHelper().create(
+                "<project name=\"abc\" path=\"def\" maven=\"true\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"><folder name=\"NAME\" path=\"PATH\"/></project>",
+                jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();
@@ -131,10 +127,8 @@ public class ProjectTest extends AbstractTest {
 
         // VERIFY
         assertThat(testee.getFolders()).hasSize(8);
-        assertThat(testee.getFolders()).contains(new Folder("mainJava", ""),
-                new Folder("mainRes", ""), new Folder("genMainJava", ""),
-                new Folder("genMainRes", ""), new Folder("testJava", ""),
-                new Folder("testRes", ""), new Folder("genTestJava", ""),
+        assertThat(testee.getFolders()).contains(new Folder("mainJava", ""), new Folder("mainRes", ""), new Folder("genMainJava", ""),
+                new Folder("genMainRes", ""), new Folder("testJava", ""), new Folder("testRes", ""), new Folder("genTestJava", ""),
                 new Folder("genTestRes", ""));
 
     }
@@ -152,10 +146,8 @@ public class ProjectTest extends AbstractTest {
         testee.init(new DefaultContext(), parent, new HashMap<String, String>());
 
         // VERIFY
-        assertThat(testee.getFolders()).contains(folder,
-                new Folder("mainRes", ""), new Folder("genMainJava", ""),
-                new Folder("genMainRes", ""), new Folder("testJava", ""),
-                new Folder("testRes", ""), new Folder("genTestJava", ""),
+        assertThat(testee.getFolders()).contains(folder, new Folder("mainRes", ""), new Folder("genMainJava", ""),
+                new Folder("genMainRes", ""), new Folder("testJava", ""), new Folder("testRes", ""), new Folder("genTestJava", ""),
                 new Folder("genTestRes", ""));
         final int idx = testee.getFolders().indexOf(folder);
         assertThat(testee.getFolders().get(idx)).isSameAs(folder);

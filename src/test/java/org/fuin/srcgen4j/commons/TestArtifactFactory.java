@@ -44,8 +44,7 @@ public final class TestArtifactFactory implements ArtifactFactory<Object> {
     }
 
     @Override
-    public final GeneratedArtifact create(@NotNull final Object modelObject,
-            @NotNull final Map<String, Object> context,
+    public final GeneratedArtifact create(@NotNull final Object modelObject, @NotNull final Map<String, Object> context,
             final boolean preparationRun) throws GenerateException {
         return new GeneratedArtifact(artifact, "b/c/d.txt", "abcd".getBytes());
     }

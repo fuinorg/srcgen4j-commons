@@ -20,8 +20,7 @@ package org.fuin.srcgen4j.commons;
 import org.fuin.objects4j.common.Nullable;
 
 /**
- * For a given generator/artifact/target was no folder found in a generator
- * configuration.
+ * For a given generator/artifact/target was no folder found in a generator configuration.
  */
 public class FolderNameNotDefinedException extends Exception {
 
@@ -31,19 +30,15 @@ public class FolderNameNotDefinedException extends Exception {
      * Constructor with names.
      * 
      * @param generatorName
-     *            Name of the generator with the requested artifact - Should not
-     *            be <code>null</code>.
+     *            Name of the generator with the requested artifact - Should not be <code>null</code>.
      * @param artifactName
-     *            Name of the artifact with the request target - Should not be
-     *            <code>null</code>.
+     *            Name of the artifact with the request target - Should not be <code>null</code>.
      * @param targetPattern
      *            Target pattern - Should not be <code>null</code>.
      */
-    public FolderNameNotDefinedException(@Nullable final String generatorName,
-            @Nullable final String artifactName,
+    public FolderNameNotDefinedException(@Nullable final String generatorName, @Nullable final String artifactName,
             @Nullable final String targetPattern) {
-        super("No folder name is defined for: " + generatorName + " / "
-                + artifactName + " / " + targetPattern);
+        super("No folder name is defined for: " + generatorName + " / " + artifactName + " / " + targetPattern);
     }
 
 }

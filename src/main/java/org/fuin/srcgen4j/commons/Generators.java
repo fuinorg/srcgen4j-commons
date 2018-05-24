@@ -41,8 +41,7 @@ import org.fuin.objects4j.common.Nullable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "generators")
 @XmlType(propOrder = { "list" })
-public class Generators extends AbstractTarget implements
-        InitializableElement<Generators, SrcGen4JConfig> {
+public class Generators extends AbstractTarget implements InitializableElement<Generators, SrcGen4JConfig> {
 
     @Nullable
     @Valid
@@ -67,8 +66,7 @@ public class Generators extends AbstractTarget implements
      * @param folder
      *            Folder to set.
      */
-    public Generators(@Nullable final String project,
-            @Nullable final String folder) {
+    public Generators(@Nullable final String project, @Nullable final String folder) {
         super(project, folder);
     }
 
@@ -117,8 +115,7 @@ public class Generators extends AbstractTarget implements
     }
 
     @Override
-    public final Generators init(final SrcGen4JContext context,
-            final SrcGen4JConfig parent, final Map<String, String> vars) {
+    public final Generators init(final SrcGen4JContext context, final SrcGen4JConfig parent, final Map<String, String> vars) {
         this.parent = parent;
         inheritVariables(vars);
         setProject(replaceVars(getProject(), getVarMap()));
@@ -143,11 +140,9 @@ public class Generators extends AbstractTarget implements
      *             No generator with the given name was found.
      */
     @Nullable
-    public final GeneratorConfig findByName(@NotEmpty final String generatorName)
-            throws GeneratorNotFoundException {
+    public final GeneratorConfig findByName(@NotEmpty final String generatorName) throws GeneratorNotFoundException {
         Contract.requireArgNotEmpty("generatorName", generatorName);
-        final int idx = list.indexOf(new GeneratorConfig(generatorName,
-                "dummy", "dummy"));
+        final int idx = list.indexOf(new GeneratorConfig(generatorName, "dummy", "dummy"));
         if (idx < 0) {
             throw new GeneratorNotFoundException(generatorName);
         }
@@ -165,8 +160,7 @@ public class Generators extends AbstractTarget implements
      * @return Target folder.
      */
     @Nullable
-    public final Folder findTargetFolder(@NotEmpty final String generatorName,
-            @NotEmpty final String artifactName) {
+    public final Folder findTargetFolder(@NotEmpty final String generatorName, @NotEmpty final String artifactName) {
         Contract.requireArgNotEmpty("generatorName", generatorName);
         Contract.requireArgNotEmpty("artifactName", artifactName);
         if (parent == null) {
@@ -176,34 +170,22 @@ public class Generators extends AbstractTarget implements
             return parent.findTargetFolder(generatorName, artifactName);
         } catch (final ProjectNameNotDefinedException ex) {
             throw new RuntimeException(
-                    "Couldn't determine target folder for generator '"
-                            + generatorName + "' and artifact '" + artifactName
-                            + "'", ex);
+                    "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
         } catch (final ArtifactNotFoundException ex) {
             throw new RuntimeException(
-                    "Couldn't determine target folder for generator '"
-                            + generatorName + "' and artifact '" + artifactName
-                            + "'", ex);
+                    "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
         } catch (final FolderNameNotDefinedException ex) {
             throw new RuntimeException(
-                    "Couldn't determine target folder for generator '"
-                            + generatorName + "' and artifact '" + artifactName
-                            + "'", ex);
+                    "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
         } catch (final GeneratorNotFoundException ex) {
             throw new RuntimeException(
-                    "Couldn't determine target folder for generator '"
-                            + generatorName + "' and artifact '" + artifactName
-                            + "'", ex);
+                    "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
         } catch (final ProjectNotFoundException ex) {
             throw new RuntimeException(
-                    "Couldn't determine target folder for generator '"
-                            + generatorName + "' and artifact '" + artifactName
-                            + "'", ex);
+                    "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
         } catch (final FolderNotFoundException ex) {
             throw new RuntimeException(
-                    "Couldn't determine target folder for generator '"
-                            + generatorName + "' and artifact '" + artifactName
-                            + "'", ex);
+                    "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
         }
     }
 

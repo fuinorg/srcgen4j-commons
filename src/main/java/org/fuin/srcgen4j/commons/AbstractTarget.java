@@ -55,8 +55,7 @@ public abstract class AbstractTarget extends AbstractElement {
      * @param folder
      *            Folder to set.
      */
-    public AbstractTarget(@Nullable final String project,
-            @Nullable final String folder) {
+    public AbstractTarget(@Nullable final String project, @Nullable final String folder) {
         super();
         this.project = project;
         this.folder = folder;

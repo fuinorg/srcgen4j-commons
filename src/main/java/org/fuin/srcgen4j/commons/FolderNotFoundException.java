@@ -30,11 +30,9 @@ public class FolderNotFoundException extends Exception {
      * Constructor with names.
      * 
      * @param generatorName
-     *            Name of the generator with the requested artifact - Should not
-     *            be <code>null</code>.
+     *            Name of the generator with the requested artifact - Should not be <code>null</code>.
      * @param artifactName
-     *            Name of the artifact with the request target - Should not be
-     *            <code>null</code>.
+     *            Name of the artifact with the request target - Should not be <code>null</code>.
      * @param targetPath
      *            Target path - Should not be <code>null</code>.
      * @param projectName
@@ -42,13 +40,9 @@ public class FolderNotFoundException extends Exception {
      * @param folderName
      *            Folder name - Should not be <code>null</code>.
      */
-    public FolderNotFoundException(@Nullable final String generatorName,
-            @Nullable final String artifactName,
-            @Nullable final String targetPath,
-            @Nullable final String projectName,
-            @Nullable final String folderName) {
-        super("The folder name '" + folderName + "' in project '" + projectName
-                + "' is not known - Selection was: " + generatorName + " / "
+    public FolderNotFoundException(@Nullable final String generatorName, @Nullable final String artifactName,
+            @Nullable final String targetPath, @Nullable final String projectName, @Nullable final String folderName) {
+        super("The folder name '" + folderName + "' in project '" + projectName + "' is not known - Selection was: " + generatorName + " / "
                 + artifactName + " / " + targetPath);
     }
 

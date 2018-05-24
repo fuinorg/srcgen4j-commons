@@ -44,8 +44,7 @@ public final class ParseException extends Exception {
      * @param cause
      *            Cause.
      */
-    public ParseException(@NotNull final String message,
-            @NotNull final Throwable cause) {
+    public ParseException(@NotNull final String message, @NotNull final Throwable cause) {
         super(message, cause);
     }
 

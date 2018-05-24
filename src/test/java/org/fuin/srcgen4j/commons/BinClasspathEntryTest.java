@@ -40,8 +40,7 @@ public class BinClasspathEntryTest extends AbstractTest {
     @Test
     public final void testPojoStructureAndBehavior() {
 
-        final PojoClass pc = PojoClassFactory
-                .getPojoClass(BinClasspathEntry.class);
+        final PojoClass pc = PojoClassFactory.getPojoClass(BinClasspathEntry.class);
         final PojoValidator pv = createPojoValidator();
         pv.runValidation(pc);
 
@@ -51,8 +50,7 @@ public class BinClasspathEntryTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext
-                .newInstance(BinClasspathEntry.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(BinClasspathEntry.class);
         final BinClasspathEntry testee = new BinClasspathEntry("a/b/c");
 
         // TEST
@@ -68,12 +66,10 @@ public class BinClasspathEntryTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext
-                .newInstance(BinClasspathEntry.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(BinClasspathEntry.class);
 
         // TEST
-        final BinClasspathEntry testee = new JaxbHelper().create(
-                "<bin path=\"a/b/c\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
+        final BinClasspathEntry testee = new JaxbHelper().create("<bin path=\"a/b/c\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
                 jaxbContext);
 
         // VERIFY

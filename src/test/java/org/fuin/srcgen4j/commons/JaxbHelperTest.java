@@ -71,8 +71,7 @@ public class JaxbHelperTest extends AbstractTest {
     public void testCreateReaderJAXBContext() throws Exception {
 
         // PREPARE
-        final Reader reader = new StringReader(
-                "<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+        final Reader reader = new StringReader("<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
         final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
 
         // TEST
@@ -107,9 +106,7 @@ public class JaxbHelperTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
 
         // TEST
-        final Dummy dummy = testee
-                .create("<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
-                        jaxbContext);
+        final Dummy dummy = testee.create("<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", jaxbContext);
 
         // VERIFY
         assertThat(dummy).isNotNull();
@@ -151,10 +148,7 @@ public class JaxbHelperTest extends AbstractTest {
         final String result = testee.write(dummy, jaxbContext);
 
         // VERIFY
-        assertThat(result)
-                .isEqualTo(
-                        XML
-                                + "<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+        assertThat(result).isEqualTo(XML + "<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
 
     }
 
@@ -172,10 +166,7 @@ public class JaxbHelperTest extends AbstractTest {
         testee.write(dummy, writer, jaxbContext);
 
         // VERIFY
-        assertThat(writer.toString())
-                .isEqualTo(
-                        XML
-                                + "<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+        assertThat(writer.toString()).isEqualTo(XML + "<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
 
     }
 

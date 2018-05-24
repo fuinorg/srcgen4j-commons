@@ -53,12 +53,10 @@ public class GeneratorsTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext
-                .newInstance(Generators.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Generators.class);
         final Generators testee = new Generators("abc", "def");
         testee.addVariable(new Variable("a", "1"));
-        testee.addGenerator(new GeneratorConfig("NAME", "a.b.c.D", "PARSER",
-                "PROJECT", "FOLDER"));
+        testee.addGenerator(new GeneratorConfig("NAME", "a.b.c.D", "PARSER", "PROJECT", "FOLDER"));
 
         // TEST
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
@@ -66,10 +64,8 @@ public class GeneratorsTest extends AbstractTest {
         // VERIFY
         XMLAssert.assertXMLEqual(XML
                 + "<ns2:generators project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
-                + "<variable value=\"1\" name=\"a\"/>"
-                + "<ns2:generator class=\"a.b.c.D\" parser=\"PARSER\" name=\"NAME\""
-                + " project=\"PROJECT\" folder=\"FOLDER\"/>"
-                + "</ns2:generators>", result);
+                + "<variable value=\"1\" name=\"a\"/>" + "<ns2:generator class=\"a.b.c.D\" parser=\"PARSER\" name=\"NAME\""
+                + " project=\"PROJECT\" folder=\"FOLDER\"/>" + "</ns2:generators>", result);
 
     }
 
@@ -77,14 +73,12 @@ public class GeneratorsTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext
-                .newInstance(Generators.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Generators.class);
 
         // TEST
         final Generators testee = new JaxbHelper().create(
                 "<ns2:generators project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<ns2:generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/>"
-                        + "<variable name=\"a\" value=\"1\"/>"
+                        + "<ns2:generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/>" + "<variable name=\"a\" value=\"1\"/>"
                         + "</ns2:generators>",
                 jaxbContext);
         testee.init(new DefaultContext(), null, new HashMap<>());
@@ -108,8 +102,7 @@ public class GeneratorsTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig parent = new SrcGen4JConfig();
         final Generators testee = new Generators("A${a}A", "${b}2B");
-        testee.addGenerator(new GeneratorConfig("A ${x}", "CLASS", "PARSER",
-                "${y}B", "a${z}c"));
+        testee.addGenerator(new GeneratorConfig("A ${x}", "CLASS", "PARSER", "${y}B", "a${z}c"));
 
         final Map<String, String> vars = new HashMap<String, String>();
         vars.put("a", "1");

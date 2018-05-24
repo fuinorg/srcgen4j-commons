@@ -34,13 +34,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides a context for the build process that just stores the markers and
- * logs the add messages.
+ * Provides a context for the build process that just stores the markers and logs the add messages.
  */
 public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable {
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(DefaultContext.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultContext.class);
 
     @NotNull
     private final Map<File, Set<DefaultFileMarker>> markers;
@@ -84,8 +82,7 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
      * @param cp
      *            Class path with JAR files and binary directories.
      */
-    public DefaultContext(@NotNull final ClassLoader classLoader,
-            @NotNull final List<File> cp) {
+    public DefaultContext(@NotNull final ClassLoader classLoader, @NotNull final List<File> cp) {
         super();
         Contract.requireArgNotNull("classLoader", classLoader);
         Contract.requireArgNotNull("cp", cp);
@@ -105,8 +102,7 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
         binDirs = Collections.unmodifiableList(dirs);
     }
 
-    private DefaultFileMarker add(final File file,
-            final DefaultFileMarker marker) {
+    private DefaultFileMarker add(final File file, final DefaultFileMarker marker) {
         Set<DefaultFileMarker> set = markers.get(file);
         if (set == null) {
             set = new HashSet<DefaultFileMarker>();
@@ -126,24 +122,19 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
     }
 
     @Override
-    public final FileMarker addMarker(final File file,
-            final FileMarkerSeverity severity, final String message) {
+    public final FileMarker addMarker(final File file, final FileMarkerSeverity severity, final String message) {
         return add(file, new DefaultFileMarker(severity, message));
     }
 
     @Override
-    public final FileMarker addMarker(final File file,
-            final FileMarkerSeverity severity, final String message,
-            final int line) {
+    public final FileMarker addMarker(final File file, final FileMarkerSeverity severity, final String message, final int line) {
         return add(file, new DefaultFileMarker(severity, message, line));
     }
 
     @Override
-    public final FileMarker addMarker(final File file,
-            final FileMarkerSeverity severity, final String message,
-            final int start, final int length) {
-        return add(file,
-                new DefaultFileMarker(severity, message, start, length));
+    public final FileMarker addMarker(final File file, final FileMarkerSeverity severity, final String message, final int start,
+            final int length) {
+        return add(file, new DefaultFileMarker(severity, message, start, length));
     }
 
     @Override
@@ -160,8 +151,7 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
     }
 
     @Override
-    public final Iterator<? extends FileMarker> getMarkerIterator(
-            final File file) {
+    public final Iterator<? extends FileMarker> getMarkerIterator(final File file) {
         final Set<DefaultFileMarker> set = markers.get(file);
         if (set == null) {
             return null;

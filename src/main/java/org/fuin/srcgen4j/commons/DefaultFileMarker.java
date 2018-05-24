@@ -51,8 +51,7 @@ public final class DefaultFileMarker implements FileMarker {
      * @param message
      *            Message.
      */
-    public DefaultFileMarker(@NotNull final FileMarkerSeverity severity,
-            @NotNull final String message) {
+    public DefaultFileMarker(@NotNull final FileMarkerSeverity severity, @NotNull final String message) {
         super();
         Contract.requireArgNotNull("severity", severity);
         Contract.requireArgNotNull("message", message);
@@ -75,8 +74,7 @@ public final class DefaultFileMarker implements FileMarker {
      * @param line
      *            Line number.
      */
-    public DefaultFileMarker(@NotNull final FileMarkerSeverity severity,
-            @NotNull final String message, @Min(0) final int line) {
+    public DefaultFileMarker(@NotNull final FileMarkerSeverity severity, @NotNull final String message, @Min(0) final int line) {
         super();
         Contract.requireArgNotNull("severity", severity);
         Contract.requireArgNotNull("message", message);
@@ -101,8 +99,7 @@ public final class DefaultFileMarker implements FileMarker {
      * @param length
      *            Length of the marked block.
      */
-    public DefaultFileMarker(@NotNull final FileMarkerSeverity severity,
-            @NotNull final String message, @Min(0) final int start,
+    public DefaultFileMarker(@NotNull final FileMarkerSeverity severity, @NotNull final String message, @Min(0) final int start,
             @Min(1) final int length) {
         super();
         Contract.requireArgNotNull("severity", severity);
@@ -149,8 +146,7 @@ public final class DefaultFileMarker implements FileMarker {
     /**
      * Returns the marked line.
      * 
-     * @return Line (if type is {@link DefaultFileMarkerType#LINE}), otherwise
-     *         zero.
+     * @return Line (if type is {@link DefaultFileMarkerType#LINE}), otherwise zero.
      */
     public final int getLine() {
         return line;
@@ -159,8 +155,7 @@ public final class DefaultFileMarker implements FileMarker {
     /**
      * Returns the marked start position.
      * 
-     * @return Start position (if type is
-     *         {@link DefaultFileMarkerType#POS_LENGTH}), otherwise zero.
+     * @return Start position (if type is {@link DefaultFileMarkerType#POS_LENGTH}), otherwise zero.
      */
     public final int getStart() {
         return start;
@@ -169,8 +164,7 @@ public final class DefaultFileMarker implements FileMarker {
     /**
      * Returns the marked length.
      * 
-     * @return Block length (if type is {@link DefaultFileMarkerType#POS_LENGTH}
-     *         ), otherwise zero.
+     * @return Block length (if type is {@link DefaultFileMarkerType#POS_LENGTH} ), otherwise zero.
      */
     public final int getLength() {
         return length;
@@ -185,8 +179,7 @@ public final class DefaultFileMarker implements FileMarker {
             return severity + " [Line " + line + "]" + message;
         }
         if (type == DefaultFileMarkerType.POS_LENGTH) {
-            return severity + " [" + start + "-" + (start + length) + "]"
-                    + message;
+            return severity + " [" + start + "-" + (start + length) + "]" + message;
         }
         throw new IllegalStateException("Unknown enum value: " + type);
     }

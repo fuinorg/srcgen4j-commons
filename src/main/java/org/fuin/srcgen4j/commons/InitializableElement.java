@@ -47,7 +47,6 @@ public interface InitializableElement<ELEMENT, PARENT> {
      * @return This instance.
      */
     @NeverNull
-    public ELEMENT init(@NotNull SrcGen4JContext context,
-            @NotNull PARENT parent, @Nullable Map<String, String> vars);
+    public ELEMENT init(@NotNull SrcGen4JContext context, @NotNull PARENT parent, @Nullable Map<String, String> vars);
 
 }

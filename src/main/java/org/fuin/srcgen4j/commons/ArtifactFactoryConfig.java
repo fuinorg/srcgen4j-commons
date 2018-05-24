@@ -73,8 +73,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      * @param factoryClassName
      *            Full qualified factory class name.
      */
-    public ArtifactFactoryConfig(@NotNull final String artifact,
-            @NotNull final String factoryClassName) {
+    public ArtifactFactoryConfig(@NotNull final String artifact, @NotNull final String factoryClassName) {
         this(artifact, factoryClassName, null);
     }
 
@@ -86,11 +85,9 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      * @param factoryClassName
      *            Full qualified factory class name.
      * @param incremental
-     *            If the factory executes on an incremental build TRUE
-     *            (default), else FALSE.
+     *            If the factory executes on an incremental build TRUE (default), else FALSE.
      */
-    public ArtifactFactoryConfig(@NotNull final String artifact,
-            @NotNull final String factoryClassName,
+    public ArtifactFactoryConfig(@NotNull final String artifact, @NotNull final String factoryClassName,
             @Nullable final Boolean incremental) {
         super();
         this.artifact = artifact;
@@ -118,8 +115,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
     }
 
     /**
-     * Returns the information if the factory should be called during an
-     * incremental build.
+     * Returns the information if the factory should be called during an incremental build.
      * 
      * @return If the factory executes on an incremental build TRUE, else FALSE.
      */
@@ -129,24 +125,20 @@ public final class ArtifactFactoryConfig extends AbstractElement {
     }
 
     /**
-     * Sets the information if the factory should be called during an
-     * incremental build.
+     * Sets the information if the factory should be called during an incremental build.
      * 
      * @param incremental
-     *            If the factory executes on an incremental build TRUE, else
-     *            FALSE.
+     *            If the factory executes on an incremental build TRUE, else FALSE.
      */
     public final void setIncremental(@Nullable final Boolean incremental) {
         this.incremental = incremental;
     }
 
     /**
-     * Returns the information if the factory should be called during an
-     * incremental build. If the information is not set (NULL) the value
+     * Returns the information if the factory should be called during an incremental build. If the information is not set (NULL) the value
      * defaults to TRUE.
      * 
-     * @return If the factory executes on an incremental build TRUE (default),
-     *         else FALSE.
+     * @return If the factory executes on an incremental build TRUE (default), else FALSE.
      */
     public final boolean isIncremental() {
         if (incremental == null) {
@@ -156,8 +148,8 @@ public final class ArtifactFactoryConfig extends AbstractElement {
     }
 
     /**
-     * Returns the factory instance. If it does not exist, it will be created.
-     * Requires that {@link #init(SrcGen4JContext, Map)} was called once before.
+     * Returns the factory instance. If it does not exist, it will be created. Requires that {@link #init(SrcGen4JContext, Map)} was called
+     * once before.
      * 
      * @return Factory.
      */
@@ -165,19 +157,15 @@ public final class ArtifactFactoryConfig extends AbstractElement {
     public final ArtifactFactory<?> getFactory() {
         if (factory == null) {
             if (factoryClassName == null) {
-                throw new IllegalStateException(
-                        "Factory class name was not set: " + artifact);
+                throw new IllegalStateException("Factory class name was not set: " + artifact);
             }
             if (context == null) {
-                throw new IllegalStateException(
-                        "Context class loader was not set: " + artifact);
+                throw new IllegalStateException("Context class loader was not set: " + artifact);
             }
-            final Object obj = Utils4J.createInstance(factoryClassName,
-                    context.getClassLoader());
+            final Object obj = Utils4J.createInstance(factoryClassName, context.getClassLoader());
             if (!ArtifactFactory.class.isAssignableFrom(obj.getClass())) {
-                throw new IllegalStateException("Expected an object of type '"
-                        + ArtifactFactory.class.getName() + "', but was: "
-                        + obj.getClass());
+                throw new IllegalStateException(
+                        "Expected an object of type '" + ArtifactFactory.class.getName() + "', but was: " + obj.getClass());
             }
             factory = (ArtifactFactory<?>) obj;
             factory.init(this);
@@ -196,9 +184,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      * @return This instance.
      */
     @NeverNull
-    public final ArtifactFactoryConfig init(
-            @NotNull final SrcGen4JContext context,
-            final Map<String, String> vars) {
+    public final ArtifactFactoryConfig init(@NotNull final SrcGen4JContext context, final Map<String, String> vars) {
         Contract.requireArgNotNull("context", context);
         this.context = context;
         inheritVariables(vars);

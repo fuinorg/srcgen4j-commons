@@ -41,27 +41,22 @@ public class SrcGen4JTest {
 
         // PREPARE
         final SrcGen4JConfig config = new SrcGen4JConfig();
-        final ParserConfig parserCfg1 = new ParserConfig("parser1",
-                "a.b.b.Parser1");
+        final ParserConfig parserCfg1 = new ParserConfig("parser1", "a.b.b.Parser1");
         config.addParser(parserCfg1);
-        final ParserConfig parserCfg2 = new ParserConfig("parser2",
-                "a.b.c.Parser2");
+        final ParserConfig parserCfg2 = new ParserConfig("parser2", "a.b.c.Parser2");
         config.addParser(parserCfg2);
 
         final Generators generators = new Generators();
         config.setGenerators(generators);
 
-        final GeneratorConfig genCfg1 = new GeneratorConfig("generator1",
-                "a.b.b.Generator1", "parser1");
+        final GeneratorConfig genCfg1 = new GeneratorConfig("generator1", "a.b.b.Generator1", "parser1");
         generators.addGenerator(genCfg1);
 
-        final GeneratorConfig genCfg2 = new GeneratorConfig("generator2",
-                "a.b.c.Generator2", "parser2");
+        final GeneratorConfig genCfg2 = new GeneratorConfig("generator2", "a.b.c.Generator2", "parser2");
         generators.addGenerator(genCfg2);
 
         // Re-use generator class + Also connected to parser2
-        final GeneratorConfig genCfg3 = new GeneratorConfig("generator3",
-                "a.b.c.Generator2", "parser2");
+        final GeneratorConfig genCfg3 = new GeneratorConfig("generator3", "a.b.c.Generator2", "parser2");
         generators.addGenerator(genCfg3);
 
         config.init(new DefaultContext(), new File("."));

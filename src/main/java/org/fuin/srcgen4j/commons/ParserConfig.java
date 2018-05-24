@@ -45,11 +45,9 @@ import org.slf4j.LoggerFactory;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "parser")
 @XmlType(propOrder = { "config", "className" })
-public class ParserConfig extends AbstractNamedElement implements
-        InitializableElement<ParserConfig, Parsers> {
+public class ParserConfig extends AbstractNamedElement implements InitializableElement<ParserConfig, Parsers> {
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(ParserConfig.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ParserConfig.class);
 
     @NotEmpty
     @XmlAttribute(name = "class")
@@ -84,8 +82,7 @@ public class ParserConfig extends AbstractNamedElement implements
      * @param className
      *            Full qualified name of the class to set.
      */
-    public ParserConfig(@NotEmpty final String name,
-            @NotEmpty final String className) {
+    public ParserConfig(@NotEmpty final String name, @NotEmpty final String className) {
         super(name);
         Contract.requireArgNotEmpty("className", className);
         this.className = className;
@@ -132,8 +129,7 @@ public class ParserConfig extends AbstractNamedElement implements
     }
 
     @Override
-    public final ParserConfig init(final SrcGen4JContext context,
-            final Parsers parent, final Map<String, String> vars) {
+    public final ParserConfig init(final SrcGen4JContext context, final Parsers parent, final Map<String, String> vars) {
         this.context = context;
         this.parent = parent;
         inheritVariables(vars);
@@ -146,8 +142,7 @@ public class ParserConfig extends AbstractNamedElement implements
     }
 
     /**
-     * Returns an existing parser instance or creates a new one if it's the
-     * first call to this method.
+     * Returns an existing parser instance or creates a new one if it's the first call to this method.
      * 
      * @return Parser of type {@link #className}.
      */
@@ -159,19 +154,14 @@ public class ParserConfig extends AbstractNamedElement implements
         }
         LOG.info("Creating parser: " + className);
         if (className == null) {
-            throw new IllegalStateException("Class name was not set: "
-                    + getName());
+            throw new IllegalStateException("Class name was not set: " + getName());
         }
         if (context == null) {
-            throw new IllegalStateException(
-                    "Context class loader was not set: " + getName() + " / "
-                            + className);
+            throw new IllegalStateException("Context class loader was not set: " + getName() + " / " + className);
         }
-        final Object obj = Utils4J.createInstance(className,
-                context.getClassLoader());
+        final Object obj = Utils4J.createInstance(className, context.getClassLoader());
         if (!(obj instanceof Parser<?>)) {
-            throw new IllegalStateException("Expected class to be of type '"
-                    + Parser.class.getName() + "', but was: " + className);
+            throw new IllegalStateException("Expected class to be of type '" + Parser.class.getName() + "', but was: " + className);
         }
         parser = (Parser<Object>) obj;
         parser.initialize(context, this);

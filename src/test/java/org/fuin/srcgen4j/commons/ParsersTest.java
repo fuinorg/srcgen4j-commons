@@ -61,9 +61,9 @@ public class ParsersTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        assertThat(result).isEqualTo(XML
-                + "<ns2:parsers xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
-                + "<variable name=\"a\" value=\"1\"/><ns2:parser class=\"a.b.c.D\" name=\"NAME\"/></ns2:parsers>");
+        assertThat(result)
+                .isEqualTo(XML + "<ns2:parsers xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<variable name=\"a\" value=\"1\"/><ns2:parser class=\"a.b.c.D\" name=\"NAME\"/></ns2:parsers>");
 
     }
 
@@ -74,10 +74,9 @@ public class ParsersTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(Parsers.class);
 
         // TEST
-        final Parsers testee = new JaxbHelper().create(XML
-                + "<ns2:parsers xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
-                + "<ns2:parser name=\"NAME\" class=\"a.b.c.D\"/>"
-                + "<variable name=\"a\" value=\"1\"/>" + "</ns2:parsers>",
+        final Parsers testee = new JaxbHelper().create(
+                XML + "<ns2:parsers xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<ns2:parser name=\"NAME\" class=\"a.b.c.D\"/>" + "<variable name=\"a\" value=\"1\"/>" + "</ns2:parsers>",
                 jaxbContext);
         testee.init(new DefaultContext(), null, new HashMap<>());
 

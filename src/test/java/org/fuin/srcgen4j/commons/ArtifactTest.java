@@ -55,8 +55,7 @@ public class ArtifactTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Artifact.class,
-                Target.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Artifact.class, Target.class);
         final Artifact testee = new Artifact("abc", "def", "ghi");
         testee.addTarget(new Target("PATTERN", "PROJECT", "FOLDER"));
 
@@ -64,13 +63,10 @@ public class ArtifactTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert
-                .assertXMLEqual(
-                        XML
-                                + "<artifact name=\"abc\" "
-                                + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                                + "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>",
-                        result);
+        XMLAssert.assertXMLEqual(
+                XML + "<artifact name=\"abc\" " + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>",
+                result);
 
     }
 
@@ -78,15 +74,12 @@ public class ArtifactTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(Artifact.class,
-                Folder.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Artifact.class, Folder.class);
 
         // TEST
         final Artifact testee = new JaxbHelper()
-                .create("<artifact name=\"abc\" "
-                        + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>",
-                        jaxbContext);
+                .create("<artifact name=\"abc\" " + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>", jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();
@@ -95,10 +88,8 @@ public class ArtifactTest extends AbstractTest {
         assertThat(testee.getFolder()).isEqualTo("ghi");
         assertThat(testee.getTargets()).isNotNull();
         assertThat(testee.getTargets()).hasSize(1);
-        assertThat(testee.getTargets().get(0).getPattern())
-                .isEqualTo("PATTERN");
-        assertThat(testee.getTargets().get(0).getProject())
-                .isEqualTo("PROJECT");
+        assertThat(testee.getTargets().get(0).getPattern()).isEqualTo("PATTERN");
+        assertThat(testee.getTargets().get(0).getProject()).isEqualTo("PROJECT");
         assertThat(testee.getTargets().get(0).getFolder()).isEqualTo("FOLDER");
 
     }
@@ -184,8 +175,7 @@ public class ArtifactTest extends AbstractTest {
         // PREPARE
         final SrcGen4JConfig config = new SrcGen4JConfig();
         final Generators generators = new Generators();
-        final GeneratorConfig generator = new GeneratorConfig("NAME1",
-                "a.b.c.D", "PARSER1");
+        final GeneratorConfig generator = new GeneratorConfig("NAME1", "a.b.c.D", "PARSER1");
         final Artifact testee = new Artifact("ARTIFACT");
 
         config.setGenerators(generators);

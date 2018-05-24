@@ -40,18 +40,15 @@ public class ArtifactFactoryConfigTest extends AbstractTest {
     public final void testMarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext
-                .newInstance(ArtifactFactoryConfig.class);
-        final ArtifactFactoryConfig testee = new ArtifactFactoryConfig("abc",
-                "a.b.c.X");
+        final JAXBContext jaxbContext = JAXBContext.newInstance(ArtifactFactoryConfig.class);
+        final ArtifactFactoryConfig testee = new ArtifactFactoryConfig("abc", "a.b.c.X");
 
         // TEST
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert.assertXMLEqual(XML
-                + "<artifact-factory artifact=\"abc\" class=\"a.b.c.X\""
-                + " xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", result);
+        XMLAssert.assertXMLEqual(
+                XML + "<artifact-factory artifact=\"abc\" class=\"a.b.c.X\"" + " xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", result);
 
     }
 
@@ -59,14 +56,11 @@ public class ArtifactFactoryConfigTest extends AbstractTest {
     public final void testUnmarshal() throws Exception {
 
         // PREPARE
-        final JAXBContext jaxbContext = JAXBContext
-                .newInstance(ArtifactFactoryConfig.class);
+        final JAXBContext jaxbContext = JAXBContext.newInstance(ArtifactFactoryConfig.class);
 
         // TEST
         final ArtifactFactoryConfig testee = new JaxbHelper().create(
-                "<artifact-factory artifact=\"abc\" class=\"a.b.c.X\""
-                        + " xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
-                jaxbContext);
+                "<artifact-factory artifact=\"abc\" class=\"a.b.c.X\"" + " xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", jaxbContext);
 
         // VERIFY
         assertThat(testee).isNotNull();
@@ -79,8 +73,7 @@ public class ArtifactFactoryConfigTest extends AbstractTest {
     public final void testGetFactory() {
 
         // PREPARE
-        final ArtifactFactoryConfig testee = new ArtifactFactoryConfig("abc",
-                "org.fuin.srcgen4j.commons.TestArtifactFactory");
+        final ArtifactFactoryConfig testee = new ArtifactFactoryConfig("abc", "org.fuin.srcgen4j.commons.TestArtifactFactory");
         testee.init(new SrcGen4JContext() {
             @Override
             public ClassLoader getClassLoader() {

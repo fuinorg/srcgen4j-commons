@@ -29,8 +29,7 @@ import org.fuin.objects4j.common.Nullable;
 public interface SrcGen4JContext {
 
     /**
-     * Returns the class loader to use for loading parsers, generators and other
-     * stuff.
+     * Returns the class loader to use for loading parsers, generators and other stuff.
      * 
      * @return Class loader.
      */
@@ -38,8 +37,7 @@ public interface SrcGen4JContext {
     public ClassLoader getClassLoader();
 
     /**
-     * Returns a list of JAR files to add to the class path used during
-     * parse/generate process.
+     * Returns a list of JAR files to add to the class path used during parse/generate process.
      * 
      * @return Unmodifiable list of JAR files.
      */
@@ -47,8 +45,7 @@ public interface SrcGen4JContext {
     public List<File> getJarFiles();
 
     /**
-     * Returns a list of binary directories to add to the class path used during
-     * parse/generate process.
+     * Returns a list of binary directories to add to the class path used during parse/generate process.
      * 
      * @return Unmodifiable list of "bin"/"classes" directories.
      */

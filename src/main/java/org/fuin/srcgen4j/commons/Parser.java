@@ -31,16 +31,14 @@ import org.fuin.objects4j.common.Nullable;
 public interface Parser<MODEL> {
 
     /**
-     * Initializes the parser using the given configuration. Only called once
-     * for every parser instance.
+     * Initializes the parser using the given configuration. Only called once for every parser instance.
      * 
      * @param context
      *            Current context.
      * @param config
      *            Configuration to use.
      */
-    public void initialize(@NotNull SrcGen4JContext context,
-            @Nullable ParserConfig config);
+    public void initialize(@NotNull SrcGen4JContext context, @Nullable ParserConfig config);
 
     /**
      * Parses a model using the initially given configuration.

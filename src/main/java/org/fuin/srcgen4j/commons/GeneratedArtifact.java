@@ -45,8 +45,7 @@ public final class GeneratedArtifact {
      * @param data
      *            Generated data.
      */
-    public GeneratedArtifact(@NotEmpty final String name,
-            @NotEmpty final String pathAndName, @NotNull final byte[] data) {
+    public GeneratedArtifact(@NotEmpty final String name, @NotEmpty final String pathAndName, @NotNull final byte[] data) {
         super();
         Contract.requireArgNotEmpty("name", name);
         Contract.requireArgNotEmpty("pathAndName", pathAndName);

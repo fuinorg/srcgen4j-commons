@@ -18,6 +18,7 @@
 package org.fuin.srcgen4j.commons;
 
 import static org.fuin.utils4j.Utils4J.replaceVars;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +44,7 @@ import org.fuin.xmlcfg4j.AbstractNamedElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "project")
 @XmlType(propOrder = { "folders", "maven", "path" })
-public class Project extends AbstractNamedElement implements
-        InitializableElement<Project, SrcGen4JConfig> {
+public class Project extends AbstractNamedElement implements InitializableElement<Project, SrcGen4JConfig> {
 
     @NotEmpty
     @XmlAttribute
@@ -169,8 +169,7 @@ public class Project extends AbstractNamedElement implements
     }
 
     @Override
-    public final Project init(final SrcGen4JContext context,
-            final SrcGen4JConfig parent, final Map<String, String> vars) {
+    public final Project init(final SrcGen4JContext context, final SrcGen4JConfig parent, final Map<String, String> vars) {
         this.parent = parent;
         inheritVariables(vars);
         setName(replaceVars(getName(), getVarMap()));
@@ -182,22 +181,14 @@ public class Project extends AbstractNamedElement implements
             }
         }
         if (isMaven()) {
-            addIfNotExists(new Folder(this, "mainJava", "src/main/java", false,
-                    false, null, false, null));
-            addIfNotExists(new Folder(this, "mainRes", "src/main/resources",
-                    false, false, null, false, null));
-            addIfNotExists(new Folder(this, "genMainJava", "src-gen/main/java",
-                    true, false, null, true, null));
-            addIfNotExists(new Folder(this, "genMainRes",
-                    "src-gen/main/resources", true, false, null, true, null));
-            addIfNotExists(new Folder(this, "testJava", "src/test/java", false,
-                    false, null, false, null));
-            addIfNotExists(new Folder(this, "testRes", "src/test/resources",
-                    false, false, null, false, null));
-            addIfNotExists(new Folder(this, "genTestJava", "src-gen/test/java",
-                    true, false, null, true, null));
-            addIfNotExists(new Folder(this, "genTestRes",
-                    "src-gen/test/resources", true, false, null, true, null));
+            addIfNotExists(new Folder(this, "mainJava", "src/main/java", false, false, null, false, null));
+            addIfNotExists(new Folder(this, "mainRes", "src/main/resources", false, false, null, false, null));
+            addIfNotExists(new Folder(this, "genMainJava", "src-gen/main/java", true, false, null, true, null));
+            addIfNotExists(new Folder(this, "genMainRes", "src-gen/main/resources", true, false, null, true, null));
+            addIfNotExists(new Folder(this, "testJava", "src/test/java", false, false, null, false, null));
+            addIfNotExists(new Folder(this, "testRes", "src/test/resources", false, false, null, false, null));
+            addIfNotExists(new Folder(this, "genTestJava", "src-gen/test/java", true, false, null, true, null));
+            addIfNotExists(new Folder(this, "genTestRes", "src-gen/test/resources", true, false, null, true, null));
         }
         return this;
     }

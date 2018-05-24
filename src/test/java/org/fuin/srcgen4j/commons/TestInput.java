@@ -33,8 +33,7 @@ import org.fuin.xmlcfg4j.AbstractElement;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "input", namespace = "http://www.fuin.org/srcgen4j/commons/test")
-public class TestInput extends AbstractElement implements
-        InitializableElement<TestInput, Config<ParserConfig>> {
+public class TestInput extends AbstractElement implements InitializableElement<TestInput, Config<ParserConfig>> {
 
     @XmlAttribute
     private String path;
@@ -77,8 +76,7 @@ public class TestInput extends AbstractElement implements
     }
 
     @Override
-    public final TestInput init(final SrcGen4JContext context,
-            final Config<ParserConfig> parent, final Map<String, String> vars) {
+    public final TestInput init(final SrcGen4JContext context, final Config<ParserConfig> parent, final Map<String, String> vars) {
         setPath(replaceVars(getPath(), vars));
         return this;
     }

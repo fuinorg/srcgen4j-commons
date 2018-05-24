@@ -59,8 +59,7 @@ public class DefaultContextTest {
         // VERIFY
         assertThat(marker).isNotNull();
         assertThat(marker).isInstanceOf(DefaultFileMarker.class);
-        final Iterator<? extends FileMarker> markerIterator = testee
-                .getMarkerIterator();
+        final Iterator<? extends FileMarker> markerIterator = testee.getMarkerIterator();
         assertThat(markerIterator.next()).isSameAs(marker);
         assertThat(markerIterator.hasNext()).isFalse();
 
@@ -83,14 +82,12 @@ public class DefaultContextTest {
         final int line = 123;
 
         // TEST
-        final FileMarker marker = testee.addMarker(file, severity, message,
-                line);
+        final FileMarker marker = testee.addMarker(file, severity, message, line);
 
         // VERIFY
         assertThat(marker).isNotNull();
         assertThat(marker).isInstanceOf(DefaultFileMarker.class);
-        final Iterator<? extends FileMarker> markerIterator = testee
-                .getMarkerIterator();
+        final Iterator<? extends FileMarker> markerIterator = testee.getMarkerIterator();
         assertThat(markerIterator.next()).isSameAs(marker);
         assertThat(markerIterator.hasNext()).isFalse();
 
@@ -114,14 +111,12 @@ public class DefaultContextTest {
         final int length = 45;
 
         // TEST
-        final FileMarker marker = testee.addMarker(file, severity, message,
-                start, length);
+        final FileMarker marker = testee.addMarker(file, severity, message, start, length);
 
         // VERIFY
         assertThat(marker).isNotNull();
         assertThat(marker).isInstanceOf(DefaultFileMarker.class);
-        final Iterator<? extends FileMarker> markerIterator = testee
-                .getMarkerIterator();
+        final Iterator<? extends FileMarker> markerIterator = testee.getMarkerIterator();
         assertThat(markerIterator.next()).isSameAs(marker);
         assertThat(markerIterator.hasNext()).isFalse();
 
@@ -144,13 +139,11 @@ public class DefaultContextTest {
 
         final FileMarkerSeverity severity1a = FileMarkerSeverity.INFO;
         final String message1a = "Abc123";
-        final FileMarker marker1a = testee.addMarker(file1, severity1a,
-                message1a);
+        final FileMarker marker1a = testee.addMarker(file1, severity1a, message1a);
 
         final FileMarkerSeverity severity1b = FileMarkerSeverity.ERROR;
         final String message1b = "Xyz456";
-        final FileMarker marker1b = testee.addMarker(file1, severity1b,
-                message1b);
+        final FileMarker marker1b = testee.addMarker(file1, severity1b, message1b);
 
         // Second file
         final File file2 = new File("./blub.txt");

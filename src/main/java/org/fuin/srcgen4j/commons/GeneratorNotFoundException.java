@@ -30,8 +30,7 @@ public class GeneratorNotFoundException extends Exception {
      * Constructor with generator name.
      * 
      * @param generatorName
-     *            Name of the generator that was not found - Should not be
-     *            <code>null</code>.
+     *            Name of the generator that was not found - Should not be <code>null</code>.
      */
     public GeneratorNotFoundException(@Nullable final String generatorName) {
         super("The generator '" + generatorName + "' is not configured");

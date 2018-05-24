@@ -64,19 +64,17 @@ public final class JaxbHelper {
         this.formattedOutput = formattedOutput;
     }
 
-/** 
-    * Checks if the given file contains a start tag within the first 1024 bytes.
-    * 
-    * @param file
-    *            File to check.
-    * @param tagName
-    *            Name of the tag. A "&lt;" will be added to this name internally to locate the start tag.
-    * 
-    * @return If the file contains the start tag TRUE else FALSE.
-    */
-    public boolean containsStartTag(
-            @NotNull @FileExists @IsFile final File file,
-            @NotNull final String tagName) {
+    /**
+     * Checks if the given file contains a start tag within the first 1024 bytes.
+     * 
+     * @param file
+     *            File to check.
+     * @param tagName
+     *            Name of the tag. A "&lt;" will be added to this name internally to locate the start tag.
+     * 
+     * @return If the file contains the start tag TRUE else FALSE.
+     */
+    public boolean containsStartTag(@NotNull @FileExists @IsFile final File file, @NotNull final String tagName) {
         Contract.requireArgNotNull("file", file);
         FileExistsValidator.requireArgValid("file", file);
         IsFileValidator.requireArgValid("file", file);
@@ -98,8 +96,7 @@ public final class JaxbHelper {
                 reader.close();
             }
         } catch (final IOException ex) {
-            throw new RuntimeException("Could not read first part of file: "
-                    + file, ex);
+            throw new RuntimeException("Could not read first part of file: " + file, ex);
         }
     }
 
@@ -121,9 +118,7 @@ public final class JaxbHelper {
      */
     @SuppressWarnings("unchecked")
     @NeverNull
-    public <TYPE> TYPE create(@NotNull final Reader reader,
-            @NotNull final JAXBContext jaxbContext)
-            throws UnmarshalObjectException {
+    public <TYPE> TYPE create(@NotNull final Reader reader, @NotNull final JAXBContext jaxbContext) throws UnmarshalObjectException {
         Contract.requireArgNotNull("reader", reader);
         Contract.requireArgNotNull("jaxbContext", jaxbContext);
         try {
@@ -131,8 +126,7 @@ public final class JaxbHelper {
             final TYPE obj = (TYPE) unmarshaller.unmarshal(reader);
             return obj;
         } catch (final JAXBException ex) {
-            throw new UnmarshalObjectException(
-                    "Unable to parse XML from reader", ex);
+            throw new UnmarshalObjectException("Unable to parse XML from reader", ex);
         }
     }
 
@@ -154,8 +148,7 @@ public final class JaxbHelper {
      */
     @SuppressWarnings("unchecked")
     @NeverNull
-    public <TYPE> TYPE create(@NotNull @FileExists @IsFile final File file,
-            @NotNull final JAXBContext jaxbContext)
+    public <TYPE> TYPE create(@NotNull @FileExists @IsFile final File file, @NotNull final JAXBContext jaxbContext)
             throws UnmarshalObjectException {
         Contract.requireArgNotNull("file", file);
         FileExistsValidator.requireArgValid("file", file);
@@ -169,8 +162,7 @@ public final class JaxbHelper {
                 fr.close();
             }
         } catch (final IOException ex) {
-            throw new UnmarshalObjectException(
-                    "Unable to parse XML from file: " + file, ex);
+            throw new UnmarshalObjectException("Unable to parse XML from file: " + file, ex);
         }
     }
 
@@ -192,9 +184,7 @@ public final class JaxbHelper {
      */
     @SuppressWarnings("unchecked")
     @NeverNull
-    public <TYPE> TYPE create(@NotNull final String xml,
-            @NotNull final JAXBContext jaxbContext)
-            throws UnmarshalObjectException {
+    public <TYPE> TYPE create(@NotNull final String xml, @NotNull final JAXBContext jaxbContext) throws UnmarshalObjectException {
 
         Contract.requireArgNotNull("xml", xml);
         Contract.requireArgNotNull("jaxbContext", jaxbContext);
@@ -219,8 +209,7 @@ public final class JaxbHelper {
      * @param <TYPE>
      *            Type of the object.
      */
-    public <TYPE> void write(@NotNull final TYPE obj, @NotNull final File file,
-            @NotNull final JAXBContext jaxbContext)
+    public <TYPE> void write(@NotNull final TYPE obj, @NotNull final File file, @NotNull final JAXBContext jaxbContext)
             throws MarshalObjectException {
 
         Contract.requireArgNotNull("obj", obj);
@@ -235,8 +224,7 @@ public final class JaxbHelper {
                 fw.close();
             }
         } catch (final IOException ex) {
-            throw new MarshalObjectException("Unable to write XML to file: "
-                    + file, ex);
+            throw new MarshalObjectException("Unable to write XML to file: " + file, ex);
         }
     }
 
@@ -256,9 +244,7 @@ public final class JaxbHelper {
      * @param <TYPE>
      *            Type of the object.
      */
-    public <TYPE> String write(@NotNull final TYPE obj,
-            @NotNull final JAXBContext jaxbContext)
-            throws MarshalObjectException {
+    public <TYPE> String write(@NotNull final TYPE obj, @NotNull final JAXBContext jaxbContext) throws MarshalObjectException {
 
         Contract.requireArgNotNull("obj", obj);
         Contract.requireArgNotNull("jaxbContext", jaxbContext);
@@ -284,8 +270,7 @@ public final class JaxbHelper {
      * @param <TYPE>
      *            Type of the object.
      */
-    public <TYPE> void write(@NotNull final TYPE obj,
-            @NotNull final Writer writer, @NotNull final JAXBContext jaxbContext)
+    public <TYPE> void write(@NotNull final TYPE obj, @NotNull final Writer writer, @NotNull final JAXBContext jaxbContext)
             throws MarshalObjectException {
 
         Contract.requireArgNotNull("obj", obj);
@@ -294,12 +279,10 @@ public final class JaxbHelper {
 
         try {
             final Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-                    formattedOutput);
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, formattedOutput);
             marshaller.marshal(obj, writer);
         } catch (final JAXBException ex) {
-            throw new MarshalObjectException("Unable to write XML to writer",
-                    ex);
+            throw new MarshalObjectException("Unable to write XML to writer", ex);
         }
     }
 
