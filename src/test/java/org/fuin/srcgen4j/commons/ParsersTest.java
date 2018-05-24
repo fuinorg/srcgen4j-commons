@@ -30,7 +30,7 @@ import org.junit.Test;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
-import com.openpojo.validation.PojoValidator;
+import com.openpojo.validation.Validator;
 
 /**
  * Tests for {@link Parsers}.
@@ -43,8 +43,8 @@ public class ParsersTest extends AbstractTest {
     public final void testPojoStructureAndBehavior() {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(Parsers.class);
-        final PojoValidator pv = createPojoValidator();
-        pv.runValidation(pc);
+        final Validator validator = createPojoValidatorBuilder().build();
+        validator.validate(pc);
 
     }
 

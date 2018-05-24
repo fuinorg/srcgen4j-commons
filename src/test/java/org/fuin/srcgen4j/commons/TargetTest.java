@@ -30,7 +30,8 @@ import org.junit.Test;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
-import com.openpojo.validation.PojoValidator;
+import com.openpojo.validation.Validator;
+import com.openpojo.validation.ValidatorBuilder;
 import com.openpojo.validation.rule.impl.NoFieldShadowingRule;
 import com.openpojo.validation.rule.impl.NoPublicFieldsRule;
 import com.openpojo.validation.test.impl.DefaultValuesNullTester;
@@ -49,16 +50,11 @@ public class TargetTest extends AbstractTest {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(Target.class);
 
-        final PojoValidator pv = new PojoValidator();
+        final Validator validator = ValidatorBuilder.create()
+                .with(new NoPublicFieldsRule()).with(new NoFieldShadowingRule())
+                .with(new DefaultValuesNullTester()).with(new SetterTester()).with(new GetterTester()).build();
 
-        pv.addRule(new NoPublicFieldsRule());
-        pv.addRule(new NoFieldShadowingRule());
-
-        pv.addTester(new DefaultValuesNullTester());
-        pv.addTester(new SetterTester());
-        pv.addTester(new GetterTester());
-
-        pv.runValidation(pc);
+        validator.validate(pc);
 
     }
 

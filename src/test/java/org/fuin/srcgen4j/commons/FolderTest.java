@@ -29,7 +29,7 @@ import org.junit.Test;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
-import com.openpojo.validation.PojoValidator;
+import com.openpojo.validation.Validator;
 
 /**
  * Tests for {@link Folder}.
@@ -42,8 +42,8 @@ public class FolderTest extends AbstractTest {
     public final void testPojoStructureAndBehavior() {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(Folder.class);
-        final PojoValidator pv = createPojoValidator();
-        pv.runValidation(pc);
+        final Validator validator = createPojoValidatorBuilder().build();
+        validator.validate(pc);
 
     }
 

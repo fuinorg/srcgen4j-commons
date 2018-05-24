@@ -30,7 +30,7 @@ import org.junit.Test;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
-import com.openpojo.validation.PojoValidator;
+import com.openpojo.validation.Validator;
 
 /**
  * Tests for {@link GeneratorConfig}.
@@ -43,8 +43,8 @@ public class GeneratorConfigTest extends AbstractTest {
     public final void testPojoStructureAndBehavior() {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(GeneratorConfig.class);
-        final PojoValidator pv = createPojoValidator();
-        pv.runValidation(pc);
+        final Validator validator = createPojoValidatorBuilder().build();
+        validator.validate(pc);
 
     }
 

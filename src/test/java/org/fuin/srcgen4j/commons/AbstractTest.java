@@ -17,7 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import com.openpojo.validation.PojoValidator;
+import com.openpojo.validation.ValidatorBuilder;
 import com.openpojo.validation.rule.impl.NoFieldShadowingRule;
 import com.openpojo.validation.rule.impl.NoPublicFieldsRule;
 import com.openpojo.validation.test.impl.DefaultValuesNullTester;
@@ -36,15 +36,15 @@ public abstract class AbstractTest {
      * 
      * @return New instance.
      */
-    protected final PojoValidator createPojoValidator() {
+    protected final ValidatorBuilder createPojoValidatorBuilder() {
 
-        final PojoValidator pv = new PojoValidator();
+        final ValidatorBuilder pv = ValidatorBuilder.create();
 
-        pv.addRule(new NoPublicFieldsRule());
-        pv.addRule(new NoFieldShadowingRule());
+        pv.with(new NoPublicFieldsRule());
+        pv.with(new NoFieldShadowingRule());
 
-        pv.addTester(new DefaultValuesNullTester());
-        pv.addTester(new GetterTester());
+        pv.with(new DefaultValuesNullTester());
+        pv.with(new GetterTester());
 
         return pv;
     }

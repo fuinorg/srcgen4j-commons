@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
-import com.openpojo.validation.PojoValidator;
+import com.openpojo.validation.Validator;
 import com.openpojo.validation.rule.impl.SetterMustExistRule;
 
 /**
@@ -37,9 +37,8 @@ public class GeneratedArtifactTest extends AbstractTest {
     public final void testPojoStructureAndBehavior() {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(GeneratedArtifact.class);
-        final PojoValidator pv = createPojoValidator();
-        pv.addRule(new SetterMustExistRule());
-        pv.runValidation(pc);
+        final Validator validator = createPojoValidatorBuilder().with(new SetterMustExistRule()).build();
+        validator.validate(pc);
 
     }
 

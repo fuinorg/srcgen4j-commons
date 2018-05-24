@@ -21,7 +21,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import com.openpojo.validation.PojoValidator;
+import com.openpojo.reflection.PojoClass;
+import com.openpojo.reflection.impl.PojoClassFactory;
+import com.openpojo.validation.Validator;
+import com.openpojo.validation.ValidatorBuilder;
 import com.openpojo.validation.rule.impl.GetterMustExistRule;
 import com.openpojo.validation.rule.impl.NoFieldShadowingRule;
 import com.openpojo.validation.rule.impl.NoPublicFieldsRule;
@@ -35,10 +38,10 @@ public class DefaultFileMarkerTest {
 
     @Test
     public void testPojo() {
-        final PojoValidator pv = new PojoValidator();
-        pv.addRule(new NoPublicFieldsRule());
-        pv.addRule(new NoFieldShadowingRule());
-        pv.addRule(new GetterMustExistRule());
+        final PojoClass pc = PojoClassFactory.getPojoClass(DefaultFileMarker.class);
+        final Validator validator = ValidatorBuilder.create().with(new NoPublicFieldsRule()).with(new NoFieldShadowingRule())
+                .with(new GetterMustExistRule()).build();
+        validator.validate(pc);
     }
 
     @Test
