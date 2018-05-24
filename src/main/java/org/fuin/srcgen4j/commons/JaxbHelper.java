@@ -37,7 +37,6 @@ import org.fuin.objects4j.common.FileExists;
 import org.fuin.objects4j.common.FileExistsValidator;
 import org.fuin.objects4j.common.IsFile;
 import org.fuin.objects4j.common.IsFileValidator;
-import org.fuin.objects4j.common.NeverNull;
 
 /**
  * Helper to serialize and deserialize objects using JAXB.
@@ -117,7 +116,7 @@ public final class JaxbHelper {
      *            Type of the created object.
      */
     @SuppressWarnings("unchecked")
-    @NeverNull
+    @NotNull
     public <TYPE> TYPE create(@NotNull final Reader reader, @NotNull final JAXBContext jaxbContext) throws UnmarshalObjectException {
         Contract.requireArgNotNull("reader", reader);
         Contract.requireArgNotNull("jaxbContext", jaxbContext);
@@ -147,7 +146,7 @@ public final class JaxbHelper {
      *            Type of the created object.
      */
     @SuppressWarnings("unchecked")
-    @NeverNull
+    @NotNull
     public <TYPE> TYPE create(@NotNull @FileExists @IsFile final File file, @NotNull final JAXBContext jaxbContext)
             throws UnmarshalObjectException {
         Contract.requireArgNotNull("file", file);
@@ -183,7 +182,7 @@ public final class JaxbHelper {
      *            Type of the created object.
      */
     @SuppressWarnings("unchecked")
-    @NeverNull
+    @NotNull
     public <TYPE> TYPE create(@NotNull final String xml, @NotNull final JAXBContext jaxbContext) throws UnmarshalObjectException {
 
         Contract.requireArgNotNull("xml", xml);

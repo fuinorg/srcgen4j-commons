@@ -21,7 +21,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 
 /**
  * Represents a file marker.
@@ -118,7 +117,7 @@ public final class DefaultFileMarker implements FileMarker {
      * 
      * @return Type.
      */
-    @NeverNull
+    @NotNull
     public final DefaultFileMarkerType getType() {
         return type;
     }
@@ -128,7 +127,7 @@ public final class DefaultFileMarker implements FileMarker {
      * 
      * @return Severity indicator.
      */
-    @NeverNull
+    @NotNull
     public final FileMarkerSeverity getSeverity() {
         return severity;
     }
@@ -138,7 +137,7 @@ public final class DefaultFileMarker implements FileMarker {
      * 
      * @return Message.
      */
-    @NeverNull
+    @NotNull
     public final String getMessage() {
         return message;
     }

@@ -28,7 +28,6 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.OrFileFilter;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
 import org.fuin.utils4j.Utils4J;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -213,7 +212,7 @@ public final class SrcGen4J {
      * 
      * @return File filter.
      */
-    @NeverNull
+    @NotNull
     public FileFilter getFileFilter() {
         if (fileFilter == null) {
             final List<IOFileFilter> filters = new ArrayList<IOFileFilter>();

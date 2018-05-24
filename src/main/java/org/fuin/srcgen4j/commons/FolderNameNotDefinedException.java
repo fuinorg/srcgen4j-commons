@@ -17,7 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import org.fuin.objects4j.common.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * For a given generator/artifact/target was no folder found in a generator configuration.

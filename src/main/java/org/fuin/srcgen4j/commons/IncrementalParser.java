@@ -23,7 +23,6 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.io.filefilter.IOFileFilter;
-import org.fuin.objects4j.common.NeverNull;
 
 /**
  * Parses some kind of model in a full or an incremental mode.
@@ -38,7 +37,7 @@ public interface IncrementalParser<MODEL> extends Parser<MODEL> {
      * 
      * @return File filter.
      */
-    @NeverNull
+    @NotNull
     public IOFileFilter getFileFilter();
 
     /**
@@ -52,7 +51,7 @@ public interface IncrementalParser<MODEL> extends Parser<MODEL> {
      * @throws ParseException
      *             Error during parse process.
      */
-    @NeverNull
+    @NotNull
     public MODEL parse(@NotNull Set<File> files) throws ParseException;
 
 }

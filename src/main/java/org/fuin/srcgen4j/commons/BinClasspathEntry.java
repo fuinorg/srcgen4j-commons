@@ -21,6 +21,7 @@ import static org.fuin.utils4j.Utils4J.replaceVars;
 
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -28,8 +29,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.common.Nullable;
 import org.fuin.xmlcfg4j.AbstractElement;
 
 /**
@@ -70,7 +69,7 @@ public final class BinClasspathEntry extends AbstractElement implements Initiali
      * 
      * @return Current path.
      */
-    @NeverNull
+    @NotNull
     public final String getPath() {
         return path;
     }

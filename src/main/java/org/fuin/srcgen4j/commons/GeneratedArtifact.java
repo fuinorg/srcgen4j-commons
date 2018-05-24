@@ -17,12 +17,10 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverEmpty;
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.common.NotEmpty;
 
 /**
  * Generated artifact.
@@ -60,7 +58,7 @@ public final class GeneratedArtifact {
      * 
      * @return Name.
      */
-    @NeverEmpty
+    @NotEmpty
     public final String getName() {
         return name;
     }
@@ -70,7 +68,7 @@ public final class GeneratedArtifact {
      * 
      * @return Path and filename to write the source code to.
      */
-    @NeverEmpty
+    @NotEmpty
     public final String getPathAndName() {
         return pathAndName;
     }
@@ -80,7 +78,7 @@ public final class GeneratedArtifact {
      * 
      * @return Data.
      */
-    @NeverNull
+    @NotNull
     public final byte[] getData() {
         return data;
     }

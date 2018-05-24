@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -31,8 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.io.filefilter.RegexFileFilter;
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.common.Nullable;
 import org.fuin.xmlcfg4j.AbstractNamedElement;
 
 /**
@@ -140,7 +139,7 @@ public final class Folder extends AbstractNamedElement implements InitializableE
      * 
      * @return Current path.
      */
-    @NeverNull
+    @NotNull
     public final String getPath() {
         return path;
     }

@@ -20,8 +20,8 @@ package org.fuin.srcgen4j.commons;
 import java.io.File;
 import java.util.List;
 
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.common.Nullable;
+import javax.annotation.Nullable;
+import javax.validation.constraints.NotNull;
 
 /**
  * Provides a context for the build process.
@@ -33,7 +33,7 @@ public interface SrcGen4JContext {
      * 
      * @return Class loader.
      */
-    @NeverNull
+    @NotNull
     public ClassLoader getClassLoader();
 
     /**

@@ -21,7 +21,10 @@ import static org.fuin.utils4j.Utils4J.replaceVars;
 
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -30,10 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverEmpty;
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.common.NotEmpty;
-import org.fuin.objects4j.common.Nullable;
 import org.fuin.utils4j.Utils4J;
 import org.fuin.xmlcfg4j.AbstractNamedElement;
 import org.slf4j.Logger;
@@ -93,7 +92,7 @@ public class ParserConfig extends AbstractNamedElement implements InitializableE
      * 
      * @return Full qualified name.
      */
-    @NeverEmpty
+    @NotEmpty
     public final String getClassName() {
         return className;
     }
@@ -147,7 +146,7 @@ public class ParserConfig extends AbstractNamedElement implements InitializableE
      * @return Parser of type {@link #className}.
      */
     @SuppressWarnings("unchecked")
-    @NeverNull
+    @NotNull
     public final Parser<Object> getParser() {
         if (parser != null) {
             return parser;

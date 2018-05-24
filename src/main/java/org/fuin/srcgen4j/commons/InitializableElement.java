@@ -19,10 +19,8 @@ package org.fuin.srcgen4j.commons;
 
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
-
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.common.Nullable;
 
 /**
  * Used by elements that require initialization with parent and variables.
@@ -46,7 +44,7 @@ public interface InitializableElement<ELEMENT, PARENT> {
      * 
      * @return This instance.
      */
-    @NeverNull
+    @NotNull
     public ELEMENT init(@NotNull SrcGen4JContext context, @NotNull PARENT parent, @Nullable Map<String, String> vars);
 
 }

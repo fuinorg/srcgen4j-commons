@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -37,8 +38,6 @@ import org.fuin.objects4j.common.FileExists;
 import org.fuin.objects4j.common.FileExistsValidator;
 import org.fuin.objects4j.common.IsDirectory;
 import org.fuin.objects4j.common.IsDirectoryValidator;
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.common.Nullable;
 import org.fuin.utils4j.VariableResolver;
 import org.fuin.xmlcfg4j.Variable;
 import org.fuin.xmlcfg4j.Variables;
@@ -400,7 +399,7 @@ public class SrcGen4JConfig {
      * 
      * @return List of generators.
      */
-    @NeverNull
+    @NotNull
     public final List<GeneratorConfig> findGeneratorsForParser(@NotNull final String parserName) {
         Contract.requireArgNotNull("parserName", parserName);
 
@@ -426,7 +425,7 @@ public class SrcGen4JConfig {
      * 
      * @return New initialized configuration instance.
      */
-    @NeverNull
+    @NotNull
     public static SrcGen4JConfig createMavenStyleSingleProject(@NotNull final SrcGen4JContext context, @NotNull final String projectName,
             @NotNull @FileExists @IsDirectory final File rootDir) {
 

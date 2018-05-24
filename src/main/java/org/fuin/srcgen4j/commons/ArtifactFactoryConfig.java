@@ -19,6 +19,7 @@ package org.fuin.srcgen4j.commons;
 
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -27,8 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverNull;
-import org.fuin.objects4j.common.Nullable;
 import org.fuin.utils4j.Utils4J;
 import org.fuin.xmlcfg4j.AbstractElement;
 
@@ -99,7 +98,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      * 
      * @return Unique artifact name.
      */
-    @NeverNull
+    @NotNull
     public final String getArtifact() {
         return artifact;
     }
@@ -109,7 +108,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      * 
      * @return Full qualified class name.
      */
-    @NeverNull
+    @NotNull
     public final String getFactoryClassName() {
         return factoryClassName;
     }
@@ -153,7 +152,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      * 
      * @return Factory.
      */
-    @NeverNull
+    @NotNull
     public final ArtifactFactory<?> getFactory() {
         if (factory == null) {
             if (factoryClassName == null) {
@@ -183,7 +182,7 @@ public final class ArtifactFactoryConfig extends AbstractElement {
      * 
      * @return This instance.
      */
-    @NeverNull
+    @NotNull
     public final ArtifactFactoryConfig init(@NotNull final SrcGen4JContext context, final Map<String, String> vars) {
         Contract.requireArgNotNull("context", context);
         this.context = context;

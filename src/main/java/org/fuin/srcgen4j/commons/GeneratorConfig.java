@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -33,9 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.fuin.objects4j.common.Contract;
-import org.fuin.objects4j.common.NeverEmpty;
-import org.fuin.objects4j.common.NotEmpty;
-import org.fuin.objects4j.common.Nullable;
 import org.fuin.utils4j.Utils4J;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,7 +125,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements Initia
      * 
      * @return Full qualified class name.
      */
-    @NeverEmpty
+    @NotEmpty
     public final String getClassName() {
         return className;
     }
@@ -136,7 +135,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements Initia
      * 
      * @return Unique parser name.
      */
-    @NeverEmpty
+    @NotEmpty
     public final String getParser() {
         return parser;
     }
