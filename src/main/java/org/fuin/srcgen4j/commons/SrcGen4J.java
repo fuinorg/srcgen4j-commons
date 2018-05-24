@@ -88,7 +88,7 @@ public final class SrcGen4J {
                     } else {
                         url = "file:///" + entry.getPath();
                     }
-                    LOG.info("Adding to classpath: " + url);
+                    LOG.info("Adding to classpath: {}", url);
                     Utils4J.addToClasspath(url, context.getClassLoader());
                 }
             }
@@ -97,10 +97,10 @@ public final class SrcGen4J {
 
     private void addToClasspath(final List<File> files, final String message) {
         if (files.size() == 0) {
-            LOG.debug("No files found (" + message + ")");
+            LOG.debug("No files found ({})", message);
         } else {
             for (final File file : files) {
-                LOG.info("Adding to classpath (" + message + "): " + file);
+                LOG.info("Adding to classpath ({}): {}", message, file);
                 Utils4J.addToClasspath(file, context.getClassLoader());
             }
         }
@@ -114,15 +114,15 @@ public final class SrcGen4J {
             for (final Project project : projects) {
                 final List<Folder> folders = project.getFolders();
                 if ((folders == null) || (folders.size() == 0)) {
-                    LOG.warn("No project folders configured for: " + project.getName());
+                    LOG.warn("No project folders configured for: {}", project.getName());
                 } else {
                     for (final Folder folder : folders) {
                         final File dir = folder.getCanonicalDir();
                         if (folder.isClean() && dir.exists()) {
-                            LOG.info("Cleaning: " + dir);
+                            LOG.info("Cleaning: {}", dir);
                             cleanDirectory(dir, folder);
                         } else {
-                            LOG.debug("Nothing to to [clean=" + folder.isClean() + ", exists=" + dir.exists() + "]: " + dir);
+                            LOG.debug("Nothing to to [clean= {}, exists={}]: {}", folder.isClean(), dir.exists(), dir);
                         }
                     }
                 }
@@ -146,13 +146,13 @@ public final class SrcGen4J {
                     delete(file);
                 }
             } else {
-                LOG.info("Excluded from cleaning: " + file);
+                LOG.info("Excluded from cleaning: {}", file);
             }
         }
         files = dir.listFiles();
         final boolean empty = (files == null || files.length == 0);
         if (!empty) {
-            LOG.debug("Directory still contains " + files.length + " files after cleaning");
+            LOG.debug("Directory still contains {} files after cleaning", files.length);
         }
         return empty;
     }
@@ -161,9 +161,9 @@ public final class SrcGen4J {
         final boolean ok = file.delete();
         if (!ok) {
             if (file.isDirectory()) {
-                LOG.error("Couldn't delete directory: " + file);
+                LOG.error("Couldn't delete directory: {}", file);
             } else {
-                LOG.error("Couldn't delete file: " + file);
+                LOG.error("Couldn't delete file: {}", file);
             }
         }
     }
@@ -249,7 +249,7 @@ public final class SrcGen4J {
 
         Contract.requireArgNotNull("files", files);
 
-        LOG.info("Executing incremental build (" + files.size() + " files)");
+        LOG.info("Executing incremental build ({} files)", files.size());
         if (LOG.isDebugEnabled()) {
             for (final File file : files) {
                 LOG.debug(file.toString());
@@ -281,7 +281,7 @@ public final class SrcGen4J {
                             generator.generate(model, true);
                         }
                     } else {
-                        LOG.debug("No incremental parser: " + pars.getClass().getName());
+                        LOG.debug("No incremental parser: {}", pars.getClass().getName());
                     }
                 }
             }

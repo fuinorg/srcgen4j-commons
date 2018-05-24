@@ -275,7 +275,7 @@ public final class GeneratorConfig extends AbstractNamedTarget implements Initia
         if (generator != null) {
             return generator;
         }
-        LOG.info("Creating generator: " + className);
+        LOG.info("Creating generator: {}", className);
         if (className == null) {
             throw new IllegalStateException("Class name was not set: " + getName());
         }

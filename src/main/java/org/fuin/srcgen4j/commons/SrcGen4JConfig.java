@@ -234,7 +234,7 @@ public class SrcGen4JConfig {
             final List<Variable> vars = variables.asList();
             for (final Variable var : vars) {
                 if (var.getName().equals(ROOT_DIR_VAR)) {
-                    LOG.warn("Replaced root directory '" + var.getValue() + "' with: '" + rootDir + "'");
+                    LOG.warn("Replaced root directory '{}' with: '{}'", var.getValue(), rootDir);
                 } else {
                     varMap.put(var.getName(), var.getValue());
                 }

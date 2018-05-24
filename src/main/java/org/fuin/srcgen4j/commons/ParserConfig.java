@@ -151,7 +151,7 @@ public class ParserConfig extends AbstractNamedElement implements InitializableE
         if (parser != null) {
             return parser;
         }
-        LOG.info("Creating parser: " + className);
+        LOG.info("Creating parser: {}", className);
         if (className == null) {
             throw new IllegalStateException("Class name was not set: " + getName());
         }
