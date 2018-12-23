@@ -29,6 +29,7 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.OrFileFilter;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.utils4j.Utils4J;
+import org.fuin.utils4j.classpath.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +63,7 @@ public final class SrcGen4J {
         }
         this.config = config;
         this.context = context;
+        Handler.add();
     }
 
     private void enhanceClasspath() {
