@@ -17,8 +17,9 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
+
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Parses some kind of model.

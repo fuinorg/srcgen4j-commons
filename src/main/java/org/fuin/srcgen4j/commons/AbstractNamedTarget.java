@@ -17,20 +17,18 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotEmpty;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlType;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.objects4j.common.Contract;
 
 /**
  * Base class for assigning generated artifacts to a project folder and a name as unique identifier.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "name" })
 public abstract class AbstractNamedTarget extends AbstractTarget {
 
     @NotEmpty

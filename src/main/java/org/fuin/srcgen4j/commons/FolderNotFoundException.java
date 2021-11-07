@@ -17,7 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import javax.annotation.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A folder with a given name was not found.

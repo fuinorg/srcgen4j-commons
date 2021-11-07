@@ -23,15 +23,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.io.filefilter.RegexFileFilter;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.xmlcfg4j.AbstractNamedElement;
 
 /**
@@ -39,7 +38,6 @@ import org.fuin.xmlcfg4j.AbstractNamedElement;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "folder")
-@XmlType(propOrder = { "clean", "override", "create", "path" })
 public final class Folder extends AbstractNamedElement implements InitializableElement<Folder, Project> {
 
     @NotNull
@@ -85,7 +83,7 @@ public final class Folder extends AbstractNamedElement implements InitializableE
     /**
      * Package visible default constructor for deserialization.
      */
-    Folder() { //NOSONAR Ignore not initialized fields
+    Folder() { // NOSONAR Ignore not initialized fields
         super();
     }
 

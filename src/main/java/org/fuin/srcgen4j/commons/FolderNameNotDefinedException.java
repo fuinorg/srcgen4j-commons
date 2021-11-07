@@ -17,7 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import javax.annotation.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * For a given generator/artifact/target was no folder found in a generator configuration.

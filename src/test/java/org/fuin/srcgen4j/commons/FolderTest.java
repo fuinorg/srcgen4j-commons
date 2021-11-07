@@ -24,8 +24,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
-import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Test;
+import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -63,10 +63,10 @@ public class FolderTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        final String expected = "<folder cleanExclude=\"ce\" overrideExclude=\"oe\" "
+        final String expected = "<sg4jc:folder cleanExclude=\"ce\" overrideExclude=\"oe\" "
                 + "path=\"def\" create=\"true\" override=\"true\" clean=\"true\" "
-                + "name=\"abc\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>";
-        XMLAssert.assertXMLEqual(XML + expected, result);
+                + "name=\"abc\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\"/>";
+        XmlAssert.assertThat(result).and(XML + expected).areIdentical();
 
     }
 

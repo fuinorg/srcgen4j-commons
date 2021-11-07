@@ -26,8 +26,8 @@ import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 
-import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Test;
+import org.xmlunit.assertj3.XmlAssert;
 
 /**
  * Tests for {@link ArtifactFactoryConfig}.
@@ -47,8 +47,8 @@ public class ArtifactFactoryConfigTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert.assertXMLEqual(
-                XML + "<artifact-factory artifact=\"abc\" class=\"a.b.c.X\"" + " xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", result);
+        XmlAssert.assertThat(result).and(XML + "<sg4jc:artifact-factory artifact=\"abc\" class=\"a.b.c.X\""
+                + " xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\"/>").areIdentical();
 
     }
 

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -32,8 +31,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlTransient;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.utils4j.Utils4J;
 import org.slf4j.Logger;
@@ -44,7 +44,6 @@ import org.slf4j.LoggerFactory;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "generator")
-@XmlType(propOrder = { "config", "artifacts", "parser", "className" })
 public final class GeneratorConfig extends AbstractNamedTarget implements InitializableElement<GeneratorConfig, Generators> {
 
     private static final Logger LOG = LoggerFactory.getLogger(GeneratorConfig.class);
@@ -68,13 +67,16 @@ public final class GeneratorConfig extends AbstractNamedTarget implements Initia
     private Config<GeneratorConfig> config;
 
     @Nullable
-    private transient SrcGen4JContext context;
+    @XmlTransient
+    private SrcGen4JContext context;
 
     @Nullable
-    private transient Generators parent;
+    @XmlTransient
+    private Generators parent;
 
     @Nullable
-    private transient Generator<Object> generator;
+    @XmlTransient
+    private Generator<Object> generator;
 
     /**
      * Package visible default constructor for deserialization.

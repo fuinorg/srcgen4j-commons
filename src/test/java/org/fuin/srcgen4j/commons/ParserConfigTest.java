@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.xml.bind.JAXBContext;
 
 import org.junit.Test;
+import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -60,9 +61,12 @@ public class ParserConfigTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        assertThat(result).isEqualTo(XML + "<ns2:parser class=\"a.b.c.TestParser\" name=\"parser1\" xmlns=\"http://www.fuin.org/xmlcfg4j\" "
-                + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\" " + "xmlns:ns3=\"http://www.fuin.org/srcgen4j/commons/test\">"
-                + "<ns2:config><ns3:input path=\"a/b/c\"/></ns2:config></ns2:parser>");
+        XmlAssert.assertThat(result)
+                .and(XML + "<sg4jc:parser class=\"a.b.c.TestParser\" name=\"parser1\" xmlns:cfg4j=\"http://www.fuin.org/xmlcfg4j\" "
+                        + "xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\" "
+                        + "xmlns:ns3=\"http://www.fuin.org/srcgen4j/commons/test\">"
+                        + "<sg4jc:config><ns3:input path=\"a/b/c\"/></sg4jc:config></sg4jc:parser>")
+                .areIdentical();
 
     }
 

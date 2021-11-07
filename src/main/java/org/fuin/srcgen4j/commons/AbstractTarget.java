@@ -17,19 +17,17 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import javax.annotation.Nullable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlType;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.xmlcfg4j.AbstractElement;
 
 /**
  * Base class for assigning generated artifacts to a project folder.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "folder", "project" })
 public abstract class AbstractTarget extends AbstractElement {
 
     @Nullable

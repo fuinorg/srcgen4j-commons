@@ -25,8 +25,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
-import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Test;
+import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -50,8 +50,7 @@ public class TargetTest extends AbstractTest {
 
         final PojoClass pc = PojoClassFactory.getPojoClass(Target.class);
 
-        final Validator validator = ValidatorBuilder.create()
-                .with(new NoPublicFieldsRule()).with(new NoFieldShadowingRule())
+        final Validator validator = ValidatorBuilder.create().with(new NoPublicFieldsRule()).with(new NoFieldShadowingRule())
                 .with(new DefaultValuesNullTester()).with(new SetterTester()).with(new GetterTester()).build();
 
         validator.validate(pc);
@@ -69,9 +68,8 @@ public class TargetTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert.assertXMLEqual(
-                XML + "<target pattern=\".*\" " + "project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
-                result);
+        XmlAssert.assertThat(result).and(XML + "<sg4jc:target pattern=\".*\" "
+                + "project=\"abc\" folder=\"def\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\"/>").areIdentical();
 
     }
 

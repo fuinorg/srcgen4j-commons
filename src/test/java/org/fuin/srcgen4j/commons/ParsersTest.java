@@ -27,6 +27,7 @@ import javax.xml.bind.JAXBContext;
 
 import org.fuin.xmlcfg4j.Variable;
 import org.junit.Test;
+import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -61,9 +62,9 @@ public class ParsersTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        assertThat(result)
-                .isEqualTo(XML + "<ns2:parsers xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<variable name=\"a\" value=\"1\"/><ns2:parser class=\"a.b.c.D\" name=\"NAME\"/></ns2:parsers>");
+        XmlAssert.assertThat(result).and(
+                XML + "<sg4jc:parsers xmlns:cfg4j=\"http://www.fuin.org/xmlcfg4j\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<cfg4j:variable name=\"a\" value=\"1\"/><sg4jc:parser class=\"a.b.c.D\" name=\"NAME\"/></sg4jc:parsers>");
 
     }
 
@@ -75,8 +76,8 @@ public class ParsersTest extends AbstractTest {
 
         // TEST
         final Parsers testee = new JaxbHelper().create(
-                XML + "<ns2:parsers xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<ns2:parser name=\"NAME\" class=\"a.b.c.D\"/>" + "<variable name=\"a\" value=\"1\"/>" + "</ns2:parsers>",
+                XML + "<sg4jc:parsers xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<sg4jc:parser name=\"NAME\" class=\"a.b.c.D\"/>" + "<variable name=\"a\" value=\"1\"/>" + "</sg4jc:parsers>",
                 jaxbContext);
         testee.init(new DefaultContext(), null, new HashMap<>());
 

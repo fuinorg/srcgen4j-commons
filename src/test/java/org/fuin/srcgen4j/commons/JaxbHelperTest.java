@@ -30,6 +30,7 @@ import javax.xml.bind.JAXBContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -131,7 +132,7 @@ public class JaxbHelperTest extends AbstractTest {
 
         // VERIFY
         assertThat(file).exists();
-        assertThat(file).hasSameContentAs(expected);
+        assertThat(file).hasSameTextualContentAs(expected);
 
     }
 
@@ -148,7 +149,8 @@ public class JaxbHelperTest extends AbstractTest {
         final String result = testee.write(dummy, jaxbContext);
 
         // VERIFY
-        assertThat(result).isEqualTo(XML + "<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+        XmlAssert.assertThat(result).and(XML + "<sg4jc:dummy name=\"Joe\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\"/>")
+                .areIdentical();
 
     }
 
@@ -166,7 +168,8 @@ public class JaxbHelperTest extends AbstractTest {
         testee.write(dummy, writer, jaxbContext);
 
         // VERIFY
-        assertThat(writer.toString()).isEqualTo(XML + "<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+        XmlAssert.assertThat(writer.toString())
+                .and(XML + "<sg4jc:dummy name=\"Joe\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\"/>").areIdentical();
 
     }
 

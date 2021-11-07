@@ -21,14 +21,13 @@ import static org.fuin.utils4j.Utils4J.replaceVars;
 
 import java.util.Map;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.xmlcfg4j.AbstractElement;
 
 /**
@@ -36,7 +35,6 @@ import org.fuin.xmlcfg4j.AbstractElement;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "bin")
-@XmlType(propOrder = "path")
 public final class BinClasspathEntry extends AbstractElement implements InitializableElement<BinClasspathEntry, Classpath> {
 
     @NotNull
@@ -49,7 +47,7 @@ public final class BinClasspathEntry extends AbstractElement implements Initiali
     /**
      * Package visible default constructor for deserialization.
      */
-    BinClasspathEntry() { //NOSONAR Ignore not initialized fields
+    BinClasspathEntry() { // NOSONAR Ignore not initialized fields
         super();
     }
 

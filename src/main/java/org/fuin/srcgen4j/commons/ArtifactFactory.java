@@ -19,8 +19,9 @@ package org.fuin.srcgen4j.commons;
 
 import java.util.Map;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
+
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Creates an artifact for a given model.

@@ -21,15 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.xmlcfg4j.AbstractElement;
 
@@ -38,7 +37,6 @@ import org.fuin.xmlcfg4j.AbstractElement;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "parsers")
-@XmlType(propOrder = { "list" })
 public class Parsers extends AbstractElement implements InitializableElement<Parsers, SrcGen4JConfig> {
 
     @Nullable

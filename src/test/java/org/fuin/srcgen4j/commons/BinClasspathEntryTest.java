@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.xml.bind.JAXBContext;
 
 import org.junit.Test;
+import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -57,8 +58,9 @@ public class BinClasspathEntryTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        assertThat(result).isEqualTo(XML
-                + "<ns2:bin path=\"a/b/c\" xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\"/>");
+        XmlAssert.assertThat(result).and(XML
+                + "<sg4jc:bin path=\"a/b/c\" xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\"/>")
+                .areIdentical();
 
     }
 

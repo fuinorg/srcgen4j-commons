@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -31,8 +30,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.FileExists;
 import org.fuin.objects4j.common.FileExistsValidator;
@@ -49,7 +48,6 @@ import org.slf4j.LoggerFactory;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "srcgen4j-config")
-@XmlType(propOrder = { "generators", "parsers", "projects", "classpath", "variables" })
 public class SrcGen4JConfig {
 
     private static final String ROOT_DIR_VAR = "rootDir";

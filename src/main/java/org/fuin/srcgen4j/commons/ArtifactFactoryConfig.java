@@ -19,14 +19,13 @@ package org.fuin.srcgen4j.commons;
 
 import java.util.Map;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.utils4j.Utils4J;
 import org.fuin.xmlcfg4j.AbstractElement;
@@ -36,7 +35,6 @@ import org.fuin.xmlcfg4j.AbstractElement;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "artifact-factory")
-@XmlType(propOrder = { "factoryClassName", "artifact" })
 public final class ArtifactFactoryConfig extends AbstractElement {
 
     @NotNull

@@ -25,9 +25,9 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
-import org.custommonkey.xmlunit.XMLAssert;
 import org.fuin.xmlcfg4j.Variable;
 import org.junit.Test;
+import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -62,10 +62,10 @@ public class GeneratorsTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert.assertXMLEqual(XML
-                + "<ns2:generators project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
-                + "<variable value=\"1\" name=\"a\"/>" + "<ns2:generator class=\"a.b.c.D\" parser=\"PARSER\" name=\"NAME\""
-                + " project=\"PROJECT\" folder=\"FOLDER\"/>" + "</ns2:generators>", result);
+        XmlAssert.assertThat(result).and(XML
+                + "<sg4jc:generators project=\"abc\" folder=\"def\" xmlns:cfg4j=\"http://www.fuin.org/xmlcfg4j\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\">"
+                + "<cfg4j:variable value=\"1\" name=\"a\"/>" + "<sg4jc:generator class=\"a.b.c.D\" parser=\"PARSER\" name=\"NAME\""
+                + " project=\"PROJECT\" folder=\"FOLDER\"/>" + "</sg4jc:generators>").areIdentical();
 
     }
 

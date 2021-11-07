@@ -25,8 +25,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
-import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Test;
+import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -63,10 +63,11 @@ public class ArtifactTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert.assertXMLEqual(
-                XML + "<artifact name=\"abc\" " + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>",
-                result);
+        XmlAssert.assertThat(result)
+                .and(XML + "<sg4jc:artifact name=\"abc\" "
+                        + "project=\"def\" folder=\"ghi\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<sg4jc:target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></sg4jc:artifact>")
+                .areIdentical();
 
     }
 

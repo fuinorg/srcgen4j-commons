@@ -19,8 +19,9 @@ package org.fuin.srcgen4j.commons;
 
 import java.util.Map;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
+
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Used by elements that require initialization with parent and variables.

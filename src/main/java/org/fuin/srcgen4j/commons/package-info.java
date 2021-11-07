@@ -10,8 +10,10 @@
  * You should have received a copy of the GNU Lesser General Public License along with this library. If not, see
  * http://www.gnu.org/licenses/.
  */
-@XmlSchema(namespace = "http://www.fuin.org/srcgen4j/commons", elementFormDefault = XmlNsForm.QUALIFIED)
+@XmlSchema(namespace = "http://www.fuin.org/srcgen4j/commons", xmlns = {
+        @XmlNs(prefix = "sg4jc", namespaceURI = "http://www.fuin.org/srcgen4j/commons") }, elementFormDefault = XmlNsForm.QUALIFIED)
 package org.fuin.srcgen4j.commons;
 
+import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlNsForm;
 import javax.xml.bind.annotation.XmlSchema;

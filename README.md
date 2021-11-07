@@ -1,6 +1,4 @@
-srcgen4j-commons
-================
-
+# srcgen4j-commons
 Source code generation for Java (Commons)
 
 [![Build Status](https://jenkins.fuin.org/job/srcgen4j-commons/badge/icon)](https://jenkins.fuin.org/job/srcgen4j-commons/)
@@ -9,9 +7,11 @@ Source code generation for Java (Commons)
 [![LGPLv3 License](http://img.shields.io/badge/license-LGPLv3-blue.svg)](https://www.gnu.org/licenses/lgpl.html)
 [![Java Development Kit 1.8](https://img.shields.io/badge/JDK-1.8-green.svg)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-Background
-----------
+## Versions
+- 0.4.3 (or later) = **Java 11** before namespace change from 'javax' to 'jakarta'
+- 0.4.2 (or previous) = **Java 8**
 
+## Background
 A model driven approach requires almost always generating some code (model to text) or other output. 
 This framework provides an easy way to setup multiple parsers and generators in a single configuration.
 It allows building a pipeline built on those parsers and generators.
@@ -35,8 +35,7 @@ The pipeline is configured using a single XML configuration file:
 There is currently a Maven plugin ([srcgen4j-maven](https://github.com/fuinorg/srcgen4j-maven/)) that executes the pipeline during a build or on manually.
 An Eclipse plugin is planned, but not yet available. There are some predefined parsers and generators abailable in the ([srcgen4j-core](https://github.com/fuinorg/srcgen4j-core/)) project.
 
-Variables
----------
+## Variables
 The variables section allows defining globally visible variables.
 ```xml
 <variables>
@@ -63,8 +62,7 @@ Variables can be overwritten in the sub-sections:
 ```
 The result is only visible inside the defining section.
 
-Classpath
----------
+## Classpath
 The classpath section allows adding additional binary classpaths.
 ```xml
 <classpath>
@@ -72,8 +70,7 @@ The classpath section allows adding additional binary classpaths.
 </classpath>
 ```
 
-Projects
---------
+## Projects
 A project is used to define the folders where the generated output can be placed.
 ```xml
 <projects>
@@ -113,8 +110,7 @@ Other attributes that indluence the generation process are:
 * *clean* All files in the directory will be deleted bevore new ones are created.
 * *cleanExclude* Regular expression to exclude some files from being deleted.
 
-Parsers
--------
+## Parsers
 The parsers section defines one or more parsers that are used to create the input models.
 ```xml
 <parsers>
@@ -129,8 +125,7 @@ The parsers section defines one or more parsers that are used to create the inpu
 Every parser has a unique name and a full qualified class name that is used to instantiate the parser (using the default constructor).
 Some parsers might require a special configuration that can be added in the config section.
 
-Generators
-----------
+## Generators
 The generator section defines one or more generators that use the input of a parser and write their output to one of the projects.
 ```xml
 <generators>
@@ -150,9 +145,7 @@ A generator creates one or more artifacts that are written to the configured fol
 
 - - - - - - - - -
 
-Snapshots
-=========
-
+## Snapshots
 Snapshots can be found on the [OSS Sonatype Snapshots Repository](http://oss.sonatype.org/content/repositories/snapshots/org/fuin "Snapshot Repository"). 
 
 Add the following to your .m2/settings.xml to enable snapshots in your Maven build:

@@ -20,8 +20,9 @@ package org.fuin.srcgen4j.commons;
 import java.io.File;
 import java.util.List;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
+
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Provides a context for the build process.

@@ -20,8 +20,9 @@ package org.fuin.srcgen4j.commons;
 import java.io.File;
 import java.util.Iterator;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
+
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A context that supports marking files.

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -31,8 +30,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.objects4j.common.Contract;
 
 /**
@@ -40,7 +39,6 @@ import org.fuin.objects4j.common.Contract;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "generators")
-@XmlType(propOrder = { "list" })
 public class Generators extends AbstractTarget implements InitializableElement<Generators, SrcGen4JConfig> {
 
     @Nullable

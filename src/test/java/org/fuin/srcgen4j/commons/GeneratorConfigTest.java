@@ -25,8 +25,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
-import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Test;
+import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -60,9 +60,11 @@ public class GeneratorConfigTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert.assertXMLEqual(XML + "<generator class=\"CLASS\" parser=\"PARSER\" name=\"NAME\" project=\"PRJ\" folder=\"FLD\""
-                + " xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                + "<artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generator>", result);
+        XmlAssert.assertThat(result)
+                .and(XML + "<sg4jc:generator class=\"CLASS\" parser=\"PARSER\" name=\"NAME\" project=\"PRJ\" folder=\"FLD\""
+                        + " xmlns:cfg4j=\"http://www.fuin.org/xmlcfg4j\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "<sg4jc:artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/>" + "</sg4jc:generator>")
+                .areIdentical();
 
     }
 

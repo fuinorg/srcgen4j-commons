@@ -24,8 +24,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
-import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Test;
+import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.impl.PojoClassFactory;
@@ -60,8 +60,9 @@ public class ProjectTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XMLAssert.assertXMLEqual(XML + "<project path=\"def\" maven=\"true\" name=\"abc\" "
-                + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">" + "<folder path=\"PATH\" name=\"NAME\"/></project>", result);
+        XmlAssert.assertThat(result).and(XML + "<sg4jc:project path=\"def\" maven=\"true\" name=\"abc\" "
+                + "xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\">" + "<sg4jc:folder path=\"PATH\" name=\"NAME\"/></sg4jc:project>")
+                .areIdentical();
 
     }
 
