@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.NotNull;
@@ -44,9 +46,9 @@ public final class TestArtifactFactory implements ArtifactFactory<Object> {
     }
 
     @Override
-    public final GeneratedArtifact create(@NotNull final Object modelObject, @NotNull final Map<String, Object> context,
+    public final List<GeneratedArtifact> create(@NotNull final Object modelObject, @NotNull final Map<String, Object> context,
             final boolean preparationRun) throws GenerateException {
-        return new GeneratedArtifact(artifact, "b/c/d.txt", "abcd".getBytes());
+        return Collections.singletonList(new GeneratedArtifact(artifact, "b/c/d.txt", "abcd".getBytes()));
     }
 
 }

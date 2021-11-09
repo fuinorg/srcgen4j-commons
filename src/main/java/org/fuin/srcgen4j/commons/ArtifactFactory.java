@@ -17,14 +17,13 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
-import org.checkerframework.checker.nullness.qual.Nullable;
-
 /**
- * Creates an artifact for a given model.
+ * Creates one or more artifacts for a given model.
  * 
  * @param <TYPE>
  *            Type of the model to create an artifact for.
@@ -64,13 +63,13 @@ public interface ArtifactFactory<TYPE> {
      * @param preparationRun
      *            TRUE if this is a (dry) preparation run. May be used to prepare a following real generation run.
      * 
-     * @return The generated artifact. A <code>null</code> value signals that nothing was generated.
+     * @return Zero or more generated artifacts. An empty list signals that nothing was generated.
      * 
      * @throws GenerateException
      *             Error when generating.
      */
-    @Nullable
-    public GeneratedArtifact create(@NotNull TYPE modelObject, @NotNull Map<String, Object> context, boolean preparationRun)
+    @NotNull
+    public List<GeneratedArtifact> create(@NotNull TYPE modelObject, @NotNull Map<String, Object> context, boolean preparationRun)
             throws GenerateException;
 
 }
