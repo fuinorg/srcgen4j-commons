@@ -347,6 +347,9 @@ public class SrcGen4JConfig {
         Contract.requireArgNotNull("artifactName", artifactName);
 
         final GeneratorConfig generator = generators.findByName(generatorName);
+        if (generator == null) {
+            throw new GeneratorNotFoundException(generatorName);
+        }
 
         int idx = generator.getArtifacts().indexOf(new Artifact(artifactName));
         if (idx < 0) {
