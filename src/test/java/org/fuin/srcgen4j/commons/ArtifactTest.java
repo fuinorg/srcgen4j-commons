@@ -25,6 +25,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
+import org.fuin.utils4j.jaxb.JaxbUtils;
+import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
 import org.junit.Test;
 import org.xmlunit.assertj3.XmlAssert;
 
@@ -65,7 +67,7 @@ public class ArtifactTest extends AbstractTest {
         // VERIFY
         XmlAssert.assertThat(result)
                 .and(XML + "<sg4jc:artifact name=\"abc\" "
-                        + "project=\"def\" folder=\"ghi\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\">"
+                        + "project=\"def\" folder=\"ghi\" xmlns:sg4jc=\""+ NS_SG4JC +"\">"
                         + "<sg4jc:target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></sg4jc:artifact>")
                 .areIdentical();
 
@@ -78,9 +80,9 @@ public class ArtifactTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(Artifact.class, Folder.class);
 
         // TEST
-        final Artifact testee = new JaxbHelper()
-                .create("<artifact name=\"abc\" " + "project=\"def\" folder=\"ghi\" xmlns=\"http://www.fuin.org/srcgen4j/commons\">"
-                        + "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>", jaxbContext);
+        final Artifact testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
+                "<artifact name=\"abc\" " + "project=\"def\" folder=\"ghi\" xmlns=\""+ NS_SG4JC +"\">"
+                        + "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>");
 
         // VERIFY
         assertThat(testee).isNotNull();

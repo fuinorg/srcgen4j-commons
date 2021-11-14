@@ -30,6 +30,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
+import org.fuin.utils4j.jaxb.JaxbUtils;
+import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
 import org.fuin.xmlcfg4j.Variable;
 import org.fuin.xmlcfg4j.Variables;
 import org.junit.Test;
@@ -67,23 +69,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
         final Map<String, String> varMap = testee.getVarMap();
 
         // VERIFY
-        assertThat(varMap).isNotNull();
-        assertThat(varMap).containsOnly(entry("rootDir", "."), entry("a", "1"), entry("B", "b"), entry("x", "2"));
-
-    }
-
-    @Test
-    public final void testUnmarshalEmptyConfig() throws Exception {
-
-        // PREPARE
-        final JAXBContext jaxbContext = JAXBContext.newInstance(SrcGen4JConfig.class);
-
-        // TEST
-        final SrcGen4JConfig testee = new JaxbHelper().create("<srcgen4j-config xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>",
-                jaxbContext);
-
-        // VERIFY
-        assertThat(testee).isNotNull();
+        assertThat(varMap).isNotNull().containsOnly(entry("rootDir", "."), entry("a", "1"), entry("B", "b"), entry("x", "2"));
 
     }
 
@@ -96,7 +82,8 @@ public class SrcGen4JConfigTest extends AbstractTest {
         try {
 
             // TEST
-            final SrcGen4JConfig testee = new JaxbHelper().create(reader, jaxbContext);
+            final SrcGen4JConfig testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext)
+                    .addClasspathSchemas("/srcgen4j-commons-0_4_3.xsd", "/xmlcfg4j-0_2_1.xsd", "/test-input.xsd").build(), reader);
 
             // VERIFY
             assertThat(testee).isNotNull();
@@ -112,11 +99,6 @@ public class SrcGen4JConfigTest extends AbstractTest {
             assertThat(var1.getName()).isEqualTo("project_example_path");
             assertThat(var1.getValue()).isEqualTo("${root}/example");
 
-            assertThat(testee.getClasspath()).isNotNull();
-            assertThat(testee.getClasspath().getBinList()).hasSize(1);
-            final BinClasspathEntry entry = testee.getClasspath().getBinList().get(0);
-            assertThat(entry.getPath()).isEqualTo("${project_example_path}/target/classes");
-
             assertThat(testee.getProjects()).isNotNull();
             assertThat(testee.getProjects()).hasSize(1);
             final Project prj = testee.getProjects().get(0);
@@ -127,7 +109,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
                     new Folder("genMainRes", ""), new Folder("testJava", ""), new Folder("testRes", ""), new Folder("genTestJava", ""),
                     new Folder("genTestRes", ""));
             final int idxGenMainJava = prj.getFolders().indexOf(new Folder("genMainJava", ""));
-            assertThat(idxGenMainJava).isGreaterThan(-1);
+            assertThat(idxGenMainJava).isNotNegative();
             assertThat(prj.getFolders().get(idxGenMainJava).getCleanExclude()).isEqualTo("\\..*");
 
             assertThat(testee.getGenerators()).isNotNull();
@@ -139,7 +121,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
             assertThat(gen.getArtifacts()).hasSize(3);
             assertThat(gen.getArtifacts()).contains(new Artifact("one"), new Artifact("abstract"), new Artifact("manual"));
             int idx = gen.getArtifacts().indexOf(new Artifact("one"));
-            assertThat(idx).isGreaterThan(-1);
+            assertThat(idx).isNotNegative();
             final Artifact one = gen.getArtifacts().get(idx);
             assertThat(one.getTargets()).isNotNull();
             assertThat(one.getTargets()).hasSize(1);
@@ -229,7 +211,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
         final Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("test-variables.xml"));
         try {
             // TEST
-            final SrcGen4JConfig testee = new JaxbHelper().create(reader, jaxbContext);
+            final SrcGen4JConfig testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(), reader);
             testee.init(new DefaultContext(), new File("."));
 
             // VERIFY
@@ -348,7 +330,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
         final Reader reader = new InputStreamReader(
                 getClass().getClassLoader().getResourceAsStream(resourceName));
         try {
-            return new JaxbHelper().create(reader, jaxbContext);
+            return JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(), reader);
         } finally {
             reader.close();
         }

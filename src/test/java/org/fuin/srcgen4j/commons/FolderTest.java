@@ -24,6 +24,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
+import org.fuin.utils4j.jaxb.JaxbUtils;
+import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlunit.assertj3.XmlAssert;
@@ -67,7 +69,7 @@ public class FolderTest extends AbstractTest {
         // VERIFY
         final String expected = "<sg4jc:folder cleanExclude=\"ce\" overrideExclude=\"oe\" "
                 + "path=\"def\" create=\"true\" override=\"true\" clean=\"true\" "
-                + "name=\"abc\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\"/>";
+                + "name=\"abc\" xmlns:sg4jc=\""+ NS_SG4JC +"\"/>";
         XmlAssert.assertThat(result).and(XML + expected).areIdentical();
 
     }
@@ -79,9 +81,10 @@ public class FolderTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(Folder.class);
 
         // TEST
-        final Folder testee = new JaxbHelper().create("<folder name=\"abc\" path=\"def\" create=\"true\""
-                + " override=\"true\" overrideExclude=\"oe\" clean=\"true\" cleanExclude=\"ce\" "
-                + "xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", jaxbContext);
+        final Folder testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
+                "<folder name=\"abc\" path=\"def\" create=\"true\""
+                        + " override=\"true\" overrideExclude=\"oe\" clean=\"true\" cleanExclude=\"ce\" "
+                        + "xmlns=\""+ NS_SG4JC +"\"/>");
 
         // VERIFY
         assertThat(testee).isNotNull();

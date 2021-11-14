@@ -27,6 +27,8 @@ import java.io.Writer;
 
 import javax.xml.bind.JAXBContext;
 
+import org.fuin.utils4j.jaxb.JaxbUtils;
+import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -72,11 +74,11 @@ public class JaxbHelperTest extends AbstractTest {
     public void testCreateReaderJAXBContext() throws Exception {
 
         // PREPARE
-        final Reader reader = new StringReader("<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>");
+        final Reader reader = new StringReader("<dummy name=\"Joe\" xmlns=\""+ NS_SG4JC +"\"/>");
         final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
 
         // TEST
-        final Dummy dummy = testee.create(reader, jaxbContext);
+        final Dummy dummy = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(), reader);
 
         // VERIFY
         assertThat(dummy).isNotNull();
@@ -92,7 +94,7 @@ public class JaxbHelperTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
 
         // TEST
-        final Dummy dummy = testee.create(file, jaxbContext);
+        final Dummy dummy = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(), file);
 
         // VERIFY
         assertThat(dummy).isNotNull();
@@ -107,7 +109,8 @@ public class JaxbHelperTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
 
         // TEST
-        final Dummy dummy = testee.create("<dummy name=\"Joe\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", jaxbContext);
+        final Dummy dummy = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
+                "<dummy name=\"Joe\" xmlns=\""+ NS_SG4JC + "\"/>");
 
         // VERIFY
         assertThat(dummy).isNotNull();
@@ -149,7 +152,7 @@ public class JaxbHelperTest extends AbstractTest {
         final String result = testee.write(dummy, jaxbContext);
 
         // VERIFY
-        XmlAssert.assertThat(result).and(XML + "<sg4jc:dummy name=\"Joe\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\"/>")
+        XmlAssert.assertThat(result).and(XML + "<sg4jc:dummy name=\"Joe\" xmlns:sg4jc=\""+ NS_SG4JC + "\"/>")
                 .areIdentical();
 
     }
@@ -169,7 +172,7 @@ public class JaxbHelperTest extends AbstractTest {
 
         // VERIFY
         XmlAssert.assertThat(writer.toString())
-                .and(XML + "<sg4jc:dummy name=\"Joe\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\"/>").areIdentical();
+                .and(XML + "<sg4jc:dummy name=\"Joe\" xmlns:sg4jc=\""+ NS_SG4JC + "\"/>").areIdentical();
 
     }
 

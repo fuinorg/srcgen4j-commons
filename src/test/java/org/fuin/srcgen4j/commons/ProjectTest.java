@@ -24,6 +24,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
+import org.fuin.utils4j.jaxb.JaxbUtils;
+import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
 import org.junit.Test;
 import org.xmlunit.assertj3.XmlAssert;
 
@@ -61,7 +63,7 @@ public class ProjectTest extends AbstractTest {
 
         // VERIFY
         XmlAssert.assertThat(result).and(XML + "<sg4jc:project path=\"def\" maven=\"true\" name=\"abc\" "
-                + "xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\">" + "<sg4jc:folder path=\"PATH\" name=\"NAME\"/></sg4jc:project>")
+                + "xmlns:sg4jc=\""+ NS_SG4JC + "\">" + "<sg4jc:folder path=\"PATH\" name=\"NAME\"/></sg4jc:project>")
                 .areIdentical();
 
     }
@@ -73,9 +75,8 @@ public class ProjectTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(Project.class, Folder.class);
 
         // TEST
-        final Project testee = new JaxbHelper().create(
-                "<project name=\"abc\" path=\"def\" maven=\"true\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"><folder name=\"NAME\" path=\"PATH\"/></project>",
-                jaxbContext);
+        final Project testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
+                "<project name=\"abc\" path=\"def\" maven=\"true\" xmlns=\"" + NS_SG4JC + "\"><folder name=\"NAME\" path=\"PATH\"/></project>");
 
         // VERIFY
         assertThat(testee).isNotNull();

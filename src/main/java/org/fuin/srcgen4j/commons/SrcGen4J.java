@@ -28,7 +28,6 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.OrFileFilter;
 import org.fuin.objects4j.common.Contract;
-import org.fuin.utils4j.Utils4J;
 import org.fuin.utils4j.classpath.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,8 +40,6 @@ public final class SrcGen4J {
     private static final Logger LOG = LoggerFactory.getLogger(SrcGen4J.class);
 
     private final SrcGen4JConfig config;
-
-    private final SrcGen4JContext context;
 
     private FileFilter fileFilter;
 
@@ -62,60 +59,17 @@ public final class SrcGen4J {
             throw new IllegalArgumentException("The configuration is not initialized");
         }
         this.config = config;
-        this.context = context;
         Handler.add();
-    }
-
-    private void enhanceClasspath() {
-        final Classpath cp = config.getClasspath();
-        if (cp == null) {
-            LOG.debug("No additional classpath found");
-        } else {
-
-            // Add context class path
-            if (cp.isAddContextCP()) {
-                addToClasspath(context.getJarFiles(), "Context jar files");
-                addToClasspath(context.getBinDirs(), "Context bin directories");
-            }
-
-            // Add class paths from configuration
-            final List<BinClasspathEntry> binList = cp.getBinList();
-            if (binList == null) {
-                LOG.debug("No binary classpath list found");
-            } else {
-                for (final BinClasspathEntry entry : binList) {
-                    final String url;
-                    if (entry.getPath().startsWith("file:")) {
-                        url = entry.getPath();
-                    } else {
-                        url = "file:///" + entry.getPath();
-                    }
-                    LOG.info("Adding to classpath: {}", url);
-                    Utils4J.addToClasspath(url, context.getClassLoader());
-                }
-            }
-        }
-    }
-
-    private void addToClasspath(final List<File> files, final String message) {
-        if (files.size() == 0) {
-            LOG.debug("No files found ({})", message);
-        } else {
-            for (final File file : files) {
-                LOG.info("Adding to classpath ({}): {}", message, file);
-                Utils4J.addToClasspath(file, context.getClassLoader());
-            }
-        }
     }
 
     private void cleanFolders() {
         final List<Project> projects = config.getProjects();
-        if ((projects == null) || (projects.size() == 0)) {
+        if ((projects == null) || (projects.isEmpty())) {
             LOG.warn("No projects configured!");
         } else {
             for (final Project project : projects) {
                 final List<Folder> folders = project.getFolders();
-                if ((folders == null) || (folders.size() == 0)) {
+                if ((folders == null) || (folders.isEmpty())) {
                     LOG.warn("No project folders configured for: {}", project.getName());
                 } else {
                     for (final Folder folder : folders) {
@@ -160,8 +114,7 @@ public final class SrcGen4J {
     }
 
     private void delete(final File file) {
-        final boolean ok = file.delete();
-        if (!ok) {
+        if (!file.delete()) {
             if (file.isDirectory()) {
                 LOG.error("Couldn't delete directory: {}", file);
             } else {
@@ -181,8 +134,6 @@ public final class SrcGen4J {
     public final void execute() throws ParseException, GenerateException {
 
         LOG.info("Executing full build");
-
-        enhanceClasspath();
 
         cleanFolders();
 

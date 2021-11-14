@@ -37,7 +37,8 @@ public class GeneralTest {
         assertEveryClassHasATest(new File("src/main/java"), new ClassFilter() {
             @Override
             public boolean isIncludeClass(final Class<?> clasz) {
-                return !clasz.getName().endsWith("Exception");
+                return !clasz.getName().endsWith("Exception") &&
+                        !clasz.equals(SrcGen4JCommonsNamespace.class);
             }
         });
     }

@@ -25,6 +25,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
+import org.fuin.utils4j.jaxb.JaxbUtils;
+import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
 import org.junit.Test;
 import org.xmlunit.assertj3.XmlAssert;
 
@@ -69,7 +71,7 @@ public class TargetTest extends AbstractTest {
 
         // VERIFY
         XmlAssert.assertThat(result).and(XML + "<sg4jc:target pattern=\".*\" "
-                + "project=\"abc\" folder=\"def\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\"/>").areIdentical();
+                + "project=\"abc\" folder=\"def\" xmlns:sg4jc=\"" + NS_SG4JC + "\"/>").areIdentical();
 
     }
 
@@ -80,8 +82,8 @@ public class TargetTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(Target.class, AbstractTarget.class);
 
         // TEST
-        final Target testee = new JaxbHelper().create(
-                "<target pattern=\".*\" " + "project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", jaxbContext);
+        final Target testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
+                "<target pattern=\".*\" " + "project=\"abc\" folder=\"def\" xmlns=\"" + NS_SG4JC + "\"/>");
 
         // VERIFY
         assertThat(testee).isNotNull();

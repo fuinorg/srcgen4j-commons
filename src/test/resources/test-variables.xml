@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <srcgen4j-config
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns="http://www.fuin.org/srcgen4j/commons"
-   xmlns:cfg="http://www.fuin.org/xmlcfg4j"
+   xmlns="http://www.fuin.org/srcgen4j/commons/0.4.3"
+   xmlns:cfg="http://www.fuin.org/xmlcfg4j/0.2.1"
    xmlns:test="http://www.fuin.org/srcgen4j/commons/test">
 	
 	<cfg:variables>

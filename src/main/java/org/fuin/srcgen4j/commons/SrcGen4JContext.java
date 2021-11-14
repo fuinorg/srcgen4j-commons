@@ -17,12 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import java.io.File;
-import java.util.List;
-
 import javax.validation.constraints.NotNull;
-
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Provides a context for the build process.
@@ -36,21 +31,5 @@ public interface SrcGen4JContext {
      */
     @NotNull
     public ClassLoader getClassLoader();
-
-    /**
-     * Returns a list of JAR files to add to the class path used during parse/generate process.
-     * 
-     * @return Unmodifiable list of JAR files.
-     */
-    @Nullable
-    public List<File> getJarFiles();
-
-    /**
-     * Returns a list of binary directories to add to the class path used during parse/generate process.
-     * 
-     * @return Unmodifiable list of "bin"/"classes" directories.
-     */
-    @Nullable
-    public List<File> getBinDirs();
 
 }

@@ -23,10 +23,9 @@ The pipeline is configured using a single XML configuration file:
 ```xml
 <srcgen4j-config
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns="http://www.fuin.org/srcgen4j/commons">
+   xmlns="http://www.fuin.org/srcgen4j/commons/0.4.3">
     
     <variables />
-    <classpath/>
     <projects />
     <parsers />
     <generators />
@@ -62,14 +61,6 @@ Variables can be overwritten in the sub-sections:
 </parsers>
 ```
 The result is only visible inside the defining section.
-
-## Classpath
-The classpath section allows adding additional binary classpaths.
-```xml
-<classpath>
-    <bin path="${project_path}/target/classes" />
-</classpath>
-```
 
 ## Projects
 A project is used to define the folders where the generated output can be placed.

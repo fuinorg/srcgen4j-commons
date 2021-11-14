@@ -17,6 +17,8 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import org.fuin.xmlcfg4j.XmlCfg4JNamespace;
+
 import com.openpojo.validation.ValidatorBuilder;
 import com.openpojo.validation.rule.impl.NoFieldShadowingRule;
 import com.openpojo.validation.rule.impl.NoPublicFieldsRule;
@@ -31,6 +33,12 @@ public abstract class AbstractTest {
     /** XML Prefix. */
     protected static final String XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
 
+    protected static final String NS_SG4JC = SrcGen4JCommonsNamespace.NAMESPACE;
+    
+    protected static final String NS_CFG4J = XmlCfg4JNamespace.NAMESPACE;
+
+    protected static final String NS_TEST = "http://www.fuin.org/srcgen4j/commons/test";
+    
     /**
      * Creates a configured POJO validator.
      * 

@@ -19,13 +19,12 @@ package org.fuin.srcgen4j.commons;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 
+import org.fuin.utils4j.jaxb.JaxbUtils;
+import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
 import org.junit.Test;
 import org.xmlunit.assertj3.XmlAssert;
 
@@ -48,7 +47,7 @@ public class ArtifactFactoryConfigTest extends AbstractTest {
 
         // VERIFY
         XmlAssert.assertThat(result).and(XML + "<sg4jc:artifact-factory artifact=\"abc\" class=\"a.b.c.X\""
-                + " xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\"/>").areIdentical();
+                + " xmlns:sg4jc=\"" + NS_SG4JC + "\"/>").areIdentical();
 
     }
 
@@ -59,8 +58,8 @@ public class ArtifactFactoryConfigTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(ArtifactFactoryConfig.class);
 
         // TEST
-        final ArtifactFactoryConfig testee = new JaxbHelper().create(
-                "<artifact-factory artifact=\"abc\" class=\"a.b.c.X\"" + " xmlns=\"http://www.fuin.org/srcgen4j/commons\"/>", jaxbContext);
+        final ArtifactFactoryConfig testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
+                "<artifact-factory artifact=\"abc\" class=\"a.b.c.X\"" + " xmlns=\"" + NS_SG4JC + "\"/>");
 
         // VERIFY
         assertThat(testee).isNotNull();
@@ -80,15 +79,6 @@ public class ArtifactFactoryConfigTest extends AbstractTest {
                 return ArtifactFactoryConfigTest.class.getClassLoader();
             }
 
-            @Override
-            public List<File> getJarFiles() {
-                return new ArrayList<File>();
-            }
-
-            @Override
-            public List<File> getBinDirs() {
-                return new ArrayList<File>();
-            }
         }, new HashMap<String, String>());
 
         // TEST

@@ -25,6 +25,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
+import org.fuin.utils4j.jaxb.JaxbUtils;
+import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
 import org.fuin.xmlcfg4j.Variable;
 import org.junit.Test;
 import org.xmlunit.assertj3.XmlAssert;
@@ -63,7 +65,7 @@ public class GeneratorsTest extends AbstractTest {
 
         // VERIFY
         XmlAssert.assertThat(result).and(XML
-                + "<sg4jc:generators project=\"abc\" folder=\"def\" xmlns:cfg4j=\"http://www.fuin.org/xmlcfg4j\" xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\">"
+                + "<sg4jc:generators project=\"abc\" folder=\"def\" xmlns:cfg4j=\"" + NS_CFG4J + "\" xmlns:sg4jc=\""+ NS_SG4JC +"\">"
                 + "<cfg4j:variable value=\"1\" name=\"a\"/>" + "<sg4jc:generator class=\"a.b.c.D\" parser=\"PARSER\" name=\"NAME\""
                 + " project=\"PROJECT\" folder=\"FOLDER\"/>" + "</sg4jc:generators>").areIdentical();
 
@@ -76,11 +78,10 @@ public class GeneratorsTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(Generators.class);
 
         // TEST
-        final Generators testee = new JaxbHelper().create(
-                "<ns2:generators project=\"abc\" folder=\"def\" xmlns=\"http://www.fuin.org/xmlcfg4j\" xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons\">"
+        final Generators testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
+                "<ns2:generators project=\"abc\" folder=\"def\" xmlns=\"" + NS_CFG4J + "\" xmlns:ns2=\""+ NS_SG4JC + "\">"
                         + "<ns2:generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/>" + "<variable name=\"a\" value=\"1\"/>"
-                        + "</ns2:generators>",
-                jaxbContext);
+                        + "</ns2:generators>");
         testee.init(new DefaultContext(), null, new HashMap<>());
 
         // VERIFY

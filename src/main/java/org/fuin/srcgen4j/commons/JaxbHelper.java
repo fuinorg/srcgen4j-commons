@@ -22,7 +22,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -30,7 +29,6 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.FileExists;
@@ -97,99 +95,6 @@ public final class JaxbHelper {
         } catch (final IOException ex) {
             throw new RuntimeException("Could not read first part of file: " + file, ex);
         }
-    }
-
-    /**
-     * Creates an instance by reading the XML from a reader.
-     * 
-     * @param reader
-     *            Reader to use.
-     * @param jaxbContext
-     *            Context to use.
-     * 
-     * @return New instance.
-     * 
-     * @throws UnmarshalObjectException
-     *             Error deserializing the object.
-     * 
-     * @param <TYPE>
-     *            Type of the created object.
-     */
-    @SuppressWarnings("unchecked")
-    @NotNull
-    public <TYPE> TYPE create(@NotNull final Reader reader, @NotNull final JAXBContext jaxbContext) throws UnmarshalObjectException {
-        Contract.requireArgNotNull("reader", reader);
-        Contract.requireArgNotNull("jaxbContext", jaxbContext);
-        try {
-            final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            final TYPE obj = (TYPE) unmarshaller.unmarshal(reader);
-            return obj;
-        } catch (final JAXBException ex) {
-            throw new UnmarshalObjectException("Unable to parse XML from reader", ex);
-        }
-    }
-
-    /**
-     * Creates an instance by reading the XML from a file.
-     * 
-     * @param file
-     *            File to read.
-     * @param jaxbContext
-     *            Context to use.
-     * 
-     * @return New instance.
-     * 
-     * @throws UnmarshalObjectException
-     *             Error deserializing the object.
-     * 
-     * @param <TYPE>
-     *            Type of the created object.
-     */
-    @SuppressWarnings("unchecked")
-    @NotNull
-    public <TYPE> TYPE create(@NotNull @FileExists @IsFile final File file, @NotNull final JAXBContext jaxbContext)
-            throws UnmarshalObjectException {
-        Contract.requireArgNotNull("file", file);
-        FileExistsValidator.requireArgValid("file", file);
-        IsFileValidator.requireArgValid("file", file);
-        Contract.requireArgNotNull("jaxbContext", jaxbContext);
-        try {
-            final FileReader fr = new FileReader(file);
-            try {
-                return (TYPE) create(fr, jaxbContext);
-            } finally {
-                fr.close();
-            }
-        } catch (final IOException ex) {
-            throw new UnmarshalObjectException("Unable to parse XML from file: " + file, ex);
-        }
-    }
-
-    /**
-     * Creates an instance by from a given XML.
-     * 
-     * @param xml
-     *            XML to parse.
-     * @param jaxbContext
-     *            Context to use.
-     * 
-     * @return New instance.
-     * 
-     * @throws UnmarshalObjectException
-     *             Error deserializing the object.
-     * 
-     * @param <TYPE>
-     *            Type of the created object.
-     */
-    @SuppressWarnings("unchecked")
-    @NotNull
-    public <TYPE> TYPE create(@NotNull final String xml, @NotNull final JAXBContext jaxbContext) throws UnmarshalObjectException {
-
-        Contract.requireArgNotNull("xml", xml);
-        Contract.requireArgNotNull("jaxbContext", jaxbContext);
-
-        return (TYPE) create(new StringReader(xml), jaxbContext);
-
     }
 
     /**

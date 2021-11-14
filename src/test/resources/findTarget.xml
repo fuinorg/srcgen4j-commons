@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <srcgen4j-config 
-   xmlns="http://www.fuin.org/srcgen4j/commons"
-   xmlns:cfg="http://www.fuin.org/xmlcfg4j">
+   xmlns="http://www.fuin.org/srcgen4j/commons/0.4.3"
+   xmlns:cfg="http://www.fuin.org/xmlcfg4j/0.2.1">
 
 	<cfg:variables>
 		<cfg:variable name="root" value="/var/tmp" />

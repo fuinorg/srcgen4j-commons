@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-   xmlns:cfg="http://www.fuin.org/xmlcfg4j"
-   targetNamespace="http://www.fuin.org/srcgen4j/commons">   
-  
-  <xs:import namespace="http://www.fuin.org/xmlcfg4j" schemaLocation="http://www.fuin.org/xsd/xmlcfg4j.xsd" />
-  
-  <xs:element name="srcgen4j-config" type="sg4jc:srcgen4j-configType" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
-  
-  <xs:complexType name="binType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute type="xs:string" name="path" use="required" />
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
-  
-  <xs:complexType name="classpathType">
-    <xs:sequence>
-      <xs:element type="sg4jc:binType" name="bin" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
-    </xs:sequence>
-    <xs:attribute type="xs:boolean" name="context" use="optional" default="true" />
-  </xs:complexType>
+   xmlns="http://www.fuin.org/srcgen4j/commons/0.4.3"
+   xmlns:cfg4j="http://www.fuin.org/xmlcfg4j/0.2.1"
+   targetNamespace="http://www.fuin.org/srcgen4j/commons/0.4.3">   
+ 
+  <xs:import namespace="http://www.fuin.org/xmlcfg4j/0.2.1" schemaLocation="http://www.fuin.org/xsd/xmlcfg4j-0_2_1.xsd" />
+ 
+  <xs:element name="srcgen4j-config" type="srcgen4j-configType" />
   
   <xs:complexType name="folderType">
     <xs:simpleContent>
@@ -40,7 +26,7 @@
   
   <xs:complexType name="projectType">
     <xs:sequence>
-      <xs:element type="sg4jc:folderType" name="folder" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
+      <xs:element type="folderType" name="folder" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute type="xs:string" name="name" use="required"/>
     <xs:attribute type="xs:string" name="path" use="required"/>
@@ -49,7 +35,7 @@
   
   <xs:complexType name="projectsType">
     <xs:sequence>
-      <xs:element type="sg4jc:projectType" name="project" minOccurs="1" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+      <xs:element type="projectType" name="project" minOccurs="1" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
   
@@ -65,8 +51,8 @@
   
   <xs:complexType name="parserType">
     <xs:sequence>
-      <xs:element type="cfg:variableType" name="variable" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
-      <xs:element type="sg4jc:anyConfigType" name="config" minOccurs="0" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
+      <xs:element ref="cfg4j:variable" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element type="anyConfigType" name="config" minOccurs="0" maxOccurs="1" />
     </xs:sequence>
     <xs:attribute type="xs:string" name="name" use="required"/>
     <xs:attribute type="xs:string" name="class" use="required"/>
@@ -74,8 +60,8 @@
   
   <xs:complexType name="parsersType">
     <xs:sequence>
-      <xs:element type="cfg:variableType" name="variable" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
-      <xs:element type="sg4jc:parserType" minOccurs="1" maxOccurs="unbounded" name="parser" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+      <xs:element ref="cfg4j:variable" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element type="parserType" minOccurs="1" maxOccurs="unbounded" name="parser" />
     </xs:sequence>
   </xs:complexType>
   
@@ -91,7 +77,7 @@
   
   <xs:complexType name="artifactType" mixed="true">
     <xs:sequence>
-      <xs:element type="sg4jc:targetType" name="target" minOccurs="0" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
+      <xs:element type="targetType" name="target" minOccurs="0" />
     </xs:sequence>
     <xs:attribute type="xs:string" name="name" use="required"/>
     <xs:attribute type="xs:string" name="project" use="optional"/>
@@ -100,9 +86,9 @@
   
   <xs:complexType name="generatorType">
     <xs:sequence>
-      <xs:element type="cfg:variableType" name="variable" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
-      <xs:element type="sg4jc:anyConfigType" name="config" minOccurs="0" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
-      <xs:element type="sg4jc:artifactType" name="artifact" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons" />
+      <xs:element ref="cfg4j:variable" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element type="anyConfigType" name="config" minOccurs="0" maxOccurs="1" />
+      <xs:element type="artifactType" name="artifact" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute type="xs:string" name="name" use="required"/>
     <xs:attribute type="xs:string" name="class" use="required"/>
@@ -113,24 +99,23 @@
   
   <xs:complexType name="generatorsType">
     <xs:sequence>
-      <xs:element type="cfg:variableType" name="variable" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
-      <xs:element type="sg4jc:generatorType" name="generator" minOccurs="1" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+      <xs:element ref="cfg4j:variable" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element type="generatorType" name="generator" minOccurs="1" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
   
   <xs:complexType name="srcgen4j-configType">
     <xs:sequence>
-      <xs:element type="cfg:variablesType" name="variables" minOccurs="0" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
-      <xs:element type="sg4jc:classpathType" name="classpath" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
-      <xs:element type="sg4jc:projectsType" name="projects" minOccurs="1" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
-      <xs:element type="sg4jc:parsersType" name="parsers"  minOccurs="1" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
-      <xs:element type="sg4jc:generatorsType" name="generators"  minOccurs="1" maxOccurs="1" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+      <xs:element ref="cfg4j:variables" minOccurs="0" maxOccurs="1" />
+      <xs:element type="projectsType" name="projects" minOccurs="1" maxOccurs="1" />
+      <xs:element type="parsersType" name="parsers"  minOccurs="1" maxOccurs="1" />
+      <xs:element type="generatorsType" name="generators"  minOccurs="1" maxOccurs="1" />
     </xs:sequence>
   </xs:complexType>
 
     <xs:complexType name="artifactFactoryConfigType">
       <xs:sequence>
-        <xs:element type="cfg:variableType" name="variable" minOccurs="0" maxOccurs="unbounded" xmlns:sg4jc="http://www.fuin.org/srcgen4j/commons"/>
+        <xs:element ref="cfg4j:variable" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
     <xs:attribute type="xs:string" name="artifact" use="required" />
     <xs:attribute type="xs:string" name="class" use="required" />

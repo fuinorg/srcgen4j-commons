@@ -32,7 +32,7 @@ import org.fuin.xmlcfg4j.AbstractElement;
  * Specific parser configuration example.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "input", namespace = "http://www.fuin.org/srcgen4j/commons/test")
+@XmlRootElement(name = "input", namespace = AbstractTest.NS_TEST)
 public class TestInput extends AbstractElement implements InitializableElement<TestInput, Config<ParserConfig>> {
 
     @XmlAttribute

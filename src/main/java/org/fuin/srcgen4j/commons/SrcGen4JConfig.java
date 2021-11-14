@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.objects4j.common.Contract;
@@ -40,6 +41,7 @@ import org.fuin.objects4j.common.IsDirectoryValidator;
 import org.fuin.utils4j.VariableResolver;
 import org.fuin.xmlcfg4j.Variable;
 import org.fuin.xmlcfg4j.Variables;
+import org.fuin.xmlcfg4j.XmlCfg4JNamespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,13 +58,8 @@ public class SrcGen4JConfig {
 
     @Nullable
     @Valid
-    @XmlElement(name = "variables", namespace = "http://www.fuin.org/xmlcfg4j")
+    @XmlElement(name = "variables", namespace = XmlCfg4JNamespace.NAMESPACE)
     private Variables variables;
-
-    @Nullable
-    @Valid
-    @XmlElement(name = "classpath")
-    private Classpath classpath;
 
     @Nullable
     @Valid
@@ -81,9 +78,11 @@ public class SrcGen4JConfig {
     private Generators generators;
 
     @Nullable
-    private transient Map<String, String> varMap;
+    @XmlTransient
+    private Map<String, String> varMap;
 
-    private transient boolean initialized = false;
+    @XmlTransient
+    private boolean initialized = false;
 
     /**
      * Default constructor.
@@ -120,26 +119,6 @@ public class SrcGen4JConfig {
      */
     public final void setVariables(@Nullable final Variables variables) {
         this.variables = variables;
-    }
-
-    /**
-     * Returns the class path.
-     * 
-     * @return Class path.
-     */
-    @Nullable
-    public final Classpath getClasspath() {
-        return classpath;
-    }
-
-    /**
-     * Sets the class path to a new value.
-     * 
-     * @param classpath
-     *            Value to set.
-     */
-    public final void setClasspath(@Nullable final Classpath classpath) {
-        this.classpath = classpath;
     }
 
     /**

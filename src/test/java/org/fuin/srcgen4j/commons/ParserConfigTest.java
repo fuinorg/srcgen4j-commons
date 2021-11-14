@@ -24,6 +24,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
+import org.fuin.utils4j.jaxb.JaxbUtils;
+import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
 import org.junit.Test;
 import org.xmlunit.assertj3.XmlAssert;
 
@@ -62,9 +64,9 @@ public class ParserConfigTest extends AbstractTest {
 
         // VERIFY
         XmlAssert.assertThat(result)
-                .and(XML + "<sg4jc:parser class=\"a.b.c.TestParser\" name=\"parser1\" xmlns:cfg4j=\"http://www.fuin.org/xmlcfg4j\" "
-                        + "xmlns:sg4jc=\"http://www.fuin.org/srcgen4j/commons\" "
-                        + "xmlns:ns3=\"http://www.fuin.org/srcgen4j/commons/test\">"
+                .and(XML + "<sg4jc:parser class=\"a.b.c.TestParser\" name=\"parser1\" xmlns:cfg4j=\"" + NS_CFG4J + "\" "
+                        + "xmlns:sg4jc=\""+ NS_SG4JC +"\" "
+                        + "xmlns:ns3=\"" + NS_TEST + "\">"
                         + "<sg4jc:config><ns3:input path=\"a/b/c\"/></sg4jc:config></sg4jc:parser>")
                 .areIdentical();
 
@@ -77,10 +79,9 @@ public class ParserConfigTest extends AbstractTest {
         final JAXBContext jaxbContext = JAXBContext.newInstance(ParserConfig.class, TestInput.class);
 
         // TEST
-        final ParserConfig testee = new JaxbHelper().create(
-                "<parser class=\"a.b.c.TestParser\" name=\"parser1\" " + "xmlns:ns2=\"http://www.fuin.org/srcgen4j/commons/test\" "
-                        + "xmlns=\"http://www.fuin.org/srcgen4j/commons\">" + "<config><ns2:input path=\"a/b/c\"/></config>" + "</parser>",
-                jaxbContext);
+        final ParserConfig testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
+                "<parser class=\"a.b.c.TestParser\" name=\"parser1\" " + "xmlns:ns2=\"" + NS_TEST + "\" "
+                        + "xmlns=\""+ NS_SG4JC + "\">" + "<config><ns2:input path=\"a/b/c\"/></config>" + "</parser>");
 
         // VERIFY
         assertThat(testee).isNotNull();

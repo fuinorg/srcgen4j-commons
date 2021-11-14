@@ -182,14 +182,4 @@ public final class DefaultContext implements SrcGen4JContext, FileMarkerCapable 
         return classLoader;
     }
 
-    @Override
-    public final List<File> getJarFiles() {
-        return jarFiles;
-    }
-
-    @Override
-    public final List<File> getBinDirs() {
-        return binDirs;
-    }
-
 }
