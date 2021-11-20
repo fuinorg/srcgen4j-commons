@@ -11,7 +11,7 @@ on:
       - '**/README.md'
 
 jobs:
-  call-workflow-2:
-    uses: fuinorg/github-workflows/.github/workflows/maven.yml@d2c87f1df5d25e38de1dad63927e109f3182ebac
+  call-workflow:
+    uses: fuinorg/github-workflows/.github/workflows/maven.yml@master
     with:
       oss_sonatype_user: michael-schnell
