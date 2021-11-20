@@ -62,9 +62,8 @@ public class ProjectTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XmlAssert.assertThat(result).and(XML + "<sg4jc:project path=\"def\" maven=\"true\" name=\"abc\" "
-                + "xmlns:sg4jc=\""+ NS_SG4JC + "\">" + "<sg4jc:folder path=\"PATH\" name=\"NAME\"/></sg4jc:project>")
-                .areIdentical();
+        XmlAssert.assertThat(result).and(XML + "<sg4jc:project path=\"def\" maven=\"true\" name=\"abc\" " + "xmlns:sg4jc=\"" + NS_SG4JC
+                + "\">" + "<sg4jc:folder path=\"PATH\" name=\"NAME\"/></sg4jc:project>").areIdentical();
 
     }
 
@@ -76,7 +75,8 @@ public class ProjectTest extends AbstractTest {
 
         // TEST
         final Project testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
-                "<project name=\"abc\" path=\"def\" maven=\"true\" xmlns=\"" + NS_SG4JC + "\"><folder name=\"NAME\" path=\"PATH\"/></project>");
+                "<project name=\"abc\" path=\"def\" maven=\"true\" xmlns=\"" + NS_SG4JC
+                        + "\"><folder name=\"NAME\" path=\"PATH\"/></project>");
 
         // VERIFY
         assertThat(testee).isNotNull();

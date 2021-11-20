@@ -64,10 +64,8 @@ public class ParserConfigTest extends AbstractTest {
 
         // VERIFY
         XmlAssert.assertThat(result)
-                .and(XML + "<sg4jc:parser class=\"a.b.c.TestParser\" name=\"parser1\" "
-                        + "xmlns:sg4jc=\""+ NS_SG4JC +"\" "
-                        + "xmlns:ns2=\"" + NS_TEST + "\">"
-                        + "<sg4jc:config><ns2:input path=\"a/b/c\"/></sg4jc:config></sg4jc:parser>")
+                .and(XML + "<sg4jc:parser class=\"a.b.c.TestParser\" name=\"parser1\" " + "xmlns:sg4jc=\"" + NS_SG4JC + "\" "
+                        + "xmlns:ns2=\"" + NS_TEST + "\">" + "<sg4jc:config><ns2:input path=\"a/b/c\"/></sg4jc:config></sg4jc:parser>")
                 .areIdentical();
 
     }
@@ -80,16 +78,16 @@ public class ParserConfigTest extends AbstractTest {
 
         // TEST
         final ParserConfig testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
-                "<parser class=\"a.b.c.TestParser\" name=\"parser1\" " + "xmlns:ns2=\"" + NS_TEST + "\" "
-                        + "xmlns=\""+ NS_SG4JC + "\">" + "<config><ns2:input path=\"a/b/c\"/></config>" + "</parser>");
+                "<parser class=\"a.b.c.TestParser\" name=\"parser1\" " + "xmlns:ns2=\"" + NS_TEST + "\" " + "xmlns=\"" + NS_SG4JC + "\">"
+                        + "<config><ns2:input path=\"a/b/c\"/></config>" + "</parser>");
 
         // VERIFY
         assertThat(testee).isNotNull();
         assertThat(testee.getName()).isEqualTo("parser1");
         assertThat(testee.getClassName()).isEqualTo("a.b.c.TestParser");
         assertThat(testee.getConfig()).isNotNull();
-        assertThat(testee.getConfig().getConfig()).isInstanceOf(TestInput.class);
-        final TestInput testInput = (TestInput) testee.getConfig().getConfig();
+        assertThat(testee.getConfig().getCfg()).isInstanceOf(TestInput.class);
+        final TestInput testInput = (TestInput) testee.getConfig().getCfg();
         assertThat(testInput.getPath()).isEqualTo("a/b/c");
 
     }

@@ -16,6 +16,7 @@ package org.fuin.srcgen4j.commons;
 
 import static org.fuin.srcgen4j.commons.SrcGen4JCommonsNamespace.NAMESPACE;
 import static org.fuin.srcgen4j.commons.SrcGen4JCommonsNamespace.NS_PREFIX;
+
 import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlNsForm;
 import javax.xml.bind.annotation.XmlSchema;

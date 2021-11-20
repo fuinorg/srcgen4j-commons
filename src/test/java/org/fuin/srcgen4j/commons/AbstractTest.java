@@ -32,9 +32,9 @@ public abstract class AbstractTest {
     protected static final String XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
 
     protected static final String NS_SG4JC = SrcGen4JCommonsNamespace.NAMESPACE;
-    
+
     protected static final String NS_TEST = "http://www.fuin.org/srcgen4j/commons/test";
-    
+
     /**
      * Creates a configured POJO validator.
      * 
@@ -52,5 +52,5 @@ public abstract class AbstractTest {
 
         return pv;
     }
-    
+
 }

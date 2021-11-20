@@ -65,10 +65,9 @@ public class ArtifactTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XmlAssert.assertThat(result)
-                .and(XML + "<sg4jc:artifact name=\"abc\" "
-                        + "project=\"def\" folder=\"ghi\" xmlns:sg4jc=\""+ NS_SG4JC +"\">"
-                        + "<sg4jc:target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></sg4jc:artifact>")
+        XmlAssert
+                .assertThat(result).and(XML + "<sg4jc:artifact name=\"abc\" " + "project=\"def\" folder=\"ghi\" xmlns:sg4jc=\"" + NS_SG4JC
+                        + "\">" + "<sg4jc:target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></sg4jc:artifact>")
                 .areIdentical();
 
     }
@@ -81,7 +80,7 @@ public class ArtifactTest extends AbstractTest {
 
         // TEST
         final Artifact testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
-                "<artifact name=\"abc\" " + "project=\"def\" folder=\"ghi\" xmlns=\""+ NS_SG4JC +"\">"
+                "<artifact name=\"abc\" " + "project=\"def\" folder=\"ghi\" xmlns=\"" + NS_SG4JC + "\">"
                         + "<target pattern=\"PATTERN\" project=\"PROJECT\" folder=\"FOLDER\"/></artifact>");
 
         // VERIFY

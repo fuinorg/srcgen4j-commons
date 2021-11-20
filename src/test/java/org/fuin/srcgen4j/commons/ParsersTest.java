@@ -63,9 +63,8 @@ public class ParsersTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XmlAssert.assertThat(result).and(
-                XML + "<sg4jc:parsers xmlns:sg4jc=\"" + NS_SG4JC + "\" xmlns:sg4jc=\""+ NS_SG4JC + "\">"
-                        + "<sg4jc:variable name=\"a\" value=\"1\"/><sg4jc:parser class=\"a.b.c.D\" name=\"NAME\"/></sg4jc:parsers>");
+        XmlAssert.assertThat(result).and(XML + "<sg4jc:parsers xmlns:sg4jc=\"" + NS_SG4JC + "\" xmlns:sg4jc=\"" + NS_SG4JC + "\">"
+                + "<sg4jc:variable name=\"a\" value=\"1\"/><sg4jc:parser class=\"a.b.c.D\" name=\"NAME\"/></sg4jc:parsers>");
 
     }
 
@@ -77,7 +76,7 @@ public class ParsersTest extends AbstractTest {
 
         // TEST
         final Parsers testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
-                XML + "<sg4jc:parsers xmlns=\"" + NS_SG4JC + "\" xmlns:sg4jc=\""+ NS_SG4JC + "\">"
+                XML + "<sg4jc:parsers xmlns=\"" + NS_SG4JC + "\" xmlns:sg4jc=\"" + NS_SG4JC + "\">"
                         + "<sg4jc:parser name=\"NAME\" class=\"a.b.c.D\"/>" + "<variable name=\"a\" value=\"1\"/>" + "</sg4jc:parsers>");
         testee.init(new DefaultContext(), null, new HashMap<>());
 

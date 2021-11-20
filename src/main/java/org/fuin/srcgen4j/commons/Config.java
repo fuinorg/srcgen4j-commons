@@ -76,7 +76,7 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
      * @return Configuration.
      */
     @Nullable
-    public final Object getConfig() {
+    public final Object getCfg() {
         return cfg;
     }
 
@@ -86,7 +86,7 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
      * @param config
      *            Configuration.
      */
-    public final void setConfig(@Nullable final Object config) {
+    public final void setCfg(@Nullable final Object config) {
         this.cfg = config;
     }
 

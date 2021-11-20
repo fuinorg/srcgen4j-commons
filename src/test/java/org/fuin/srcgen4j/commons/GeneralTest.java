@@ -20,6 +20,7 @@ package org.fuin.srcgen4j.commons;
 import static org.fuin.units4j.AssertCoverage.assertEveryClassHasATest;
 
 import java.io.File;
+
 import org.fuin.units4j.AssertCoverage;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -38,8 +39,7 @@ public class GeneralTest {
         assertEveryClassHasATest(new File("src/main/java"), new AssertCoverage.ClassFilter() {
             @Override
             public boolean isIncludeClass(final Class<?> clasz) {
-                return !clasz.getName().endsWith("Exception") &&
-                        !clasz.equals(SrcGen4JCommonsNamespace.class);
+                return !clasz.getName().endsWith("Exception") && !clasz.equals(SrcGen4JCommonsNamespace.class);
             }
         });
     }

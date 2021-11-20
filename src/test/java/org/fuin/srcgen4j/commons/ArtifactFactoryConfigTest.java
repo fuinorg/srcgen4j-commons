@@ -46,8 +46,9 @@ public class ArtifactFactoryConfigTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XmlAssert.assertThat(result).and(XML + "<sg4jc:artifact-factory artifact=\"abc\" class=\"a.b.c.X\""
-                + " xmlns:sg4jc=\"" + NS_SG4JC + "\"/>").areIdentical();
+        XmlAssert.assertThat(result)
+                .and(XML + "<sg4jc:artifact-factory artifact=\"abc\" class=\"a.b.c.X\"" + " xmlns:sg4jc=\"" + NS_SG4JC + "\"/>")
+                .areIdentical();
 
     }
 

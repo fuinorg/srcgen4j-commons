@@ -33,9 +33,9 @@ public final class TestUtils {
     protected static final String XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
 
     protected static final String NS_SG4JC = SrcGen4JCommonsNamespace.NAMESPACE;
-    
+
     protected static final String NS_TEST = "http://www.fuin.org/srcgen4j/commons/test";
-    
+
     /**
      * Private utility class constructor.
      */
@@ -59,7 +59,7 @@ public final class TestUtils {
 
         return pv;
     }
-    
+
     /**
      * Creates a configured POJO validator.
      * 

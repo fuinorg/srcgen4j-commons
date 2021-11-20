@@ -63,10 +63,11 @@ public class GeneratorsTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XmlAssert.assertThat(result).and(XML
-                + "<sg4jc:generators project=\"abc\" folder=\"def\" xmlns:sg4jc=\""+ NS_SG4JC +"\">"
-                + "<sg4jc:variable value=\"1\" name=\"a\"/>" + "<sg4jc:generator class=\"a.b.c.D\" parser=\"PARSER\" name=\"NAME\""
-                + " project=\"PROJECT\" folder=\"FOLDER\"/>" + "</sg4jc:generators>").areIdentical();
+        XmlAssert.assertThat(result)
+                .and(XML + "<sg4jc:generators project=\"abc\" folder=\"def\" xmlns:sg4jc=\"" + NS_SG4JC + "\">"
+                        + "<sg4jc:variable value=\"1\" name=\"a\"/>" + "<sg4jc:generator class=\"a.b.c.D\" parser=\"PARSER\" name=\"NAME\""
+                        + " project=\"PROJECT\" folder=\"FOLDER\"/>" + "</sg4jc:generators>")
+                .areIdentical();
 
     }
 
@@ -78,7 +79,7 @@ public class GeneratorsTest extends AbstractTest {
 
         // TEST
         final Generators testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
-                "<ns2:generators project=\"abc\" folder=\"def\" xmlns=\"" + NS_SG4JC + "\" xmlns:ns2=\""+ NS_SG4JC + "\">"
+                "<ns2:generators project=\"abc\" folder=\"def\" xmlns=\"" + NS_SG4JC + "\" xmlns:ns2=\"" + NS_SG4JC + "\">"
                         + "<ns2:generator name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/>" + "<variable name=\"a\" value=\"1\"/>"
                         + "</ns2:generators>");
         testee.init(new DefaultContext(), null, new HashMap<>());

@@ -74,7 +74,7 @@ public class JaxbHelperTest extends AbstractTest {
     public void testCreateReaderJAXBContext() throws Exception {
 
         // PREPARE
-        final Reader reader = new StringReader("<dummy name=\"Joe\" xmlns=\""+ NS_SG4JC +"\"/>");
+        final Reader reader = new StringReader("<dummy name=\"Joe\" xmlns=\"" + NS_SG4JC + "\"/>");
         final JAXBContext jaxbContext = JAXBContext.newInstance(Dummy.class);
 
         // TEST
@@ -110,7 +110,7 @@ public class JaxbHelperTest extends AbstractTest {
 
         // TEST
         final Dummy dummy = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
-                "<dummy name=\"Joe\" xmlns=\""+ NS_SG4JC + "\"/>");
+                "<dummy name=\"Joe\" xmlns=\"" + NS_SG4JC + "\"/>");
 
         // VERIFY
         assertThat(dummy).isNotNull();
@@ -152,8 +152,7 @@ public class JaxbHelperTest extends AbstractTest {
         final String result = testee.write(dummy, jaxbContext);
 
         // VERIFY
-        XmlAssert.assertThat(result).and(XML + "<sg4jc:dummy name=\"Joe\" xmlns:sg4jc=\""+ NS_SG4JC + "\"/>")
-                .areIdentical();
+        XmlAssert.assertThat(result).and(XML + "<sg4jc:dummy name=\"Joe\" xmlns:sg4jc=\"" + NS_SG4JC + "\"/>").areIdentical();
 
     }
 
@@ -171,8 +170,7 @@ public class JaxbHelperTest extends AbstractTest {
         testee.write(dummy, writer, jaxbContext);
 
         // VERIFY
-        XmlAssert.assertThat(writer.toString())
-                .and(XML + "<sg4jc:dummy name=\"Joe\" xmlns:sg4jc=\""+ NS_SG4JC + "\"/>").areIdentical();
+        XmlAssert.assertThat(writer.toString()).and(XML + "<sg4jc:dummy name=\"Joe\" xmlns:sg4jc=\"" + NS_SG4JC + "\"/>").areIdentical();
 
     }
 

@@ -68,8 +68,7 @@ public class FolderTest extends AbstractTest {
 
         // VERIFY
         final String expected = "<sg4jc:folder cleanExclude=\"ce\" overrideExclude=\"oe\" "
-                + "path=\"def\" create=\"true\" override=\"true\" clean=\"true\" "
-                + "name=\"abc\" xmlns:sg4jc=\""+ NS_SG4JC +"\"/>";
+                + "path=\"def\" create=\"true\" override=\"true\" clean=\"true\" " + "name=\"abc\" xmlns:sg4jc=\"" + NS_SG4JC + "\"/>";
         XmlAssert.assertThat(result).and(XML + expected).areIdentical();
 
     }
@@ -83,8 +82,7 @@ public class FolderTest extends AbstractTest {
         // TEST
         final Folder testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
                 "<folder name=\"abc\" path=\"def\" create=\"true\""
-                        + " override=\"true\" overrideExclude=\"oe\" clean=\"true\" cleanExclude=\"ce\" "
-                        + "xmlns=\""+ NS_SG4JC +"\"/>");
+                        + " override=\"true\" overrideExclude=\"oe\" clean=\"true\" cleanExclude=\"ce\" " + "xmlns=\"" + NS_SG4JC + "\"/>");
 
         // VERIFY
         assertThat(testee).isNotNull();

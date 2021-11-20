@@ -64,8 +64,8 @@ public class GeneratorConfigTest extends AbstractTest {
         // VERIFY
         XmlAssert.assertThat(result)
                 .and(XML + "<sg4jc:generator class=\"CLASS\" parser=\"PARSER\" name=\"NAME\" project=\"PRJ\" folder=\"FLD\""
-                        + " xmlns:sg4jc=\""+ NS_SG4JC +"\">"
-                        + "<sg4jc:artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/>" + "</sg4jc:generator>")
+                        + " xmlns:sg4jc=\"" + NS_SG4JC + "\">" + "<sg4jc:artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/>"
+                        + "</sg4jc:generator>")
                 .areIdentical();
 
     }
@@ -78,7 +78,7 @@ public class GeneratorConfigTest extends AbstractTest {
 
         // TEST
         final GeneratorConfig testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext).build(),
-                "<generator name=\"abc\" " + "project=\"def\" folder=\"ghi\" xmlns=\""+ NS_SG4JC +"\">"
+                "<generator name=\"abc\" " + "project=\"def\" folder=\"ghi\" xmlns=\"" + NS_SG4JC + "\">"
                         + "<artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/></generator>");
 
         // VERIFY

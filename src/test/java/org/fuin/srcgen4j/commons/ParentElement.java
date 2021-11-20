@@ -1,7 +1,6 @@
 // CHECKSTYLE:OFF
 package org.fuin.srcgen4j.commons;
 
-
 import java.util.Collections;
 import java.util.List;
 

@@ -70,8 +70,9 @@ public class TargetTest extends AbstractTest {
         final String result = new JaxbHelper(false).write(testee, jaxbContext);
 
         // VERIFY
-        XmlAssert.assertThat(result).and(XML + "<sg4jc:target pattern=\".*\" "
-                + "project=\"abc\" folder=\"def\" xmlns:sg4jc=\"" + NS_SG4JC + "\"/>").areIdentical();
+        XmlAssert.assertThat(result)
+                .and(XML + "<sg4jc:target pattern=\".*\" " + "project=\"abc\" folder=\"def\" xmlns:sg4jc=\"" + NS_SG4JC + "\"/>")
+                .areIdentical();
 
     }
 
