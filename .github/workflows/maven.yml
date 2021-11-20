@@ -12,6 +12,6 @@ on:
 
 jobs:
   call-workflow:
-    uses: fuinorg/github-workflows/.github/workflows/maven.yml@master
+    uses: fuinorg/github-workflows/.github/workflows/maven.yml@main
     with:
       oss_sonatype_user: michael-schnell
