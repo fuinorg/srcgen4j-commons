@@ -22,9 +22,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.File;
 import java.util.Iterator;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link DefaultContext}.
@@ -35,12 +35,12 @@ public class DefaultContextTest {
 
     private DefaultContext testee;
 
-    @Before
+    @BeforeEach
     public void setup() {
         testee = new DefaultContext();
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         testee = null;
     }

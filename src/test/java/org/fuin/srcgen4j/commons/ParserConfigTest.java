@@ -26,7 +26,7 @@ import javax.xml.bind.JAXBContext;
 
 import org.fuin.utils4j.jaxb.JaxbUtils;
 import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;

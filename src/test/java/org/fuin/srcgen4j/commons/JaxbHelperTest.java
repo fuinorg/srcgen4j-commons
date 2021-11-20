@@ -29,9 +29,9 @@ import javax.xml.bind.JAXBContext;
 
 import org.fuin.utils4j.jaxb.JaxbUtils;
 import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
@@ -48,12 +48,12 @@ public class JaxbHelperTest extends AbstractTest {
 
     private JaxbHelper testee;
 
-    @Before
+    @BeforeEach
     public void setup() {
         testee = new JaxbHelper();
     }
 
-    @After
+    @AfterEach
     public void teardown() {
         testee = null;
     }

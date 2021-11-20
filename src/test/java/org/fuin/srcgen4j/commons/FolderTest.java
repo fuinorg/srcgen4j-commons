@@ -26,8 +26,8 @@ import javax.xml.bind.JAXBContext;
 
 import org.fuin.utils4j.jaxb.JaxbUtils;
 import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;
@@ -41,7 +41,7 @@ public class FolderTest extends AbstractTest {
 
     // CHECKSTYLE:OFF
 
-    @Ignore("Fails with: Illegal reflective access by com.openpojo.reflection.impl.PojoFieldImpl to field java.util.regex.Pattern.ALL_FLAGS")
+    @Disabled("Fails with: Illegal reflective access by com.openpojo.reflection.impl.PojoFieldImpl to field java.util.regex.Pattern.ALL_FLAGS")
     @Test
     public final void testPojoStructureAndBehavior() {
 

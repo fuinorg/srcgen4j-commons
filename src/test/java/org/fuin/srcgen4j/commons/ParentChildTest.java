@@ -26,7 +26,7 @@ import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests parent/child variable inheritance.

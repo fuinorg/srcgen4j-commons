@@ -19,18 +19,18 @@ package org.fuin.srcgen4j.commons;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.fuin.srcgen4j.commons.TestUtils.NS_SG4JC;
+import static org.fuin.srcgen4j.commons.TestUtils.NS_TEST;
+import static org.fuin.srcgen4j.commons.TestUtils.createPojoValidator;
 import static org.fuin.utils4j.jaxb.JaxbUtils.XML_PREFIX;
 import static org.fuin.utils4j.jaxb.JaxbUtils.marshal;
 import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
-import static org.fuin.srcgen4j.commons.TestUtils.NS_SG4JC;
-import static org.fuin.srcgen4j.commons.TestUtils.createPojoValidator;
-import static org.fuin.srcgen4j.commons.TestUtils.NS_TEST;
 
 import javax.validation.constraints.NotEmpty;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.xmlunit.assertj3.XmlAssert;
 
 import com.openpojo.reflection.PojoClass;

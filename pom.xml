@@ -154,17 +154,23 @@
         </dependency>
 
         <dependency>
-            <groupId>org.fuin</groupId>
-            <artifactId>units4j</artifactId>
+            <groupId>com.openpojo</groupId>
+            <artifactId>openpojo</artifactId>
             <version>0.9.1</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>com.openpojo</groupId>
-            <artifactId>openpojo</artifactId>
+            <groupId>org.fuin</groupId>
+            <artifactId>units4j</artifactId>
             <version>0.9.1</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
