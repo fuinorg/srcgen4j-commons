@@ -2,11 +2,11 @@ name: Java Maven Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths-ignore:
       - '**/README.md'
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
     paths-ignore:
       - '**/README.md'
 
