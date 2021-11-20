@@ -1,7 +1,7 @@
 # srcgen4j-commons
 Source code generation for Java (Commons)
 
-[![Build Status](https://jenkins.fuin.org/job/srcgen4j-commons/badge/icon)](https://jenkins.fuin.org/job/srcgen4j-commons/)
+[![Build Status](https://github.com/fuinorg/srcgen4j-commons/actions/workflows/maven.yml/badge.svg)](https://github.com/fuinorg/srcgen4j-commons/actions/workflows/maven.yml)
 [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=org.fuin.srcgen4j%3Asrcgen4j-commons&metric=coverage)](https://sonarcloud.io/dashboard?id=org.fuin.srcgen4j%3Asrcgen4j-commons)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fuin.srcgen4j/srcgen4j-commons/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fuin.srcgen4j/srcgen4j-commons/)
 [![LGPLv3 License](http://img.shields.io/badge/license-LGPLv3-blue.svg)](https://www.gnu.org/licenses/lgpl.html)
