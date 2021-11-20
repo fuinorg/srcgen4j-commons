@@ -202,7 +202,7 @@ public class SrcGen4JConfig {
     }
 
     private void initVarMap(final File rootDir) {
-        varMap = new HashMap<String, String>();
+        varMap = new HashMap<>();
         varMap.put(ROOT_DIR_VAR, rootDir.toString());
         if (variables != null) {
             final List<Variable> vars = variables.asList();

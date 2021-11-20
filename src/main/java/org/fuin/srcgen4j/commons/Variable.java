@@ -170,7 +170,6 @@ public final class Variable {
         value = Utils4J.replaceVars(getValue(), vars);
     }
 
-    // CHECKSTYLE:OFF Generated code
     @Override
     public final int hashCode() {
         final int prime = 31;
@@ -200,7 +199,6 @@ public final class Variable {
         }
         return true;
     }
-    // CHECKSTYLE:ON
 
     @Override
     public final String toString() {

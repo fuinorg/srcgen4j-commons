@@ -79,9 +79,8 @@ public abstract class AbstractNamedTarget extends AbstractTarget {
         this.name = name;
     }
 
-    // CHECKSTYLE:OFF Generated code
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -89,7 +88,7 @@ public abstract class AbstractNamedTarget extends AbstractTarget {
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -104,6 +103,5 @@ public abstract class AbstractNamedTarget extends AbstractTarget {
             return false;
         return true;
     }
-    // CHECKSTYLE:ON
 
 }

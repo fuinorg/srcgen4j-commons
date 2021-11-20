@@ -39,7 +39,7 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
     @Nullable
     @Valid
     @XmlAnyElement(lax = true)
-    private Object config;
+    private Object cfg;
 
     /**
      * Package visible default constructor for deserialization.
@@ -56,15 +56,15 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
      */
     public Config(@Nullable final Object config) {
         super();
-        this.config = config;
+        this.cfg = config;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public final Config<PARENT> init(final SrcGen4JContext context, final PARENT parent, final Map<String, String> vars) {
-        if (config instanceof InitializableElement) {
+        if (cfg instanceof InitializableElement) {
             final InitializableElement<?, Config<PARENT>> ie;
-            ie = (InitializableElement<?, Config<PARENT>>) config;
+            ie = (InitializableElement<?, Config<PARENT>>) cfg;
             ie.init(context, this, vars);
         }
         return this;
@@ -77,7 +77,7 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
      */
     @Nullable
     public final Object getConfig() {
-        return config;
+        return cfg;
     }
 
     /**
@@ -87,7 +87,7 @@ public final class Config<PARENT> implements InitializableElement<Config<PARENT>
      *            Configuration.
      */
     public final void setConfig(@Nullable final Object config) {
-        this.config = config;
+        this.cfg = config;
     }
 
 }

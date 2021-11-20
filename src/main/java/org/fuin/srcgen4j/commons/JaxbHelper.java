@@ -83,14 +83,11 @@ public final class JaxbHelper {
 
     private String readFirstPartOfFile(final File file) {
         try {
-            final Reader reader = new FileReader(file);
-            try {
+            try (final Reader reader = new FileReader(file)) {
 
                 final char[] buf = new char[1024];
                 reader.read(buf);
                 return String.copyValueOf(buf);
-            } finally {
-                reader.close();
             }
         } catch (final IOException ex) {
             throw new RuntimeException("Could not read first part of file: " + file, ex);
@@ -121,11 +118,8 @@ public final class JaxbHelper {
         Contract.requireArgNotNull("jaxbContext", jaxbContext);
 
         try {
-            final FileWriter fw = new FileWriter(file);
-            try {
+            try (final FileWriter fw = new FileWriter(file)) {
                 write(obj, fw, jaxbContext);
-            } finally {
-                fw.close();
             }
         } catch (final IOException ex) {
             throw new MarshalObjectException("Unable to write XML to file: " + file, ex);

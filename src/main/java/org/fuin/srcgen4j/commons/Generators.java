@@ -166,22 +166,8 @@ public class Generators extends AbstractTarget implements InitializableElement<G
         }
         try {
             return parent.findTargetFolder(generatorName, artifactName);
-        } catch (final ProjectNameNotDefinedException ex) {
-            throw new RuntimeException(
-                    "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
-        } catch (final ArtifactNotFoundException ex) {
-            throw new RuntimeException(
-                    "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
-        } catch (final FolderNameNotDefinedException ex) {
-            throw new RuntimeException(
-                    "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
-        } catch (final GeneratorNotFoundException ex) {
-            throw new RuntimeException(
-                    "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
-        } catch (final ProjectNotFoundException ex) {
-            throw new RuntimeException(
-                    "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
-        } catch (final FolderNotFoundException ex) {
+        } catch (final ProjectNameNotDefinedException | ArtifactNotFoundException | FolderNameNotDefinedException
+                | GeneratorNotFoundException | ProjectNotFoundException | FolderNotFoundException ex) {
             throw new RuntimeException(
                     "Couldn't determine target folder for generator '" + generatorName + "' and artifact '" + artifactName + "'", ex);
         }

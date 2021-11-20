@@ -74,7 +74,6 @@ public abstract class AbstractNamedElement extends AbstractElement {
         this.name = name;
     }
 
-    // CHECKSTYLE:OFF Generated code
     @Override
     public final int hashCode() {
         final int prime = 31;
@@ -104,6 +103,5 @@ public abstract class AbstractNamedElement extends AbstractElement {
         }
         return true;
     }
-    // CHECKSTYLE:ON
 
 }
