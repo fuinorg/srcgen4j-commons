@@ -11,7 +11,7 @@ on:
       - '**/README.md'
 
 jobs:
-  call-workflow:
-    uses: fuinorg/github-workflows/.github/workflows/maven.yml@main
+  maven_build:
+    uses: fuinorg/github-workflows/.github/workflows/java-maven-sonar-oss.yml@main
     with:
       oss_sonatype_user: michael-schnell
