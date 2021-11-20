@@ -4,7 +4,7 @@
    xmlns="http://www.fuin.org/srcgen4j/commons/0.4.3"
    targetNamespace="http://www.fuin.org/srcgen4j/commons/0.4.3">   
  
-  <xs:element name="srcgen4j-config" type="srcgen4j-configType" />
+  <xs:element name="srcgen4j-config" type="configType" />
   
   <xs:element name="variable" type="variableType" />
     
@@ -122,7 +122,7 @@
     </xs:sequence>
   </xs:complexType>
   
-  <xs:complexType name="srcgen4j-configType">
+  <xs:complexType name="configType">
     <xs:sequence>
       <xs:element ref="variables" minOccurs="0" maxOccurs="1" />
       <xs:element type="projectsType" name="projects" minOccurs="1" maxOccurs="1" />
