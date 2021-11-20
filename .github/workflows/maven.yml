@@ -51,6 +51,7 @@ jobs:
 
     - name: Build with Maven
       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         OSS_SONATYPE_USERNAME: michael-schnell
         OSS_SONATYPE_TOKEN: ${{ secrets.OSS_SONATYPE_TOKEN }}
         OSS_SONATYPE_GPG_PASSPHRASE: ${{ secrets.OSS_SONATYPE_GPG_PASSPHRASE }}
