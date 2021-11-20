@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.objects4j.common.Contract;
 import org.fuin.utils4j.Utils4J;
-import org.fuin.xmlcfg4j.AbstractElement;
 
 /**
  * Configuration for a {@link ArtifactFactory}.

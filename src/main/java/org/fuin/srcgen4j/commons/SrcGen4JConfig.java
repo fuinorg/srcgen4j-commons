@@ -39,9 +39,6 @@ import org.fuin.objects4j.common.FileExistsValidator;
 import org.fuin.objects4j.common.IsDirectory;
 import org.fuin.objects4j.common.IsDirectoryValidator;
 import org.fuin.utils4j.VariableResolver;
-import org.fuin.xmlcfg4j.Variable;
-import org.fuin.xmlcfg4j.Variables;
-import org.fuin.xmlcfg4j.XmlCfg4JNamespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +55,7 @@ public class SrcGen4JConfig {
 
     @Nullable
     @Valid
-    @XmlElement(name = "variables", namespace = XmlCfg4JNamespace.NAMESPACE)
+    @XmlElement(name = "variables")
     private Variables variables;
 
     @Nullable

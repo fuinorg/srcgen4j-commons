@@ -64,10 +64,10 @@ public class ParserConfigTest extends AbstractTest {
 
         // VERIFY
         XmlAssert.assertThat(result)
-                .and(XML + "<sg4jc:parser class=\"a.b.c.TestParser\" name=\"parser1\" xmlns:cfg4j=\"" + NS_CFG4J + "\" "
+                .and(XML + "<sg4jc:parser class=\"a.b.c.TestParser\" name=\"parser1\" "
                         + "xmlns:sg4jc=\""+ NS_SG4JC +"\" "
-                        + "xmlns:ns3=\"" + NS_TEST + "\">"
-                        + "<sg4jc:config><ns3:input path=\"a/b/c\"/></sg4jc:config></sg4jc:parser>")
+                        + "xmlns:ns2=\"" + NS_TEST + "\">"
+                        + "<sg4jc:config><ns2:input path=\"a/b/c\"/></sg4jc:config></sg4jc:parser>")
                 .areIdentical();
 
     }

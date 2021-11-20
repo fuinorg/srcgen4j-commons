@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <srcgen4j-config 
-   xmlns="http://www.fuin.org/srcgen4j/commons/0.4.3"
-   xmlns:cfg="http://www.fuin.org/xmlcfg4j/0.2.1">
+   xmlns="http://www.fuin.org/srcgen4j/commons/0.4.3">
 
-	<cfg:variables>
-		<cfg:variable name="root" value="/var/tmp" />
-	</cfg:variables>
+	<variables>
+		<variable name="root" value="/var/tmp" />
+	</variables>
 
 	<projects>
 		<project name="prj1" path="${root}/myproject">

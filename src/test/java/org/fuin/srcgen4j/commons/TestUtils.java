@@ -17,6 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
+import com.openpojo.validation.Validator;
 import com.openpojo.validation.ValidatorBuilder;
 import com.openpojo.validation.rule.impl.NoFieldShadowingRule;
 import com.openpojo.validation.rule.impl.NoPublicFieldsRule;
@@ -26,7 +27,7 @@ import com.openpojo.validation.test.impl.GetterTester;
 /**
  * Basic functions for all tests.
  */
-public abstract class AbstractTest {
+public final class TestUtils {
 
     /** XML Prefix. */
     protected static final String XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
@@ -36,11 +37,17 @@ public abstract class AbstractTest {
     protected static final String NS_TEST = "http://www.fuin.org/srcgen4j/commons/test";
     
     /**
+     * Private utility class constructor.
+     */
+    private TestUtils() {
+    }
+
+    /**
      * Creates a configured POJO validator.
      * 
      * @return New instance.
      */
-    protected final ValidatorBuilder createPojoValidatorBuilder() {
+    public static ValidatorBuilder createPojoValidatorBuilder() {
 
         final ValidatorBuilder pv = ValidatorBuilder.create();
 
@@ -53,4 +60,13 @@ public abstract class AbstractTest {
         return pv;
     }
     
+    /**
+     * Creates a configured POJO validator.
+     * 
+     * @return New instance.
+     */
+    public static Validator createPojoValidator() {
+        return createPojoValidatorBuilder().build();
+    }
+
 }

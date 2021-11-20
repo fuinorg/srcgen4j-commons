@@ -2,27 +2,26 @@
 <srcgen4j-config
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xmlns="http://www.fuin.org/srcgen4j/commons/0.4.3"
-   xmlns:cfg="http://www.fuin.org/xmlcfg4j/0.2.1"
    xmlns:test="http://www.fuin.org/srcgen4j/commons/test">
 	
-	<cfg:variables>
-		<cfg:variable name="root" value="/var/tmp" />
-		<cfg:variable name="a" value="base" />
-		<cfg:variable name="res" url="classpath:header.txt" encoding="utf-8" />
-		<cfg:variable name="escapes" value="\r\n\t" />
-	</cfg:variables>
+	<variables>
+		<variable name="root" value="/var/tmp" />
+		<variable name="a" value="base" />
+		<variable name="res" url="classpath:header2.txt" encoding="utf-8" />
+		<variable name="escapes" value="\r\n\t" />
+	</variables>
 	
 	<projects>
 		<project name="example" path="${root}/example" maven="true" />
 	</projects>
 	
 	<parsers>
-		<cfg:variable name="a" value="${a}/parsers1" />
-		<cfg:variable name="b" value="${a}/parsers2" />
+		<variable name="a" value="${a}/parsers1" />
+		<variable name="b" value="${a}/parsers2" />
 		<parser name="parser1" class="org.fuin.srcgen4j.commons.TestParser">
-			<cfg:variable name="a" value="${a}/parser1" />
-			<cfg:variable name="c" value="${a}/parser3" />
-			<cfg:variable name="x" url="classpath:header.txt" encoding="utf-8" />
+			<variable name="a" value="${a}/parser1" />
+			<variable name="c" value="${a}/parser3" />
+			<variable name="x" url="classpath:header2.txt" encoding="utf-8" />
 			<config>
 				<test:input path="${root}/xtext-ddd/TestModel/src/main/domain" />
 			</config>
@@ -30,11 +29,11 @@
 	</parsers>
 	
 	<generators>
-		<cfg:variable name="a" value="${a}/generators1" />
-		<cfg:variable name="b" value="${a}/generators2" />
+		<variable name="a" value="${a}/generators1" />
+		<variable name="b" value="${a}/generators2" />
 		<generator name="gen1" class="org.fuin.srcgen4j.commons.TestGenerator" parser="parser1" project="example" folder="genMainJava">
-			<cfg:variable name="a" value="${a}/generator1" />
-			<cfg:variable name="c" value="${a}/generator3" />
+			<variable name="a" value="${a}/generator1" />
+			<variable name="c" value="${a}/generator3" />
 		</generator>
 	</generators>
 	

@@ -32,8 +32,6 @@ import javax.xml.bind.JAXBContext;
 
 import org.fuin.utils4j.jaxb.JaxbUtils;
 import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
-import org.fuin.xmlcfg4j.Variable;
-import org.fuin.xmlcfg4j.Variables;
 import org.junit.Test;
 
 import com.openpojo.reflection.PojoClass;
@@ -83,7 +81,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
             // TEST
             final SrcGen4JConfig testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext)
-                    .addClasspathSchemas("/srcgen4j-commons-0_4_3.xsd", "/xmlcfg4j-0_2_1.xsd", "/test-input.xsd").build(), reader);
+                    .addClasspathSchemas("/srcgen4j-commons-0_4_3.xsd", "/test-input.xsd").build(), reader);
 
             // VERIFY
             assertThat(testee).isNotNull();

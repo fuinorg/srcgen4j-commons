@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <srcgen4j-config xmlns="http://www.fuin.org/srcgen4j/commons/0.4.3"
-   xmlns:cfg="http://www.fuin.org/xmlcfg4j/0.2.1"
    xmlns:test="http://www.fuin.org/srcgen4j/commons/test">
 	
-	<cfg:variables>
-		<cfg:variable name="root" value="/var/tmp" />
-		<cfg:variable name="project_example_path" value="${root}/example" />
-	</cfg:variables>
+	<variables>
+		<variable name="root" value="/var/tmp" />
+		<variable name="project_example_path" value="${root}/example" />
+	</variables>
 	
 	<projects>
 		<project name="example" path="${root}/example">
@@ -23,7 +22,7 @@
 	</projects>
 	
 	<parsers>
-		<cfg:variable name="pep" value="${project_example_path}/parsers" />
+		<variable name="pep" value="${project_example_path}/parsers" />
 		<parser name="parser1" class="org.fuin.srcgen4j.commons.TestParser">
 			<config>
 				<test:input path="${root}/xtext-ddd/TestModel/src/main/domain" />
@@ -32,7 +31,7 @@
 	</parsers>
 	
 	<generators>
-		<cfg:variable name="pep" value="${project_example_path}/generators" />
+		<variable name="pep" value="${project_example_path}/generators" />
 		<generator name="gen1" class="org.fuin.srcgen4j.commons.TestGenerator" parser="parser1" project="example" folder="genMainJava">
 			<!-- Project and folder can be overridden in artifact -->
 			<artifact name="one" project="example" folder="genMainJava">

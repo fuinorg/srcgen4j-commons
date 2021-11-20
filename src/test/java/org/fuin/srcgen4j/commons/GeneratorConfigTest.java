@@ -64,7 +64,7 @@ public class GeneratorConfigTest extends AbstractTest {
         // VERIFY
         XmlAssert.assertThat(result)
                 .and(XML + "<sg4jc:generator class=\"CLASS\" parser=\"PARSER\" name=\"NAME\" project=\"PRJ\" folder=\"FLD\""
-                        + " xmlns:cfg4j=\"" + NS_CFG4J + "\" xmlns:sg4jc=\""+ NS_SG4JC +"\">"
+                        + " xmlns:sg4jc=\""+ NS_SG4JC +"\">"
                         + "<sg4jc:artifact name=\"NAME\" project=\"PROJECT\" folder=\"FOLDER\"/>" + "</sg4jc:generator>")
                 .areIdentical();
 

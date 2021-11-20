@@ -26,8 +26,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.fuin.xmlcfg4j.AbstractElement;
-
 /**
  * Specific parser configuration example.
  */

@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.fuin.xmlcfg4j.AbstractNamedElement;
 
 /**
  * Represents a folder in a target folder.

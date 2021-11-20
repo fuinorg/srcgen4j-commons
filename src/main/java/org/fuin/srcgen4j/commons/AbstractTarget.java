@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.fuin.xmlcfg4j.AbstractElement;
 
 /**
  * Base class for assigning generated artifacts to a project folder.
