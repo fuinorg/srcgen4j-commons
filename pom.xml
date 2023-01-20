@@ -214,7 +214,7 @@
                 <configuration>
                     <manifestLocation>${manifest-location}</manifestLocation>
                     <instructions>
-                        <Automatic-Module-Name>org.fuin.srcgen4j-commons</Automatic-Module-Name>
+                        <Automatic-Module-Name>org.fuin.srcgen4j.commons</Automatic-Module-Name>
                         <_removeheaders>
                             Built-By,Tool,Build-Jdk,Created-By,
                             Bnd-LastModified, Private-Package
