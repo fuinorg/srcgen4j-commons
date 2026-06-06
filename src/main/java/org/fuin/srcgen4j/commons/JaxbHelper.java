@@ -25,10 +25,10 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 
 import org.fuin.objects4j.common.Contract;
 import org.fuin.objects4j.common.FileExists;

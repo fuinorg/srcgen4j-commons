@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
 
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 
 import org.fuin.utils4j.jaxb.JaxbUtils;
 import org.fuin.utils4j.jaxb.UnmarshallerBuilder;

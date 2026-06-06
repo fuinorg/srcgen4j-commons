@@ -26,8 +26,8 @@ import static org.fuin.utils4j.jaxb.JaxbUtils.XML_PREFIX;
 import static org.fuin.utils4j.jaxb.JaxbUtils.marshal;
 import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
 
-import javax.validation.constraints.NotEmpty;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import org.fuin.utils4j.jaxb.UnmarshallerBuilder;
 import org.junit.jupiter.api.Test;

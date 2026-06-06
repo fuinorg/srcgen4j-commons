@@ -24,6 +24,7 @@ import static org.fuin.utils4j.jaxb.JaxbUtils.XML_PREFIX;
 import static org.fuin.utils4j.jaxb.JaxbUtils.marshal;
 import static org.fuin.utils4j.jaxb.JaxbUtils.unmarshal;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,7 +85,10 @@ public class VariableTest {
 
     @Test
     public final void testHashCodeEquals() {
-        EqualsVerifier.forClass(Variable.class).withIgnoredFields("value", "urlStr", "encoding").suppress(Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(Variable.class)
+                .withIgnoredFields("value", "urlStr", "encoding")
+                .suppress(Warning.NONFINAL_FIELDS, Warning.URL_EQUALITY)
+                .verify();
     }
 
     @Test

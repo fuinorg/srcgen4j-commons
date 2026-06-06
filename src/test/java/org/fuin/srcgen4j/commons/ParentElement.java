@@ -4,8 +4,8 @@ package org.fuin.srcgen4j.commons;
 import java.util.Collections;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "parent", namespace = "http://www.fuin.org/srcgen4j/commons/other-ns")
 public class ParentElement extends AbstractElement {

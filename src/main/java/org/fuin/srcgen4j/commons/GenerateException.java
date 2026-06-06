@@ -17,7 +17,7 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * The generation failed.

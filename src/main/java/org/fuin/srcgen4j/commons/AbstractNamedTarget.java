@@ -17,10 +17,10 @@
  */
 package org.fuin.srcgen4j.commons;
 
-import javax.validation.constraints.NotEmpty;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.fuin.objects4j.common.Contract;

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 
 import org.fuin.utils4j.jaxb.JaxbUtils;
 import org.fuin.utils4j.jaxb.UnmarshallerBuilder;

@@ -3,13 +3,13 @@ Source code generation for Java (Commons)
 
 [![Build Status](https://github.com/fuinorg/srcgen4j-commons/actions/workflows/maven.yml/badge.svg)](https://github.com/fuinorg/srcgen4j-commons/actions/workflows/maven.yml)
 [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=org.fuin.srcgen4j%3Asrcgen4j-commons&metric=coverage)](https://sonarcloud.io/dashboard?id=org.fuin.srcgen4j%3Asrcgen4j-commons)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fuin.srcgen4j/srcgen4j-commons/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fuin.srcgen4j/srcgen4j-commons/)
+[![Maven Central](https://img.shields.io/maven-central/v/org.fuin.srcgen4j/srcgen4j-commons.svg)](https://central.sonatype.com/artifact/org.fuin.srcgen4j/srcgen4j-commons)
 [![LGPLv3 License](http://img.shields.io/badge/license-LGPLv3-blue.svg)](https://www.gnu.org/licenses/lgpl.html)
-[![Java Development Kit 11](https://img.shields.io/badge/JDK-11-green.svg)](https://openjdk.java.net/projects/jdk/11/)
+[![Java Development Kit 17](https://img.shields.io/badge/JDK-17-green.svg)](https://openjdk.java.net/projects/jdk/17/)
 
 
 ## Versions
-- 0.4.3 (or later) = **Java 11** before namespace change from 'javax' to 'jakarta'
+- 0.4.3 (or later) = **Java 17** - See [CHANGELOG.md](CHANGELOG.md) for details. 
 - 0.4.2 (or previous) = **Java 8**
 
 ## Background

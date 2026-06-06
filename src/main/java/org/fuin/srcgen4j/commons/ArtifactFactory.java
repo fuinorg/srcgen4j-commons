@@ -20,7 +20,7 @@ package org.fuin.srcgen4j.commons;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Creates one or more artifacts for a given model.

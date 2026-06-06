@@ -20,7 +20,7 @@ package org.fuin.srcgen4j.commons;
 import java.io.File;
 import java.util.Iterator;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
