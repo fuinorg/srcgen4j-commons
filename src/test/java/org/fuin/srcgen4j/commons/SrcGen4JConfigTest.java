@@ -81,7 +81,7 @@ public class SrcGen4JConfigTest extends AbstractTest {
 
             // TEST
             final SrcGen4JConfig testee = JaxbUtils.unmarshal(new UnmarshallerBuilder().withContext(jaxbContext)
-                    .addClasspathSchemas("/srcgen4j-commons-0_4_3.xsd", "/test-input.xsd").build(), reader);
+                    .addClasspathSchemas("/srcgen4j-commons-0_5_0.xsd", "/test-input.xsd").build(), reader);
 
             // VERIFY
             assertThat(testee).isNotNull();

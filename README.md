@@ -9,7 +9,7 @@ Source code generation for Java (Commons)
 
 
 ## Versions
-- 0.4.3 (or later) = **Java 17** - See [CHANGELOG.md](CHANGELOG.md) for details. 
+- 0.5.0 (or later) = **Java 17 with Jakarta Namespace** - See [CHANGELOG.md](CHANGELOG.md) for details. 
 - 0.4.2 (or previous) = **Java 8**
 
 ## Background
@@ -23,7 +23,7 @@ The pipeline is configured using a single XML configuration file:
 ```xml
 <srcgen4j-config
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns="http://www.fuin.org/srcgen4j/commons/0.4.3">
+   xmlns="http://www.fuin.org/srcgen4j/commons/0.5.0">
     
     <variables />
     <projects />

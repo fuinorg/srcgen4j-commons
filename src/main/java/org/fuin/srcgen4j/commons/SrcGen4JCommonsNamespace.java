@@ -6,7 +6,7 @@ package org.fuin.srcgen4j.commons;
 public final class SrcGen4JCommonsNamespace {
 
     /** Namespace URL. */
-    public static final String NAMESPACE = "http://www.fuin.org/srcgen4j/commons/0.4.3";
+    public static final String NAMESPACE = "http://www.fuin.org/srcgen4j/commons/0.5.0";
 
     /** Namespace prefix. */
     public static final String NS_PREFIX = "sg4jc";
