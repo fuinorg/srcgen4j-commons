@@ -25,6 +25,9 @@
     </scm>
     
     <properties>
+        <java.version>21</java.version>
+        <java.release.version>${java.version}</java.release.version>
+
         <utils4j.version>0.16.1-SNAPSHOT</utils4j.version>
         <org-fuin-bom.version>1.0.2-SNAPSHOT</org-fuin-bom.version>
     </properties>
