@@ -1,6 +1,6 @@
 # Release Notes
 
 ## 0.5.0
-- Use Java 17
+- Uses **Java 17**
+- Switched to `jakarta` namespace
 - Use fuin.org BOM
-- Switched to jakarta namespace
